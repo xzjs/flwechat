@@ -1,0 +1,12 @@
+#head_portrait{
+    width:40px;
+    height:40px;
+    margin: 5px;
+    border-radius: 25px;
+    vertical-align: middle;
+}
+.contacts{
+    width:auto;
+    margin-left:15px;
+    border-bottom: 1px solid #bababa;
+}
