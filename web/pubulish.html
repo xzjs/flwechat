@@ -14,11 +14,20 @@
 <body>
 <div class="container">
     <div class="publish_content">
-        <textarea  id="words"></textarea>
+        <div class="text_insert">
+            <textarea  id="words" maxlength="300" placeholder="评论"></textarea>
+        </div>
         <div class="pic_insert">
             <img src="images/pic_insert.png" alt="">
             <input id="pic_files" type="file" multiple="multiple">
         </div>
+        <div class="url_insert">
+            <div class="url_icon"><img src="images/url.png" alt=""></div>
+            <textarea name="url" id="url" placeholder="连接"></textarea>
+        </div>
+    </div>
+    <div>
+        <a href="javascript:;" class="weui-btn weui-btn_primary">提交</a>
     </div>
     <div class="weui-tabbar">
         <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
