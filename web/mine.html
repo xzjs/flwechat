@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>我</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/mine.css">
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
@@ -58,6 +59,18 @@
 <script type="text/javascript">
     $(function () {
         $(".container").height($(window).height());
+=======
+</head>
+<body>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script>
+    $(document).ready(function () {
+        var cookie=$.cookie('openid');
+        if(cookie==null){
+            location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+        }
+>>>>>>> origin/master
     })
 </script>
 </body>

@@ -86,18 +86,17 @@
                 <img src="images/share.png" alt=""><span>1</span>
             </div>
             <div>
-                <img src="images/comment.png" alt=""><span>1</span>
+                <img src="images/comment.png" alt=""><span>2</span>
             </div>
             <div>
-                <img src="images/bad.png" alt=""><span>1</span>
+                <img src="images/bad.png" alt=""><span>3</span>
             </div>
             <div>
-                <img src="images/great.png" alt=""><span>1</span>
+                <img src="images/great.png" alt=""><span>4</span>
             </div>
         </div>
     </div>
 </div>
-
 <div class="weui-tabbar">
     <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
                     <span style="display: inline-block;position: relative;">
@@ -128,21 +127,21 @@
             $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
         })
         /*调用微信预览图片的方法*/
-        function funcReadImgInfo(){
+        function funcReadImgInfo() {
             var imgs = [];
             var imgObj = $(".userImg img");//这里改成相应的对象
-            for(var i=0; i<imgObj.length; i++){
+            for (var i = 0; i < imgObj.length; i++) {
                 imgs.push(imgObj.eq(i).attr('src'));
-                imgObj.eq(i).click(function(){
+                imgObj.eq(i).click(function () {
                     var nowImgurl = $(this).attr('src');
-                    WeixinJSBridge.invoke("imagePreview",{
-                        "urls":imgs,
-                        "current":nowImgurl
+                    WeixinJSBridge.invoke("imagePreview", {
+                        "urls": imgs,
+                        "current": nowImgurl
                     });
                 });
             }
-
         }
+    })
 </script>
 </body>
 </html>
