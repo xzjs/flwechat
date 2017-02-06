@@ -48,16 +48,23 @@
         </a>
     </div>
     <script type="text/javascript">
-        $(function(){
+        $(function () {
             $('.weui-tabbar__item').on('click', function () {
                 $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
             });
         });
     </script>
 </div>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript">
     $(function () {
         $(".container").height($(window).height());
+    });
+    $(document).ready(function () {
+        var user_id = $.cookie("code");
+        if (code == null) {
+
+        }
     })
 </script>
 </body>

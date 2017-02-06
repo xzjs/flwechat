@@ -11,7 +11,11 @@
 |
 */
 
-Route::group(['middleware'=>['web','wechat.oauth']],function (){
-    Route::any('/','WechatController@serve');
+Route::any('/','WechatController@serve');
+
+Route::resource('photos', 'PhotoController');
+
+Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo\'']], function () {
+    Route::get('/getuser', 'WechatController@getuser');
 });
 
