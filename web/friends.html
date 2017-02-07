@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/friends.css">
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jsweixin.js"></script>
 </head>
 <body>
 <div class="container">
@@ -74,7 +75,7 @@
         <img src="images/lan.jpg" alt="" id="head_portrait"><span class="friend_name">奥巴马</span>
     </div>
     <div class="weui-tabbar">
-        <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
+        <a href="index.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/homepage.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
@@ -85,7 +86,7 @@
             <img src="./images/release.png" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">发布</p>
         </a>
-        <a href="friends.html" class="weui-tabbar__item">
+        <a href="friends.html" class="weui-tabbar__item  weui-bar__item_on">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/friend.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
@@ -97,13 +98,6 @@
             <p class="weui-tabbar__label">我</p>
         </a>
     </div>
-    <script type="text/javascript">
-        $(function(){
-            $('.weui-tabbar__item').on('click', function () {
-                $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-            });
-        });
-    </script>
 </div>
 </body>
 </html>

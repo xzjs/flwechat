@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/index.css">
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="js/jsweixin.js"></script>
+    <script type="text/javascript" src="js/wechat.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
@@ -121,27 +123,5 @@
         <p class="weui-tabbar__label">我</p>
     </a>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $('.weui-tabbar__item').on('click', function () {
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-        })
-        /*调用微信预览图片的方法*/
-        function funcReadImgInfo() {
-            var imgs = [];
-            var imgObj = $(".userImg img");//这里改成相应的对象
-            for (var i = 0; i < imgObj.length; i++) {
-                imgs.push(imgObj.eq(i).attr('src'));
-                imgObj.eq(i).click(function () {
-                    var nowImgurl = $(this).attr('src');
-                    WeixinJSBridge.invoke("imagePreview", {
-                        "urls": imgs,
-                        "current": nowImgurl
-                    });
-                });
-            }
-        }
-    })
-</script>
 </body>
 </html>

@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/mine.css">
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jsweixin.js"></script>
 </head>
 <body>
 <div class="container">
     <div class="my_messages">
-        <img src="images/lan.jpg" alt="" id="head_portrait"><span>哆啦A梦</span>
+        <img src="images/lan.jpg" alt="" id="head_portrait"><span>奥巴马</span>
     </div>
     <div class="messages">
         <div class="message_top" id="system_messages">系统消息</div>
@@ -24,7 +25,7 @@
         <div class="message_bottom">我评论过的主题</div>
     </div>
     <div class="weui-tabbar">
-        <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
+        <a href="index.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/homepage.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
@@ -42,30 +43,11 @@
                     </span>
             <p class="weui-tabbar__label">好友</p>
         </a>
-        <a href="mine.html" class="weui-tabbar__item">
+        <a href="mine.html" class="weui-tabbar__item  weui-bar__item_on">
             <img src="./images/me.png" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">我</p>
         </a>
     </div>
-    <script type="text/javascript">
-        $(function () {
-            $('.weui-tabbar__item').on('click', function () {
-                $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-            });
-        });
-    </script>
 </div>
-<script type="text/javascript" src="js/jquery.cookie.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $(".container").height($(window).height());
-    });
-    $(document).ready(function () {
-        var user_id = $.cookie("code");
-        if (code == null) {
-
-        }
-    })
-</script>
 </body>
 </html>
