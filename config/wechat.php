@@ -16,8 +16,8 @@ return [
     /*
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
-    'app_id'  => env('WECHAT_APPID', 'wxe50342c4108c50ce'),         // AppID
-    'secret'  => env('WECHAT_SECRET', '2d696d519950fc6ed4b757b2a0064ea6'),     // AppSecret
+    'app_id'  => env('WECHAT_APPID', 'wx8f318ffaba82b3ca'),         // AppID
+    'secret'  => env('WECHAT_SECRET', 'ee9e686118ec31b1eabbc9e437cc3e9e'),     // AppSecret
     'token'   => env('WECHAT_TOKEN', 'xzjs'),          // Token
     'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
 
@@ -41,7 +41,7 @@ return [
      * callback：OAuth授权完成后的回调页地址(如果使用中间件，则随便填写。。。)
      */
      'oauth' => [
-         'only_wechat_browser' => true,
+         'only_wechat_browser' => false,
          'scopes'   => array_map('trim', explode(',', env('WECHAT_OAUTH_SCOPES', 'snsapi_userinfo'))),
          'callback' => env('WECHAT_OAUTH_CALLBACK', '/examples/oauth_callback.php'),
      ],
@@ -65,7 +65,7 @@ return [
      *
      * 当 enable_mock 为 true 则会启用模拟微信授权，用于开发时使用，开发完成请删除或者改为 false 即可
      */
-     'enable_mock' => env('WECHAT_ENABLE_MOCK', false),
+     'enable_mock' => env('WECHAT_ENABLE_MOCK', true),
      'mock_user' => [
          "openid" =>"odh7zsgI75iT8FRh0fGlSojc9PWM",
          // 以下字段为 scope 为 snsapi_userinfo 时需要
