@@ -23,6 +23,7 @@ class CreateArticlesTable extends Migration
             $table->string('url1');
             $table->string('url2');
             $table->string('url3');
+            $table->string('url');
             $table->timestamps();
         });
     }

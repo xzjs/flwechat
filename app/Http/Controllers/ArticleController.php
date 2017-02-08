@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use Illuminate\Http\Request;
 
-class ContentController extends Controller
+class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,14 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article=new Article;
+        $article->user_id=$request->user_id;
+        $paths=array();
+        foreach ($request->allFiles() as $file) {
+            $path=$file->store('uploads');
+            array_push($paths,$path);
+        }
+        var_dump($paths);
     }
 
     /**

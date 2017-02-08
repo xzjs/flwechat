@@ -23,11 +23,18 @@ class WechatController extends Controller
      */
     public function getuser(){
         $user = session('wechat.oauth_user');
-        var_dump($user);
-        $u=User::firstOrNew(['openid'=>$user['id']]);
-        $u->nickname=$user["nickname"];
-        $u->head_img=$user['avatar'];
-        $u->save();
-        echo $u->id;
+        //var_dump($user);
+        if($user!=null) {
+            $u = User::firstOrNew(['openid' => $user['id']]);
+            $u->nickname = $user["nickname"];
+            $u->head_img = $user['avatar'];
+            $u->save();
+//            echo $u->id;
+            setcookie('id', $u->id, time()+3600,"/");
+            header("Location: /flwechat/web/index.html");
+            exit;
+        }else{
+            echo 0;
+        }
     }
 }
