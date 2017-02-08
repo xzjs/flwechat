@@ -16,6 +16,9 @@
     background-color: #fff;
     border-bottom:1px solid #bababa;
 }
+.messages a{
+    color: #000;
+}
 .message_top{
     border-bottom: 1px solid #bababa;
 }
