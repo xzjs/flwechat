@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Image;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -30,25 +31,36 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $article=new Article;
-        $article->user_id=$request->user_id;
-        $paths=array();
-        foreach ($request->allFiles() as $file) {
-            $path=$file->store('uploads');
-            array_push($paths,$path);
+        try {
+            $article = new Article;
+            $article->user_id = $request->user_id;
+            $article->content = $request->comment;
+            $article->url = $request->url;
+            $article->saveOrFail();
+            $arr = ['pic_files1', 'pic_files2', 'pic_files3'];
+            foreach ($arr as $value) {
+                if ($request->hasFile($value)) {
+                    $path = $request->file($value)->store('uploads');
+                    //TODO 此处需要图片识别获取url
+                    $img = new Image(['img' => $path, 'url' => '']);
+                    $article->images()->save($img);
+                }
+            }
+            echo $article->id;
+        } catch (\Exception $exception) {
+            echo 0;
         }
-        var_dump($paths);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -59,7 +71,7 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -70,8 +82,8 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -82,7 +94,7 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
