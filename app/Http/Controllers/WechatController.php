@@ -28,6 +28,8 @@ class WechatController extends Controller
             $u = User::firstOrNew(['openid' => $user['id']]);
             $u->nickname = $user["nickname"];
             $u->head_img = $user['avatar'];
+            $u->follow=0;
+            $u->be_follow=0;
             $u->save();
 //            echo $u->id;
             setcookie('id', $u->id, time()+3600,"/");

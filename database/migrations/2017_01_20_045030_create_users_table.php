@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('openid');
             $table->string('nickname');
             $table->string('head_img');
+            $table->integer('follow');
+            $table->integer('be_follow');
             $table->timestamps();
         });
     }

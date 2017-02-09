@@ -129,6 +129,18 @@ class ArticleController extends Controller
         }catch (\Exception $exception){
             echo \GuzzleHttp\json_encode($exception->getMessage());
         }
+    }
 
+    /**
+     * 根据用户id获取用户的文章
+     * @param $user_id
+     */
+    public function get_article_by_user_id($user_id){
+        try{
+            $articles=Article::with('images','topic')->where('user_id',$user_id)->orderBy('created_at','desc')->get();
+            echo \GuzzleHttp\json_encode($articles);
+        }catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
     }
 }
