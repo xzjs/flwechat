@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Image;
+use App\Topic;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -51,7 +52,10 @@ class ArticleController extends Controller
                     $article->images()->save($img);
                 }
             }
-            echo $article->id;
+            //TODO 此处需要计算话题
+            $result['id']=$article->id;
+            $result['topic']='宝宝离婚了';
+            echo \GuzzleHttp\json_encode($result);
         } catch (\Exception $exception) {
             echo 0;
         }
@@ -100,5 +104,26 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * 为文章增加话题
+     * @param Request $request
+     */
+    public function add_topic(Request $request){
+        try{
+            $topic=Topic::firstOrNew(['content'=>$request->name]);
+            if($topic->user_id==null){
+                $topic->user_id=$request->user_id;
+                $topic->save();
+            }
+            $article=Article::find($request->article_id);
+            $article->topic_id=$topic->id;
+            $article->save();
+            echo \GuzzleHttp\json_encode(true);
+        }catch (\Exception $exception){
+            echo \GuzzleHttp\json_encode($exception->getMessage());
+        }
+
     }
 }

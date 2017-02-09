@@ -14,6 +14,7 @@
 Route::any('/','WechatController@serve');
 
 Route::resource('user', 'UserController');
+Route::post('/article/add_topic','ArticleController@add_topic');
 Route::resource('article', 'ArticleController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
