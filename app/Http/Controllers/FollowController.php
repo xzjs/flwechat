@@ -130,7 +130,7 @@ class FollowController extends Controller
      */
     public function cancel_follow(Request $request){
         try{
-            $follow=Follow::where('type',$request->type)->where('follow_user',$request->follow_user_id)->where('be_follow_user',$request->be_follow-id)->first();
+            $follow=Follow::where('type',$request->type)->where('follow_user',$request->follow_user_id)->where('be_follow_user',$request->be_follow_id)->first();
             if($request->type==0){
                 $follow_user=User::find($request->follow_user_id);
                 $follow_user->follow-=1;
