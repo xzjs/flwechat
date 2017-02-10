@@ -24,7 +24,7 @@ $(function () {
             $('#dialog1').fadeIn(200);
             $('#sure1').click(function(){$('#dialog1').fadeOut(200)});
         }else{
-            $('.publish_content').prepend('<textarea name="id" style="display: none">'+id+'</textarea>');
+            $('.publish_content').prepend('<input name="user_id" type="hidden" value=id>');
             var formData=new FormData($('.publish_content')[0]);
             $.ajax({
                 url:"/flwechat/public/article",
