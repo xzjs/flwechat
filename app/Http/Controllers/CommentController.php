@@ -55,7 +55,12 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        try{
+            $comments=Comment::with('user')->where('article_id',$id)->get();
+            echo \GuzzleHttp\json_encode($comments);
+        }catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
     }
 
     /**
