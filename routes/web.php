@@ -19,6 +19,7 @@ Route::get('/article/get_article_by_user_id/{user_id}','ArticleController@get_ar
 Route::resource('article', 'ArticleController');
 Route::get('/comment/get_comments_by_user_id/{user_id}','CommentController@get_comments_by_user_id');
 Route::resource('comment','CommentController');
+Route::post('/follow/get_follow_list','FollowController@get_follow_list');
 Route::resource('follow','FollowController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {

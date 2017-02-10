@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Follow;
+use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -39,14 +40,21 @@ class FollowController extends Controller
         try{
             $follow=new Follow;
             $follow->follow_user=$request->follow_user_id;
-            $follow->be_follow_user=$request->be_follow_user_id;
+            $follow->be_follow_user=$request->be_follow_id;
+            $follow->type=$request->type;
             $follow->save();
-            $follow_user=User::find($request->follow_user_id);
-            $follow_user->follow+=1;
-            $follow_user->save();
-            $be_follow_user=User::find($request->be_follow_user_id);
-            $be_follow_user->be_follow+=1;
-            $be_follow_user->save();
+            if($request->type==0){
+                $follow_user=User::find($request->follow_user_id);
+                $follow_user->follow+=1;
+                $follow_user->save();
+                $be_follow_user=User::find($request->be_follow_user_id);
+                $be_follow_user->be_follow+=1;
+                $be_follow_user->save();
+            }else{
+                $topic=Topic::find($request->be_follow_id);
+                $topic->follow_num+=1;
+                $topic->save();
+            }
             echo $follow->id;
         }catch (\Exception $exception){
             echo 0;
@@ -61,13 +69,7 @@ class FollowController extends Controller
      */
     public function show($id)
     {
-        try{
-            $be_follow_user_ids=Follow::where('follow_user',$id)->pluck('be_follow_user')->toArray();
-            $be_follow_user=User::find($be_follow_user_ids);
-            echo \GuzzleHttp\json_encode($be_follow_user);
-        }catch (\Exception $exception){
-            echo $exception->getMessage();
-        }
+
     }
 
     /**
@@ -102,5 +104,23 @@ class FollowController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * 获取用户关注的列表
+     * @param Request $request
+     */
+    public function get_follow_list(Request $request){
+        try{
+            $be_follow_ids=Follow::where('type',$request->type)->where('follow_user',$request->id)->pluck('be_follow_user')->toArray();
+            if($request->type==0){
+                $be_follow=User::find($be_follow_ids);
+            }else{
+                $be_follow=Topic::find($be_follow_ids);
+            }
+            echo \GuzzleHttp\json_encode($be_follow);
+        }catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
     }
 }

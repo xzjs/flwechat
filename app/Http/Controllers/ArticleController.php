@@ -120,6 +120,7 @@ class ArticleController extends Controller
             $topic=Topic::firstOrNew(['content'=>$request->name]);
             if($topic->user_id==null){
                 $topic->user_id=$request->user_id;
+                $topic->follow_num=0;
                 $topic->save();
             }
             $article=Article::find($request->article_id);
