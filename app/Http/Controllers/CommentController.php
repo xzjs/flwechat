@@ -96,4 +96,17 @@ class CommentController extends Controller
     {
         //
     }
+
+    /**
+     * 根据用户id获取评论
+     * @param $user_id
+     */
+    public function get_comments_by_user_id($user_id){
+        try{
+            $comments=Comment::with('article')->where('user_id',$user_id)->get();
+            echo \GuzzleHttp\json_encode($comments);
+        }catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
+    }
 }
