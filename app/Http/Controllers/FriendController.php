@@ -30,16 +30,16 @@ class FriendController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         try {
-            $friend=new Friend;
-            $friend->friend_post=$request->friend_post_id;
-            $friend->friend_receive=$request->friend_receive_id;
-            $friend->agree=false;
+            $friend = new Friend;
+            $friend->friend_post = $request->friend_post_id;
+            $friend->friend_receive = $request->friend_receive_id;
+            $friend->agree = false;
             $friend->save();
             echo \GuzzleHttp\json_encode(true);
         } catch (\Exception $exception) {
@@ -50,7 +50,7 @@ class FriendController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,30 +61,37 @@ class FriendController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        try {
+            $friend = Friend::find($id);
+            $friend->agree=true;
+            $friend->save();
+            echo 'true';
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
