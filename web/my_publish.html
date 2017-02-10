@@ -8,120 +8,124 @@
     <title>友连</title>
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/mine.css">
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" src="js/jsweixin.js"></script>
     <script type="text/javascript" src="js/wechat.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/publish.js"></script>
 </head>
 <body>
-<div class="weui-search-bar" id="searchBar">
-    <form class="weui-search-bar__form">
-        <div class="weui-search-bar__box">
-            <i class="weui-icon-search"></i>
-            <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-        </div>
-        <label class="weui-search-bar__label" id="searchText">
-            <i class="weui-icon-search"></i>
-            <span>搜索</span>
-        </label>
-    </form>
-    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-</div>
-<script type="text/javascript" class="searchbar js_show">
-    $(function () {
-        var $searchBar = $('#searchBar'),
-            $searchResult = $('#searchResult'),
-            $searchText = $('#searchText'),
-            $searchInput = $('#searchInput'),
-            $searchClear = $('#searchClear'),
-            $searchCancel = $('#searchCancel');
-
-        function hideSearchResult() {
-            $searchResult.hide();
-            $searchInput.val('');
-        }
-
-        function cancelSearch() {
-            hideSearchResult();
-            $searchBar.removeClass('weui-search-bar_focusing');
-            $searchText.show();
-        }
-
-        $searchText.on('click', function () {
-            $searchBar.addClass('weui-search-bar_focusing');
-            $searchInput.focus();
-        });
-        $searchInput
-            .on('blur', function () {
-                if (!this.value.length) cancelSearch();
-            })
-            .on('input', function () {
-                if (this.value.length) {
-                    $searchResult.show();
-                } else {
-                    $searchResult.hide();
-                }
-            })
-        ;
-        $searchClear.on('click', function () {
-            hideSearchResult();
-            $searchInput.focus();
-        });
-        $searchCancel.on('click', function () {
-            cancelSearch();
-            $searchInput.blur();
-        });
-    });</script>
-<div class="content_box">
-    <div class="content">
-        <img src="images/lan.jpg" alt="" id="head_portrait"><span id="wei_name">奥巴马</span>
-        <p id="content_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。--阿尔伯特·爱因斯坦</p>
-        <div class="pic_show">
-            <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
-            <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
-            <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
-        </div>
-        <div class="your_action">
-            <div>
-                <img src="images/share.png" alt=""><span>1</span>
+<div class="container">
+    <div class="weui-search-bar" id="searchBar">
+        <form class="weui-search-bar__form">
+            <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+                <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
             </div>
-            <div>
-                <img src="images/comment.png" alt=""><span>2</span>
+            <label class="weui-search-bar__label" id="searchText">
+                <i class="weui-icon-search"></i>
+                <span>搜索</span>
+            </label>
+        </form>
+        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+    </div>
+    <script type="text/javascript" class="searchbar js_show">
+        $(function () {
+            var $searchBar = $('#searchBar'),
+                $searchResult = $('#searchResult'),
+                $searchText = $('#searchText'),
+                $searchInput = $('#searchInput'),
+                $searchClear = $('#searchClear'),
+                $searchCancel = $('#searchCancel');
+
+            function hideSearchResult() {
+                $searchResult.hide();
+                $searchInput.val('');
+            }
+
+            function cancelSearch() {
+                hideSearchResult();
+                $searchBar.removeClass('weui-search-bar_focusing');
+                $searchText.show();
+            }
+
+            $searchText.on('click', function () {
+                $searchBar.addClass('weui-search-bar_focusing');
+                $searchInput.focus();
+            });
+            $searchInput
+                .on('blur', function () {
+                    if (!this.value.length) cancelSearch();
+                })
+                .on('input', function () {
+                    if (this.value.length) {
+                        $searchResult.show();
+                    } else {
+                        $searchResult.hide();
+                    }
+                })
+            ;
+            $searchClear.on('click', function () {
+                hideSearchResult();
+                $searchInput.focus();
+            });
+            $searchCancel.on('click', function () {
+                cancelSearch();
+                $searchInput.blur();
+            });
+        });</script>
+    <div class="blank"><img src="images/none.png" alt=""></div>
+    <div class="content_box">
+        <div class="content">
+            <img src="images/lan.jpg" alt="" id="head_portrait"><span id="wei_name">奥巴马</span>
+            <p id="content_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。--阿尔伯特·爱因斯坦</p>
+            <div class="pic_show">
+                <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
+                <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
+                <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
             </div>
-            <div>
-                <img src="images/bad.png" alt=""><span>3</span>
-            </div>
-            <div>
-                <img src="images/great.png" alt=""><span>4</span>
+            <div class="your_action">
+                <div>
+                    <img src="images/share.png" alt=""><span>1</span>
+                </div>
+                <div>
+                    <img src="images/comment.png" alt=""><span>2</span>
+                </div>
+                <div>
+                    <img src="images/bad.png" alt=""><span>3</span>
+                </div>
+                <div>
+                    <img src="images/great.png" alt=""><span>4</span>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="weui-tabbar">
-    <a href="index.html" class="weui-tabbar__item">
+    <div class="weui-tabbar">
+        <a href="index.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/homepage.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
                     </span>
-        <p class="weui-tabbar__label">首页</p>
-    </a>
-    <a href="publish.html" class="weui-tabbar__item">
-        <img src="./images/release.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">发布</p>
-    </a>
-    <a href="friends.html" class="weui-tabbar__item">
+            <p class="weui-tabbar__label">首页</p>
+        </a>
+        <a href="publish.html" class="weui-tabbar__item">
+            <img src="./images/release.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">发布</p>
+        </a>
+        <a href="friends.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/friend.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
                     </span>
-        <p class="weui-tabbar__label">好友</p>
-    </a>
-    <a href="mine.html" class="weui-tabbar__item weui-bar__item_on">
-        <img src="./images/me.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">我</p>
-    </a>
+            <p class="weui-tabbar__label">好友</p>
+        </a>
+        <a href="mine.html" class="weui-tabbar__item weui-bar__item_on">
+            <img src="./images/me.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">我</p>
+        </a>
+    </div>
 </div>
 </body>
 </html>
