@@ -48,11 +48,12 @@ class ArticleController extends Controller
             $article->content = $request->comment;
             $article->url = $request->url;
             $article->saveOrFail();
-            $arr = ['pic_files1', 'pic_files2', 'pic_files3'];
+            $arr = ['pic_file1', 'pic_file2', 'pic_file3'];
             foreach ($arr as $value) {
                 if ($request->hasFile($value)) {
-                    $path = $request->file($value)->store('uploads');
+                    $path = $request->file($value)->store('public');
                     //TODO 此处需要图片识别获取url
+                    $path=explode('/',$path)[1];
                     $img = new Image(['img' => $path, 'url' => '']);
                     $article->images()->save($img);
                 }

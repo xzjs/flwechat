@@ -123,4 +123,30 @@ class FollowController extends Controller
             echo $exception->getMessage();
         }
     }
+
+    /**
+     * 取消关注
+     * @param Request $request
+     */
+    public function cancel_follow(Request $request){
+        try{
+            $follow=Follow::where('type',$request->type)->where('follow_user',$request->follow_user_id)->where('be_follow_user',$request->be_follow-id)->first();
+            if($request->type==0){
+                $follow_user=User::find($request->follow_user_id);
+                $follow_user->follow-=1;
+                $follow_user->save();
+                $be_follow=User::find($request->follow_id);
+                $be_follow->be_follow-=1;
+                $be_follow->save();
+            }else{
+                $topic=Topic::find($request->be_follow_id);
+                $topic->follow_num-=1;
+                $topic->save();
+            }
+            $follow->delete();
+            echo \GuzzleHttp\json_encode(true);
+        }catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
+    }
 }
