@@ -32,6 +32,7 @@ $(function () {
                 data:formData,
                 processData: false,
                 contentType: false,
+                dataType:"json",
                 success:function(result){
                     if (result!=0){
                         console.log(result.id);
