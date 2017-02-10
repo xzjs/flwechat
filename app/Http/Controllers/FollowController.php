@@ -103,7 +103,11 @@ class FollowController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+
+        }catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
     }
 
     /**
