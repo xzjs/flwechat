@@ -17,8 +17,8 @@ class ArticleController extends Controller
     public function index()
     {
         try {
-            $articles = Article::with('images','topic')->orderBy('created_at', 'desc')->get();
-            echo \GuzzleHttp\json_encode($articles);
+            $articles = Article::with('images','topic','user')->orderBy('created_at', 'desc')->get();
+            return response()->json($articles);
         }catch (\Exception $exception){
             echo $exception->getMessage();
         }
