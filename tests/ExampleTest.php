@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ExampleTest extends TestCase
 {
+    use DatabaseTransactions;
     /**
      * A basic functional test example.
      *
@@ -13,7 +14,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
-             ->see('Laravel');
+        $this->json('POST','/article',['user_id'=>1,'comment'=>'祝大家新年快乐','url'=>'http://www.baidu.com'])->seeJsonStructure(['id','topic']);
+        $this->get('/article/support/1')->see('true');
     }
 }

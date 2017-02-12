@@ -98,4 +98,16 @@ class FriendController extends Controller
     {
         //
     }
+
+    /**
+     * 获取好友关系
+     * @param Request $request
+     */
+    public function get_friends(Request $request){
+        try {
+            $friends=Friend::where('friend_post',$request->user_id)->orWhere('friend_receive',$request->user_id)->get();
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
 }

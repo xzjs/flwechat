@@ -19,6 +19,10 @@ class CreateArticlesTable extends Migration
             $table->string('content');
             $table->string('url');
             $table->integer('topic_id')->nullable();
+            $table->integer('support_num');
+            $table->integer('comment_num');
+            $table->integer('oppose_num');
+            $table->integer('transmit_num');
             $table->timestamps();
         });
     }

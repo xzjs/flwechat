@@ -14,9 +14,12 @@
 Route::any('/','WechatController@serve');
 
 Route::resource('user', 'UserController');
+
 Route::post('/article/add_topic','ArticleController@add_topic');
 Route::get('/article/get_article_by_user_id/{user_id}','ArticleController@get_article_by_user_id');
+Route::get('/article/support/{id}','ArticleController@support');
 Route::resource('article', 'ArticleController');
+
 Route::get('/comment/get_comments_by_user_id/{user_id}','CommentController@get_comments_by_user_id');
 Route::resource('comment','CommentController');
 Route::post('/follow/get_follow_list','FollowController@get_follow_list');

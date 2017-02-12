@@ -47,6 +47,10 @@ class ArticleController extends Controller
             $article->user_id = $request->user_id;
             $article->content = $request->comment;
             $article->url = $request->url;
+            $article->support_num=0;
+            $article->transmit_num=0;
+            $article->comment_num=0;
+            $article->oppose_num=0;
             $article->saveOrFail();
             $arr = ['pic_file1', 'pic_file2', 'pic_file3'];
             foreach ($arr as $value) {
@@ -61,7 +65,8 @@ class ArticleController extends Controller
             //TODO 此处需要计算话题
             $result['id']=$article->id;
             $result['topic']='宝宝离婚了';
-            echo \GuzzleHttp\json_encode($result);
+            //echo \GuzzleHttp\json_encode($result);
+            return response()->json($result);
         } catch (\Exception $exception) {
             echo 0;
         }
@@ -142,6 +147,22 @@ class ArticleController extends Controller
             $articles=Article::with('images','topic')->where('user_id',$user_id)->orderBy('created_at','desc')->get();
             echo \GuzzleHttp\json_encode($articles);
         }catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
+    }
+
+    /**
+     * 为文章点赞
+     * @param $id 文章id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function support($id){
+        try {
+            $article=Article::find($id);
+            $article->support_num+=1;
+            $article->save();
+            return response('true');
+        } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
     }
