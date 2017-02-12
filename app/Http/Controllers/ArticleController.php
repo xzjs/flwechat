@@ -166,4 +166,20 @@ class ArticleController extends Controller
             echo $exception->getMessage();
         }
     }
+
+    /**
+     * 踩文章
+     * @param $id 文章id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function oppose($id){
+        try {
+            $article=Article::find($id);
+            $article->oppose_num+=1;
+            $article->save();
+            return response('true');
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
 }
