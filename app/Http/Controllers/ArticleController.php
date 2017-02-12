@@ -139,13 +139,14 @@ class ArticleController extends Controller
     }
 
     /**
-     * 根据用户id获取用户的文章
+     * 获取用户发布的文章
      * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get_article_by_user_id($user_id){
         try{
-            $articles=Article::with('images','topic')->where('user_id',$user_id)->orderBy('created_at','desc')->get();
-            echo \GuzzleHttp\json_encode($articles);
+            $articles=Article::with('images','topic','user')->where('user_id',$user_id)->orderBy('created_at','desc')->get();
+            return response()->json($articles);
         }catch (\Exception $exception){
             echo $exception->getMessage();
         }
