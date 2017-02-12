@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Friend;
+use App\User;
 use Illuminate\Http\Request;
 
 class FriendController extends Controller
@@ -102,10 +103,28 @@ class FriendController extends Controller
     /**
      * 获取好友关系
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get_friends(Request $request){
         try {
-            $friends=Friend::where('friend_post',$request->user_id)->orWhere('friend_receive',$request->user_id)->get();
+            $friends_ids=array();
+            switch ($request->type){
+                case 1:
+                    //发出的好友邀请
+                    $friends_ids=Friend::where('friend_post',$request->id)->where('agree',0)->get(['friend_receive'])->toArray();
+                    break;
+                case 2:
+                    //收到的好友邀请
+                    $friends_ids=Friend::where('friend_receive',$request->id)->where('agree',0)->get(['friend_post'])->toArray();
+                    break;
+                case 0:
+                    //所有好友
+                    $friends_ids1=Friend::where('friend_post',$request->id)->where('agree',1)->get(['friend_receive'])->toArray();
+                    $friends_ids2=Friend::where('friend_receive',$request->id)->where('agree',1)->get(['friend_post'])->toArray();
+                    $friends_ids=array_merge($friends_ids1,$friends_ids2);
+            }
+            $users=User::find($friends_ids);
+            return response()->json($users);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }

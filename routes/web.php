@@ -26,6 +26,8 @@ Route::resource('comment','CommentController');
 Route::post('/follow/get_follow_list','FollowController@get_follow_list');
 Route::post('/follow/cancel_follow','FollowController@cancel_follow');
 Route::resource('follow','FollowController');
+
+Route::post('/friend/get_friends','FriendController@get_friends');
 Route::resource('friend','FriendController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
