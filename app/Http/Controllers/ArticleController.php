@@ -120,6 +120,7 @@ class ArticleController extends Controller
     /**
      * 为文章增加话题
      * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function add_topic(Request $request){
         try{
@@ -132,9 +133,9 @@ class ArticleController extends Controller
             $article=Article::find($request->article_id);
             $article->topic_id=$topic->id;
             $article->save();
-            echo \GuzzleHttp\json_encode(true);
+            return response('true');
         }catch (\Exception $exception){
-            echo \GuzzleHttp\json_encode($exception->getMessage());
+            return response($exception->getMessage());
         }
     }
 
