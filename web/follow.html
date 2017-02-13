@@ -8,12 +8,15 @@
     <title>友连</title>
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/my_publish.css">
+    <link rel="stylesheet" href="css/follow.css">
 </head>
 <body>
 <div class="container">
-    <div class="blank"><img src="images/none.png" alt=""></div>
-    <div class="content_box" style="margin-top: 5px">
+    <div class="follow_class_box">
+        <div><span class="follow_class">用户</span><span class="follow_class">话题</span></div>
+    </div>
+    <div class="my_messages">
+        <img src="images/lan.jpg" alt="" id="head_portrait"/><span id="name">ao</span>
     </div>
     <div class="weui-tabbar">
         <a href="index.html" class="weui-tabbar__item">
@@ -23,7 +26,7 @@
                     </span>
             <p class="weui-tabbar__label">首页</p>
         </a>
-        <a href="follow.html" class="weui-tabbar__item">
+        <a href="follow.html" class="weui-tabbar__item  weui-bar__item_on">
             <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">关注</p>
         </a>
@@ -38,7 +41,7 @@
                     </span>
             <p class="weui-tabbar__label">好友</p>
         </a>
-        <a href="mine.html" class="weui-tabbar__item weui-bar__item_on">
+        <a href="mine.html" class="weui-tabbar__item">
             <img src="./images/me.png" alt="" class="weui-tabbar__icon">
             <p class="weui-tabbar__label">我</p>
         </a>
@@ -49,6 +52,6 @@
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jsweixin.js"></script>
 <script type="text/javascript" src="js/wechat.js"></script>
-<script type="text/javascript" src="js/my_publish.js"></script>
+<script type="text/javascript" src="js/follow.js"></script>
 </body>
 </html>

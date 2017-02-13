@@ -8,10 +8,10 @@
 }
 .content_box{
     margin-top: 44px;
-    padding:0 15px;
-    border-bottom: 6px solid #e8e8e8;
 }
 .content{
+    padding:0 15px;
+    border-bottom: 6px solid #e8e8e8;
     background-color: #fff;
     margin-bottom: 5px;
 }
@@ -23,8 +23,14 @@
     border-radius: 25px;
     vertical-align: middle;
 }
-#wei_name{
+#wei_name,#topic{
     font-size:14px;
+}
+#topic{
+    float: right;
+    height:30px;
+    line-height: 30px;
+
 }
 #content_txt{
     font-size:16px;

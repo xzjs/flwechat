@@ -2,6 +2,10 @@
  * Created by yanlli on 2017/1/24.
  */
 $(function () {
+    var id = $.cookie('id');
+    if (id == null) {
+        window.location.href = '/flwechat/web/index.html';
+    }
     $("#pic_files1").change(function () {
         var url = window.URL.createObjectURL(this.files.item(0));
         $("#pic_insert_icon1").attr("src", url);
@@ -35,13 +39,18 @@ $(function () {
                 dataType:"json",
                 success:function(result){
                     if (result!=0){
-                        console.log(result.id);
-                        console.log(result.topic);
                         $.cookie('article_id',result.id);
-                        // $('#topic_class').val(result.topic);
+                        var article_id=result.id;
+                        $('#topic').val('#'+result.topic);
+                        var topic=$('#topic_class').val();
                         $('#dialog2').fadeIn(200);
                         $('#sure2').on('click',function () {
-                            $('#dialog2').fadeOut(200);
+                            $.post('/flwechat/public/article/add_topic',{article_id:article_id,name:topic,user_id:id},function (result) {
+                                if (result=='true'){
+                                    $('#dialog2').fadeOut(200);
+                                    window.location.href='my_publish.html';
+                                }
+                            },'json');
                         });
                     }
                 }
@@ -49,11 +58,4 @@ $(function () {
         }
 
     });
-    // var $iosDialog1 = $('#iosDialog1');
-    // $('#dialogs').on('click', '.weui-dialog__btn', function () {
-    //     $(this).parents('.js_dialog').fadeOut(200);
-    // });
-    // $('#showIOSDialog1').on('click', function () {
-    //     $iosDialog1.fadeIn(200);
-    // });
 });

@@ -13,7 +13,7 @@
 <div class="container">
     <form class="publish_content" action="" method="post" enctype="multipart/form-data">
         <div class="text_insert">
-            <textarea  id="comment" maxlength="300" placeholder="评论" name="comment"></textarea>
+            <textarea  id="comment" maxlength="300" placeholder="评论" name="comment" autofocus="autofocus"></textarea>
         </div>
         <div class="pic_insert" id="pic_insert1">
             <img src="images/pic_insert.png" alt="" id="pic_insert_icon1">
@@ -42,6 +42,10 @@
                         <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
                     </span>
             <p class="weui-tabbar__label">首页</p>
+        </a>
+        <a href="follow.html" class="weui-tabbar__item">
+            <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">关注</p>
         </a>
         <a href="publish.html" class="weui-tabbar__item  weui-bar__item_on">
             <img src="./images/release.png" alt="" class="weui-tabbar__icon">
@@ -75,29 +79,14 @@
     <div class="weui-dialog">
         <div class="weui-dialog__hd"><strong class="weui-dialog__title">请确认话题类型</strong></div>
         <div class="weui-dialog__bd">
-            <input type="text" id="topic_class">
+            <input type="text" id="topic" autofocus="autofocus">
+            <img src="images/write.png" alt="" id="write_icon">
         </div>
         <div class="weui-dialog__ft">
-            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="sure2">确定</a>
+            <a href="" class="weui-dialog__btn weui-dialog__btn_primary" id="sure2">确定</a>
         </div>
     </div>
 </div>
-<!--<div id="dialogs">-->
-    <!--<div class="js_dialog" id="iosDialog1" style="display:none;">-->
-        <!--<div class="weui-mask"></div>-->
-        <!--<div class="weui-dialog">-->
-            <!--<div class="weui-dialog__hd"><strong class="weui-dialog__title">请确认话题类型</strong></div>-->
-            <!--<div class="weui-dialog__bd">-->
-                <!--<input type="text" id="topic_class">-->
-            <!--</div>-->
-            <!--<div class="weui-dialog__ft">-->
-                <!--<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取消</a>-->
-                <!--<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确认</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
