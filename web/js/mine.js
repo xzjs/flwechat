@@ -7,7 +7,7 @@ $(document).ready(function () {
         window.location.href = '/flwechat/web/index.html';
     }
     $.getJSON('/flwechat/public/user/'+id, function (result) {
-        $('#head_portrait')[0].src = result.head_img;
-        $('#name').html(result.nickname);
+        $('.head_portrait')[0].src = result.head_img;
+        $('.name').html(result.nickname);
     })
 });
