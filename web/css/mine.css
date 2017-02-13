@@ -6,7 +6,7 @@
     padding:8px;
     border-bottom:1px solid #bababa;
 }
-.head_portrait{
+.head_portrait_top{
     width:80px;
     height:80px;
     border-radius: 5px;
@@ -31,16 +31,26 @@
 }
 .messages{
     background-color: #fff;
-    border-bottom:1px solid #bababa;
+    text-align: center;
 }
 .messages a{
-    color: #000;
+    color: #8a8a8a;
 }
-.message_top{
-    border-bottom: 1px solid #bababa;
+.messages .selected{
+    color:#1aad19;
 }
-.message_top,.message_bottom{
-    margin-left: 25px;
-    line-height: 50px;
-    height:50px;
+.blank{
+    padding:30% 0;
+    text-align: center;
 }
+.topic{
+    text-align: right;
+}
+/*.message_top{*/
+    /*border-bottom: 1px solid #bababa;*/
+/*}*/
+/*.message_top,.message_bottom{*/
+    /*margin-left: 25px;*/
+    /*line-height: 50px;*/
+    /*height:50px;*/
+/*}*/
