@@ -7,7 +7,7 @@ $(document).ready(function () {
         window.location.href = '/flwechat/web/index.html';
     }
     $.getJSON('/flwechat/public/user/'+id, function (result) {
-        $('.head_portrait_top')[0].src = result.head_img;
+        $('#head_img')[0].src = result.head_img;
         $('.name').html(result.nickname);
     });
     getArticleList();
@@ -27,12 +27,12 @@ function showArticleList(result) {
     for (var i = 0; i < result.length; i++) {
         var html_img = '';
         for (var j = 0; j < result[i].images.length; j++) {
-            html_img += '<div class="userImg"><img src="' + result[i].images[j].img+ '" alt=""></div>';
+            html_img += '<div class="userImg"><img src="/flwechat/public/storage/' + result[i].images[j].img+ '" alt=""></div>';
         }
         var html = '<div class="content">'
             + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
             + '<span class="wei_name">' + result[i].user.nickname + '</span>'
-            + '<span class="topic">' + result[i].topic + '</span>'
+            + '<span class="topic">' + result[i].topic.content + '</span>'
             + '<p class="content_txt">' + result[i].content + '</p>'
             + '<div class="pic_show">' + html_img + '</div>'
             + '<div class="your_action">'
