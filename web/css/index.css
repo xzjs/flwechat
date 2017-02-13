@@ -15,7 +15,7 @@
     background-color: #fff;
     margin-bottom: 5px;
 }
-#head_portrait{
+.head_portrait{
     width:50px;
     height:50px;
     margin-top: 5px;
@@ -23,16 +23,19 @@
     border-radius: 25px;
     vertical-align: middle;
 }
-#wei_name,#topic{
+.wei_name,.topic{
     font-size:14px;
 }
-#topic{
+.topic{
     float: right;
-    height:30px;
-    line-height: 30px;
-
+    height:24px;
+    line-height: 24px;
+    margin: 5px 0;
+    padding:0 5px;
+    border-radius: 5px;
+    background-color: #e8e8e8;
 }
-#content_txt{
+.content_txt{
     font-size:16px;
     line-height: 1.5em;
 }
