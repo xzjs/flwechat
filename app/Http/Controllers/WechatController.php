@@ -12,7 +12,7 @@ class WechatController extends Controller
         Log::info('request arrived');
         $wechat=app('wechat');
         $wechat->server->setMessageHandler(function ($message){
-            return 'http://xzjs.love/flwechat/public/';
+            return 'http://xzjs.love/flwechat/web/';
         });
         Log::info('return response');
         return $wechat->server->serve();
