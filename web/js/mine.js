@@ -23,7 +23,9 @@ function getArticleList() {
 }
 function showArticleList(result) {
     var myPublish = $('.content_box');
-    $('.blank').remove();
+    if (result.length>0){
+        $('.blank').remove();
+    }
     for (var i = 0; i < result.length; i++) {
         var html_img = '';
         for (var j = 0; j < result[i].images.length; j++) {

@@ -28,8 +28,7 @@ $(function () {
             user_id: id
         }, function (result) {
             if (result == 'true') {
-                // $('#dialog2').fadeOut(200);
-                window.location.href='my_publish.html';
+                window.location.href='mine.html';
             }
         });
     });
