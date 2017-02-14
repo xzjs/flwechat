@@ -15,6 +15,7 @@
     border:1px solid #bababa;
     text-align: center;
     display: inline-block;
+    color: #000;
 }
 .follow_user{
     border-top-left-radius: 5px;

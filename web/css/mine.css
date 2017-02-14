@@ -20,6 +20,9 @@
 .head_portrait,.my_messages_middle,.my_messages_num,.my_messages_num div,.my_messages_right{
     display: inline-block;
 }
+.follow_num{
+    text-align: center;
+}
 .my_messages_right{
     height:80px;
     float: right;
