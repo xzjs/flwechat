@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>友连</title>
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        .img{
+            width:80px;
+        }
+    </style>
+</head>
+<body>
+<img src="images/lan.jpg" alt="" class="img">
+<div class="weui-gallery" style="display: none">
+    <span class="weui-gallery__img" style="background-image: url(./images/pic_article.png);"></span>
+    <div class="weui-gallery__opr">
+        <a href="javascript:" class="weui-gallery__del">
+            <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+        </a>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="js/jsweixin.js"></script>
+<script type="text/javascript" src="js/wechat.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script>
+    $('.img').click(function () {
+        $('.weui-gallery').show();
+    })
+</script>
+</body>
+</html>

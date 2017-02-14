@@ -5,47 +5,57 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>系统消息</title>
+    <title>添加好友</title>
     <link rel="stylesheet" href="css/weui.min.css">
-    <link rel="stylesheet" href="css/index.css">
+    <!--<link rel="stylesheet" href="css/index.css">-->
+    <link rel="stylesheet" href="css/add_friend.css">
     <link rel="stylesheet" href="css/system_messages.css">
-    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
-    <script type="text/javascript" src="js/jsweixin.js"></script>
-    <script type="text/javascript" src="js/wechat.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
 <div class="container">
-
-</div>
-<div class="weui-tabbar">
-    <a href="index.html" class="weui-tabbar__item">
+    <div class="weui-cells__title">您需要发送验证申请，等对方通过</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入文本"/>
+            </div>
+        </div>
+    </div>
+    <div class="sent">发送</div>
+    <div class="weui-tabbar">
+        <a href="index.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/homepage.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
                     </span>
-        <p class="weui-tabbar__label">首页</p>
-    </a>
-    <a href="follow.html" class="weui-tabbar__item">
-        <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">关注</p>
-    </a>
-    <a href="publish.html" class="weui-tabbar__item">
-        <img src="./images/release.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">发布</p>
-    </a>
-    <a href="friends.html" class="weui-tabbar__item">
+            <p class="weui-tabbar__label">首页</p>
+        </a>
+        <a href="follow.html" class="weui-tabbar__item">
+            <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">关注</p>
+        </a>
+        <a href="publish.html" class="weui-tabbar__item">
+            <img src="./images/release.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">发布</p>
+        </a>
+        <a href="friends.html" class="weui-tabbar__item weui-bar__item_on">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/friend.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
                     </span>
-        <p class="weui-tabbar__label">好友</p>
-    </a>
-    <a href="mine.html" class="weui-tabbar__item weui-bar__item_on">
-        <img src="./images/me.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">我</p>
-    </a>
+            <p class="weui-tabbar__label">好友</p>
+        </a>
+        <a href="mine.html" class="weui-tabbar__item">
+            <img src="./images/me.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">我</p>
+        </a>
+    </div>
 </div>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="js/jsweixin.js"></script>
+<script type="text/javascript" src="js/wechat.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
