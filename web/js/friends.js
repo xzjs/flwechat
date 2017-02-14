@@ -53,9 +53,9 @@ $(function () {
         function (result) {
             var html='';
             for(var i=0;i<result.length;i++){
-                html+='<a href="javascript:void(0);" onclick="detail('+result[i].id+')"><img src="'+result[i].head_img+'" alt="'+result[i].nickname+'" class="head_portrait"><span class="friend_name">'+result[i].nickname+'</span></a>';
+                html+='<div id="friend_list" class="contacts"><a href="javascript:void(0);" onclick="detail('+result[i].id+')"><img src="'+result[i].head_img+'" alt="'+result[i].nickname+'" class="head_portrait"><span class="friend_name">'+result[i].nickname+'</span></a></div>';
             }
-            $('#friend_list').html(html);
+            $('#searchBar').append(html);
         },
         'json'
     );
