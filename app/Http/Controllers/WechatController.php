@@ -12,7 +12,7 @@ class WechatController extends Controller
         Log::info('request arrived');
         $wechat=app('wechat');
         $wechat->server->setMessageHandler(function ($message){
-            return 'http://http://120.27.35.90/flwechat/web/';
+            return 'http://120.27.35.90/flwechat/web/';
         });
         Log::info('return response');
         return $wechat->server->serve();
