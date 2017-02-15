@@ -5,27 +5,48 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>友连</title>
+    <title>文章详情</title>
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/artical_detail.css">
 </head>
 <body>
 <div class="container">
-    <div class="weui-search-bar" id="searchBar">
-        <form class="weui-search-bar__form">
-            <div class="weui-search-bar__box">
-                <i class="weui-icon-search"></i>
-                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-                <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-            </div>
-            <label class="weui-search-bar__label" id="searchText">
-                <i class="weui-icon-search"></i>
-                <span>搜索</span>
-            </label>
-        </form>
-        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-    </div>
     <div class="content_box">
+        <div class="content">
+            <img src="images/lan.jpg" alt="" class="head_portrait"><span class="wei_name">奥巴马</span><span class="follow"><img
+                src="images/follow.png" alt=""></span>
+            <p class="content_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。--阿尔伯特·爱因斯坦</p >
+            <div class="pic_show">
+                <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
+                <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
+                <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
+            </div>
+            <div class="your_action">
+                <div>
+                    <img src="images/share.png" alt=""><span>1</span>
+                </div>
+                <div>
+                    <img src="images/comment.png" alt=""><span>2</span>
+                </div>
+                <div>
+                    <img src="images/oppose.png" alt=""><span>3</span>
+                </div>
+                <div>
+                    <img src="images/support.png" alt=""><span>4</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content_box comment_box">
+        <div class="follow">
+            <img src="images/support.png" alt="" class="support_comment">
+        </div>
+        <img src="images/lan.jpg" alt="" class="comment_head_portrait">
+        <div class="comment">
+            <p class="wei_name">奥巴马</p>
+            <p class="comment_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。--阿尔伯特·爱因斯坦</p >
+        </div>
     </div>
     <div class="weui-tabbar">
         <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
@@ -56,18 +77,11 @@
         </a>
     </div>
 </div>
-<div id="toast" style="display: none;">
-    <div class="weui-mask_transparent"></div>
-    <div class="weui-toast">
-        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
-        <p class="weui-toast__content">已关注</p>
-    </div>
-</div>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jsweixin.js"></script>
 <script type="text/javascript" src="js/wechat.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/artical_detail.js"></script>
 </body>
 </html>

@@ -73,7 +73,7 @@ $(function () {
                 // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
                 + '<div><img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></div>'
                 + '<div><img src="images/oppose.png" alt=""><span>' + result[i].oppose_num + '</span></div>'
-                + '<div><img src="images/support.png" alt=""><span>' + result[i].support_num + '</span></div>'
+                + '<a href="comment.html"><div><img src="images/support.png" alt=""><span>' + result[i].support_num + '</span></div></a>'
                 + '</div></div>';
             myPublish.append(html);
             var user_id = $.cookie('id');

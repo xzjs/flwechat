@@ -1,0 +1,28 @@
+.content_box{
+    margin-top: 0px;
+}
+.comment_box{
+    padding: 5px 15px;
+}
+.comment_head_portrait{
+    float: left;
+}
+.follow{
+    float: right;
+}
+.follow img{
+    margin-top: 5px;
+    width:20px;
+}
+.comment_head_portrait{
+    width:30px;
+    height:30px;
+    border-radius: 15px;
+    vertical-align: middle;
+}
+.comment{
+    margin: 5px 35px;
+}
+.comment_txt{
+    font-size: 12px;
+}
