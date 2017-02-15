@@ -74,11 +74,11 @@ $(function () {
                 + '<div>'
                 + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></div>'
                 + '<div>'
-                + '<a href="javascript:void(0)" onclick="support(' + result[i].id + ',1)"'
-                + '<img id="img_support_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].oppose_num + '</span>'
+                + '<a href="javascript:void(0)" onclick="support(' + result[i].id + ',1)">'
+                + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
                 + '</a></div>'
                 + '<div><a href="javascript:void(0);" onclick="support(' + result[i].id + ',0)">'
-                + '<img d="img_oppose_' + result[i].id + '" src="images/support.png" alt=""><span d="span_oppose_' + result[i].id + '">' + result[i].support_num + '</span></div>'
+                + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
                 + '</a></div></div>';
             myPublish.append(html);
 
@@ -170,10 +170,10 @@ function support(article_id, type) {
 //设置点赞或者踩的图片
 function set_img(article_id, type) {
     var temp = 'support_';
-    var src = 'img/support2.png';
+    var src = 'images/support2.png';
     if (type == 1) {
         temp = 'oppose_'
-        src = 'img/oppose2.png';
+        src = 'images/oppose2.png';
     }
     $('#img_' + temp + article_id).attr('src', src);
 }
