@@ -67,7 +67,7 @@ $(function () {
                 + "<a href=\"javascript:void(0)\" onclick=\"follow_topic(" + result[i].topic.id + ")\">"
                 + '<span class="topic" data-id="' + result[i].topic.id + '">' + result[i].topic.content + '</span>'
                 + '</a>'
-                + '<p class="content_txt">' + result[i].content + '</p>'
+                + '<a href="artical_detail.html"><p class="content_txt">' + result[i].content + '</p></a>'
                 + '<div class="pic_show">' + html_img + '</div>'
                 + '<div class="your_action">'
                 // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
