@@ -58,7 +58,7 @@ $(function () {
                     if (result != 0) {
                         $.cookie('article_id', result.id);
                         article_id = result.id;
-                        $('#topic').val('#' + result.topic);
+                        $('#topic').val(result.topic);
                         $('#dialog2').fadeIn(200);
                     }
                 }
