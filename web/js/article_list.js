@@ -43,12 +43,12 @@ function follow_topic_list(user_id) {
     );
 }
 
-//取消关注话题
-function cancel_follow(topic_id) {
+//取消关注话题或用户
+function cancel_follow(topic_id, type) {
     $.post('/flwechat/public/follow/cancel_follow',
-        {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': 1},
+        {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
         function (result) {
-            if (result == 'true') {
+            if (result == 'true' && type == 1) {
                 change_follow_topic_style(topic_id);
             }
         });
