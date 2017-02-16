@@ -36,7 +36,7 @@
     background-color: #fff;
     text-align: center;
 }
-.messages a{
+.messages span{
     color: #8a8a8a;
 }
 .messages .selected{

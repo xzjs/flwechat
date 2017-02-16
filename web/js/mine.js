@@ -37,7 +37,7 @@ $(document).ready(function () {
         $('.name').html(result.nickname);
     });
     getArticleList('/flwechat/public/article/get_article_by_user_id/' + id);
-    $('.message a').click(function () {
+    $('.messages span').click(function () {
         $(this).addClass('selected').siblings().removeClass('selected');
     })
 });
