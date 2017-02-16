@@ -3,7 +3,7 @@
  */
 $(function () {
     var id = $.cookie('id');
-    var article_id=0;
+    var article_id = 0;
 
     if (id == null) {
         window.location.href = '/flwechat/web/index.html';
@@ -28,7 +28,7 @@ $(function () {
             user_id: id
         }, function (result) {
             if (result == 'true') {
-                window.location.href='mine.html';
+                window.location.href = 'mine.html';
             }
         });
     });
@@ -46,7 +46,21 @@ $(function () {
             });
         } else {
             $('.publish_content').prepend('<input name="user_id" type="hidden" value=' + id + '>');
+            var reply_id = $.cookie('reply_id');
+            if (reply_id == null) {
+                reply_id = 0;
+            }
             var formData = new FormData($('.publish_content')[0]);
+            formData.append('reply_id', reply_id);
+            var article=null;
+            if (reply_id != 0) {
+                $.ajaxSettings.async = false;
+                $.getJSON('/flwechat/public/article/' + reply_id, function (result) {
+                    article = result;
+                    formData.append('topic_id', result.topic.id);
+                });
+                $.ajaxSettings.async = true;
+            }
             $.ajax({
                 url: "/flwechat/public/article",
                 type: "post",
@@ -56,10 +70,15 @@ $(function () {
                 dataType: "json",
                 success: function (result) {
                     if (result != 0) {
-                        $.cookie('article_id', result.id);
                         article_id = result.id;
-                        $('#topic').val('#' + result.topic);
-                        $('#dialog2').fadeIn(200);
+                        if (reply_id != 0) {
+                            window.location.href="mine.html";
+                        } else {
+                            $('#topic').val(result.topic);
+                            $('#dialog2').fadeIn(200);
+                        }
+                    } else {
+                        console.log(result);
                     }
                 }
             });

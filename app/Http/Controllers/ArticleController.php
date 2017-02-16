@@ -17,9 +17,9 @@ class ArticleController extends Controller
     public function index()
     {
         try {
-            $articles = Article::with('images','topic','user')->orderBy('created_at', 'desc')->get();
+            $articles = Article::with('images', 'topic', 'user')->orderBy('created_at', 'desc')->get();
             return response()->json($articles);
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
     }
@@ -47,25 +47,32 @@ class ArticleController extends Controller
             $article->user_id = $request->user_id;
             $article->content = $request->comment;
             $article->url = $request->url;
-            $article->support_num=0;
-            $article->transmit_num=0;
-            $article->comment_num=0;
-            $article->oppose_num=0;
+            $article->support_num = 0;
+            $article->transmit_num = 0;
+            $article->comment_num = 0;
+            $article->oppose_num = 0;
+            $article->reply_id = $request->reply_id;
+            if ($article->reply_id != 0) {
+                $article2 = Article::find($article->reply_id);
+                $article2->comment_num += 1;
+                $article2->save();
+                $article->topic_id = $article2->topic_id;
+            }
             $article->saveOrFail();
             $arr = ['pic_file1', 'pic_file2', 'pic_file3'];
             foreach ($arr as $value) {
                 if ($request->hasFile($value)) {
                     $path = $request->file($value)->store('public');
                     //TODO 此处需要图片识别获取url
-                    $path=explode('/',$path)[1];
+                    $path = explode('/', $path)[1];
                     $img = new Image(['img' => $path, 'url' => '']);
                     $article->images()->save($img);
                 }
             }
+
             //TODO 此处需要计算话题
-            $result['id']=$article->id;
-            $result['topic']='宝宝离婚了';
-            //echo \GuzzleHttp\json_encode($result);
+            $result['id'] = $article->id;
+            $result['topic'] = '宝宝离婚了';
             return response()->json($result);
         } catch (\Exception $exception) {
             echo 0;
@@ -80,7 +87,12 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $article = Article::with('images', 'topic', 'user')->find($id);
+            return response()->json($article);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     /**
@@ -122,19 +134,20 @@ class ArticleController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function add_topic(Request $request){
-        try{
-            $topic=Topic::firstOrNew(['content'=>$request->name]);
-            if($topic->user_id==null){
-                $topic->user_id=$request->user_id;
-                $topic->follow_num=0;
+    public function add_topic(Request $request)
+    {
+        try {
+            $topic = Topic::firstOrNew(['content' => $request->name]);
+            if ($topic->user_id == null) {
+                $topic->user_id = $request->user_id;
+                $topic->follow_num = 0;
                 $topic->save();
             }
-            $article=Article::find($request->article_id);
-            $article->topic_id=$topic->id;
+            $article = Article::find($request->article_id);
+            $article->topic_id = $topic->id;
             $article->save();
             return response('true');
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return response($exception->getMessage());
         }
     }
@@ -144,11 +157,12 @@ class ArticleController extends Controller
      * @param $user_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get_article_by_user_id($user_id){
-        try{
-            $articles=Article::with('images','topic','user')->where('user_id',$user_id)->orderBy('created_at','desc')->get();
+    public function get_article_by_user_id($user_id)
+    {
+        try {
+            $articles = Article::with('images', 'topic', 'user')->where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
             return response()->json($articles);
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
     }
@@ -158,10 +172,11 @@ class ArticleController extends Controller
      * @param $id 文章id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function support($id){
+    public function support($id)
+    {
         try {
-            $article=Article::find($id);
-            $article->support_num+=1;
+            $article = Article::find($id);
+            $article->support_num += 1;
             $article->save();
             return response('true');
         } catch (\Exception $exception) {
@@ -174,12 +189,28 @@ class ArticleController extends Controller
      * @param $id 文章id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function oppose($id){
+    public function oppose($id)
+    {
         try {
-            $article=Article::find($id);
-            $article->oppose_num+=1;
+            $article = Article::find($id);
+            $article->oppose_num += 1;
             $article->save();
             return response('true');
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
+
+    /**
+     * 根据回复id获取文章列表
+     * @param $reply_id 回复文章的id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function article_list($reply_id)
+    {
+        try {
+            $articles = Article::with('images', 'topic', 'user')->where('reply_id', $reply_id)->orderBy('created_at', 'desc')->get();
+            return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }

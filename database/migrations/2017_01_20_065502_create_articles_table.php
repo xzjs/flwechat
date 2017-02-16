@@ -23,6 +23,7 @@ class CreateArticlesTable extends Migration
             $table->integer('comment_num');
             $table->integer('oppose_num');
             $table->integer('transmit_num');
+            $table->integer('reply_id');
             $table->timestamps();
         });
     }

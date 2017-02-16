@@ -104,6 +104,11 @@ function getArticleList(url) {
     });
 }
 
+function comment(reply_id) {
+    $.cookie('reply_id', reply_id);
+    window.location.href = 'publish.html';
+}
+
 function showArticleList(result) {
     var myPublish = $('.content_box');
     $('.blank').remove();
@@ -125,7 +130,8 @@ function showArticleList(result) {
             + '<div class="your_action">'
             // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
             + '<div>'
-            + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></div>'
+            + '<a href="javascript:void(0)" onclick="comment(' + result[i].id + ')" >'
+            + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
             + '<div>'
             + '<a href="javascript:void(0)" onclick="support(' + result[i].id + ',1)">'
             + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'

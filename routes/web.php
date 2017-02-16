@@ -11,26 +11,27 @@
 |
 */
 
-Route::any('/','WechatController@serve');
+Route::any('/', 'WechatController@serve');
 
 Route::resource('user', 'UserController');
 
-Route::post('/article/add_topic','ArticleController@add_topic');
-Route::get('/article/get_article_by_user_id/{user_id}','ArticleController@get_article_by_user_id');
-Route::get('/article/support/{id}','ArticleController@support');
-Route::get('/article/oppose/{id}','ArticleController@oppose');
+Route::post('/article/add_topic', 'ArticleController@add_topic');
+Route::get('/article/get_article_by_user_id/{user_id}', 'ArticleController@get_article_by_user_id');
+Route::get('/article/support/{id}', 'ArticleController@support');
+Route::get('/article/oppose/{id}', 'ArticleController@oppose');
+Route::get('/article/article_list/{reply_id}', 'ArticleController@article_list');
 Route::resource('article', 'ArticleController');
 
-Route::get('/comment/get_comments_by_user_id/{user_id}','CommentController@get_comments_by_user_id');
-Route::resource('comment','CommentController');
-Route::post('/follow/get_follow_list','FollowController@get_follow_list');
-Route::post('/follow/cancel_follow','FollowController@cancel_follow');
-Route::resource('follow','FollowController');
+Route::get('/comment/get_comments_by_user_id/{user_id}', 'CommentController@get_comments_by_user_id');
+Route::resource('comment', 'CommentController');
+Route::post('/follow/get_follow_list', 'FollowController@get_follow_list');
+Route::post('/follow/cancel_follow', 'FollowController@cancel_follow');
+Route::resource('follow', 'FollowController');
 
-Route::post('/friend/get_friends','FriendController@get_friends');
-Route::resource('friend','FriendController');
+Route::post('/friend/get_friends', 'FriendController@get_friends');
+Route::resource('friend', 'FriendController');
 
-Route::resource('action','ActionController');
+Route::resource('action', 'ActionController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
     Route::get('/getuser', 'WechatController@getuser');

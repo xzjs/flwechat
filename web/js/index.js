@@ -45,7 +45,7 @@ $(function () {
         $searchInput.blur();
     });
 
-    getArticleList('/flwechat/public/article');
+    getArticleList('/flwechat/public/article/article_list/0');
 });
 
 
