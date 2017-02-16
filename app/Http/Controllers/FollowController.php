@@ -47,7 +47,7 @@ class FollowController extends Controller
                 $follow_user=User::find($request->follow_user_id);
                 $follow_user->follow+=1;
                 $follow_user->save();
-                $be_follow_user=User::find($request->be_follow_user_id);
+                $be_follow_user=User::find($request->be_follow_id);
                 $be_follow_user->be_follow+=1;
                 $be_follow_user->save();
             }else{
@@ -139,7 +139,7 @@ class FollowController extends Controller
                 $follow_user=User::find($request->follow_user_id);
                 $follow_user->follow-=1;
                 $follow_user->save();
-                $be_follow=User::find($request->follow_id);
+                $be_follow=User::find($request->be_follow_id);
                 $be_follow->be_follow-=1;
                 $be_follow->save();
             }else{

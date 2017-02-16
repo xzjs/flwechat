@@ -3,8 +3,8 @@
  */
 $(function () {
     $(".container").height($(window).height());
-    var id = $.cookie('id');
-    if (id == null) {
+    var user_id = $.cookie('id');
+    if (user_id == null) {
         window.location.href = '/flwechat/public/getuser';
     }
 });

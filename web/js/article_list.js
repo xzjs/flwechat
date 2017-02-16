@@ -63,18 +63,22 @@ function change_follow_topic_style(topic_id) {
 }
 
 //点赞或踩
-function support(article_id, type) {
+function action(article_id, type, obj) {
     $.post('/flwechat/public/action',
         {'user_id': user_id, 'article_id': article_id, 'type': type},
         function (result) {
             if (result == 'true') {
-                set_img(article_id, type);
-                var temp = 'support_';
-                if (type == 1) {
-                    temp = 'oppose_'
+                var src = "";
+                if (type == 0) {
+                    src = 'images/support2.png';
+                } else {
+                    src = 'images/oppose2.png';
                 }
-                var num = parseInt($('#span_' + temp + article_id).html());
-                $('#span_' + temp + article_id).html(num + 1);
+                $(obj).attr('src', src);
+                var num = parseInt($(obj).siblings('span').html()) + 1;
+                $(obj).siblings('span').html(num);
+            } else {
+                console.log(result);
             }
         });
 }
@@ -125,7 +129,7 @@ function showArticleList(result) {
             + "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
             + '<span class="topic" data-id="' + result[i].topic.id + '">' + result[i].topic.content + '</span>'
             + '</a>'
-            + '<a href="artical_detail.html"><p class="content_txt">' + result[i].content + '</p></a>'
+            + '<a href="article_detail.html?id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
             + '<div class="pic_show">' + html_img + '</div>'
             + '<div class="your_action">'
             // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
@@ -133,12 +137,10 @@ function showArticleList(result) {
             + '<a href="javascript:void(0)" onclick="comment(' + result[i].id + ')" >'
             + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
             + '<div>'
-            + '<a href="javascript:void(0)" onclick="support(' + result[i].id + ',1)">'
-            + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
-            + '</a></div>'
-            + '<div><a href="javascript:void(0);" onclick="support(' + result[i].id + ',0)">'
-            + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
-            + '</a></div></div>';
+            + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt="" onclick="action(' + result[i].id + ',1,this)"><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
+            + '</div><div>'
+            + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt="" onclick="action(' + result[i].id + ',0,this)"><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
+            + '</div></div>';
         myPublish.append(html);
 
         var user_id = $.cookie('id');

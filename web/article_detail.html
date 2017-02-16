@@ -14,26 +14,27 @@
 <div class="container">
     <div class="content_box">
         <div class="content">
-            <img src="images/lan.jpg" alt="" class="head_portrait"><span class="wei_name">奥巴马</span><span class="follow"><img
-                src="images/follow.png" alt=""></span>
-            <p class="content_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。--阿尔伯特·爱因斯坦</p >
-            <div class="pic_show">
+            <img id="head_img" src="images/lan.jpg" alt="" class="head_portrait">
+            <span id="nick_name" class="wei_name">奥巴马</span><span class="follow">
+            <img id="follow" src="images/follow.png" alt=""></span>
+            <p id="article_content" class="content_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。--阿尔伯特·爱因斯坦</p>
+            <div class="pic_show" id="img">
                 <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
                 <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
                 <div class="userImg"><img src="images/IMG_2440.PNG" alt=""></div>
             </div>
-            <div class="your_action">
+            <div class="your_action" id="action">
                 <div>
                     <img src="images/share.png" alt=""><span>1</span>
                 </div>
                 <div>
-                    <img src="images/comment.png" alt=""><span>2</span>
+                    <img src="images/comment.png" alt=""><span id="comment">2</span>
                 </div>
                 <div>
-                    <img src="images/oppose.png" alt=""><span>3</span>
+                    <img src="images/oppose.png" alt=""><span id="oppose">3</span>
                 </div>
                 <div>
-                    <img src="images/support.png" alt=""><span>4</span>
+                    <img src="images/support.png" alt=""><span id="support">4</span>
                 </div>
             </div>
         </div>
@@ -45,7 +46,7 @@
         <img src="images/lan.jpg" alt="" class="comment_head_portrait">
         <div class="comment">
             <p class="wei_name">奥巴马</p>
-            <p class="comment_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。--阿尔伯特·爱因斯坦</p >
+            <p class="comment_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。--阿尔伯特·爱因斯坦</p>
         </div>
     </div>
     <div class="weui-tabbar">
@@ -82,6 +83,8 @@
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jsweixin.js"></script>
 <script type="text/javascript" src="js/wechat.js"></script>
+<script type="text/javascript" src="js/article_list.js"></script>
+<script type="text/javascript" src="js/follow_tool.js"></script>
 <script type="text/javascript" src="js/article_detail.js"></script>
 </body>
 </html>
