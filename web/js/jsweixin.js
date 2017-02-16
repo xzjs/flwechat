@@ -27,3 +27,11 @@ var homepage_icon=$('.homepage_icon'),
 $('.weui-tabbar__item').on('click', function () {
     $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
 });
+
+//获取url中的参数
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)return decodeURI(r[2]);
+    return null;
+}

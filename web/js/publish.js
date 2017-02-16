@@ -46,7 +46,7 @@ $(function () {
             });
         } else {
             $('.publish_content').prepend('<input name="user_id" type="hidden" value=' + id + '>');
-            var reply_id = $.cookie('reply_id');
+            var reply_id = GetQueryString('id');
             if (reply_id == null) {
                 reply_id = 0;
             }
