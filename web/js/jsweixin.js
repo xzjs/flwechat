@@ -1,13 +1,13 @@
 /**
  * Created by yanlli on 2017/2/6.
  */
-$(function () {
-    $(".container").height($(window).height());
-    var user_id = $.cookie('id');
-    if (user_id == null) {
-        window.location.href = '/flwechat/public/getuser';
-    }
-});
+var user_id = null;
+$(".container").height($(window).height());
+var user_id = $.cookie('id');
+if (user_id == null) {
+    window.location.href = '/flwechat/public/getuser';
+}
+
 var timestamp = new Date().getTime();
 
 
@@ -19,11 +19,11 @@ var timestamp = new Date().getTime();
 //     signature: '',// 必填，签名，见附录1
 //     jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 // });
-var homepage_icon=$('.homepage_icon'),
-    follow_icon=$('.follow_icon'),
-    publish_icon=$('.publish_icon'),
-    friend_icon=$('.friend_icon'),
-    mine_icon=$('.mine_icon');
+var homepage_icon = $('.homepage_icon'),
+    follow_icon = $('.follow_icon'),
+    publish_icon = $('.publish_icon'),
+    friend_icon = $('.friend_icon'),
+    mine_icon = $('.mine_icon');
 $('.weui-tabbar__item').on('click', function () {
     $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
 });
