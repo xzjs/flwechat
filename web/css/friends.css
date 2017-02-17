@@ -1,3 +1,6 @@
+.container{
+    background-color: #f5f5f5;
+}
 .weui-search-bar{
     width:100%;
     position: fixed;
@@ -9,21 +12,27 @@
 .contacts a{
     color: #000;
 }
-.head_portrait{
-    width:40px;
-    height:40px;
-    margin: 5px;
-    border-radius: 25px;
-    vertical-align: middle;
-    display: inline-block;
-    /*float: left;*/
-}
+
 .contacts{
     height: 50px;
     margin-top: 46px;
     margin-left:15px;
     padding:5px 0;
     border-bottom: 1px solid #bababa;
+}
+.head_portrait{
+    width:40px;
+    height:40px;
+    margin: 5px;
+    border-radius: 25px;
+    vertical-align: middle;
+    display: block;
+    float: left;
+}
+.friend_name{
+    font-size: 18px;
+    height: 50px;
+    line-height: 50px;
 }
 .contacts a div{
     display: inline-block;
