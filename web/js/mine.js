@@ -21,7 +21,7 @@ $(document).ready(function () {
         $('title').html(result.nickname);
     });
     getArticleList('/flwechat/public/article/get_article_by_user_id/' + id);
-    $('.messages span').click(function () {
+    $('.messages span').on('click',function () {
         $(this).addClass('selected').siblings().removeClass('selected');
         var html = $(this).html();
         var url = '';

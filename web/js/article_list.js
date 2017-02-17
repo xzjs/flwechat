@@ -143,8 +143,7 @@ function showArticleList(result) {
             + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt="" onclick="action(' + result[i].id + ',0,this)"><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
             + '</div></div>';
         myPublish.append(html);
-
-        follow_topic_list(user_id);
-        action_list();
     }
+    follow_topic_list(user_id);
+    action_list();
 }
