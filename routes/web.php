@@ -35,6 +35,8 @@ Route::resource('friend', 'FriendController');
 
 Route::resource('action', 'ActionController');
 
+Route::resource('image','ImageController');
+
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
     Route::get('/getuser', 'WechatController@getuser');
 });
