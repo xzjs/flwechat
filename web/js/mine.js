@@ -7,7 +7,9 @@ $(document).ready(function () {
     var show_id = GetQueryString('id');
     if (show_id != null) {
         id = show_id;
-        set_follow(id);
+        //为图片设置data
+        $('.follow_action').data('id',id);
+        set_follow(0);
         set_friend(0, show_id);
     } else {
         id = user_id;

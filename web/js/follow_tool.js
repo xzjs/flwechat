@@ -2,9 +2,9 @@
  * Created by xzjs on 2017/2/16.
  */
 var follow_type = 0;
-function follow_user(follow_id) {
+function follow_user(obj) {
     $.post('/flwechat/public/follow',
-        {'follow_user_id': user_id, 'be_follow_id': follow_id, 'type': follow_type},
+        {'follow_user_id': user_id, 'be_follow_id': obj.data('id'), 'type': follow_type},
         function (result) {
             if (result > 0) {
                 var $toast = $('#toast');
@@ -15,18 +15,18 @@ function follow_user(follow_id) {
                 setTimeout(function () {
                     $toast.fadeOut(100);
                 }, 2000);
-                change_follow(0, follow_id);
+                change_follow(0, obj);
             }
         }
     );
 }
 
-function cancel_follow_user(follow_id) {
+function cancel_follow_user(obj) {
     $.post('/flwechat/public/follow/cancel_follow',
-        {'follow_user_id': user_id, 'be_follow_id': follow_id, 'type': follow_type},
+        {'follow_user_id': user_id, 'be_follow_id': obj.data('id'), 'type': follow_type},
         function (result) {
             if (result == 'true') {
-                change_follow(1, follow_id);
+                change_follow(1, obj);
             }
         });
 }
@@ -42,43 +42,42 @@ function set_follow(type) {
     $('body').append(html);
     follow_type = type;
     $('.follow_action').each(function () {
-        init($(this).data('id'));
-    })
-
+        init($(this));
+    });
 }
 
 //关注按钮初始化
-function init(follow_id) {
+function init(obj) {
     $.post('/flwechat/public/follow/get_follow_list',
         {'id': user_id, 'type': 0},
         function (result) {
             var flag = false;
             //TODO 当数据量大时，此处得切换为二分查找，时间复杂度从o(n)降为o(log(n))
             for (var i = 0; i < result.length; i++) {
-                if (result[i].id == follow_id) {
+                if (result[i].id == obj.data('id')) {
                     flag = true;
                     break;
                 }
             }
             if (flag) {
-                change_follow(0, follow_id);
+                change_follow(0, obj);
             } else {
-                change_follow(1, follow_id);
+                change_follow(1, obj);
             }
         }, 'json');
 }
 
 //改变关注图标的状态
-function change_follow(type, follow_id) {
+function change_follow(type, obj) {
     if (type == 0) {
-        $('#follow').attr('src', 'images/follow2.png');
-        $('#follow').on('click', function () {
-            cancel_follow_user(follow_id);
+        obj.attr('src', 'images/follow2.png');
+        obj.on('click', function () {
+            cancel_follow_user(obj);
         });
     } else {
-        $('#follow').attr('src', 'images/follow.png');
-        $('#follow').on('click', function () {
-            follow_user(follow_id);
+        obj.attr('src', 'images/follow.png');
+        obj.on('click', function () {
+            follow_user(obj);
         });
     }
 }

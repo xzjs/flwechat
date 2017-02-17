@@ -18,8 +18,9 @@ function get_content() {
                     + '<div class="user_name">' + result[i].nickname + '</div>'
                     + '<!--<p class="new_messages_num">5<span>条新状态</span></p>-->'
                     + '</div></a>'
-                    + '<div class="follow_icon_box"><img src="images/follow.png" alt="" id="follow_icon"></div> </div>';
+                    + '<div class="follow_icon_box"><img class="follow_action" src="images/follow.png" alt="" id="follow_icon" data-id="'+result[i].id+'"></div> </div>';
             }
             $('#follow_list').html(html);
+            set_follow(0);
         }, 'json');
 }
