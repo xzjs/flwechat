@@ -32,6 +32,9 @@
     float: none;
     display: block;
 }
+.my_messages_friend{
+    position: relative;
+}
 .messages{
     background-color: #fff;
     text-align: center;
