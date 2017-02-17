@@ -20,7 +20,8 @@ $(function () {
             + '<img id="img_support_' + result.id + '" src="images/support.png" alt="" onclick="action(' + result.id + ',0,this)"><span>' + result.support_num + '</span></div>';
         $('#action').html(action_html);
         action_list();
-        set_follow(result.user.id);
+        $('.follow_action').data('id', result.user.id);
+        set_follow(0);
     });
     getArticleList('/flwechat/public/article/article_list/'+article_id);
     // getArticleList('/flwechat/public/comment/get_comments_by_user_id/'+user_id)
