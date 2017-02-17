@@ -2,15 +2,24 @@
  * Created by yanlli on 2017/2/13.
  */
 $(document).ready(function () {
-    var id = $.cookie('id');
-    if (id == null) {
-        window.location.href = '/flwechat/web/index.html';
-    }
-    $('.follow_class').click(function () {
-        $(this).addClass('selected').siblings('.follow_class').removeClass('selected');
-    });
-    // $.getJSON('/flwechat/public/user/'+id, function (result) {
-    //     $('#head_portrait')[0].src = result.head_img;
-    //     $('#name').html(result.nickname);
-    // })
+    get_content();
 });
+
+function get_content() {
+    $.post('/flwechat/public/follow/get_follow_list',
+        {'id': user_id, 'type': 0},
+        function (result) {
+            var html = '';
+            for (var i = 0; i < result.length; i++) {
+                html += '<div class="user_list">'
+                    + '<a href="mine.html?id=' + result[i].id + '">'
+                    + '<img src="' + result[i].head_img + '" alt="" class="head_portrait"/>'
+                    + '<div>'
+                    + '<div class="user_name">' + result[i].nickname + '</div>'
+                    + '<!--<p class="new_messages_num">5<span>条新状态</span></p>-->'
+                    + '</div></a>'
+                    + '<div class="follow_icon_box"><img src="images/follow.png" alt="" id="follow_icon"></div> </div>';
+            }
+            $('#follow_list').html(html);
+        }, 'json');
+}

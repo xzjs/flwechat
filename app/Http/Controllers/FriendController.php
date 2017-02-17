@@ -37,12 +37,12 @@ class FriendController extends Controller
     public function store(Request $request)
     {
         try {
-            $friend = new Friend;
-            $friend->friend_post = $request->friend_post_id;
-            $friend->friend_receive = $request->friend_receive_id;
-            $friend->agree = false;
-            $friend->save();
-            echo \GuzzleHttp\json_encode(true);
+            $friend = Friend::firstOrNew(['friend_post' => $request->friend_post_id, 'friend_receive' => $request->friend_receive_id]);
+            if ($friend->id == null) {
+                $friend->agree = false;
+                $friend->save();
+            }
+            return response('true');
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
@@ -69,7 +69,7 @@ class FriendController extends Controller
     {
         try {
             $friend = Friend::find($id);
-            $friend->agree=true;
+            $friend->agree = true;
             $friend->save();
             echo 'true';
         } catch (\Exception $exception) {
@@ -105,25 +105,26 @@ class FriendController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get_friends(Request $request){
+    public function get_friends(Request $request)
+    {
         try {
-            $friends_ids=array();
-            switch ($request->type){
+            $friends_ids = array();
+            switch ($request->type) {
                 case 1:
                     //发出的好友邀请
-                    $friends_ids=Friend::where('friend_post',$request->id)->where('agree',0)->get(['friend_receive'])->toArray();
+                    $friends_ids = Friend::where('friend_post', $request->id)->where('agree', 0)->get(['friend_receive'])->toArray();
                     break;
                 case 2:
                     //收到的好友邀请
-                    $friends_ids=Friend::where('friend_receive',$request->id)->where('agree',0)->get(['friend_post'])->toArray();
+                    $friends_ids = Friend::where('friend_receive', $request->id)->where('agree', 0)->get(['friend_post'])->toArray();
                     break;
                 case 0:
                     //所有好友
-                    $friends_ids1=Friend::where('friend_post',$request->id)->where('agree',1)->get(['friend_receive'])->toArray();
-                    $friends_ids2=Friend::where('friend_receive',$request->id)->where('agree',1)->get(['friend_post'])->toArray();
-                    $friends_ids=array_merge($friends_ids1,$friends_ids2);
+                    $friends_ids1 = Friend::where('friend_post', $request->id)->where('agree', 1)->get(['friend_receive'])->toArray();
+                    $friends_ids2 = Friend::where('friend_receive', $request->id)->where('agree', 1)->get(['friend_post'])->toArray();
+                    $friends_ids = array_merge($friends_ids1, $friends_ids2);
             }
-            $users=User::find($friends_ids);
+            $users = User::find($friends_ids);
             return response()->json($users);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
