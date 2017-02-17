@@ -1,3 +1,14 @@
+.weui-search-bar{
+    width:100%;
+    position: fixed;
+    top:0;
+}
+.contacts{
+    margin: 44px 0 52px 0;
+}
+.contacts a{
+    color: #000;
+}
 .head_portrait{
     width:40px;
     height:40px;
@@ -5,7 +16,7 @@
     border-radius: 25px;
     vertical-align: middle;
     display: inline-block;
-    float: left;
+    /*float: left;*/
 }
 .contacts{
     height: 50px;
@@ -36,4 +47,8 @@
     background-color: #1aad19;
     color: #f5f5f5;
     float: right;
+}
+.weui-tabbar{
+    position: fixed;
+    bottom:0;
 }
