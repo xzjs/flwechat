@@ -115,6 +115,7 @@ function comment(reply_id) {
 
 function showArticleList(result) {
     var myPublish = $('.content_box');
+    myPublish.html('');
     $('.blank').remove();
     for (var i = 0; i < result.length; i++) {
         var html_img = '';
@@ -122,7 +123,7 @@ function showArticleList(result) {
             html_img += '<div class="userImg"><img src="/flwechat/public/storage/' + result[i].images[j].img + '" alt=""></div>';
         }
         var html = '<div class="content">'
-            + '<a href="javascript:void(0);" onclick="show_user(' + result[i].user.id + ')">'
+            + '<a href="mine.html?id=' + result[i].user.id + '">'
             + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
             + '</a>'
             + '<span class="wei_name">' + result[i].user.nickname + '</span>'
@@ -134,7 +135,7 @@ function showArticleList(result) {
             + '<div class="your_action">'
             // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
             + '<div>'
-            + '<a href="publish.html?id'+result[i].id+'">'
+            + '<a href="publish.html?id' + result[i].id + '">'
             + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
             + '<div>'
             + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt="" onclick="action(' + result[i].id + ',1,this)"><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'

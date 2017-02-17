@@ -168,40 +168,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * 为文章点赞
-     * @param $id 文章id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function support($id)
-    {
-        try {
-            $article = Article::find($id);
-            $article->support_num += 1;
-            $article->save();
-            return response('true');
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 踩文章
-     * @param $id 文章id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function oppose($id)
-    {
-        try {
-            $article = Article::find($id);
-            $article->oppose_num += 1;
-            $article->save();
-            return response('true');
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
      * 根据回复id获取文章列表
      * @param $reply_id 回复文章的id
      * @return \Illuminate\Http\JsonResponse
@@ -210,6 +176,22 @@ class ArticleController extends Controller
     {
         try {
             $articles = Article::with('images', 'topic', 'user')->where('reply_id', $reply_id)->orderBy('created_at', 'desc')->get();
+            return response()->json($articles);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
+
+    /**
+     * 获取用户评论过的文章
+     * @param $user_id 用户id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function comment_articles($user_id)
+    {
+        try {
+            $reply_ids = Article::where('user_id', $user_id)->where('reply_id', '>', 0)->get(['reply_id'])->toArray();
+            $articles = Article::with('images', 'topic', 'user')->find($reply_ids);
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
