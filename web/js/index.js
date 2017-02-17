@@ -45,7 +45,12 @@ $(function () {
         $searchInput.blur();
     });
 
-    getArticleList('/flwechat/public/article/article_list/0');
+    var topic_id=GetQueryString('id');
+    if(topic_id==null){
+        getArticleList('/flwechat/public/article/article_list/0');
+    }else{
+        getArticleList('/flwechat/public/article/get_article_by_topic/'+topic_id);
+    }
 });
 
 

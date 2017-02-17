@@ -49,7 +49,7 @@ function set_follow(type) {
 //关注按钮初始化
 function init(obj) {
     $.post('/flwechat/public/follow/get_follow_list',
-        {'id': user_id, 'type': 0},
+        {'id': user_id, 'type': follow_type},
         function (result) {
             var flag = false;
             //TODO 当数据量大时，此处得切换为二分查找，时间复杂度从o(n)降为o(log(n))

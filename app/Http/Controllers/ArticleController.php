@@ -197,4 +197,18 @@ class ArticleController extends Controller
             echo $exception->getMessage();
         }
     }
+
+    /**
+     * 根据话题id获取文章
+     * @param $topic_id 话题id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_article_by_topic($topic_id){
+        try {
+            $articles=Article::with('images', 'topic', 'user')->where('topic_id',$topic_id)->where('reply_id',0)->orderBy('created_at', 'desc')->get();
+            return response()->json($articles);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
 }
