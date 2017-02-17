@@ -1,28 +1,53 @@
-.content_box{
-    margin: 0px;
-}
-.comment_box{
-    padding: 5px 15px;
-}
-.comment_head_portrait{
-    float: left;
-}
 .follow{
+    display: inline;
     float: right;
 }
 .follow img{
     margin-top: 5px;
     width:20px;
+    height: 20px;
 }
-.comment_head_portrait{
+.content_box{
+    margin: 0px;
+}
+.comment_box .content{
+    background-color: #f5f5f5;
+    border-bottom: 1px solid  #e8e8e8;
+}
+.comment_box .content .wei_name{
+    font-size: 14px;
+}
+.comment_box .content .content_txt{
+    margin-left: 45px;
+    font-size:12px;
+}
+.comment_box .content .pic_show .userImg{
+    width: 60px;
+    height:60px;
+}
+.comment_box .content .pic_show .userImg img{
+    width: 60px;
+}
+/*.comment_box .topic{*/
+    /*float: right;*/
+/*}*/
+/*.comment_box .content .your_action{*/
+   /*height: 20px;*/
+/*}*/
+
+.comment_box .content .head_portrait{
     width:30px;
     height:30px;
     border-radius: 15px;
     vertical-align: middle;
 }
-.comment{
-    margin: 5px 35px;
-}
-.comment_txt{
-    font-size: 12px;
-}
+/*.comment{*/
+    /*margin: 5px 0 5px 35px;*/
+/*}*/
+/*.comment p{*/
+    /*display: inline-block;*/
+/*}*/
+/*.comment_txt{*/
+    /*margin: 0;*/
+    /*font-size: 12px;*/
+/*}*/

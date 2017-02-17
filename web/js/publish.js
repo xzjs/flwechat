@@ -72,7 +72,7 @@ $(function () {
                     if (result != 0) {
                         article_id = result.id;
                         if (reply_id != 0) {
-                            window.location.href="mine.html";
+                            window.location.href="article_detail.html?id="+reply_id;
                         } else {
                             $('#topic').val(result.topic);
                             $('#dialog2').fadeIn(200);

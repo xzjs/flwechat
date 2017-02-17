@@ -123,19 +123,19 @@ function showArticleList(result) {
             html_img += '<div class="userImg"><img src="/flwechat/public/storage/' + result[i].images[j].img + '" alt=""></div>';
         }
         var html = '<div class="content">'
-            + '<a href="mine.html?id=' + result[i].user.id + '">'
+            + '<div class="content_top"><a href="mine.html?id=' + result[i].user.id + '">'
             + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
             + '</a>'
             + '<span class="wei_name">' + result[i].user.nickname + '</span>'
             + "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
-            + '<span class="topic" data-id="' + result[i].topic.id + '">' + result[i].topic.content + '</span>'
-            + '</a>'
+            + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
+            + '</a></div>'
             + '<a href="article_detail.html?id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
             + '<div class="pic_show">' + html_img + '</div>'
             + '<div class="your_action">'
             // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
             + '<div>'
-            + '<a href="publish.html?id' + result[i].id + '">'
+            + '<a href="publish.html?id=' + result[i].id + '">'
             + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
             + '<div>'
             + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt="" onclick="action(' + result[i].id + ',1,this)"><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
