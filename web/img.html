@@ -18,6 +18,7 @@
                     <img src="images/left.png" alt="" class="galleryImgLeft">
                     <img src="images/right.png" alt="" class="galleryImgRight">
                     <img src="images/close.png" alt="" class="galleryImgCenter">
+                    <div class="galleryImgBulletScreen"></div>
                 </span>
                 <div class="bullet_screen">
                     <div class="bullet_screen_button"><input type="checkbox" class="bullet_screen_button_checkbox"><span>弹幕</span></div>
@@ -30,8 +31,8 @@
 </div>
 <div class="pic_show" id="img">
     <div class="userImg">
-        <img src="images/IMG_2440.PNG" alt="" id="button">
-        <img src="images/0104.jpg" alt="" id="button">
+        <img src="images/IMG_2440.PNG" alt="" class="button">
+        <img src="images/0104.jpg" alt="" class="button">
     </div>
 </div>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
@@ -42,7 +43,7 @@
         $('.galleryImgCenter').on("click", function(){
             $gallery.fadeOut(100);
         });
-        $('#button').on('click',function () {
+        $('.button').on('click',function () {
             $gallery.fadeIn(100);
         });
         $('.bullet_screen_button_checkbox').on('click',function () {

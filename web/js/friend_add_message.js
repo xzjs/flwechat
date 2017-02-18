@@ -3,6 +3,9 @@
  */
 $(function () {
     load_friend();
+    if ($('#content').html()!=''){
+        $('.contacts_blank').remove();
+    }
 });
 
 function agree(id) {
@@ -20,11 +23,12 @@ function load_friend() {
         {'id': user_id, 'type': 2}, function (result) {
             var html = '';
             for (var i = 0; i < result.length; i++) {
-                html += '<div class="accept" onclick="agree(' + result[i].id + ')">接收</div>'
+                html += '<div class="contacts">'
+                    +'<div class="accept" onclick="agree(' + result[i].id + ')">接收</div>'
                     + '<a href="mine.html?id=' + result[i].id + '">'
                     + '<img src="' + result[i].head_img + '" alt="" class="head_portrait" /></a>'
                     + '<div><div class="user_name">' + result[i].nickname + '</div>'
-                    + '<p class="verification_messages">请求添加为好友</p></div>';
+                    + '<p class="verification_messages">请求添加为好友</p></div></div>';
             }
             $('#content').html(html);
         }, 'json');
