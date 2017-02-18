@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+use App\Article;
+use App\Image;
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class ImageController extends Controller
 {
+    private $img_ids = [];
+
     /**
      * Display a listing of the resource.
      *
@@ -35,16 +38,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $comment = new Comment;
-            $comment->content = $request->comment;
-            $comment->image_id = $request->image_id;
-            $comment->user_id = $request->user_id;
-            $comment->save();
-            return response('true');
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
+        //
     }
 
     /**
@@ -56,8 +50,9 @@ class CommentController extends Controller
     public function show($id)
     {
         try {
-            $comments = Comment::with('user')->where('article_id', $id)->get();
-            echo \GuzzleHttp\json_encode($comments);
+            $this->get_img($id);
+            $imgs = Image::with('comments')->find($this->img_ids);
+            return response()->json($imgs);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
@@ -98,16 +93,16 @@ class CommentController extends Controller
     }
 
     /**
-     * 根据用户id获取评论
-     * @param $user_id
+     * 递归获取图片的函数
+     * @param $id 文章id
      */
-    public function get_comments_by_user_id($user_id)
+    private function get_img($id)
     {
-        try {
-            $comments = Comment::with('article')->where('user_id', $user_id)->get();
-            echo \GuzzleHttp\json_encode($comments);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
+        $imgs = Image::where('article_id', $id)->get(['id'])->toArray();
+        array_push($this->img_ids, $imgs);
+        $article_ids = Article::where('reply_id', $id)->get(['id'])->toArray();
+        foreach ($article_ids as $article_id) {
+            $this->get_img($article_id);
         }
     }
 }

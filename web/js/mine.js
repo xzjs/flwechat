@@ -6,11 +6,16 @@ $(document).ready(function () {
 
     var show_id = GetQueryString('id');
     if (show_id != null) {
-        id = show_id;
-        //为图片设置data
-        $('.follow_action').data('id',id);
-        set_follow(0);
-        set_friend(0, show_id);
+        if (show_id == user_id) {
+            id = user_id;
+            set_friend(1);
+        } else {
+            id = show_id;
+            //为图片设置data
+            $('.follow_action').data('id', id);
+            set_follow(0);
+            set_friend(0, show_id);
+        }
     } else {
         id = user_id;
         set_friend(1);
@@ -21,7 +26,7 @@ $(document).ready(function () {
         $('title').html(result.nickname);
     });
     getArticleList('/flwechat/public/article/get_article_by_user_id/' + id);
-    $('.messages span').on('click',function () {
+    $('.messages span').on('click', function () {
         $(this).addClass('selected').siblings().removeClass('selected');
         var html = $(this).html();
         var url = '';
