@@ -60,6 +60,7 @@
     position: fixed;
     bottom:0;
 }
-.blank{
+.contacts_blank{
     padding:100px 45%;
+    display: none;
 }

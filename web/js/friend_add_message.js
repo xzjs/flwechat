@@ -3,8 +3,8 @@
  */
 $(function () {
     load_friend();
-    if ($('#content').html()!=''){
-        $('.contacts_blank').remove();
+    if ($('.contacts').html()==null){
+        $('.contacts_blank').show();
     }
 });
 
