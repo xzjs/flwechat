@@ -67,14 +67,7 @@ class FriendController extends Controller
      */
     public function edit($id)
     {
-        try {
-            $friend = Friend::find($id);
-            $friend->agree = true;
-            $friend->save();
-            echo 'true';
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
+
     }
 
     /**
@@ -126,6 +119,23 @@ class FriendController extends Controller
             }
             $users = User::find($friends_ids);
             return response()->json($users);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
+
+    /**
+     * 同意好友邀请
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function agree_friend(Request $request)
+    {
+        try {
+            $friend = Friend::where('friend_post', $request->friend_post)->where('friend_receive', $request->friend_receive)->where('agree', 0)->firstOrFail();
+            $friend->agree = 1;
+            $friend->save();
+            return response('true');
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
