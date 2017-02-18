@@ -120,7 +120,20 @@ function showArticleList(result) {
     for (var i = 0; i < result.length; i++) {
         var html_img = '';
         for (var j = 0; j < result[i].images.length; j++) {
-            html_img += '<div class="userImg"><img src="/flwechat/public/storage/' + result[i].images[j].img + '" alt=""></div>';
+            var $gallery = $("#gallery");
+            $('.galleryImgCenter').on("click", function(){
+                $gallery.fadeOut(100);
+            });
+            $('.imgButton').on('click',function () {
+                $gallery.fadeIn(100);
+                $('.galleryImg').css('background-image','url(images/'+result[i].images[j].img+')');
+            });
+            $('.bullet_screen_button_checkbox').on('click',function () {
+                if($('.bullet_screen_button_checkbox').is(':checked')){
+                    $('.bullet_screen_button span').html('已关闭');
+                }
+            });
+            html_img += '<div class="userImg"><img src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="imgButton"></div>';
         }
         var html = '<div class="content">'
             + '<div class="content_top"><a href="mine.html?id=' + result[i].user.id + '">'
