@@ -11,23 +11,24 @@
 </head>
 <body>
 <div class="container">
-    <div class="page">
-        <div class="page__bd">
-            <div class="weui-gallery" id="gallery">
+
+    <div class="weui-gallery" id="gallery">
                 <span class="weui-gallery__img" id="galleryImg" style="background-image: url(images/IMG_2440.PNG)">
                     <img src="images/left.png" alt="" class="galleryImgLeft">
                     <img src="images/right.png" alt="" class="galleryImgRight">
                     <img src="images/close.png" alt="" class="galleryImgCenter">
-                    <div class="galleryImgBulletScreen"></div>
+                    <div id="danmu" class="galleryImgBulletScreen"></div>
                 </span>
-                <div class="bullet_screen">
-                    <div class="bullet_screen_button"><input type="checkbox" class="bullet_screen_button_checkbox"><span>弹幕</span></div>
-                    <span class="bullet_screen_submit">提交</span>
-                    <input type="text" placeholder="吐槽" class="bullet_screen_content">
-                </div>
+        <div class="bullet_screen">
+            <div class="bullet_screen_button">
+                <input type="checkbox" class="bullet_screen_button_checkbox">
+                <span>弹幕</span>
             </div>
+            <span id="submit" class="bullet_screen_submit">提交</span>
+            <input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content">
         </div>
     </div>
+
 </div>
 <div class="pic_show" id="img">
     <div class="userImg">
@@ -37,20 +38,62 @@
 </div>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="js/jquery.danmu.min.js"></script>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         var $gallery = $("#gallery");
-        $('.galleryImgCenter').on("click", function(){
+        $('.galleryImgCenter').on("click", function () {
             $gallery.fadeOut(100);
+            $('#danmu').danmu('danmu_stop');
         });
-        $('.button').on('click',function () {
+        $('.button').on('click', function () {
             $gallery.fadeIn(100);
+
+            $("#danmu").danmu({
+                left: 0,    //区域的起始位置x坐标
+                top: 0,  //区域的起始位置y坐标
+                height: 360, //区域的高度
+                width: 640, //区域的宽度
+                zindex: 100, //div的css样式zindex
+                speed: 20000, //弹幕速度，飞过区域的毫秒数
+                sumtime: 900, //弹幕运行总时间
+                danmuss: {
+                    1: [{"text": "hahahaha", "color": "red", "size": "0", "position": "0"},
+                        {"text": "233333", "color": "red", "size": "0", "position": "2"}],
+                    3: [{"text": "poi", "color": "red", "size": "1", "position": "1"},
+                        {"text": "2333", "color": "#FFFFFF", "size": "0", "position": "0"}],
+                    50: [{"text": "XXX真好", "color": "#FFFFFF", "size": "0", "position": "2"},]
+                }, //danmuss对象，运行时的弹幕内容
+                default_font_color: "#FFFFFF", //弹幕默认字体颜色
+                font_size_small: 16, //小号弹幕的字体大小,注意此属性值只能是整数
+                font_size_big: 24, //大号弹幕的字体大小
+                opacity: "0.9", //弹幕默认透明度
+                top_botton_danmu_time: 6000 //顶端底端弹幕持续时间
+            });
+            $('#danmu').danmu('danmu_start');
         });
-        $('.bullet_screen_button_checkbox').on('click',function () {
-            if($('.bullet_screen_button_checkbox').is(':checked')){
+        $('.bullet_screen_button_checkbox').on('click', function () {
+            if ($('.bullet_screen_button_checkbox').is(':checked')) {
                 console.log($(this));
                 $('.bullet_screen_button span').html('已关闭');
             }
+        });
+        $('#submit').on('click',function () {
+            var text = $('#danmu_text').val();
+            var color = 'red';
+            var position = 0;
+            var size = 1;
+            var time = $('#danmu').data("nowtime") + 5;
+            //以上部分为从页面空间中获取用户输入的弹幕内容及选择的颜色等选项
+            var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';    //构造字符串形式的弹幕对象
+//            if (url_to_post_danmu)    //url_to_post_danmu 为接受推送的后端地址
+//                jQuery.post(url_to_post_danmu, {
+//                    danmu: text_obj
+//                });       //向服务器推送danmu对象的字符串形式
+            var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + ',"isnew":""}';   //构造加上了innew属性的字符串danmu对象
+            var new_obj = eval('(' + text_obj + ')');       //转化为js对象
+            $('#danmu').danmu("add_danmu", new_obj);    //向插件中添加该danmu对象
+            $('#danmu_text').val('');  //清空用户输入框
         });
     });
 </script>
