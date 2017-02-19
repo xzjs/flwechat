@@ -105,15 +105,17 @@
     /*background-color: #fff;*/
 /*}*/
 .bullet_screen_button {
+    font-size: 16px;
+    height:35px;
+    line-height: 35px;
     margin-left: 15px;
     float: left;
 }
-
 .bullet_screen_button_checkbox{
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }
-
 .bullet_screen_button span{
     color: #fff;
     background: none;
