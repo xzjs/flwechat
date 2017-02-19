@@ -115,25 +115,21 @@ function comment(reply_id) {
 
 function showArticleList(result) {
     var myPublish = $('.content_box');
-    myPublish.html('');
     $('.blank').remove();
     for (var i = 0; i < result.length; i++) {
         var html_img = '';
         for (var j = 0; j < result[i].images.length; j++) {
-            var $gallery = $("#gallery");
-            $('.galleryImgCenter').on("click", function(){
-                $gallery.fadeOut(100);
-            });
-            $('.imgButton').on('click',function () {
-                $gallery.fadeIn(100);
-                $('.galleryImg').css('background-image','url(images/'+result[i].images[j].img+')');
-            });
-            $('.bullet_screen_button_checkbox').on('click',function () {
-                if($('.bullet_screen_button_checkbox').is(':checked')){
-                    $('.bullet_screen_button span').html('已关闭');
-                }
-            });
-            html_img += '<div class="userImg"><img src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="imgButton"></div>';
+            // var $gallery = $("#gallery");
+            // $('.galleryImgCenter').on("click", function(){
+            //     $gallery.fadeOut(100);
+            // });
+            // $('.bullet_screen_button_checkbox').on('click',function () {
+            //     if($('.bullet_screen_button_checkbox').is(':checked')){
+            //         $('.bullet_screen_button span').html('已关闭');
+            //     }
+            // });
+            html_img += '<div class="userImg">' +
+                '<img data-id="'+result[i].id+'" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show"></div>';
         }
         var html = '<div class="content">'
             + '<div class="content_top"><a href="mine.html?id=' + result[i].user.id + '">'
@@ -155,8 +151,9 @@ function showArticleList(result) {
             + '</div><div>'
             + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt="" onclick="action(' + result[i].id + ',0,this)"><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
             + '</div></div>';
-        myPublish.append(html);
+        myPublish.html(html);
     }
     follow_topic_list(user_id);
     action_list();
+    init_showimg();
 }

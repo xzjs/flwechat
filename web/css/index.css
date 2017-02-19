@@ -108,6 +108,12 @@
     margin-left: 15px;
     float: left;
 }
+
+.bullet_screen_button_checkbox{
+    width: 16px;
+    height: 16px;
+}
+
 .bullet_screen_button span{
     color: #fff;
     background: none;

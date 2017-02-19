@@ -95,6 +95,14 @@
         $('.galleryImgRight').on('click', function () {
             change_img(1);
         });
+
+        $('.galleryImgUrl').on('click',function () {
+            if(img_data[index].url!=''){
+                window.location.href=img_data[index].url;
+            }else{
+                alert('图片没有相关的链接');
+            }
+        })
     });
     var img_data = [];
     var index = 0;
