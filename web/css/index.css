@@ -77,7 +77,12 @@
 .galleryImgCenter{
     position: absolute;
     bottom:10px;
-    right:48%;
+    right:58%;
+}
+.galleryImgUrl{
+    position: absolute;
+    bottom:10px;
+    right:30%;
 }
 .galleryImgRight{
     position: absolute;
