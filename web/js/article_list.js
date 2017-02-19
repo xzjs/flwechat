@@ -116,6 +116,7 @@ function comment(reply_id) {
 function showArticleList(result) {
     var myPublish = $('.content_box');
     $('.blank').remove();
+    var myPublic_html=''
     for (var i = 0; i < result.length; i++) {
         var html_img = '';
         for (var j = 0; j < result[i].images.length; j++) {
@@ -151,8 +152,9 @@ function showArticleList(result) {
             + '</div><div>'
             + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt="" onclick="action(' + result[i].id + ',0,this)"><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
             + '</div></div>';
-        myPublish.html(html);
+        myPublic_html+=html;
     }
+    myPublish.html(myPublic_html);
     follow_topic_list(user_id);
     action_list();
     init_showimg();

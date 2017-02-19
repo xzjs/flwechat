@@ -24,6 +24,8 @@ $(document).ready(function () {
         $('#head_img')[0].src = result.head_img;
         $('.name').html(result.nickname);
         $('title').html(result.nickname);
+        $('#follow_num').html(result.follow);
+        $('#be_follow_num').html(result.be_follow);
     });
     getArticleList('/flwechat/public/article/get_article_by_user_id/' + id);
     $('.messages span').on('click', function () {
