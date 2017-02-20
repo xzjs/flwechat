@@ -31,7 +31,14 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        $ch = curl_init();
+
+        $data = array('uname' => 'Foo');
+
+        curl_setopt($ch, CURLOPT_URL, 'http://112.74.36.180:8080/api/posttest');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        var_dump(curl_exec($ch));
     }
 
     /**
@@ -63,9 +70,35 @@ class ArticleController extends Controller
             foreach ($arr as $value) {
                 if ($request->hasFile($value)) {
                     $path = $request->file($value)->store('public');
-                    //TODO 此处需要图片识别获取url
                     $path = explode('/', $path)[1];
-                    $img = new Image(['img' => $path, 'url' => '']);
+
+                    //此处需要图片识别获取url
+                    $ch = curl_init();
+
+                    //$data = array('image' => "@public/storage/$path");
+                    $data['image']=curl_file_create("storage/$path");
+                    curl_setopt($ch, CURLOPT_SAFE_UPLOAD, true);
+                    curl_setopt($ch, CURLOPT_URL, 'http://112.74.36.180:8080/api/getimginfo');
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                    //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_HEADER, false);
+                    //curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+
+                    $return_data = curl_exec($ch);
+                    $log=curl_getinfo($ch);
+                    if ($return_data == false) {
+                        throw new \Exception(curl_error($ch), curl_errno($ch));
+                    }
+                    curl_close($ch);
+
+                    $url_data = \GuzzleHttp\json_decode($return_data);
+                    $url = '';
+                    if (count($url_data) > 1) {
+                        $url = $url_data[0]->href;
+                    }
+                    $img = new Image(['img' => $path, 'url' => $url]);
                     $article->images()->save($img);
                 }
             }
@@ -203,9 +236,10 @@ class ArticleController extends Controller
      * @param $topic_id 话题id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get_article_by_topic($topic_id){
+    public function get_article_by_topic($topic_id)
+    {
         try {
-            $articles=Article::with('images', 'topic', 'user')->where('topic_id',$topic_id)->where('reply_id',0)->orderBy('created_at', 'desc')->get();
+            $articles = Article::with('images', 'topic', 'user')->where('topic_id', $topic_id)->where('reply_id', 0)->orderBy('created_at', 'desc')->get();
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();

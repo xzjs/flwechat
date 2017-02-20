@@ -42,3 +42,5 @@ Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function
     Route::get('/getuser', 'WechatController@getuser');
 });
 
+//test
+Route::post('test_post','TestController@test_post');
