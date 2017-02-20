@@ -3,7 +3,7 @@
  */
 function init_showimg() {
     var html = '<div class="weui-gallery" id="gallery">' +
-        '<span class="weui-gallery__img" id="galleryImg" style="background-image: url(images/IMG_2440.PNG)">' +
+        '<span class="weui-gallery__img" id="galleryImg" style="background-image: url()">' +
         '<img src="images/left.png" alt="" class="galleryImgLeft"> ' +
         '<img src="images/right.png" alt="" class="galleryImgRight"> ' +
         '<img src="images/url.png" alt="" class="galleryImgUrl"> ' +
@@ -26,6 +26,11 @@ function init_showimg() {
         index = 0;
     });
 
+    $('.bullet_screen_content').keydown(function (event) {
+        if(event.keyCode==13){
+            $(".bullet_screen_submit").click();
+        }
+    });
     $('.img_show').on('click', function () {
         var article_id = $(this).data('id');
         $.getJSON('/flwechat/public/image/' + article_id, function (result) {
