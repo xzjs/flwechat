@@ -116,6 +116,7 @@ function comment(reply_id) {
 function showArticleList(result) {
     var myPublish = $('.content_box');
     $('.blank').remove();
+    var myPublic_html = ''
     for (var i = 0; i < result.length; i++) {
         var html_img = '';
         for (var j = 0; j < result[i].images.length; j++) {
@@ -129,16 +130,19 @@ function showArticleList(result) {
             //     }
             // });
             html_img += '<div class="userImg">' +
-                '<img data-id="'+result[i].id+'" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show"></div>';
+                '<img data-id="' + result[i].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show"></div>';
         }
         var html = '<div class="content">'
             + '<div class="content_top"><a href="mine.html?id=' + result[i].user.id + '">'
             + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
             + '</a>'
-            + '<span class="wei_name">' + result[i].user.nickname + '</span>'
-            + "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
-            + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
-            + '</a></div>'
+            + '<span class="wei_name">' + result[i].user.nickname + '</span>';
+        if (result[i].topic_id != null) {
+            html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
+                + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
+                + '</a>';
+        }
+        html += '</div>'
             + '<a href="article_detail.html?id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
             + '<div class="pic_show">' + html_img + '</div>'
             + '<div class="your_action">'
@@ -151,8 +155,9 @@ function showArticleList(result) {
             + '</div><div>'
             + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt="" onclick="action(' + result[i].id + ',0,this)"><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
             + '</div></div>';
-        myPublish.html(html);
+        myPublic_html += html;
     }
+    myPublish.html(myPublic_html);
     follow_topic_list(user_id);
     action_list();
     init_showimg();

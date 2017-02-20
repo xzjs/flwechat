@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Image;
+use App\Jobs\GetUrl;
 use App\Topic;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,14 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        $ch = curl_init();
+
+        $data = array('uname' => 'Foo');
+
+        curl_setopt($ch, CURLOPT_URL, 'http://112.74.36.180:8080/api/posttest');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        var_dump(curl_exec($ch));
     }
 
     /**
@@ -63,13 +71,12 @@ class ArticleController extends Controller
             foreach ($arr as $value) {
                 if ($request->hasFile($value)) {
                     $path = $request->file($value)->store('public');
-                    //TODO 此处需要图片识别获取url
                     $path = explode('/', $path)[1];
-                    $img = new Image(['img' => $path, 'url' => '']);
+                    $img = new Image(['img' => $path, 'url' => '','article_id',$article->id]);
                     $article->images()->save($img);
+                    dispatch(new GetUrl($img));
                 }
             }
-
             //TODO 此处需要计算话题
             $result['id'] = $article->id;
             $result['topic'] = '宝宝离婚了';
@@ -203,9 +210,10 @@ class ArticleController extends Controller
      * @param $topic_id 话题id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get_article_by_topic($topic_id){
+    public function get_article_by_topic($topic_id)
+    {
         try {
-            $articles=Article::with('images', 'topic', 'user')->where('topic_id',$topic_id)->where('reply_id',0)->orderBy('created_at', 'desc')->get();
+            $articles = Article::with('images', 'topic', 'user')->where('topic_id', $topic_id)->where('reply_id', 0)->orderBy('created_at', 'desc')->get();
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
