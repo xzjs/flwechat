@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Image;
+use App\Jobs\GetUrl;
 use App\Topic;
 use Illuminate\Http\Request;
 
@@ -71,38 +72,11 @@ class ArticleController extends Controller
                 if ($request->hasFile($value)) {
                     $path = $request->file($value)->store('public');
                     $path = explode('/', $path)[1];
-
-                    //此处需要图片识别获取url
-                    $ch = curl_init();
-
-                    //$data = array('image' => "@public/storage/$path");
-                    $data['image']=curl_file_create("storage/$path");
-                    curl_setopt($ch, CURLOPT_SAFE_UPLOAD, true);
-                    curl_setopt($ch, CURLOPT_URL, 'http://112.74.36.180:8080/api/getimginfo');
-                    curl_setopt($ch, CURLOPT_POST, 1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-                    //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($ch, CURLOPT_HEADER, false);
-                    //curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-
-                    $return_data = curl_exec($ch);
-                    $log=curl_getinfo($ch);
-                    if ($return_data == false) {
-                        throw new \Exception(curl_error($ch), curl_errno($ch));
-                    }
-                    curl_close($ch);
-
-                    $url_data = \GuzzleHttp\json_decode($return_data);
-                    $url = '';
-                    if (count($url_data) > 1) {
-                        $url = $url_data[0]->href;
-                    }
-                    $img = new Image(['img' => $path, 'url' => $url]);
+                    $img = new Image(['img' => $path, 'url' => '','article_id',$article->id]);
                     $article->images()->save($img);
+                    dispatch(new GetUrl($img));
                 }
             }
-
             //TODO 此处需要计算话题
             $result['id'] = $article->id;
             $result['topic'] = '宝宝离婚了';
