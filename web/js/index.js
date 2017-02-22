@@ -44,13 +44,26 @@ $(function () {
         cancelSearch();
         $searchInput.blur();
     });
-
     var topic_id=GetQueryString('id');
     if(topic_id==null){
         getArticleList('/flwechat/public/article/article_list/0');
     }else{
         getArticleList('/flwechat/public/article/get_article_by_topic/'+topic_id);
     }
+});
+$('.more').on('click', function () {
+    $('.more').hide();
+    $('.close').show();
+    $('.topic_index_box').css('height','150px');
+    $('')
+});
+$('.close').on('click',function () {
+    $('.more').show();
+    $('.close').hide();
+    $('.topic_index_box').css('height','35px');
+});
+$('.topic_index span').on('click',function () {
+    $(this).addClass('topic_index_selected').siblings().removeClass('topic_index_selected');
 });
 
 

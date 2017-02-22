@@ -8,9 +8,46 @@
     width:100%;
     position: fixed;
     top:0;
+    z-index: 100;
 }
+.topic_index_box{
+    height: 35px;
+    /*text-align: center;*/
+    margin-top: 44px;
+    overflow: hidden;
+}
+.topic_index{
+    width:92%;
+    float: left;
+}
+.topic_index span{
+    display: inline-block;
+    text-align: center;
+    width:50px;
+    /*border:1px solid #8a8a8a;*/
+    margin:5px 0;
+    /*border-radius: 22px;*/
+}
+.more_topic{
+    height:40px;
+    width:24px;
+    float: right;
+    line-height: 35px;
+}
+.more,.close{
+    width:20px;
+}
+.topic_index_selected{
+    border-bottom:2px solid #ec971f;
+}
+.topic_index_selected_box{
+    display: inline-block;
+}
+
+
+
 .content_box{
-    margin: 44px 0 52px 0;
+    margin-bottom:84px;
 }
 .content{
     padding:0 15px;
