@@ -9,7 +9,7 @@
     border-bottom:1px solid #bababa;
 }
 .follow_class{
-    width:80px;
+    width:90px;
     height:30px;
     line-height:30px;
     border:1px solid #bababa;
@@ -19,13 +19,13 @@
 }
 .follow_user{
     border-right: none;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
 }
 .follow_topic{
     border-left: none;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 .selected{
     background-color: #ec971f;
@@ -64,4 +64,17 @@
     border-radius: 5px;
     vertical-align: middle;
     margin-right: 12px;
+}
+.blank{
+    color: #888;
+    text-align: center;
+    padding:50px 40px;
+    display: none;
+}
+.blank p{
+    height: 40px;
+    line-height: 40px;
+}
+.blank img{
+    vertical-align: middle;
 }

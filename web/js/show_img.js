@@ -31,6 +31,14 @@ function init_showimg() {
             $(".bullet_screen_submit").click();
         }
     });
+
+    $('#danmu_text').focus(function () {
+        this.placeholder='';
+    });
+    $('#danmu_text').blur(function () {
+        this.placeholder='吐槽';
+    });
+
     $('.img_show').on('click', function () {
         var article_id = $(this).data('id');
         $.getJSON('/flwechat/public/image/' + article_id, function (result) {

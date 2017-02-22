@@ -21,6 +21,11 @@ function get_content() {
                     + '<div class="follow_icon_box"><img class="follow_action" src="images/follow.png" alt="" id="follow_icon" data-id="'+result[i].id+'"></div> </div>';
             }
             $('#follow_list').html(html);
+            if ($('#follow_list').html()==''){
+                $('.blank').css('display','block');
+            }else{
+                $('.blank').css('display','none');
+            }
             set_follow(0);
         }, 'json');
 }

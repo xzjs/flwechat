@@ -13,7 +13,7 @@
 <div class="container">
     <form class="publish_content" action="" method="post" enctype="multipart/form-data">
         <div class="text_insert">
-            <textarea  id="comment" maxlength="300" placeholder="评论" name="comment" autofocus="autofocus"></textarea>
+            <textarea  id="comment" maxlength="300" placeholder="评论" name="comment" onfocus="this.placeholder=''" onblur="this.placeholder='评论'"></textarea>
         </div>
         <div class="pic_insert" id="pic_insert1">
             <img src="images/pic_insert.png" alt="" id="pic_insert_icon1">
@@ -29,7 +29,7 @@
         </div>
         <div class="url_insert">
             <div class="url_icon"><img src="images/url.png" alt=""></div>
-            <textarea name="url" id="url" placeholder="连接"></textarea>
+            <textarea name="url" id="url" placeholder="连接" onfocus="this.placeholder=''" onblur="this.placeholder='连接'"></textarea>
         </div>
     </form>
     <div>
@@ -68,7 +68,7 @@
     <div class="weui-mask"></div>
     <div class="weui-dialog">
         <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
-        <div class="weui-dialog__bd">评论或url不能为空</div>
+        <div class="weui-dialog__bd">评论和图片不能全为空</div>
         <div class="weui-dialog__ft">
             <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="sure1">知道了</a>
         </div>

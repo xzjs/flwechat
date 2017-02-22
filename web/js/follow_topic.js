@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     get_content();
+
 });
 
 function get_content() {
@@ -22,5 +23,10 @@ function get_content() {
             }
             $('#follow_list').html(html);
             set_follow(1);
+            if ($('#follow_list').html()==''){
+                $('.blank').css('display','block');
+            }else{
+                $('.blank').css('display','none');
+            }
         }, 'json');
 }
