@@ -353,8 +353,8 @@ var cyntax = {
 
     Danmu.DEFAULTS = {
         left: 0,
-        top: 0,
-        height: 360,
+        top: 20,
+        height: 390,
         width: 640,
         zindex: 100,
         speed: 20000,
