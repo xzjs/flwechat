@@ -13,6 +13,10 @@
 
 Route::any('/', 'WechatController@serve');
 
+Route::get('/test', function () {
+    return view('welcome');
+});
+
 Route::resource('user', 'UserController');
 
 Route::post('/article/add_topic', 'ArticleController@add_topic');
@@ -31,16 +35,16 @@ Route::post('/follow/cancel_follow', 'FollowController@cancel_follow');
 Route::resource('follow', 'FollowController');
 
 Route::post('/friend/get_friends', 'FriendController@get_friends');
-Route::post('/friend/agree_friend','FriendController@agree_friend');
+Route::post('/friend/agree_friend', 'FriendController@agree_friend');
 Route::resource('friend', 'FriendController');
 
 Route::resource('action', 'ActionController');
 
-Route::resource('image','ImageController');
+Route::resource('image', 'ImageController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
     Route::get('/getuser', 'WechatController@getuser');
 });
 
 //test
-Route::post('test_post','TestController@test_post');
+Route::post('test_post', 'TestController@test_post');
