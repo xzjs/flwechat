@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    protected $fillable = ['img','url'];
+    protected $fillable = ['img'];
 
     public function comments(){
         return $this->hasMany('App\Comment');
