@@ -72,7 +72,7 @@ class ArticleController extends Controller
                 if ($request->hasFile($value)) {
                     $path = $request->file($value)->store('public');
                     $path = explode('/', $path)[1];
-                    $img = new Image(['img' => $path, 'url' => '','article_id',$article->id]);
+                    $img = new Image(['img' => $path,'article_id',$article->id]);
                     $article->images()->save($img);
                     dispatch(new GetUrl($img));
                 }

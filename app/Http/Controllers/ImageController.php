@@ -50,7 +50,9 @@ class ImageController extends Controller
     public function show($id)
     {
         try {
-            $this->get_img($id);
+            $article = Image::with('article')->find($id)->article;
+            $this->get_img_after($article->id);
+            $this->get_img_before($article->reply_id);
             $imgs = Image::with('comments')->find($this->img_ids);
             return response()->json($imgs);
         } catch (\Exception $exception) {
@@ -96,13 +98,30 @@ class ImageController extends Controller
      * 递归获取图片的函数
      * @param $id 文章id
      */
-    private function get_img($id)
+    private function get_img_after($id)
     {
         $imgs = Image::where('article_id', $id)->get(['id'])->toArray();
-        array_push($this->img_ids, $imgs);
+        $this->img_ids=array_merge($this->img_ids,$imgs);
+//        foreach ($imgs as $img) {
+//            array_push($this->img_ids, $img);
+//        }
         $article_ids = Article::where('reply_id', $id)->get(['id'])->toArray();
         foreach ($article_ids as $article_id) {
-            $this->get_img($article_id);
+            $this->get_img_after($article_id);
+        }
+    }
+
+    private function get_img_before($id)
+    {
+        if ($id > 0) {
+            $article = Article::with('images')->find($id);
+            $imgs = Image::where('article_id', $article->id)->get(['id'])->toArray();
+            $this->img_ids=array_merge($imgs,$this->img_ids);
+//        foreach ($imgs as $img) {
+//            array_push($this->img_ids, $img);
+//        }
+            $this->get_img_before($article->reply_id);
+
         }
     }
 }

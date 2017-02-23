@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Expand;
 use App\Image;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -53,13 +54,16 @@ class GetUrl implements ShouldQueue
             curl_close($ch);
 
             $url_data = \GuzzleHttp\json_decode($return_data);
-            $url = '';
-            if (count($url_data) > 1) {
-                $url = $url_data[0]->href;
+            foreach ($url_data as $item) {
+                $expand=new Expand;
+                $expand->image_id=$this->image->id;
+                $expand->href=$item->href;
+                $expand->title=$item->title;
+                $expand->abstract=$item->abstract;
+                $expand->domain=$item->domain;
+                $expand->pubdate=$item->pubdate;
+                $expand->save();
             }
-            $this->image->url = $url;
-            $result = $this->image->save();
-            echo $result;
         } catch (\Exception $exception) {
             echo $exception->getMessage();
             throw $exception;
