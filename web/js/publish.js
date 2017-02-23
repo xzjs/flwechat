@@ -39,7 +39,7 @@ $(function () {
         var url = $('#url').val();
         if (id == null) {
             window.location.href = '/flwechat/web/index.html';
-        } else if (comment == '' && $('.pic_insert input').val() == '') {
+        } else if (comment == ''||comment==null) {
             $('#dialog1').fadeIn(200);
             $('#sure1').click(function () {
                 $('#dialog1').fadeOut(200)

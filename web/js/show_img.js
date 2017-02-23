@@ -4,19 +4,19 @@
 function init_showimg() {
     var html = '<div class="weui-gallery" id="gallery">' +
         '<span class="weui-gallery__img" id="galleryImg" style="background-image: url()">' +
-        '<img src="images/left.png" alt="" class="galleryImgLeft"> ' +
-        '<img src="images/right.png" alt="" class="galleryImgRight"> ' +
-        '<img src="images/url.png" alt="" class="galleryImgUrl"> ' +
-        '<img src="images/close.png" alt="" class="galleryImgCenter"> ' +
-        '<div id="danmu" class="galleryImgBulletScreen"></div> ' +
-        '</span> ' +
-        '<div class="bullet_screen"> ' +
-        '<div class="bullet_screen_button"> ' +
-        '<input type="checkbox" class="bullet_screen_button_checkbox" checked="checked"> ' +
-        '<span>弹幕</span> ' +
-        '</div> ' +
-        '<span id="submit" class="bullet_screen_submit">提交</span> ' +
-        '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content"> ' +
+        '<img src="images/left.png" alt="" class="galleryImgLeft">' +
+        '<img src="images/right.png" alt="" class="galleryImgRight">' +
+        '<img src="images/url.png" alt="" class="galleryImgUrl">' +
+        '<img src="images/close.png" alt="" class="galleryImgCenter">' +
+        '<div id="danmu" class="galleryImgBulletScreen"></div>' +
+        '</span>' +
+        '<div class="bullet_screen">' +
+        '<div class="bullet_screen_button">' +
+        '<input type="checkbox" class="bullet_screen_button_checkbox" checked="checked">' +
+        '<span>弹幕</span>' +
+        '</div>' +
+        '<span id="submit" class="bullet_screen_submit">提交</span>' +
+        '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content">' +
         '</div></div>';
     $('body').append(html);
     var $gallery = $("#gallery");
@@ -57,13 +57,8 @@ function init_showimg() {
 
     $('.bullet_screen_button_checkbox').on('click', function () {
         if ($('.bullet_screen_button_checkbox').is(':checked')) {
-            console.log($(this));
-            // $('.bullet_screen_button span').html('已关闭');
-            // $('#danmu').data("opacity",0.9);
             $('#danmu').show();
         }else{
-            // $('.bullet_screen_button span').html('弹幕');
-            // $('#danmu').data("opacity",0);
             $('#danmu').hide();
         }
     });
