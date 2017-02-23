@@ -3,8 +3,8 @@
  */
 $(function () {
     load_friend();
-    if ($('.contacts').html()==null){
-        $('.contacts_blank').show();
+    if ($('.contacts').html() == null) {
+
     }
 });
 
@@ -20,16 +20,21 @@ function agree(id) {
 
 function load_friend() {
     $.post('/flwechat/public/friend/get_friends',
-        {'id': user_id, 'type': 2}, function (result) {
+        {'id': user_id, 'type': 2},
+        function (result) {
             var html = '';
             for (var i = 0; i < result.length; i++) {
                 html += '<div class="contacts">'
-                    +'<div class="accept" onclick="agree(' + result[i].id + ')">接收</div>'
+                    + '<div class="accept" onclick="agree(' + result[i].id + ')">接收</div>'
                     + '<a href="mine.html?id=' + result[i].id + '">'
                     + '<img src="' + result[i].head_img + '" alt="" class="head_portrait" /></a>'
                     + '<div><div class="user_name">' + result[i].nickname + '</div>'
                     + '<p class="verification_messages">请求添加为好友</p></div></div>';
             }
-            $('#content').html(html);
+            if (result.length == 0) {
+                $('.contacts_blank').show();
+            } else {
+                $('#content').html(html);
+            }
         }, 'json');
 }
