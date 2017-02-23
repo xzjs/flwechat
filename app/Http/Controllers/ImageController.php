@@ -99,7 +99,9 @@ class ImageController extends Controller
     private function get_img($id)
     {
         $imgs = Image::where('article_id', $id)->get(['id'])->toArray();
-        array_push($this->img_ids, $imgs);
+        foreach ($imgs as $img) {
+            array_push($this->img_ids, $img);
+        }
         $article_ids = Article::where('reply_id', $id)->get(['id'])->toArray();
         foreach ($article_ids as $article_id) {
             $this->get_img($article_id);
