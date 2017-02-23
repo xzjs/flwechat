@@ -137,14 +137,20 @@ class FollowController extends Controller
             $follow=Follow::where('type',$request->type)->where('follow_user',$request->follow_user_id)->where('be_follow_user',$request->be_follow_id)->first();
             if($request->type==0){
                 $follow_user=User::find($request->follow_user_id);
-                $follow_user->follow-=1;
+                if($follow_user->follow>0){
+                    $follow_user->follow-=1;
+                }
                 $follow_user->save();
                 $be_follow=User::find($request->be_follow_id);
-                $be_follow->be_follow-=1;
+                if($be_follow->be_follow>0){
+                    $be_follow->be_follow-=1;
+                }
                 $be_follow->save();
             }else{
                 $topic=Topic::find($request->be_follow_id);
-                $topic->follow_num-=1;
+                if($topic->follow_num>0){
+                    $topic->follow_num-=1;
+                }
                 $topic->save();
             }
             $follow->delete();
