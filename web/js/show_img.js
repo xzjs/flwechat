@@ -40,10 +40,16 @@ function init_showimg() {
     });
 
     $('.img_show').on('click', function () {
-        var article_id = $(this).data('id');
-        $.getJSON('/flwechat/public/image/' + article_id, function (result) {
+        var image_id = $(this).data('id');
+        $.getJSON('/flwechat/public/image/' + image_id, function (result) {
             img_data = result;
-            change_img(0);
+            for(var i=0;i<img_data.length;i++){
+                if(img_data[i].id==image_id){
+                    index=i;
+                    break;
+                }
+            }
+            change_img(index);
 
             $gallery.fadeIn(100);
         });
@@ -83,11 +89,11 @@ function init_showimg() {
     });
 
     $('.galleryImgLeft').on('click', function () {
-        change_img(-1);
+        change_img(index-1);
     });
 
     $('.galleryImgRight').on('click', function () {
-        change_img(1);
+        change_img(index+1);
     });
 
     $('.galleryImgUrl').on('click', function () {
@@ -102,14 +108,12 @@ var img_data = [];
 var index = 0;
 
 function change_img(num) {
-    index += num;
-    if (index < 0) {
+    if (num < 0) {
         alert('已经是第一张了');
-        index += 1;
-    } else if (index == img_data.length) {
+    } else if (num == img_data.length) {
         alert('已经是最后一张了');
-        index -= 1;
     } else {
+        index=num;
         $('#danmu').danmu('danmu_stop');
         $("#danmu").danmu('clear');
         $('#galleryImg').css('background-image', 'url(/flwechat/public/storage/' + img_data[index].img + ')');

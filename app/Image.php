@@ -11,4 +11,8 @@ class Image extends Model
     public function comments(){
         return $this->hasMany('App\Comment');
     }
+
+    public function article(){
+        return $this->belongsTo('App\Article');
+    }
 }
