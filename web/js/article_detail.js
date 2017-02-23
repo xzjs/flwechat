@@ -24,9 +24,4 @@ $(function () {
         set_follow(0);
     });
     getArticleList('/flwechat/public/article/article_list/'+article_id);
-    // getArticleList('/flwechat/public/comment/get_comments_by_user_id/'+user_id)
 });
-
-function test() {
-    alert('hello');
-}
