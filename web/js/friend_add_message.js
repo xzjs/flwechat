@@ -33,8 +33,7 @@ function load_friend() {
             }
             if (result.length == 0) {
                 $('.contacts_blank').show();
-            } else {
-                $('#content').html(html);
             }
+            $('#content').html(html);
         }, 'json');
 }
