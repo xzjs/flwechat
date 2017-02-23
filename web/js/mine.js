@@ -64,11 +64,11 @@ function set_friend(type, show_id) {
                             $toast.fadeOut(100);
                         }, 2000);
                     }
-                })
+                });
         });
     } else {
         $('#friend').on('click', function () {
-            window.location.href = 'friend_add_message.html';
+            window.location.href = 'friend_add_messages.html';
         })
     }
 }
