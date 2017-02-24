@@ -35,13 +35,3 @@ function GetQueryString(name) {
     if (r != null)return decodeURI(r[2]);
     return null;
 }
-$('.do_open').on('click',function () {
-    $('.do').fadeIn(200);
-    $('.do_open').hide();
-    $('.do_close').show();
-});
-$('.do_close').on('click',function () {
-    $('.do').fadeOut(200);
-    $('.do_open').show();
-    $('.do_close').hide();
-});
