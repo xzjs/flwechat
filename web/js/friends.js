@@ -45,15 +45,18 @@ $(function () {
         $searchInput.blur();
     });
 
-    var id=$.cookie('id');
-    var data={'id':id,'type':0};
+    var id = $.cookie('id');
+    var data = {'id': id, 'type': 0};
     $.post(
         "/flwechat/public/friend/get_friends",
         data,
         function (result) {
-            var html='';
-            for(var i=0;i<result.length;i++){
-                html+='<div id="friend_list" class="contacts"><a href="javascript:void(0);" onclick="detail('+result[i].id+')"><img src="'+result[i].head_img+'" alt="'+result[i].nickname+'" class="head_portrait"><span class="friend_name">'+result[i].nickname+'</span></a></div>';
+            var html = '';
+            for (var i = 0; i < result.length; i++) {
+                html += '<div id="friend_list" class="contacts">' +
+                    '<a href="mine.html?id=' + result[i].id + '">' +
+                    '<img src="' + result[i].head_img + '" alt="' + result[i].nickname + '" class="head_portrait">' +
+                    '<span class="friend_name">' + result[i].nickname + '</span></a></div>';
             }
             $('#searchBar').after(html);
         },
