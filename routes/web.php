@@ -26,6 +26,7 @@ Route::get('/article/oppose/{id}', 'ArticleController@oppose');
 Route::get('/article/article_list/{reply_id}', 'ArticleController@article_list');
 Route::get('/article/comment_articles/{user_id}', 'ArticleController@comment_articles');
 Route::get('/article/get_article_by_topic/{topic_id}', 'ArticleController@get_article_by_topic');
+Route::post('/article/search', 'ArticleController@search');
 Route::resource('article', 'ArticleController');
 
 Route::get('/comment/get_comments_by_user_id/{user_id}', 'CommentController@get_comments_by_user_id');
@@ -46,7 +47,7 @@ Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function
     Route::get('/getuser', 'WechatController@getuser');
 });
 
-Route::resource('topic','TopicController');
+Route::resource('topic', 'TopicController');
 
 //test
 Route::post('test_post', 'TestController@test_post');

@@ -15,4 +15,8 @@ class Image extends Model
     public function article(){
         return $this->belongsTo('App\Article');
     }
+
+    public function expands(){
+        return $this->hasMany('App\Expand');
+    }
 }

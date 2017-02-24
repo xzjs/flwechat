@@ -53,7 +53,7 @@ class ImageController extends Controller
             $article = Image::with('article')->find($id)->article;
             $this->get_img_after($article->id);
             $this->get_img_before($article->reply_id);
-            $imgs = Image::with('comments')->find($this->img_ids);
+            $imgs = Image::with('comments','article.user','expands')->find($this->img_ids);
             return response()->json($imgs);
         } catch (\Exception $exception) {
             echo $exception->getMessage();

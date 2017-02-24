@@ -17,7 +17,6 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('content');
-            $table->string('url');
             $table->integer('topic_id')->nullable();
             $table->integer('support_num');
             $table->integer('comment_num');

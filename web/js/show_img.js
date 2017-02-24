@@ -4,9 +4,13 @@
 function init_showimg() {
     var html = '<div class="weui-gallery" id="gallery">' +
         '<span class="weui-gallery__img" id="galleryImg" style="background-image: url()">' +
+        '<div class="galleryImgUser">' +
+        '<img id="img_head_img" src="images/lan.jpg" alt="" class="galleryImgUserImg">' +
+        '<span id="img_user_name">微信</span><span>-</span><span id="img_article_content">评论内容</span></div>' +
         '<img src="images/left.png" alt="" class="galleryImgLeft">' +
         '<img src="images/right.png" alt="" class="galleryImgRight">' +
         '<img src="images/url.png" alt="" class="galleryImgUrl">' +
+        '<div id="img_expands" class="url_list" style="display: none"></div>' +
         '<img src="images/close.png" alt="" class="galleryImgCenter">' +
         '<div id="danmu" class="galleryImgBulletScreen"></div>' +
         '</span>' +
@@ -27,25 +31,25 @@ function init_showimg() {
     });
 
     $('.bullet_screen_content').keydown(function (event) {
-        if(event.keyCode==13){
+        if (event.keyCode == 13) {
             $(".bullet_screen_submit").click();
         }
     });
 
     $('#danmu_text').focus(function () {
-        this.placeholder='';
+        this.placeholder = '';
     });
     $('#danmu_text').blur(function () {
-        this.placeholder='吐槽';
+        this.placeholder = '吐槽';
     });
 
     $('.img_show').on('click', function () {
         var image_id = $(this).data('id');
         $.getJSON('/flwechat/public/image/' + image_id, function (result) {
             img_data = result;
-            for(var i=0;i<img_data.length;i++){
-                if(img_data[i].id==image_id){
-                    index=i;
+            for (var i = 0; i < img_data.length; i++) {
+                if (img_data[i].id == image_id) {
+                    index = i;
                     break;
                 }
             }
@@ -58,7 +62,7 @@ function init_showimg() {
     $('.bullet_screen_button_checkbox').on('click', function () {
         if ($('.bullet_screen_button_checkbox').is(':checked')) {
             $('#danmu').show();
-        }else{
+        } else {
             $('#danmu').hide();
         }
     });
@@ -71,12 +75,6 @@ function init_showimg() {
             function (result) {
                 console.log(result);
             });
-        //以上部分为从页面空间中获取用户输入的弹幕内容及选择的颜色等选项
-//            var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';    //构造字符串形式的弹幕对象
-//            if (url_to_post_danmu)    //url_to_post_danmu 为接受推送的后端地址
-//                jQuery.post(url_to_post_danmu, {
-//                    danmu: text_obj
-//                });       //向服务器推送danmu对象的字符串形式
         text_obj = '{ "text":"' + text + '","color":"' + getcolor() + '","size":"' + getsize() + '","position":"' + 0 + '","time":' + time + ',"isnew":""}';   //构造加上了innew属性的字符串danmu对象
         var new_obj = eval('(' + text_obj + ')');       //转化为js对象
         $('#danmu').danmu("add_danmu", new_obj);    //向插件中添加该danmu对象
@@ -84,16 +82,16 @@ function init_showimg() {
     });
 
     $('.galleryImgLeft').on('click', function () {
-        change_img(index-1);
+        change_img(index - 1);
     });
 
     $('.galleryImgRight').on('click', function () {
-        change_img(index+1);
+        change_img(index + 1);
     });
 
     $('.galleryImgUrl').on('click', function () {
-        if (img_data[index].url != '') {
-            window.location.href = img_data[index].url;
+        if (img_data[index].expands.length != 0) {
+            $('#img_expands').fadeIn(100);
         } else {
             alert('图片没有相关的链接');
         }
@@ -108,10 +106,12 @@ function change_img(num) {
     } else if (num == img_data.length) {
         alert('已经是最后一张了');
     } else {
-        index=num;
+        index = num;
         $('#danmu').danmu('danmu_stop');
         $("#danmu").danmu('clear');
+        //设置图片
         $('#galleryImg').css('background-image', 'url(/flwechat/public/storage/' + img_data[index].img + ')');
+        //设置弹幕
         for (var i = 0; i < img_data[index].comments.length; i++) {
             var text = '{"text":"' + img_data[index].comments[i].content + '","color":"' + getcolor() + '","size":"' + getsize() + '","position":"0","time":' + ((i + 1) * 5) + '}';
             console.log(text);
@@ -119,6 +119,18 @@ function change_img(num) {
             $('#danmu').danmu("add_danmu", new_obj);
         }
         $('#danmu').danmu('danmu_start');
+        //设置用户头像
+        $('#img_head_img').attr('src', img_data[index].article.user.head_img);
+        //设置用户名称
+        $('#img_user_name').html(img_data[index].article.user.nickname);
+        //设置文章内容
+        $('#img_article_content').html(img_data[index].article.content);
+        //设置链接
+        var expands_html = '';
+        for (var i = 0; i < img_data[index].expands.length; i++) {
+            expands_html += '<a href="' + img_data[index].expands[i].href + '">' + img_data[index].expands[i].title + '</a>';
+        }
+        $('#img_expands').html(expands_html);
     }
 }
 
@@ -155,6 +167,6 @@ function getcolor() {
 function getsize() {
     return Math.round(Math.random());
 }
-$('.galleryImgUser').on('click',function () {
-    $(this).css('height','auto')
+$('.galleryImgUser').on('click', function () {
+    $(this).css('height', 'auto')
 });
