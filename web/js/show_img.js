@@ -155,3 +155,6 @@ function getcolor() {
 function getsize() {
     return Math.round(Math.random());
 }
+$('.galleryImgUser').on('click',function () {
+    $(this).css('height','auto')
+});

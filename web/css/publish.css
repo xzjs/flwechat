@@ -39,34 +39,11 @@
     top:0;
     left:15px;
 }
-.topic_index_box{
-    margin-top: 5px;
-}
-.publish_more_topic{
-    height:40px;
-    width:24px;
-    float: left;
-    margin:5px 0 0 15px;
-    line-height: 35px;
-}
-.topic_input{
-    height:35px;
+.topic_choose select{
     font-size: 14px;
-    border:none;
+    margin-left: 15px;
+    width: 200px;
 }
-/*.topic_choose input{*/
-    /*height:24px;*/
-    /*padding-top: 6px;*/
-    /*font-size: 14px;*/
-    /*width:50%;*/
-    /*resize: none;*/
-    /*padding-left: 10%;*/
-    /*border-radius: 4px;*/
-    /*border:1px solid #8a8a8a;*/
-/*}*/
-/*.topic_choose span{*/
-    /*display: inline-block;*/
-/*}*/
 
 
 .weui-btn_primary{

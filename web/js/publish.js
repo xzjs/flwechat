@@ -85,28 +85,3 @@ $(function () {
         }
     });
 });
-$('.more').on('click', function () {
-    $('.more').hide();
-    $('.close').show();
-    $('.topic_index_box').css('height','320px');
-    $('')
-    var i=0;
-    $('.topic_index img').on('click',function () {
-        if (i<1){
-            $(this).attr('src','images/choose.png');
-            $(this).parent().siblings().data('id','1');
-            //设置data-id
-            console.log($(this).parent().siblings().data());
-            var top_topic_index=$(this).parent().siblings().html();
-            $('.topic_input').val(top_topic_index);
-            i++;
-        }else{
-            return
-        }
-    });
-});
-$('.close').on('click',function () {
-    $('.more').show();
-    $('.close').hide();
-    $('.topic_index_box').css('height','35px');
-});
