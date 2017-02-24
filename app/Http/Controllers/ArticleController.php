@@ -54,11 +54,11 @@ class ArticleController extends Controller
             $article = new Article;
             $article->user_id = $request->user_id;
             $article->content = $request->comment;
-            $article->url = $request->url;
             $article->support_num = 0;
             $article->transmit_num = 0;
             $article->comment_num = 0;
             $article->oppose_num = 0;
+            $article->topic_id = $request->topic_id;
             $article->reply_id = $request->reply_id;
             if ($article->reply_id != 0) {
                 $article2 = Article::find($article->reply_id);
@@ -77,10 +77,7 @@ class ArticleController extends Controller
                     dispatch(new GetUrl($img));
                 }
             }
-            //TODO 此处需要计算话题
-            $result['id'] = $article->id;
-            $result['topic'] = '宝宝离婚了';
-            return response()->json($result);
+            return response($article->id);
         } catch (\Exception $exception) {
             echo 0;
         }
@@ -228,7 +225,7 @@ class ArticleController extends Controller
     public function search(Request $request)
     {
         try {
-            $articles = Article::with('images', 'topic', 'user')->where('content', 'like', "%".$request->keyword."%")->orWhere('User->name', 'like', "%".$request->keyword."%")->orderBy('created_at', 'desc')->get();
+            $articles = Article::with('images', 'topic', 'user')->where('content', 'like', "%" . $request->keyword . "%")->orWhere('User->name', 'like', "%" . $request->keyword . "%")->orderBy('created_at', 'desc')->get();
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();

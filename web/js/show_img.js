@@ -75,12 +75,6 @@ function init_showimg() {
             function (result) {
                 console.log(result);
             });
-        //以上部分为从页面空间中获取用户输入的弹幕内容及选择的颜色等选项
-//            var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';    //构造字符串形式的弹幕对象
-//            if (url_to_post_danmu)    //url_to_post_danmu 为接受推送的后端地址
-//                jQuery.post(url_to_post_danmu, {
-//                    danmu: text_obj
-//                });       //向服务器推送danmu对象的字符串形式
         text_obj = '{ "text":"' + text + '","color":"' + getcolor() + '","size":"' + getsize() + '","position":"' + 0 + '","time":' + time + ',"isnew":""}';   //构造加上了innew属性的字符串danmu对象
         var new_obj = eval('(' + text_obj + ')');       //转化为js对象
         $('#danmu').danmu("add_danmu", new_obj);    //向插件中添加该danmu对象
@@ -126,7 +120,7 @@ function change_img(num) {
         }
         $('#danmu').danmu('danmu_start');
         //设置用户头像
-        $('#img_head_img').attr('src',img_data[index].article.user.head_img);
+        $('#img_head_img').attr('src', img_data[index].article.user.head_img);
         //设置用户名称
         $('#img_user_name').html(img_data[index].article.user.nickname);
         //设置文章内容
@@ -136,7 +130,7 @@ function change_img(num) {
         for (var i = 0; i < img_data[index].expands.length; i++) {
             expands_html += '<a href="' + img_data[index].expands[i].href + '">' + img_data[index].expands[i].title + '</a>';
         }
-        $('#img_expans').html(expands_html);
+        $('#img_expands').html(expands_html);
     }
 }
 
