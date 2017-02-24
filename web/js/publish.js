@@ -8,6 +8,9 @@ $(function () {
     if (id == null) {
         window.location.href = '/flwechat/web/index.html';
     }
+
+    get_select_list();
+
     $("#pic_files1").change(function () {
         var url = window.URL.createObjectURL(this.files.item(0));
         $("#pic_insert_icon1").attr("src", url);
@@ -85,3 +88,13 @@ $(function () {
         }
     });
 });
+
+function get_select_list() {
+    $.getJSON('/flwechat/public/topic',function (result) {
+        var html='';
+        for(var i=0;i<result.length;i++){
+            html+='<option value="'+result[i].id+'">'+result[i].content+'</option>'
+        }
+        $('#topic_select').append(html);
+    })
+}

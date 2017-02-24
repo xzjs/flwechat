@@ -72,7 +72,7 @@ class ArticleController extends Controller
                 if ($request->hasFile($value)) {
                     $path = $request->file($value)->store('public');
                     $path = explode('/', $path)[1];
-                    $img = new Image(['img' => $path,'article_id',$article->id]);
+                    $img = new Image(['img' => $path, 'article_id', $article->id]);
                     $article->images()->save($img);
                     dispatch(new GetUrl($img));
                 }
@@ -214,6 +214,21 @@ class ArticleController extends Controller
     {
         try {
             $articles = Article::with('images', 'topic', 'user')->where('topic_id', $topic_id)->where('reply_id', 0)->orderBy('created_at', 'desc')->get();
+            return response()->json($articles);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
+
+    /**
+     * 搜索文章
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        try {
+            $articles = Article::with('images', 'topic', 'user')->where('content', 'like', "%".$request->keyword."%")->orWhere('User->name', 'like', "%".$request->keyword."%")->orderBy('created_at', 'desc')->get();
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();

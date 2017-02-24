@@ -62,8 +62,4 @@ $(function () {
         },
         'json'
     );
-
-    function detail(id) {
-
-    }
 });
