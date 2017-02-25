@@ -13,7 +13,7 @@ $(function () {
         }
         $('#img').html(img_html);
         var action_html = '<div>'
-            + '<a href="publish.html?id='+result.id+'"><img src="images/comment.png" alt=""></a><span id="comment">2</span>'
+            + '<a href="publish.html?id='+result.id+'"><img src="images/comment.png" alt=""></a><span id="comment">'+result.comment_num+'</span>'
             + '</div><div>'
             + '<img id="img_oppose_' + result.id + '" src="images/oppose.png" alt="" onclick="action(' + result.id + ',1,this)"><span>' + result.oppose_num + '</span>'
             + '</div><div>'
@@ -22,7 +22,7 @@ $(function () {
         action_list();
 
         // $('.follow_action').data('id', result.user.id);
-        set_follow(0);
+        // set_follow(0);
     });
     getArticleList('/flwechat/public/article/article_list/'+article_id);
 

@@ -71,12 +71,14 @@ function init(obj) {
 function change_follow(type, obj) {
     if (type == 0) {
         obj.attr('src', 'images/follow2.png');
-        obj.on('click', function () {
+        // $('.weui-toast__content').html('已关注');
+        obj.one('click', function () {
             cancel_follow_user(obj);
         });
     } else {
         obj.attr('src', 'images/follow.png');
-        obj.on('click', function () {
+        // $('.weui-toast__content').html('已取消关注');
+        obj.one('click', function () {
             follow_user(obj);
         });
     }

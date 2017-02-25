@@ -153,6 +153,7 @@ function showArticleList(result) {
             html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
                 + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
                 + '</a>';
+
         }
         html += '</div>'
             + '<a href="article_detail.html?id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
