@@ -16,7 +16,7 @@
         <div class="content">
             <img id="head_img" src="" alt="" class="head_portrait">
             <span id="nick_name" class="wei_name"></span>
-            <span class="do_icon" style="float: right">
+            <span id="edit" class="do_icon" style="float: right">
                 <img class="do_open" src="images/down.png" alt="">
             </span>
             <p id="article_content" class="content_txt"></p>
@@ -88,10 +88,10 @@
         <!--</a>-->
     <!--</div>-->
     <div id="do" style="display: none">
-        <div class="weui-mask"></div>
+        <div id="close_dialog" class="weui-mask"></div>
         <div class="article_do">
-                <a href=""><img src="images/rewrite.png" alt="">编辑</a>
-                <a href=""><img src="images/delete.png" alt="">删除</a>
+                <a id="edit_article" href=""><img src="images/rewrite.png" alt="">编辑</a>
+                <a id="delete_article" href=""><img src="images/delete.png" alt="">删除</a>
         </div>
     </div>
 </div>

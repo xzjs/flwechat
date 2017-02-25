@@ -25,4 +25,13 @@ $(function () {
         set_follow(0);
     });
     getArticleList('/flwechat/public/article/article_list/'+article_id);
+
+    $('#edit').on('click',function () {
+        $('#do').show();
+        $('#edit_article').attr('href','publish.html?id='+article_id+'&action=edit');
+    });
+
+    $('#close_dialog').on('click',function () {
+        $('#do').hide();
+    });
 });

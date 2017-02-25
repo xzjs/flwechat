@@ -51,32 +51,53 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         try {
-            $article = new Article;
-            $article->user_id = $request->user_id;
-            $article->content = $request->comment;
-            $article->support_num = 0;
-            $article->transmit_num = 0;
-            $article->comment_num = 0;
-            $article->oppose_num = 0;
-            $article->topic_id = $request->topic_id;
-            $article->reply_id = $request->reply_id;
-            if ($article->reply_id != 0) {
-                $article2 = Article::find($article->reply_id);
-                $article2->comment_num += 1;
-                $article2->save();
-                $article->topic_id = $article2->topic_id;
-            }
-            $article->saveOrFail();
+            $id=$request->id;
             $arr = ['pic_file1', 'pic_file2', 'pic_file3'];
-            foreach ($arr as $value) {
-                if ($request->hasFile($value)) {
-                    $path = $request->file($value)->store('public');
-                    $path = explode('/', $path)[1];
-                    $img = new Image(['img' => $path, 'article_id', $article->id]);
-                    $article->images()->save($img);
-                    dispatch(new GetUrl($img));
+            if($id==null){
+                $article = new Article;
+                $article->user_id = $request->user_id;
+                $article->content = $request->comment;
+                $article->support_num = 0;
+                $article->transmit_num = 0;
+                $article->comment_num = 0;
+                $article->oppose_num = 0;
+                $article->topic_id = $request->topic_id;
+                $article->reply_id = $request->reply_id;
+                if ($article->reply_id != 0) {
+                    $article2 = Article::find($article->reply_id);
+                    $article2->comment_num += 1;
+                    $article2->save();
+                    $article->topic_id = $article2->topic_id;
+                }
+                $article->saveOrFail();
+
+                foreach ($arr as $value) {
+                    if ($request->hasFile($value)) {
+                        $path = $request->file($value)->store('public');
+                        $path = explode('/', $path)[1];
+                        $img = new Image(['img' => $path, 'article_id', $article->id]);
+                        $img->position=$value;
+                        $article->images()->save($img);
+                        dispatch(new GetUrl($img));
+                    }
+                }
+            }else{
+                $article=Article::find($id);
+                $article->content = $request->comment;
+                $article->topic_id = $request->topic_id;
+                $article->save();
+                foreach ($arr as $value) {
+                    if ($request->hasFile($value)) {
+                        $path = $request->file($value)->store('public');
+                        $path = explode('/', $path)[1];
+                        $img = new Image(['img' => $path, 'article_id', $article->id]);
+                        $img->position=$value;
+                        $article->images()->save($img);
+                        dispatch(new GetUrl($img));
+                    }
                 }
             }
+
             return response($article->id);
         } catch (\Exception $exception) {
             echo 0;

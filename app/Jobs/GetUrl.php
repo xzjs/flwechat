@@ -52,7 +52,7 @@ class GetUrl implements ShouldQueue
                 throw new \Exception(curl_error($ch), curl_errno($ch));
             }
             curl_close($ch);
-
+            echo $return_data;
             $url_data = \GuzzleHttp\json_decode($return_data);
             foreach ($url_data as $item) {
                 $expand=new Expand;
