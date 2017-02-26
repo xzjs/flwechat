@@ -8,22 +8,22 @@ $(function () {
 
     $("#pic_files1").change(function () {
         var url = window.URL.createObjectURL(this.files.item(0));
-        $("#pic_insert_icon1").attr("src", url);
+        $("#pic_file1").attr("src", url);
     });
     $("#pic_files2").change(function () {
         var url = window.URL.createObjectURL(this.files.item(0));
-        $("#pic_insert_icon2").attr("src", url);
+        $("#pic_file2").attr("src", url);
     });
     $("#pic_files3").change(function () {
         var url = window.URL.createObjectURL(this.files.item(0));
-        $("#pic_insert_icon3").attr("src", url);
+        $("#pic_file2").attr("src", url);
     });
 
     $("#showIOSDialog1").click(function () {
         var id = $.cookie('id');
         var comment = $.trim($('#comment').val());
-        var topic_id=$('#topic_select').val();
-        if(topic_id==0){
+        var topic_id = $('#topic_select').val();
+        if (topic_id == 0) {
             alert('请选择话题');
             return;
         }
@@ -38,6 +38,9 @@ $(function () {
             var formData = new FormData($('.publish_content')[0]);
             formData.append('reply_id', reply_id);
             formData.append('topic_id', topic_id);
+            if (action != null) {
+                formData.append('id', reply_id);
+            }
             $.ajax({
                 url: "/flwechat/public/article",
                 type: "post",
@@ -50,7 +53,7 @@ $(function () {
                         article_id = result.id;
                         if (reply_id != 0) {
                             window.location.href = "article_detail.html?id=" + reply_id;
-                        }else{
+                        } else {
                             window.location.href = 'mine.html';
                         }
                     } else {
@@ -60,6 +63,8 @@ $(function () {
             });
         }
     });
+
+    edit();
 });
 
 function get_select_list() {
@@ -73,13 +78,28 @@ function get_select_list() {
             $.getJSON('/flwechat/public/article/' + reply_id, function (result) {
                 var article = result;
                 $('#topic_select').val(article.topic_id);
-                $('#topic_select').attr('disabled','disabled');
+                if (action == null) {
+                    $('#topic_select').attr('disabled', 'disabled');
+                }
             });
         }
     });
 }
 
-var reply_id=GetQueryString('id');
+var reply_id = GetQueryString('id');
 if (reply_id == null) {
     reply_id = 0;
+}
+var action = GetQueryString('action');
+
+function edit() {
+
+    if (action == 'edit') {
+        $.getJSON('/flwechat/public/article/' + reply_id, function (result) {
+            $('#comment').val(result.content);
+            for (var i = 0; i < result.images.length; i++) {
+                $('#' + result.images[i].position).attr('src', '/flwechat/public/storage/' + result.images[i].img);
+            }
+        });
+    }
 }
