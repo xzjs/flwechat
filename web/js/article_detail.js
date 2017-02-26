@@ -12,11 +12,13 @@ $(function () {
             img_html += '<div class="userImg"><img src="/flwechat/public/storage/' + result.images[i].img + '" alt=""></div>'
         }
         $('#img').html(img_html);
-        var action_html = '<div>'
+        var action_html = '<div class="your_action_left">'
+            +'<a href="article_detail.html?id='+result.reply_id+'"><img src="images/back_to_original.png" alt=""><span>原文</span></a>'
+            +'</div><div class="your_action_right">'
             + '<a href="publish.html?id='+result.id+'"><img src="images/comment.png" alt=""></a><span id="comment">'+result.comment_num+'</span>'
-            + '</div><div>'
+            + '</div><div class="your_action_right">'
             + '<img id="img_oppose_' + result.id + '" src="images/oppose.png" alt="" onclick="action(' + result.id + ',1,this)"><span>' + result.oppose_num + '</span>'
-            + '</div><div>'
+            + '</div><div class="your_action_right">'
             + '<img id="img_support_' + result.id + '" src="images/support.png" alt="" onclick="action(' + result.id + ',0,this)"><span>' + result.support_num + '</span></div>';
         $('#action').html(action_html);
         action_list();
