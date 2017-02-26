@@ -15,7 +15,7 @@ class TopicController extends Controller
     public function index()
     {
         try {
-            $topics = Topic::orderBy('follow_num')->get();
+            $topics = Topic::orderBy('follow_num','desc')->get();
             return response()->json($topics);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
