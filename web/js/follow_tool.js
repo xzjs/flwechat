@@ -7,6 +7,7 @@ function follow_user(obj) {
         {'follow_user_id': user_id, 'be_follow_id': obj.data('id'), 'type': follow_type},
         function (result) {
             if (result > 0) {
+                $('.weui-toast__content').html('已关注');
                 var $toast = $('#toast');
 
                 if ($toast.css('display') != 'none') return;
@@ -26,6 +27,15 @@ function cancel_follow_user(obj) {
         {'follow_user_id': user_id, 'be_follow_id': obj.data('id'), 'type': follow_type},
         function (result) {
             if (result == 'true') {
+                $('.weui-toast__content').html('已取消关注');
+                var $toast = $('#toast');
+
+                if ($toast.css('display') != 'none') return;
+
+                $toast.fadeIn(100);
+                setTimeout(function () {
+                    $toast.fadeOut(100);
+                }, 2000);
                 change_follow(1, obj);
             }
         });
@@ -37,7 +47,7 @@ function set_follow(type) {
         + '<div class="weui-mask_transparent"></div>'
         + '<div class="weui-toast">'
         + '<i class="weui-icon-success-no-circle weui-icon_toast"></i>'
-        + '<p class="weui-toast__content">已关注</p>'
+        + '<p class="weui-toast__content"></p>'
         + '</div></div>';
     $('body').append(html);
     follow_type = type;
@@ -71,13 +81,11 @@ function init(obj) {
 function change_follow(type, obj) {
     if (type == 0) {
         obj.attr('src', 'images/follow2.png');
-        // $('.weui-toast__content').html('已关注');
         obj.one('click', function () {
             cancel_follow_user(obj);
         });
     } else {
         obj.attr('src', 'images/follow.png');
-        // $('.weui-toast__content').html('已取消关注');
         obj.one('click', function () {
             follow_user(obj);
         });
