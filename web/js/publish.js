@@ -58,6 +58,7 @@ $(function () {
                         }
                     } else {
                         console.log(result);
+                        alert('系统出故障了！！！');
                     }
                 }
             });
