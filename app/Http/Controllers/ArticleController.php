@@ -63,6 +63,7 @@ class ArticleController extends Controller
                 $article->oppose_num = 0;
                 $article->topic_id = $request->topic_id;
                 $article->reply_id = $request->reply_id;
+                $article->is_deleted=0;
                 if ($article->reply_id != 0) {
                     $article2 = Article::find($article->reply_id);
                     $article2->comment_num += 1;
@@ -98,9 +99,9 @@ class ArticleController extends Controller
                 }
             }
 
-            return response($article->id);
+            return response('true');
         } catch (\Exception $exception) {
-            echo 0;
+            return response($exception->getMessage());
         }
     }
 
@@ -151,7 +152,13 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $article=Article::find($id);
+            $article->is_deleted=1;
+            $article->save();
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     /**
