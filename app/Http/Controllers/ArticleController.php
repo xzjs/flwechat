@@ -98,9 +98,9 @@ class ArticleController extends Controller
                 }
             }
 
-            return response($article->id);
+            return response('true');
         } catch (\Exception $exception) {
-            echo 0;
+            return response($exception->getMessage());
         }
     }
 
