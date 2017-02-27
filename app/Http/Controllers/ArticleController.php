@@ -63,6 +63,7 @@ class ArticleController extends Controller
                 $article->oppose_num = 0;
                 $article->topic_id = $request->topic_id;
                 $article->reply_id = $request->reply_id;
+                $article->is_deleted=0;
                 if ($article->reply_id != 0) {
                     $article2 = Article::find($article->reply_id);
                     $article2->comment_num += 1;
@@ -153,10 +154,8 @@ class ArticleController extends Controller
     {
         try {
             $article=Article::find($id);
-            $article->content='作者已删除该文章';
+            $article->is_deleted=1;
             $article->save();
-            $deleteRows=Image::where('article_id',$article->id)->delete();
-            return response('true');
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }

@@ -49,7 +49,7 @@ $(function () {
                 contentType: false,
                 dataType: "json",
                 success: function (result) {
-                    if (result == 0) {
+                    if (result == true) {
                         if (reply_id != 0) {
                             window.location.href = "article_detail.html?id=" + reply_id;
                         } else {
