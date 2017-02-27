@@ -9,7 +9,7 @@ $(function () {
         $('#article_content').html(result.content);
         var img_html = '';
         for (var i = 0; i < result.images.length; i++) {
-            img_html += '<div class="userImg"><img src="/flwechat/public/storage/' + result.images[i].img + '" alt=""></div>'
+            img_html += '<div class="userImg"><img src="/flwechat/public/storage/' + result.images[i].img + '" alt="" class="img_show"></div>'
         }
         $('#img').html(img_html);
         var action_html = '<div class="your_action_left">'
@@ -27,7 +27,6 @@ $(function () {
         // set_follow(0);
     });
     getArticleList('/flwechat/public/article/article_list/'+article_id);
-
     $('#edit').on('click',function () {
         $('#do').show();
         $('#edit_article').attr('href','publish.html?id='+article_id+'&action=edit');
