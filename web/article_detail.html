@@ -91,7 +91,7 @@
         <div id="close_dialog" class="weui-mask"></div>
         <div class="article_do">
                 <a id="edit_article" href=""><img src="images/rewrite.png" alt="">编辑</a>
-                <a id="delete_article" href=""><img src="images/delete.png" alt="">删除</a>
+                <a id="delete_article" href="javascript:void(0);"><img src="images/delete.png" alt="">删除</a>
         </div>
     </div>
 </div>
@@ -100,6 +100,17 @@
     <div class="weui-toast">
         <i class="weui-icon-success-no-circle weui-icon_toast"></i>
         <p class="weui-toast__content">已关注</p>
+    </div>
+</div>
+<div id="dialog1" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__hd"><strong class="weui-dialog__title">确认删除</strong></div>
+        <div class="weui-dialog__bd">删除后您和您的好友都将无法看到这篇文章</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" onclick="cancel()">取消</a>
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="confirm()">确认</a>
+        </div>
     </div>
 </div>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>

@@ -151,7 +151,15 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $article=Article::find($id);
+            $article->content='作者已删除该文章';
+            $article->save();
+            $deleteRows=Image::where('article_id',$article->id)->delete();
+            return response('true');
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     /**

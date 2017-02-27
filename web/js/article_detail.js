@@ -36,9 +36,28 @@ $(function () {
     $('#edit').on('click', function () {
         $('#do').show();
         $('#edit_article').attr('href', 'publish.html?id=' + article_id + '&action=edit');
+        $('#delete_article').one('click',function () {
+            $('#dialog1').show();
+        })
     });
 
     $('#close_dialog').on('click', function () {
         $('#do').hide();
     });
 });
+
+function cancel() {
+    $('#dialog1').hide();
+    $('#do').hide();
+}
+
+function confirm() {
+    var article_id = GetQueryString('id');
+    $.ajax({
+        url: '/flwechat/public/article/'+article_id,
+        type: 'DELETE',
+        success: function(result) {
+            cancel();
+        }
+    });
+}
