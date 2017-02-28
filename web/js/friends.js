@@ -53,12 +53,17 @@ $(function () {
         function (result) {
             var html = '';
             for (var i = 0; i < result.length; i++) {
-                html += '<div id="friend_list" class="contacts">' +
+                html += '<div class="contacts">' +
                     '<a href="mine.html?id=' + result[i].id + '">' +
                     '<img src="' + result[i].head_img + '" alt="' + result[i].nickname + '" class="head_portrait">' +
                     '<span class="friend_name">' + result[i].nickname + '</span></a></div>';
             }
-            $('#searchBar').after(html);
+            if (html==''){
+                $('.contacts_blank').css('display','block');
+            }else {
+                $('.contacts_blank').css('display','none');
+                $('.contacts_box').append(html);
+            }
         },
         'json'
     );

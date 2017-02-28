@@ -8,14 +8,17 @@ $(function () {
 
     $("#pic_files1").change(function () {
         var url = window.URL.createObjectURL(this.files.item(0));
+        $('#pic_blank').css('display','none');
         $("#pic_file1").attr("src", url);
     });
     $("#pic_files2").change(function () {
         var url = window.URL.createObjectURL(this.files.item(0));
+        $('#pic_blank').css('display','none');
         $("#pic_file2").attr("src", url);
     });
     $("#pic_files3").change(function () {
         var url = window.URL.createObjectURL(this.files.item(0));
+        $('#pic_blank').css('display','none');
         $("#pic_file2").attr("src", url);
     });
 
