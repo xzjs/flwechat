@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use EasyWeChat\Support\Log;
 use Illuminate\Http\Request;
+use EasyWeChat\Foundation\Application;
 
 class WechatController extends Controller
 {
@@ -36,7 +37,11 @@ class WechatController extends Controller
                 }
 //            echo $u->id;
                 setcookie('id', $u->id, time()+3600,"/");
-                header("Location: /flwechat/web/index.html");
+                $url='/flwechat/web/index.html';
+                if(isset($_COOKIE["parameter"])){
+                    $url=$_COOKIE["parameter"];
+                }
+                header("Location: $url");
                 exit;
             }else{
                 echo 0;
@@ -44,6 +49,12 @@ class WechatController extends Controller
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
+    }
 
+    public function getconfig(Application $wechat,Request $request){
+        $js=$wechat->js;
+        $js->setUrl($request->url);
+        $result=$js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage'), true);
+        return response($result);
     }
 }

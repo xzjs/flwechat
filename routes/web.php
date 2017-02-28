@@ -12,6 +12,7 @@
 */
 
 Route::any('/', 'WechatController@serve');
+Route::post('/getconfig', 'WechatController@getconfig');
 
 Route::get('/test', function () {
     return view('welcome');

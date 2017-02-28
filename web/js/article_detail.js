@@ -30,7 +30,7 @@ function loadMainData() {
             $('#article_content').html(result.content);
             var img_html = '';
             for (var i = 0; i < result.images.length; i++) {
-                img_html += '<div class="userImg"><img data-id="'+result.images[i].id+'" class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt=""></div>'
+                img_html += '<div class="userImg"><img data-id="' + result.images[i].id + '" class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt=""></div>'
             }
             $('#img').html(img_html);
             if (result.user_id == user_id) {
@@ -41,15 +41,40 @@ function loadMainData() {
                 action_html += '<a href="article_detail.html?id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
             }
             action_html += '</div><div class="your_action_right">'
-                + '<a href="publish.html?id="><img src="images/share.png" alt=""></a><span id="share">' + + '</span>'
-                +'</div><div class="your_action_right">'
+                + '<a href="publish.html?id="><img src="images/share.png" alt=""></a><span id="share">' + +'</span>'
+                + '</div><div class="your_action_right">'
                 + '<a href="publish.html?id=' + result.id + '"><img src="images/comment.png" alt=""></a><span id="comment">' + result.comment_num + '</span>'
                 + '</div><div class="your_action_right">'
                 + '<img id="img_oppose_' + result.id + '" src="images/oppose.png" alt="" onclick="action(' + result.id + ',1,this)"><span>' + result.oppose_num + '</span>'
                 + '</div><div class="your_action_right">'
                 + '<img id="img_support_' + result.id + '" src="images/support.png" alt="" onclick="action(' + result.id + ',0,this)"><span>' + result.support_num + '</span></div>';
             $('#action').html(action_html);
-        }else{
+
+            //设置分享
+            $.post('/flwechat/public/getconfig',
+                {'url': window.location.href},
+                function (config) {
+                    wx.config(config);
+                    var icon = '/flwechat/web/images/topic.png';
+                    if (result.images.length > 0) {
+                        icon = result.images[0].img;
+                    }
+                    wx.onMenuShareTimeline({
+                        title: '友连', // 分享标题
+                        link: window.location.href, // 分享链接
+                        imgUrl: icon, // 分享图标
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            alert('分享成功');
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                            alert('取消分享');
+                        }
+                    });
+                });
+
+        } else {
             $('#article_content').html('用户已删除该文章');
             var action_html = '<div class="your_action_left">';
             $('#img').html('');
@@ -65,7 +90,7 @@ function loadMainData() {
             $('#action').html(action_html);
         }
         action_list();
-        $('.img_show').on('click',bandImageClick());
+        $('.img_show').on('click', bandImageClick());
     });
 }
 
