@@ -3,6 +3,7 @@
  */
 
 var article_id = GetQueryString('id');
+var icon = '/flwechat/web/images/topic.png';
 
 $(function () {
 
@@ -63,7 +64,7 @@ function loadMainData() {
                         signature: config.signature,// 必填，签名，见附录1
                         jsApiList: config.jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                     });
-                    var icon = '/flwechat/web/images/topic.png';
+
                     if (result.images.length > 0) {
                         icon = result.images[0].img;
                     }
