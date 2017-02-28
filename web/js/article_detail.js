@@ -71,9 +71,10 @@ function loadMainData() {
                     }
                     desc=result.content;
                     wx.onMenuShareTimeline({
-                        title: '友连', // 分享标题
+                        title: desc, // 分享标题
+                        desc:desc,
                         link: window.location.href, // 分享链接
-                        imgUrl: "/flwechat/public/storage/"+icon, // 分享图标
+                        imgUrl: window.location.host+"/flwechat/public/storage/"+icon, // 分享图标
                         success: function () {
                             // 用户确认分享后执行的回调函数
                             alert('分享成功');
