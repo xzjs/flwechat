@@ -4,6 +4,7 @@
 
 var article_id = GetQueryString('id');
 var icon = '/flwechat/web/images/topic.png';
+var desc='';
 
 $(function () {
 
@@ -68,10 +69,11 @@ function loadMainData() {
                     if (result.images.length > 0) {
                         icon = result.images[0].img;
                     }
+                    desc=result.content;
                     wx.onMenuShareTimeline({
                         title: '友连', // 分享标题
                         link: window.location.href, // 分享链接
-                        imgUrl: icon, // 分享图标
+                        imgUrl: "/flwechat/public/storage/"+icon, // 分享图标
                         success: function () {
                             // 用户确认分享后执行的回调函数
                             alert('分享成功');
