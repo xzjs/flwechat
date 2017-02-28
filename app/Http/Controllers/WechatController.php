@@ -51,8 +51,9 @@ class WechatController extends Controller
         }
     }
 
-    public function getconfig(Application $wechat){
+    public function getconfig(Application $wechat,Request $request){
         $js=$wechat->js;
+        $js->setUrl($request->url);
         $result=$js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage'), true);
         return response($result);
     }
