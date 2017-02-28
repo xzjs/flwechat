@@ -32,7 +32,7 @@ function loadMainData() {
             $('#article_content').html(result.content);
             var img_html = '';
             for (var i = 0; i < result.images.length; i++) {
-                img_html += '<div class="userImg"><img data-id="' + result.images[i].id + '" class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt=""></div>'
+                img_html += '<div class="userImg"><img data-id="' + result.images[i].id + '" class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt="" onclick="bandImageClick()"></div>'
             }
             $('#img').html(img_html);
             if (result.user_id == user_id) {
@@ -116,7 +116,6 @@ function loadMainData() {
             $('#action').html(action_html);
         }
         action_list();
-        $('.img_show').on('click', bandImageClick());
     });
 }
 
