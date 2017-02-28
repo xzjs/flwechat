@@ -5,6 +5,9 @@ var user_id = null;
 $(".container").height($(window).height());
 var user_id = $.cookie('id');
 if (user_id == null) {
+    var test = window.location.href;
+    console.log(test);
+    $.cookie('parameter',test,{ expires: 1, path: '/' });
     window.location.href = '/flwechat/public/getuser';
 }
 

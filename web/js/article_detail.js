@@ -49,6 +49,29 @@ function loadMainData() {
                 + '</div><div class="your_action_right">'
                 + '<img id="img_support_' + result.id + '" src="images/support.png" alt="" onclick="action(' + result.id + ',0,this)"><span>' + result.support_num + '</span></div>';
             $('#action').html(action_html);
+
+            //设置分享
+            $.get('/flwechat/public/getconfig',function (config) {
+                wx.config(config);
+                var icon='/flwechat/web/images/topic.png';
+                if(result.images.length>0){
+                    icon=result.images[0].img;
+                }
+                wx.onMenuShareTimeline({
+                    title: '友连', // 分享标题
+                    link: window.location.href, // 分享链接
+                    imgUrl: icon, // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        alert('分享成功');
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                        alert('取消分享');
+                    }
+                });
+            });
+
         }else{
             $('#article_content').html('用户已删除该文章');
             var action_html = '<div class="your_action_left">';
