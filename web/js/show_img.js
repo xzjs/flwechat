@@ -2,30 +2,33 @@
  * Created by xzjs on 2017/2/19.
  */
 function init_showimg() {
-    var html = '<div class="weui-gallery" id="gallery">' +
-        '<span class="weui-gallery__img" id="galleryImg" style="background-image: url()">' +
-        '<div class="galleryImgUser">' +
-        '<img id="img_head_img" src="images/lan.jpg" alt="" class="galleryImgUserImg">' +
-        '<span id="img_user_name">微信</span><span>-</span><span id="img_article_content">评论内容</span></div>' +
-        '<img src="images/left.png" alt="" class="galleryImgLeft">' +
-        '<img src="images/right.png" alt="" class="galleryImgRight">' +
-        '<img src="images/url.png" alt="" class="galleryImgUrl">' +
-        '<div id="img_expands" class="url_list" style="display: none"></div>' +
-        '<img src="images/close.png" alt="" class="galleryImgCenter">' +
-        '<div id="danmu" class="galleryImgBulletScreen"></div>' +
-        '</span>' +
-        '<div class="bullet_screen">' +
-        '<div class="bullet_screen_button">' +
-        '<input type="checkbox" class="bullet_screen_button_checkbox" checked="checked">' +
-        '<span>弹幕</span>' +
-        '</div>' +
-        '<span id="submit" class="bullet_screen_submit">提交</span>' +
-        '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content">' +
-        '</div></div>';
-    $('body').append(html);
-    var $gallery = $("#gallery");
+    var gallery = $("#gallery");
+    if (gallery.length == 0) {
+        var html = '<div class="weui-gallery" id="gallery">' +
+            '<span class="weui-gallery__img" id="galleryImg" style="background-image: url()">' +
+            '<div class="galleryImgUser">' +
+            '<img id="img_head_img" src="images/lan.jpg" alt="" class="galleryImgUserImg">' +
+            '<span id="img_user_name">微信</span><span>-</span><span id="img_article_content">评论内容</span></div>' +
+            '<img src="images/left.png" alt="" class="galleryImgLeft">' +
+            '<img src="images/right.png" alt="" class="galleryImgRight">' +
+            '<img src="images/url.png" alt="" class="galleryImgUrl">' +
+            '<div id="img_expands" class="url_list" style="display: none"></div>' +
+            '<img src="images/close.png" alt="" class="galleryImgCenter">' +
+            '<div id="danmu" class="galleryImgBulletScreen"></div>' +
+            '</span>' +
+            '<div class="bullet_screen">' +
+            '<div class="bullet_screen_button">' +
+            '<input type="checkbox" class="bullet_screen_button_checkbox" checked="checked">' +
+            '<span>弹幕</span>' +
+            '</div>' +
+            '<span id="submit" class="bullet_screen_submit">提交</span>' +
+            '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content">' +
+            '</div></div>';
+        $('body').append(html);
+    }
+    gallery = $("#gallery");
     $('.galleryImgCenter').on("click", function () {
-        $gallery.fadeOut(100);
+        gallery.fadeOut(100);
         $('#danmu').danmu('danmu_stop');
         index = 0;
     });
@@ -55,7 +58,7 @@ function init_showimg() {
             }
             change_img(index);
 
-            $gallery.fadeIn(100);
+            gallery.fadeIn(100);
         });
     });
 
@@ -170,3 +173,19 @@ function getsize() {
 $('.galleryImgUser').on('click', function () {
     $(this).css('height', 'auto')
 });
+
+function bandImageClick() {
+    var image_id = $(this).data('id');
+    $.getJSON('/flwechat/public/image/' + image_id, function (result) {
+        img_data = result;
+        for (var i = 0; i < img_data.length; i++) {
+            if (img_data[i].id == image_id) {
+                index = i;
+                break;
+            }
+        }
+        change_img(index);
+
+        gallery.fadeIn(100);
+    });
+}
