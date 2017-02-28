@@ -174,8 +174,11 @@ $('.galleryImgUser').on('click', function () {
     $(this).css('height', 'auto')
 });
 
-function bandImageClick() {
-    var image_id = $(this).data('id');
+function bandImageClick(id) {
+    image_id=id;
+    if(image_id==null) {
+        var image_id = $(this).data('id');
+    }
     $.getJSON('/flwechat/public/image/' + image_id, function (result) {
         img_data = result;
         for (var i = 0; i < img_data.length; i++) {
@@ -186,6 +189,6 @@ function bandImageClick() {
         }
         change_img(index);
 
-        gallery.fadeIn(100);
+        $("#gallery").fadeIn(100);
     });
 }
