@@ -41,6 +41,8 @@ function loadMainData() {
                 action_html += '<a href="article_detail.html?id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
             }
             action_html += '</div><div class="your_action_right">'
+                + '<a href="publish.html?id="><img src="images/share.png" alt=""></a><span id="share">' + + '</span>'
+                +'</div><div class="your_action_right">'
                 + '<a href="publish.html?id=' + result.id + '"><img src="images/comment.png" alt=""></a><span id="comment">' + result.comment_num + '</span>'
                 + '</div><div class="your_action_right">'
                 + '<img id="img_oppose_' + result.id + '" src="images/oppose.png" alt="" onclick="action(' + result.id + ',1,this)"><span>' + result.oppose_num + '</span>'

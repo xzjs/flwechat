@@ -185,7 +185,7 @@ function showArticleList(result) {
             html += '</div>'
                 + '<a href="article_detail.html?id=' + result[i].id + '"><p class="content_txt">作者已删除该文章</p></a>'
                 + '<div class="your_action">'
-                // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
+                // +'<div class="your_action_right"><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
                 + '<div class="your_action_right">'
                 + '<a href="article_detail.html?id=' + result[i].id + '">'
                 + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
