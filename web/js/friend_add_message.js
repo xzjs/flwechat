@@ -3,9 +3,6 @@
  */
 $(function () {
     load_friend();
-    if ($('.contacts').html() == null) {
-
-    }
 });
 
 function agree(id) {
