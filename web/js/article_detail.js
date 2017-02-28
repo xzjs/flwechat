@@ -4,7 +4,7 @@
 
 var article_id = GetQueryString('id');
 var icon = '/flwechat/web/images/topic.png';
-var desc='';
+var desc = '';
 
 $(function () {
 
@@ -43,8 +43,6 @@ function loadMainData() {
                 action_html += '<a href="article_detail.html?id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
             }
             action_html += '</div><div class="your_action_right">'
-                + '<a href="publish.html?id="><img src="images/share.png" alt=""></a><span id="share">' + +'</span>'
-                + '</div><div class="your_action_right">'
                 + '<a href="publish.html?id=' + result.id + '"><img src="images/comment.png" alt=""></a><span id="comment">' + result.comment_num + '</span>'
                 + '</div><div class="your_action_right">'
                 + '<img id="img_oppose_' + result.id + '" src="images/oppose.png" alt="" onclick="action(' + result.id + ',1,this)"><span>' + result.oppose_num + '</span>'
@@ -69,12 +67,12 @@ function loadMainData() {
                     if (result.images.length > 0) {
                         icon = result.images[0].img;
                     }
-                    desc=result.content;
+                    desc = result.content;
                     wx.onMenuShareTimeline({
                         title: desc, // 分享标题
-                        desc:desc,
+                        desc: desc,
                         link: window.location.href, // 分享链接
-                        imgUrl: "http://"+window.location.host+"/flwechat/public/storage/"+icon, // 分享图标
+                        imgUrl: "http://" + window.location.host + "/flwechat/public/storage/" + icon, // 分享图标
                         success: function () {
                             // 用户确认分享后执行的回调函数
                             alert('分享成功');
@@ -88,7 +86,7 @@ function loadMainData() {
                         title: desc, // 分享标题
                         desc: desc, // 分享描述
                         link: window.location.href, // 分享链接
-                        imgUrl: "http://"+window.location.host+"/flwechat/public/storage/"+icon, // 分享图标
+                        imgUrl: "http://" + window.location.host + "/flwechat/public/storage/" + icon, // 分享图标
                         type: '', // 分享类型,music、video或link，不填默认为link
                         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                         success: function () {
@@ -100,7 +98,7 @@ function loadMainData() {
                             alert('取消分享');
                         }
                     });
-                },'json');
+                }, 'json');
 
         } else {
             $('#article_content').html('用户已删除该文章');
