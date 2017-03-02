@@ -49,4 +49,5 @@ function cancelSearch() {
     //hideSearchResult();
     $('#searchBar').removeClass('weui-search-bar_focusing');
     $('#searchText').show();
+    $('#searchInput').blur();
 }
