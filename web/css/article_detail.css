@@ -84,6 +84,9 @@
     border-radius: 15px;
     vertical-align: middle;
 }
+.comment_box{
+    margin-bottom: 84px;
+}
 
 /*.comment{*/
     /*margin: 5px 0 5px 35px;*/

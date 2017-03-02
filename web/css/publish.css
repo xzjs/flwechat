@@ -101,6 +101,9 @@ lable{
 #write_icon{
     vertical-align: bottom;
 }
+.modal-body{
+    text-align: center;
+}
 
 /*#canvas{*/
     /*width: 289px;*/
