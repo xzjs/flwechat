@@ -141,6 +141,7 @@ var show_img, signaturePad, url;
 
 //设置canvas的长宽
 function set_canvas() {
+    $('#myModal').modal();
     var image = new Image();
     image.src = url;
     image.onload = function () {
@@ -153,20 +154,23 @@ function set_canvas() {
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
         //如果长大于宽
         if (image_scale > brower_scale) {
-            canvas.height = brower_height * 0.7;
+            canvas.height = brower_height * 0.7 * ratio;
             canvas.width = canvas.height / image_scale;
         } else {//宽大于长
-            canvas.width = brower_width * 0.7;
+            canvas.width = brower_width * 0.7 * ratio;
             canvas.height = canvas.width * image_scale;
         }
-        canvas.getContext("2d");
+        canvas.getContext("2d").scale(ratio,ratio);
         console.log(canvas.height);
         console.log(canvas.width);
+        console.log(canvas.offsetHeight);
+        console.log(canvas.offsetWidth);
         signaturePad = new SignaturePad(canvas, {
             penColor: "rgb(229,43,28)"
         });
         signaturePad.fromDataURL(url);
-        $('#myModal').modal();
+        $('#canvas').css('height',canvas.height/ratio);
+        $('#canvas').css('width',canvas.width/ratio);
     };
 }
 
@@ -178,3 +182,16 @@ $('#clear').on('click', function () {
     signaturePad.clear();
     signaturePad.fromDataURL(url);
 });
+
+function resizeCanvas() {
+    // When zoomed out to less than 100%, for some very strange reason,
+    // some browsers report devicePixelRatio as less than 1
+    // and only part of the canvas is cleared then.
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+}
+
+// window.onresize = resizeCanvas;
+// resizeCanvas();
