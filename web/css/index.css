@@ -3,6 +3,7 @@
 }
 .container{
     background-color: #fff;
+    /*margin-bottom:84px;*/
 }
 .weui-search-bar{
     width:100%;
@@ -40,7 +41,7 @@
 }
 
 .content_box{
-    margin-bottom:84px;
+    /*margin-bottom:84px;*/
 }
 .content{
     padding:0 15px;
@@ -243,6 +244,10 @@ a{
 .your_action span{
     font-size: 10px;
     color: #8a8a8a;
+}
+.bottom{
+    height: 100px;
+    /*text-align: center;*/
 }
 .weui-tabbar{
     position: fixed;
