@@ -13,11 +13,11 @@ $(function () {
         $searchInput.val('');
     }
 
-    function cancelSearch() {
-        hideSearchResult();
-        $searchBar.removeClass('weui-search-bar_focusing');
-        $searchText.show();
-    }
+    // function cancelSearch() {
+    //     hideSearchResult();
+    //     $searchBar.removeClass('weui-search-bar_focusing');
+    //     $searchText.show();
+    // }
 
     $searchText.on('click', function () {
         $searchBar.addClass('weui-search-bar_focusing');
@@ -44,3 +44,9 @@ $(function () {
         $searchInput.blur();
     });
 });
+
+function cancelSearch() {
+    //hideSearchResult();
+    $('#searchBar').removeClass('weui-search-bar_focusing');
+    $('#searchText').show();
+}

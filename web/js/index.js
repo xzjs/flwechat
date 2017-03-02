@@ -62,6 +62,7 @@ function check() {
         {'keyword': $('#searchInput').val(),},
         function (result) {
             showArticleList(result);
+            cancelSearch();
         }, 'json');
     return false;
 }
