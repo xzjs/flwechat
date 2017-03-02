@@ -271,7 +271,7 @@ class ArticleController extends Controller
     public function search(Request $request)
     {
         try {
-            $articles = Article::with('images', 'topic', 'user')->where('content', 'like', "%" . $request->keyword . "%")->orWhere('User->name', 'like', "%" . $request->keyword . "%")->orderBy('created_at', 'desc')->get();
+            $articles = Article::with('images', 'topic', 'user')->where('content', 'like', "%" . $request->keyword . "%")->orderBy('created_at', 'desc')->get();
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
