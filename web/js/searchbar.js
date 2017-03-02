@@ -3,22 +3,21 @@
  */
 $(function () {
     var $searchBar = $('#searchBar'),
-        $searchResult = $('#searchResult'),
         $searchText = $('#searchText'),
         $searchInput = $('#searchInput'),
         $searchClear = $('#searchClear'),
         $searchCancel = $('#searchCancel');
 
     function hideSearchResult() {
-        $searchResult.hide();
+        //$searchResult.hide();
         $searchInput.val('');
     }
 
-    function cancelSearch() {
-        hideSearchResult();
-        $searchBar.removeClass('weui-search-bar_focusing');
-        $searchText.show();
-    }
+    // function cancelSearch() {
+    //     hideSearchResult();
+    //     $searchBar.removeClass('weui-search-bar_focusing');
+    //     $searchText.show();
+    // }
 
     $searchText.on('click', function () {
         $searchBar.addClass('weui-search-bar_focusing');
@@ -28,13 +27,13 @@ $(function () {
         .on('blur', function () {
             if (!this.value.length) cancelSearch();
         })
-        .on('input', function () {
-            if (this.value.length) {
-                $searchResult.show();
-            } else {
-                $searchResult.hide();
-            }
-        })
+        // .on('input', function () {
+        //     if (this.value.length) {
+        //         $searchResult.show();
+        //     } else {
+        //         $searchResult.hide();
+        //     }
+        // })
     ;
     $searchClear.on('click', function () {
         hideSearchResult();
@@ -45,3 +44,10 @@ $(function () {
         $searchInput.blur();
     });
 });
+
+function cancelSearch() {
+    //hideSearchResult();
+    $('#searchBar').removeClass('weui-search-bar_focusing');
+    $('#searchText').show();
+    $('#searchInput').blur();
+}

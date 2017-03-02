@@ -57,14 +57,14 @@ function getTopicList() {
     });
 }
 
-$('#searchInput').keydown(function (event) {
-    if (event.keyCode == 13) {
-        $.post('/flwechat/public/article/search',
-            {'keyword': $('#searchInput').val(),},
-            function (result) {
-                showArticleList(result);
-            }, 'json');
-    }
-});
+function check() {
+    $.post('/flwechat/public/article/search',
+        {'keyword': $('#searchInput').val(),},
+        function (result) {
+            showArticleList(result);
+            cancelSearch();
+        }, 'json');
+    return false;
+}
 
 
