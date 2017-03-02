@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <div class="weui-search-bar" id="searchBar">
-        <div class="weui-search-bar__form">
+        <form class="weui-search-bar__form" onsubmit="return check()">
             <div class="weui-search-bar__box">
                 <i class="weui-icon-search"></i>
                 <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
@@ -22,7 +22,7 @@
                 <i class="weui-icon-search"></i>
                 <span>搜索</span>
             </label>
-        </div>
+        </form>
         <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
     </div>
     <nav class="topic_index_box">
