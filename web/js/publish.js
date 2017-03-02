@@ -153,7 +153,7 @@ function set_canvas() {
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
         //如果长大于宽
         if (image_scale > brower_scale) {
-            canvas.height = brower_height * 0.9;
+            canvas.height = brower_height * 0.7;
             canvas.width = canvas.height / image_scale;
         } else {//宽大于长
             canvas.width = brower_width * 0.7;
