@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>发布</title>
+    <link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/publish.css">
@@ -106,10 +107,30 @@
         <!--<p class="weui-toast__content">发布成功</p>-->
     <!--</div>-->
 <!--</div>-->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">标记图片</h4>
+            </div>
+            <div class="modal-body">
+                <canvas id="canvas"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button id="clear" type="button" class="btn btn-warning">清除</button>
+                <button type="button" class="btn btn-primary" onclick="show()" data-dismiss="modal">上传</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jsweixin.js"></script>
+<script src="js/signature_pad.js"></script>
 <script type="text/javascript" src="js/publish.js"></script>
 </body>
 </html>

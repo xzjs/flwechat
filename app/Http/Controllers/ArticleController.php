@@ -7,6 +7,7 @@ use App\Image;
 use App\Jobs\GetUrl;
 use App\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -51,9 +52,9 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         try {
-            $id=$request->id;
+            $id = $request->id;
             $arr = ['pic_file1', 'pic_file2', 'pic_file3'];
-            if($id==null){
+            if ($id == null) {
                 $article = new Article;
                 $article->user_id = $request->user_id;
                 $article->content = $request->comment;
@@ -63,7 +64,7 @@ class ArticleController extends Controller
                 $article->oppose_num = 0;
                 $article->topic_id = $request->topic_id;
                 $article->reply_id = $request->reply_id;
-                $article->is_deleted=0;
+                $article->is_deleted = 0;
                 if ($article->reply_id != 0) {
                     $article2 = Article::find($article->reply_id);
                     $article2->comment_num += 1;
@@ -72,18 +73,35 @@ class ArticleController extends Controller
                 }
                 $article->saveOrFail();
 
+//                foreach ($arr as $value) {
+//                    if ($request->hasFile($value)) {
+//                        $path = $request->file($value)->store('public');
+//                        $path = explode('/', $path)[1];
+//                        $img = new Image(['img' => $path, 'article_id', $article->id]);
+//                        $img->position=$value;
+//                        $article->images()->save($img);
+//                        dispatch(new GetUrl($img));
+//                    }
+//                }
                 foreach ($arr as $value) {
-                    if ($request->hasFile($value)) {
-                        $path = $request->file($value)->store('public');
-                        $path = explode('/', $path)[1];
-                        $img = new Image(['img' => $path, 'article_id', $article->id]);
-                        $img->position=$value;
+                    if ($request->$value != null) {
+                        $temp = $request->$value;
+                        $r=explode(',',$temp);
+                        $img = base64_decode($r[1]);
+                        $extension=explode(';',explode('/',$r[0])[1])[0];
+                        $img_name=time().'.'.$extension;
+                        $status=Storage::put("public/$img_name", $img);
+                        if($status==false){
+                            throw new \Exception('图片存储错误');
+                        }
+                        $img = new Image(['img' => $img_name, 'article_id', $article->id]);
+                        $img->position = $value;
                         $article->images()->save($img);
                         dispatch(new GetUrl($img));
                     }
                 }
-            }else{
-                $article=Article::find($id);
+            } else {
+                $article = Article::find($id);
                 $article->content = $request->comment;
                 $article->topic_id = $request->topic_id;
                 $article->save();
@@ -92,7 +110,7 @@ class ArticleController extends Controller
                         $path = $request->file($value)->store('public');
                         $path = explode('/', $path)[1];
                         $img = new Image(['img' => $path, 'article_id', $article->id]);
-                        $img->position=$value;
+                        $img->position = $value;
                         $article->images()->save($img);
                         dispatch(new GetUrl($img));
                     }
@@ -153,8 +171,8 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         try {
-            $article=Article::find($id);
-            $article->is_deleted=1;
+            $article = Article::find($id);
+            $article->is_deleted = 1;
             $article->save();
         } catch (\Exception $exception) {
             echo $exception->getMessage();
