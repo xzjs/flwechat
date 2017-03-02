@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-    <div>
+    <div class="article_box">
         <div class="content">
             <img id="head_img" src="" alt="" class="head_portrait">
             <span id="nick_name" class="wei_name"></span>
@@ -43,6 +43,12 @@
                 <!--</div>-->
             </div>
         </div>
+        <div class="comment_box">
+            <div class="content_box"></div>
+        </div>
+        <div class="comment_input">
+            <a href="">评论</a>
+        </div>
     </div>
     <!--<div class="comment_box">-->
         <!--<div class="follow">-->
@@ -55,12 +61,7 @@
             <!--<p class="comment_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。&#45;&#45;阿尔伯特·爱因斯坦</p>-->
         <!--</div>-->
     <!--</div>-->
-    <div class="comment_box">
-        <div class="content_box"></div>
-    </div>
-    <div class="comment_input">
-        <a href="">评论</a>
-    </div>
+
     <div class="weui-tabbar">
         <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
                     <span style="display: inline-block;position: relative;">
@@ -89,12 +90,12 @@
             <p class="weui-tabbar__label">我</p>
         </a>
     </div>
-    <div id="do" style="display: none">
-        <div id="close_dialog" class="weui-mask"></div>
-        <div class="article_do">
-                <a id="edit_article" href=""><img src="images/rewrite.png" alt="">编辑</a>
-                <a id="delete_article" href="javascript:void(0);"><img src="images/delete.png" alt="">删除</a>
-        </div>
+</div>
+<div id="do" style="display: none">
+    <div id="close_dialog" class="weui-mask"></div>
+    <div class="article_do">
+        <a id="edit_article" href=""><img src="images/rewrite.png" alt="">编辑</a>
+        <a id="delete_article" href="javascript:void(0);"><img src="images/delete.png" alt="">删除</a>
     </div>
 </div>
 <div id="toast" style="display: none;">
