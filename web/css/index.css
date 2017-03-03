@@ -247,7 +247,7 @@ a{
 }
 .bottom{
     height: 100px;
-    /*text-align: center;*/
+    width: 100%;
 }
 .weui-tabbar{
     position: fixed;
