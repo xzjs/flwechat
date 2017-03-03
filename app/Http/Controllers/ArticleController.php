@@ -89,7 +89,7 @@ class ArticleController extends Controller
                         $r=explode(',',$temp);
                         $img = base64_decode($r[1]);
                         $extension=explode(';',explode('/',$r[0])[1])[0];
-                        $img_name=time().'.'.$extension;
+                        $img_name=time().rand(0,10000).'.'.$extension;
                         $status=Storage::put("public/$img_name", $img);
                         if($status==false){
                             throw new \Exception('图片存储错误');

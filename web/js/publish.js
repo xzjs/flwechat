@@ -121,6 +121,8 @@ function get_select_list() {
 var reply_id = GetQueryString('id');
 if (reply_id == null) {
     reply_id = 0;
+}else{
+    $('title').html('评论');
 }
 var action = GetQueryString('action');
 
