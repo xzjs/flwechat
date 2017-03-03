@@ -104,6 +104,9 @@ lable{
 .modal-body{
     text-align: center;
 }
+.weui-tabbar__label{
+    margin-bottom: 0;
+}
 
 /*#canvas{*/
     /*width: 289px;*/
