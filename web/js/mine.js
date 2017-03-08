@@ -35,9 +35,15 @@ $(document).ready(function () {
         if (html != '发布的文章') {
             // url = '/flwechat/public/article/comment_articles/' + id;
             // getArticleList(url);
-            window.location.href='mine.html?user_id='+show_id+'&comment=1';
+            window.location.href = 'mine.html?user_id=' + user_id + '&comment=1';
         }
     });
+    $('span').removeClass('selected');
+    if (data['comment'] == 1) {
+        $('#comment').addClass('selected');
+    } else {
+        $('#publish').addClass('selected');
+    }
 });
 
 function set_friend(type, show_id) {

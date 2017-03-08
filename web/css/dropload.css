@@ -9,6 +9,8 @@
 }
 .dropload-down{
     height: 50px;
+    width: 50%;
+    margin: 0 auto;
 }
 .dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
     height: 50px;
