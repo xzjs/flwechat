@@ -94,7 +94,7 @@ function init_showimg() {
 
     $('.galleryImgUrl').on('click', function () {
         if (img_data[index].expands.length != 0) {
-            $('#img_expands').fadeIn(100);
+            $('#img_expands').fadeToggle(100);
         } else {
             alert('图片没有相关的链接');
         }
