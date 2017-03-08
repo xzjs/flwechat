@@ -1,15 +1,13 @@
 /**
  * Created by yanlli on 2017/2/14.
  */
-
-var article_id = GetQueryString('id');
 var icon = '/flwechat/web/images/topic.png';
 var desc = '';
 
 $(function () {
 
     loadMainData();
-    getArticleList('/flwechat/public/article/article_list/' + article_id);
+    //getArticleList('/flwechat/public/article/article_list/' + article_id);
 
     $('#edit').on('click', function () {
         $('#do').show();
@@ -26,7 +24,7 @@ $(function () {
 });
 
 function loadMainData() {
-    $.getJSON('/flwechat/public/article/' + article_id, function (result) {
+    $.getJSON('/flwechat/public/article/' + data['reply_id'], function (result) {
         $('#head_img').attr('src', result.user.head_img);
         $('#nick_name').html(result.user.nickname);
         if (result.is_deleted == 0) {

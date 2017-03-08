@@ -1,8 +1,6 @@
 /**
  * Created by xzjs on 2017/2/15.
  */
-var user_id = $.cookie('id');
-
 //查看用户
 function show_user(id) {
     $.cookie('show_id', id);
@@ -69,7 +67,7 @@ function change_follow_topic_style(topic_id) {
     $("span[data-id=" + topic_id + "]").toggleClass('topic_followed');
     if ($("span[data-id=" + topic_id + "]").hasClass('topic_followed')) {
         $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'cancel_follow(' + topic_id + ',1)');
-    }else{
+    } else {
         $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'follow(' + topic_id + ',1)');
     }
 }
@@ -125,23 +123,15 @@ function comment(reply_id) {
     window.location.href = 'publish.html';
 }
 
+//渲染文章列表
 function showArticleList(result) {
     var myPublish = $('.content_box');
     $('.blank').remove();
     var myPublic_html = ''
     for (var i = 0; i < result.length; i++) {
-        if(result[i].is_deleted==0) {
+        if (result[i].is_deleted == 0) {
             var html_img = '';
             for (var j = 0; j < result[i].images.length; j++) {
-                // var $gallery = $("#gallery");
-                // $('.galleryImgCenter').on("click", function(){
-                //     $gallery.fadeOut(100);
-                // });
-                // $('.bullet_screen_button_checkbox').on('click',function () {
-                //     if($('.bullet_screen_button_checkbox').is(':checked')){
-                //         $('.bullet_screen_button span').html('已关闭');
-                //     }
-                // });
                 html_img += '<div class="userImg">' +
                     '<img data-id="' + result[i].images[j].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show"></div>';
             }
@@ -157,7 +147,7 @@ function showArticleList(result) {
 
             }
             html += '</div>'
-                + '<a href="article_detail.html?id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
+                + '<a href="article_detail.html?reply_id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
                 + '<div class="pic_show">' + html_img + '</div>'
                 + '<div class="your_action">'
                 // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
@@ -170,7 +160,7 @@ function showArticleList(result) {
                 + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt="" onclick="action(' + result[i].id + ',0,this)"><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
                 + '</div></div>';
             myPublic_html += html;
-        }else{
+        } else {
             var html = '<div class="content">'
                 + '<div class="content_top"><a href="mine.html?id=' + result[i].user.id + '">'
                 + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
@@ -197,8 +187,82 @@ function showArticleList(result) {
             myPublic_html += html;
         }
     }
-    myPublish.html(myPublic_html);
+    myPublish.append(myPublic_html);
     follow_topic_list(user_id);
     action_list();
     init_showimg();
 }
+
+//上拉加载
+// dropload
+$('.container').dropload({
+    scrollArea: window,
+    domUp: {
+        domClass: 'dropload-up',
+        domRefresh: '<div class="dropload-refresh">↓下拉刷新-自定义内容</div>',
+        domUpdate: '<div class="dropload-update">↑释放更新-自定义内容</div>',
+        domLoad: '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>'
+    },
+    domDown: {
+        domClass: 'dropload-down',
+        domRefresh: '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+        domLoad: '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
+        domNoData: '<div class="dropload-noData">已无更多数据</div>'
+    },
+    loadUpFn: function (me) {
+        data['page'] = 0;
+        $.ajax({
+            type: 'POST',
+            url: '/flwechat/public/article/article_list',
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                $('.content_box').html('');
+                showArticleList(data);
+
+                // 每次数据加载完，必须重置
+                me.resetload();
+                // 重置页数，重新获取loadDownFn的数据
+                data['page'] = 0;
+                // 解锁loadDownFn里锁定的情况
+                me.unlock();
+                me.noData(false);
+
+            },
+            error: function (xhr, type) {
+                console.log(xhr.responseText);
+                // 即使加载出错，也得重置
+                me.resetload();
+            }
+        });
+    },
+    loadDownFn: function (me) {
+        data['page']++;
+        $.ajax({
+            type: 'POST',
+            url: '/flwechat/public/article/article_list',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                var arrLen = data.length;
+                if (arrLen > 0) {
+                    showArticleList(data);
+                    // 如果没有数据
+                } else {
+                    // 锁定
+                    me.lock();
+                    // 无数据
+                    me.noData();
+                }
+                // 每次数据插入，必须重置
+                me.resetload();
+            },
+            error: function (xhr, type) {
+                console.log(xhr);
+                // 即使加载出错，也得重置
+                me.resetload();
+            }
+        });
+    },
+    threshold: 50
+});

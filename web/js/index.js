@@ -2,14 +2,6 @@
  * Created by yanlli on 2017/1/16.
  */
 $(function () {
-    var topic_id = GetQueryString('id');
-    if (topic_id == null) {
-        getArticleList('/flwechat/public/article/article_list/0');
-    } else {
-        getArticleList('/flwechat/public/article/get_article_by_topic/' + topic_id);
-
-        $('div[data-id="' + topic_id + '"]').addClass('topic_index_selected').siblings('.topic_index').removeClass('topic_index_selected');
-    }
     getTopicList();
 });
 $('.more').on('click', function () {
@@ -39,16 +31,16 @@ $('.close').on('click', function () {
     $('.topic_index_box').css('height', '30px');
 });
 
+//获取标签列表
 function getTopicList() {
     $.getJSON('/flwechat/public/topic', function (result) {
         var topicList = ''
         for (var i = 0; i < result.length; i++) {
-            topicList += '<a href="index.html?id=' + result[i].id + '" class="topic_index" data-id="' + result[i].id + '">' + result[i].content + '</a>'
+            topicList += '<a href="index.html?topic_id=' + result[i].id + '" class="topic_index" data-id="' + result[i].id + '">' + result[i].content + '</a>'
         }
         $('.topic_index_box').append(topicList);
-        var topic_id = GetQueryString('id');
-        if (topic_id != null) {
-            $('a[data-id="' + topic_id + '"]').addClass('topic_index_selected').siblings('.topic_index').removeClass('topic_index_selected');
+        if (data['topic_id'] != null) {
+            $('a[data-id="' + data['topic_id'] + '"]').addClass('topic_index_selected').siblings('.topic_index').removeClass('topic_index_selected');
         }
         // $('.topic_index').on('click',function () {
         //     $(this).addClass('topic_index_selected').siblings('.topic_index').removeClass('topic_index_selected');

@@ -7,21 +7,26 @@ var user_id = $.cookie('id');
 if (user_id == null) {
     var test = window.location.href;
     console.log(test);
-    $.cookie('parameter',test,{ expires: 1, path: '/' });
+    $.cookie('parameter', test, {expires: 1, path: '/'});
     window.location.href = '/flwechat/public/getuser';
 }
 
-var timestamp = new Date().getTime();
+//上拉下拉数据
+var data = {'page': -1, 'size': 15};
 
+//获取url中的参数
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)return decodeURI(r[2]);
+    return null;
+}
 
-// wx.config({
-//     debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-//     appId: APPID, // 必填，公众号的唯一标识
-//     timestamp: timestamp, // 必填，生成签名的时间戳
-//     nonceStr: 'flwechat', // 必填，生成签名的随机串
-//     signature: '',// 必填，签名，见附录1
-//     jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-// });
+data['topic_id'] = GetQueryString('topic_id');
+data['user_id'] = GetQueryString('user_id');
+data['reply_id'] = GetQueryString('reply_id');
+data['comment'] = GetQueryString('comment');
+
 var homepage_icon = $('.homepage_icon'),
     follow_icon = $('.follow_icon'),
     publish_icon = $('.publish_icon'),
@@ -31,10 +36,3 @@ $('.weui-tabbar__item').on('click', function () {
     $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
 });
 
-//获取url中的参数
-function GetQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null)return decodeURI(r[2]);
-    return null;
-}

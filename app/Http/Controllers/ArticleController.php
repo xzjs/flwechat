@@ -86,12 +86,12 @@ class ArticleController extends Controller
                 foreach ($arr as $value) {
                     if ($request->$value != null) {
                         $temp = $request->$value;
-                        $r=explode(',',$temp);
+                        $r = explode(',', $temp);
                         $img = base64_decode($r[1]);
-                        $extension=explode(';',explode('/',$r[0])[1])[0];
-                        $img_name=time().rand(0,10000).'.'.$extension;
-                        $status=Storage::put("public/$img_name", $img);
-                        if($status==false){
+                        $extension = explode(';', explode('/', $r[0])[1])[0];
+                        $img_name = time() . rand(0, 10000) . '.' . $extension;
+                        $status = Storage::put("public/$img_name", $img);
+                        if ($status == false) {
                             throw new \Exception('图片存储错误');
                         }
                         $img = new Image(['img' => $img_name, 'article_id', $article->id]);
@@ -222,15 +222,15 @@ class ArticleController extends Controller
      * @param $reply_id 回复文章的id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function article_list($reply_id)
-    {
-        try {
-            $articles = Article::with('images', 'topic', 'user')->where('reply_id', $reply_id)->orderBy('created_at', 'desc')->get();
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
+//    public function article_list($reply_id)
+//    {
+//        try {
+//            $articles = Article::with('images', 'topic', 'user')->where('reply_id', $reply_id)->orderBy('created_at', 'desc')->get();
+//            return response()->json($articles);
+//        } catch (\Exception $exception) {
+//            echo $exception->getMessage();
+//        }
+//    }
 
     /**
      * 获取用户评论过的文章
@@ -272,6 +272,44 @@ class ArticleController extends Controller
     {
         try {
             $articles = Article::with('images', 'topic', 'user')->where('content', 'like', "%" . $request->keyword . "%")->orderBy('created_at', 'desc')->get();
+            return response()->json($articles);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
+
+    /**
+     * 获取文章列表
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function article_list(Request $request)
+    {
+        try {
+            $page = $request->page;
+            $size = $request->size;
+            $topic_id = $request->topic_id;
+            $user_id = $request->user_id;
+            $reply_id = $request->reply_id;
+            $key_word = $request->key_word;
+            $articles = Article::with('images', 'topic', 'user');
+            //话题查询
+            if ($topic_id != null) {
+                $articles = $articles->where('topic_id', $topic_id)->where('reply_id', 0);
+            }
+            //用户id查询
+            if ($user_id != null) {
+                $articles = $articles->where('user_id', $user_id);
+            }
+            //回复id查询
+            if ($reply_id != null) {
+                $articles = $articles->where('reply_id', $reply_id);
+            }
+            //关键字查询
+            if ($key_word != null) {
+                $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
+            }
+            $articles = $articles->orderBy('created_at','desc')->skip($page * $size)->take($size)->get();
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();

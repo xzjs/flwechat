@@ -4,7 +4,7 @@
 $(document).ready(function () {
     var id = 0;
 
-    var show_id = GetQueryString('id');
+    var show_id = data['user_id'];
     if (show_id != null) {
         if (show_id == user_id) {
             id = user_id;
@@ -27,17 +27,16 @@ $(document).ready(function () {
         $('#follow_num').html(result.follow);
         $('#be_follow_num').html(result.be_follow);
     });
-    getArticleList('/flwechat/public/article/get_article_by_user_id/' + id);
     $('.messages span').on('click', function () {
         $(this).addClass('selected').siblings().removeClass('selected');
+        $('.content_box').html('');
         var html = $(this).html();
         var url = '';
-        if (html == '发布的文章') {
-            url = '/flwechat/public/article/get_article_by_user_id/' + id;
-        } else {
-            url = '/flwechat/public/article/comment_articles/' + id;
+        if (html != '发布的文章') {
+            // url = '/flwechat/public/article/comment_articles/' + id;
+            // getArticleList(url);
+            window.location.href='mine.html?user_id='+show_id+'&comment=1';
         }
-        getArticleList(url);
     });
 });
 
