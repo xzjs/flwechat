@@ -194,6 +194,7 @@ function resizeCanvas() {
     canvas.width = canvas.offsetWidth * ratio;
     canvas.height = canvas.offsetHeight * ratio;
     canvas.getContext("2d").scale(ratio, ratio);
+
 }
 
 // window.onresize = resizeCanvas;
