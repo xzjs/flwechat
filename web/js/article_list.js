@@ -136,7 +136,7 @@ function showArticleList(result) {
                     '<img data-id="' + result[i].images[j].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show"></div>';
             }
             var html = '<div class="content">'
-                + '<div class="content_top"><a href="mine.html?id=' + result[i].user.id + '">'
+                + '<div class="content_top"><a href="mine.html?user_id=' + result[i].user.id + '">'
                 + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
                 + '</a>'
                 + '<span class="wei_name">' + result[i].user.nickname + '</span>';
@@ -162,7 +162,7 @@ function showArticleList(result) {
             myPublic_html += html;
         } else {
             var html = '<div class="content">'
-                + '<div class="content_top"><a href="mine.html?id=' + result[i].user.id + '">'
+                + '<div class="content_top"><a href="mine.html?user_id=' + result[i].user.id + '">'
                 + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
                 + '</a>'
                 + '<span class="wei_name">' + result[i].user.nickname + '</span>';

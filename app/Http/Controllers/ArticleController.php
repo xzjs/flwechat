@@ -292,6 +292,7 @@ class ArticleController extends Controller
             $user_id = $request->user_id;
             $reply_id = $request->reply_id;
             $key_word = $request->key_word;
+            $comment = $request->comment;
             $articles = Article::with('images', 'topic', 'user');
             //话题查询
             if ($topic_id != null) {
@@ -299,7 +300,12 @@ class ArticleController extends Controller
             }
             //用户id查询
             if ($user_id != null) {
-                $articles = $articles->where('user_id', $user_id);
+                if ($comment == 1) {
+                    $reply_ids = Article::where('user_id', $user_id)->where('reply_id', '>', 0)->get(['reply_id'])->toArray();
+                    $articles = Article::with('images', 'topic', 'user')->whereIn('id',$reply_ids);
+                } else {
+                    $articles = $articles->where('user_id', $user_id);
+                }
             }
             //回复id查询
             if ($reply_id != null) {
@@ -309,7 +315,7 @@ class ArticleController extends Controller
             if ($key_word != null) {
                 $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
             }
-            $articles = $articles->orderBy('created_at','desc')->skip($page * $size)->take($size)->get();
+            $articles = $articles->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
