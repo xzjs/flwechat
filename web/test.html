@@ -1,38 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>测试</title>
-    <style>
-        .div1{
-            width: 300px;
-            height: 300px;
-            background-color: #0bb20c;
-            /*text-align: center;*/
-            /*margin-bottom: 50px;*/
-            /*border: 1px solid #fff;*/
-            /*overflow:hidden;*/
-            /*display: table-cell;*/
-            line-height: 300px;
-            /*vertical-align: middle;*/
-        }
-        .div2{
-            width: 200px;
-            height: 200px;
-            background-color: #ac2925;
-            vertical-align: middle;
-            /*margin-top: 20px;*/
-            /*margin:0 auto;*/
-            display: inline;
-        }
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/test.css">
+    <title>图片翻转</title>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script>
+        $(function(){
+            var $opposite = $('#opposite');
+//            $(".wrap").hover(function(){
+//                $opposite.removeClass();
+//                $opposite.addClass('test2');
+//            },function(){
+//                $opposite.removeClass();
+//                $opposite.addClass('test');
+//            });
 
-    </style>
+            $(".well-item").click(function(){
+//                $(this).removeClass().addClass("well-item2");
+//                $(this).find(".correct").children().removeClass();
+//                $(this).find(".opposite").children().removeClass();
+                $(this).find(".correct").children().toggleClass("test").toggleClass("test2");
+                $(this).find(".opposite").children().toggleClass('test2').toggleClass('test');
+            },function(){
+//                $(this).find(".correct").children().removeClass();
+//                $(this).find(".opposite").children().removeClass();
+                $(this).find(".correct").children().toggleClass("test2");
+                $(this).find(".opposite").children().toggleClass('test');
+            });
+//            $(".well-item2").hover(function () {
+//                $(this).removeClass().addClass("well-item");
+//                $(this).find(".correct").children().removeClass();
+//                $(this).find(".opposite").children().removeClass();
+//                $(this).find(".correct").children().addClass("test2");
+//                $(this).find(".opposite").children().addClass('test');
+//            });
+        });
+    </script>
 </head>
 <body>
-<div class="div1">
-    <!--<img src="images/lan.jpg" alt="" class="div2">-->
-    <div class="div2"></div>
+<div class="well">
+    <div class="well-item">
+        <div class="correct"><img  class="" src="images/lan.jpg" /></div>
+        <div class="opposite">
+            <div class="">
+                <div class="opposite-content">
+                    <div class="opposite-content-text">
+                        背面
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 </body>
 </html>

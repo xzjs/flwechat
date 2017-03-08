@@ -5,7 +5,7 @@ function init_showimg() {
     var gallery = $("#gallery");
     if (gallery.length == 0) {
         var html = '<div class="weui-gallery" id="gallery">' +
-            '<span class="weui-gallery__img" id="galleryImg" style="background-image: url()">' +
+            '<span class="weui-gallery__img correct" id="galleryImg" style="background-image: url()">' +
             '<div class="galleryImgUser">' +
             '<img id="img_head_img" src="images/lan.jpg" alt="" class="galleryImgUserImg">' +
             '<span id="img_user_name">微信</span><span>-</span><span id="img_article_content">评论内容</span></div>' +
@@ -16,6 +16,7 @@ function init_showimg() {
             '<img src="images/close.png" alt="" class="galleryImgCenter">' +
             '<div id="danmu" class="galleryImgBulletScreen"></div>' +
             '</span>' +
+            '<div class="opposite"><div class=""><div class="opposite-content">背面</div></div></div>'+
             '<div class="bullet_screen">' +
             '<div class="bullet_screen_button">' +
             '<input type="checkbox" class="bullet_screen_button_checkbox" checked="checked">' +
@@ -26,6 +27,21 @@ function init_showimg() {
             '</div></div>';
         $('body').append(html);
     }
+
+    $('.correct').on('click',function(){
+        $(".correct").removeClass('test2');
+        $(".opposite").children().removeClass("test");
+        $(".correct").addClass("test");
+        $(".opposite").children().addClass('test2');
+    });
+    $('.opposite').on('click',function(){
+        $(".correct").removeClass("test");
+        $(".opposite").children().removeClass('test2');
+        $(".correct").addClass("test2");
+        $(".opposite").children().addClass('test');
+//                setTimeout('location.reload()',3000);
+    });
+
     gallery = $("#gallery");
     $('.galleryImgCenter').on("click", function () {
         gallery.fadeOut(100);
@@ -134,6 +150,7 @@ function change_img(num) {
             expands_html += '<a href="' + img_data[index].expands[i].href + '">' + img_data[index].expands[i].title + '</a>';
         }
         $('#img_expands').html(expands_html);
+        $('.opposite-content').html(expands_html);
     }
 }
 
