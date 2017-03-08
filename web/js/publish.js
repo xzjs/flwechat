@@ -173,6 +173,7 @@ function set_canvas() {
         signaturePad.fromDataURL(url);
         $('#canvas').css('height',canvas.height/ratio);
         $('#canvas').css('width',canvas.width/ratio);
+
     };
 }
 
