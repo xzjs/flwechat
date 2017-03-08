@@ -61,8 +61,8 @@
     font-size: 14px;
 }
 .comment_box .content .content_txt{
-    margin-left: 45px;
-    font-size:12px;
+    margin-left: 40px;
+    /*font-size:12px;*/
 }
 .comment_box .content .pic_show .userImg{
     width: 60px;
