@@ -133,17 +133,21 @@ a{
 .galleryImgLeft{
     position: absolute;
     bottom:10px;
-    left:20px;
+    /*left:20px;*/
+    left:25%;
 }
 .galleryImgCenter{
     position: absolute;
     bottom:10px;
-    right:58%;
+    /*right:58%;*/
+    left:40%;
 }
 .galleryImgUrl{
     position: absolute;
     bottom:10px;
-    right:30%;
+    /*right:30%;*/
+    /*bottom: 30px;*/
+    left:55%;
 }
 .url_list{
     position: absolute;
@@ -165,12 +169,13 @@ a{
 .galleryImgRight{
     position: absolute;
     bottom:10px;
-    right:20px;
+    /*right:20px;*/
+    left:70%;
 }
 .bullet_screen{
     width:100%;
     position: absolute;
-    bottom:0;
+    bottom:12.5px;
 }
 .bullet_screen_button {
     font-size: 16px;
@@ -196,6 +201,8 @@ a{
     border-bottom-right-radius: 0;
 }
 .bullet_screen .bullet_screen_content{
+    position: absolute;
+    right:60px;
     padding:0 5px;
     font-size: 16px;
     color: #000;
@@ -208,17 +215,20 @@ a{
     margin-bottom: 10px;
 }
 .bullet_screen_submit{
+    position: absolute;
+    right:15px;
     text-align: center;
-    margin-right: 15px;
-    width:14%;
+    /*margin-right: 15px;*/
+    width:45px;
     background-color: #b2b2b2;
     line-height: 35px;
     height:35px;
     float: right;
     border: none;
-    margin-bottom: 15px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    /*margin-bottom: 15px;*/
+    border-radius:5px;
+    /*border-top-right-radius: 5px;*/
+    /*border-bottom-right-radius: 5px;*/
 }
 
 /*操作按钮*/

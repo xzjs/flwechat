@@ -9,25 +9,33 @@ function init_showimg() {
             '<div class="galleryImgUser">' +
             '<img id="img_head_img" src="images/lan.jpg" alt="" class="galleryImgUserImg">' +
             '<span id="img_user_name">微信</span><span>-</span><span id="img_article_content">评论内容</span></div>' +
-            '<img src="images/left.png" alt="" class="galleryImgLeft">' +
-            '<img src="images/right.png" alt="" class="galleryImgRight">' +
-            '<img src="images/url.png" alt="" class="galleryImgUrl">' +
-            '<div id="img_expands" class="url_list" style="display: none"></div>' +
-            '<img src="images/close.png" alt="" class="galleryImgCenter">' +
+            // '<img src="images/left.png" alt="" class="galleryImgLeft">' +
+            // '<img src="images/right.png" alt="" class="galleryImgRight">' +
+            // '<img src="images/url.png" alt="" class="galleryImgUrl">' +
+            // '<div id="img_expands" class="url_list" style="display: none"></div>' +
+            // '<img src="images/close.png" alt="" class="galleryImgCenter">' +
             '<div id="danmu" class="galleryImgBulletScreen"></div>' +
             '</span>' +
-            '<div class="opposite"><div class="">'+
+            '<div class="opposite"><div class="" style="opacity: 0">'+
             '<div class="opposite-content">'+
             '<p>相关阅读</p>'+
             '<ul><li><a href="">扩展阅读1</a></li></ul>'+
-            '</div><div class="turn_to_img"><img src="images/back_to_original.png" alt=""><span>返回</span></div></div></div>'+
+            '</div><div class="turn_to_img"><img src="images/back_to_original.png" alt=""><span>返回</span></div>'+
+            '<div class="ads_box"><div></div><img src="images/ads.jpg" alt=""></div>'+
+            '</div></div>'+
             '<div class="bullet_screen">' +
             '<div class="bullet_screen_button">' +
             '<input type="checkbox" class="bullet_screen_button_checkbox" checked="checked">' +
             '<span>弹幕</span>' +
             '</div>' +
-            '<span id="submit" class="bullet_screen_submit">提交</span>' +
-            '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content">' +
+            '<img src="images/left2.png" alt="" class="galleryImgLeft">' +
+            '<img src="images/right2.png" alt="" class="galleryImgRight">' +
+            '<img src="images/url2.png" alt="" class="galleryImgUrl">' +
+            // '<div id="img_expands" class="url_list" style="display: none"></div>' +
+            '<img src="images/close2.png" alt="" class="galleryImgCenter">' +
+            // '<div class="tucao_button">吐槽</div>'+
+            '<span id="submit" class="bullet_screen_submit">吐槽</span>' +
+            '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content" style="display: none">' +
             '</div></div>';
         $('body').append(html);
         // $('.opposite').css('height',$('.weui-gallery__img').height());
@@ -41,19 +49,17 @@ function init_showimg() {
         $(".correct").addClass("test");
         $(".opposite").children().addClass('test2');
     });
-    // $('.correct').on('click',function(){
-    //
-    // });
     $('.turn_to_img').on('click',function(){
         $(".correct").removeClass("test");
         $(this).parent().removeClass('test2');
         $(".correct").addClass("test2");
         $(this).parent().addClass('test');
-//                setTimeout('location.reload()',3000);
     });
 
     gallery = $("#gallery");
     $('.galleryImgCenter').on("click", function () {
+        $(".correct").attr('class','weui-gallery__img correct');
+        $(".opposite").children().removeClass();
         gallery.fadeOut(100);
         $('#danmu').danmu('danmu_stop');
         index = 0;
@@ -97,17 +103,29 @@ function init_showimg() {
     });
 
     $('#submit').on('click', function () {
-        var text = $('#danmu_text').val();
-        var time = $('#danmu').data("nowtime") + 5;
-        $.post('/flwechat/public/comment',
-            {'image_id': img_data[index].id, 'user_id': user_id, 'comment': text},
-            function (result) {
-                console.log(result);
-            });
-        text_obj = '{ "text":"' + text + '","color":"' + getcolor() + '","size":"' + getsize() + '","position":"' + 0 + '","time":' + time + ',"isnew":""}';   //构造加上了innew属性的字符串danmu对象
-        var new_obj = eval('(' + text_obj + ')');       //转化为js对象
-        $('#danmu').danmu("add_danmu", new_obj);    //向插件中添加该danmu对象
-        $('#danmu_text').val('');  //清空用户输入框
+        var danmu_text=$('#danmu_text');
+        if (danmu_text.css('display')=='none'){
+            danmu_text.show();
+            $('.bullet_screen_submit').css('border-top-left-radius','0');
+            $('.bullet_screen_submit').css('border-bottom-left-radius','0');
+        }else{
+            if (danmu_text.val()!=''){
+                var text = danmu_text.val();
+                var time = $('#danmu').data("nowtime") + 5;
+                $.post('/flwechat/public/comment',
+                    {'image_id': img_data[index].id, 'user_id': user_id, 'comment': text},
+                    function (result) {
+                    });
+                text_obj = '{ "text":"' + text + '","color":"' + getcolor() + '","size":"' + getsize() + '","position":"' + 0 + '","time":' + time + ',"isnew":""}';   //构造加上了innew属性的字符串danmu对象
+                var new_obj = eval('(' + text_obj + ')');       //转化为js对象
+                $('#danmu').danmu("add_danmu", new_obj);    //向插件中添加该danmu对象
+                danmu_text.val('');  //清空用户输入框
+            }else{
+                $('#danmu_text').hide();
+                $('.bullet_screen_submit').css('border-top-left-radius','5px');
+                $('.bullet_screen_submit').css('border-bottom-left-radius','5px');
+            }
+        }
     });
 
     $('.galleryImgLeft').on('click', function () {
@@ -143,7 +161,7 @@ function change_img(num) {
         //设置弹幕
         for (var i = 0; i < img_data[index].comments.length; i++) {
             var text = '{"text":"' + img_data[index].comments[i].content + '","color":"' + getcolor() + '","size":"' + getsize() + '","position":"0","time":' + ((i + 1) * 5) + '}';
-            console.log(text);
+            // console.log(text);
             var new_obj = eval('(' + text + ')');
             $('#danmu').danmu("add_danmu", new_obj);
         }
@@ -157,10 +175,10 @@ function change_img(num) {
         //设置链接
         var expands_html = '';
         for (var i = 0; i < img_data[index].expands.length; i++) {
-            expands_html += '<a href="' + img_data[index].expands[i].href + '">' + img_data[index].expands[i].title + '</a>';
+            expands_html += '<li><a href="' + img_data[index].expands[i].href + '">' + img_data[index].expands[i].title + '</a></li>';
         }
         // $('#img_expands').html(expands_html);
-        // $('.opposite-content').html(expands_html);
+        $('.opposite-content ul').html(expands_html);
     }
 }
 
