@@ -16,7 +16,11 @@ function init_showimg() {
             '<img src="images/close.png" alt="" class="galleryImgCenter">' +
             '<div id="danmu" class="galleryImgBulletScreen"></div>' +
             '</span>' +
-            '<div class="opposite"><div class=""><div class="opposite-content">背面</div></div></div>'+
+            '<div class="opposite"><div class="">'+
+            '<div class="opposite-content">'+
+            '<p>相关阅读</p>'+
+            '<ul><li><a href="">扩展阅读1</a></li></ul>'+
+            '</div><div class="turn_to_img"><img src="images/back_to_original.png" alt=""><span>返回</span></div></div></div>'+
             '<div class="bullet_screen">' +
             '<div class="bullet_screen_button">' +
             '<input type="checkbox" class="bullet_screen_button_checkbox" checked="checked">' +
@@ -26,19 +30,25 @@ function init_showimg() {
             '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content">' +
             '</div></div>';
         $('body').append(html);
+        // $('.opposite').css('height',$('.weui-gallery__img').height());
+        // $('.opposite').width($('.weui-gallery__img').width());
     }
 
-    $('.correct').on('click',function(){
+
+    $('.galleryImgUrl').on('click', function () {
         $(".correct").removeClass('test2');
         $(".opposite").children().removeClass("test");
         $(".correct").addClass("test");
         $(".opposite").children().addClass('test2');
     });
-    $('.opposite').on('click',function(){
+    // $('.correct').on('click',function(){
+    //
+    // });
+    $('.turn_to_img').on('click',function(){
         $(".correct").removeClass("test");
-        $(".opposite").children().removeClass('test2');
+        $(this).parent().removeClass('test2');
         $(".correct").addClass("test2");
-        $(".opposite").children().addClass('test');
+        $(this).parent().addClass('test');
 //                setTimeout('location.reload()',3000);
     });
 
@@ -108,13 +118,13 @@ function init_showimg() {
         change_img(index + 1);
     });
 
-    $('.galleryImgUrl').on('click', function () {
-        if (img_data[index].expands.length != 0) {
-            $('#img_expands').fadeToggle(100);
-        } else {
-            alert('图片没有相关的链接');
-        }
-    })
+    // $('.galleryImgUrl').on('click', function () {
+    //     if (img_data[index].expands.length != 0) {
+    //         $('#img_expands').fadeToggle(100);
+    //     } else {
+    //         alert('图片没有相关的链接');
+    //     }
+    // })
 }
 var img_data = [];
 var index = 0;
@@ -149,8 +159,8 @@ function change_img(num) {
         for (var i = 0; i < img_data[index].expands.length; i++) {
             expands_html += '<a href="' + img_data[index].expands[i].href + '">' + img_data[index].expands[i].title + '</a>';
         }
-        $('#img_expands').html(expands_html);
-        $('.opposite-content').html(expands_html);
+        // $('#img_expands').html(expands_html);
+        // $('.opposite-content').html(expands_html);
     }
 }
 
