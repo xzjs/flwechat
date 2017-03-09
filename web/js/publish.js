@@ -168,7 +168,7 @@ function set_canvas() {
         console.log(canvas.offsetHeight);
         console.log(canvas.offsetWidth);
         signaturePad = new SignaturePad(canvas, {
-            penColor: "rgba(229,43,28,0.25)"
+            penColor: "rgba(229,43,28,0.15)"
         });
         signaturePad.fromDataURL(url);
         $('#canvas').css('height',canvas.height/ratio);

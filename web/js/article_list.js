@@ -152,7 +152,7 @@ function showArticleList(result) {
                 + '<div class="your_action">'
                 // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
                 + '<div class="your_action_right">'
-                + '<a href="article_detail.html?id=' + result[i].id + '">'
+                + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
                 + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
                 + '<div class="your_action_right">'
                 + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt="" onclick="action(' + result[i].id + ',1,this)"><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
