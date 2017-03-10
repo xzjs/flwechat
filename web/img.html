@@ -52,7 +52,7 @@
         var url = signaturePad.toDataURL();
         $(".show").attr('src', url);
     });
-    $('#clear').on('click',function () {
+    $('#clear').on('click', function () {
         signaturePad.clear();
         signaturePad.fromDataURL('images/0104.jpg');
     });
@@ -65,6 +65,7 @@
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
         canvas.width = canvas.offsetWidth * ratio;
         canvas.height = canvas.offsetHeight * ratio;
+        canvas.style.backgroundImage = "url(images/0104.jpg)"
         canvas.getContext("2d").scale(ratio, ratio);
     }
 
@@ -73,7 +74,7 @@
     signaturePad = new SignaturePad(canvas, {
         penColor: "rgb(229,43,28)"
     });
-    signaturePad.fromDataURL('images/0104.jpg');
+    //signaturePad.fromDataURL('images/0104.jpg');
 </script>
 </body>
 </html>
