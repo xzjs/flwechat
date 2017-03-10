@@ -138,6 +138,7 @@ function edit() {
 
 var canvas = $('#canvas')[0];
 var show_img, signaturePad, url;
+var w, h;
 
 //设置canvas的长宽
 function set_canvas() {
@@ -145,11 +146,13 @@ function set_canvas() {
     var image = new Image();
     image.src = url;
     image.onload = function () {
-        var w = image.width;
-        var h = image.height;
+        w = image.width;
+        h = image.height;
+        console.log('原始宽' + w);
+        console.log('原始高' + h);
         var brower_width = $(window).width();
         var brower_height = $(window).height();
-        var image_scale = h / w;
+        image_scale = h / w;
         var brower_scale = brower_height / brower_width;
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
         //如果长大于宽
@@ -161,18 +164,16 @@ function set_canvas() {
             canvas.height = canvas.width * image_scale;
         }
         canvas.getContext("2d").scale(ratio, ratio);
-        console.log(canvas.height);
-        console.log(canvas.width);
-        console.log(canvas.offsetHeight);
-        console.log(canvas.offsetWidth);
         signaturePad = new SignaturePad(canvas, {
-            penColor: "rgba(229,43,28,0.25)"
+            penColor: "rgb(229,43,28)"
         });
         //signaturePad.fromDataURL(url);
         $('#canvas').css('height', canvas.height / ratio);
         $('#canvas').css('width', canvas.width / ratio);
         $('#canvas').css('background-image', "url(" + url + ")");
         $('#canvas').css('background-size', "cover");
+        console.log('压缩后高' + $('#canvas').height());
+        console.log('压缩后宽' + $('#canvas').width());
     };
 }
 
@@ -199,7 +200,6 @@ function resizeCanvas() {
     canvas.width = canvas.offsetWidth * ratio;
     canvas.height = canvas.offsetHeight * ratio;
     canvas.getContext("2d").scale(ratio, ratio);
-
 }
 
 // window.onresize = resizeCanvas;
@@ -215,10 +215,9 @@ function getMarkPosition(arr) {
             positions.min_y = Math.max(Math.min(positions.min_y, arr[i][j].y), 0);
         }
     }
-    var ratio = Math.max(window.devicePixelRatio || 1, 1);
-    positions.max_x*=ratio;
-    positions.min_x*=ratio;
-    positions.max_y*=ratio;
-    positions.min_y*=ratio;
+    positions.max_x *= w / $('#canvas').width();
+    positions.min_x *= w / $('#canvas').width();
+    positions.max_y *= h / $('#canvas').height();
+    positions.min_y *= h / $('#canvas').height();
     return positions;
 }
