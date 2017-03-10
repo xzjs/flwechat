@@ -102,7 +102,8 @@ var app = new Vue({
             var vm = this;
             vm.postData['comment'] = comment;
             vm.$http.post('/flwechat/public/article/article_list', vm.postData)
-                .then((response)=> {
+                .then(
+                    function(response){
                     console.log(response.data);
                     vm.items = response.data;
                     if(response.data.length>0){
@@ -110,7 +111,7 @@ var app = new Vue({
                     }else{
                         vm.show = true;
                     }
-                }, (response)=> {
+                }, function(response){
                     console.log(response.data);
                 });
             if(event!=null){
