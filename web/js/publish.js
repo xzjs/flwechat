@@ -11,21 +11,21 @@ $(function () {
         set_canvas(url);
         show_img = $("#pic_file1");
         $('#pic_blank').css('display', 'none');
-        //$("#pic_file1").attr("src", url);
+        $("#pic_file1").attr("src", url);
     });
     $("#pic_files2").change(function () {
         url = window.URL.createObjectURL(this.files.item(0));
         set_canvas(url);
         show_img = $("#pic_file2");
         $('#pic_blank').css('display', 'none');
-        //$("#pic_file2").attr("src", url);
+        $("#pic_file2").attr("src", url);
     });
     $("#pic_files3").change(function () {
         url = window.URL.createObjectURL(this.files.item(0));
         set_canvas(url);
         show_img = $("#pic_file3");
         $('#pic_blank').css('display', 'none');
-        // $("#pic_file2").attr("src", url);
+        $("#pic_file2").attr("src", url);
     });
 
     $("#showIOSDialog1").click(function () {
@@ -42,55 +42,51 @@ $(function () {
                 $('#dialog1').fadeOut(200)
             });
         } else {
-            $('.publish_content').prepend('<input name="user_id" type="hidden" value=' + id + '>');
+            // $('.publish_content').prepend('<input name="user_id" type="hidden" value=' + id + '>');
 
-            var formData = new FormData($('.publish_content')[0]);
+            // var formData = new FormData($('.publish_content')[0]);
             formData.append('reply_id', reply_id);
             formData.append('topic_id', topic_id);
-            if (action != null) {
-                formData.append('id', reply_id);
-            }
-            // $.ajax({
-            //     url: "/flwechat/public/article",
-            //     type: "post",
-            //     data: formData,
-            //     processData: false,
-            //     contentType: false,
-            //     dataType: "json",
-            //     success: function (result) {
-            //         if (result == true) {
-            //             if (reply_id != 0) {
-            //                 window.location.href = "article_detail.html?id=" + reply_id;
-            //             } else {
-            //                 window.location.href = 'mine.html';
-            //             }
-            //         } else {
-            //             console.log(result);
-            //             alert('系统出故障了！！！');
-            //         }
+            formData.append('user_id', user_id);
+            formData.append('comment', $('#comment').val());
+            // data.user_id = user_id;
+            // data.reply_id = reply_id;
+            // data.topic_id = topic_id;
+            // data.comment = $('#comment').val();
+            // $('.pic_preview').each(function () {
+            //     if ($(this).attr('src') != 'images/pic_insert.png') {
+            //         data[$(this).attr('id')] = $(this).attr('src');
             //     }
             // });
-            var data = {
-                'user_id': user_id,
-                'reply_id': reply_id,
-                'topic_id': topic_id,
-                'comment': $('#comment').val()
-            }
-            $('.pic_preview').each(function () {
-                if ($(this).attr('src') != 'images/pic_insert.png') {
-                    data[$(this).attr('id')] = $(this).attr('src');
-                }
-            });
-            $.post('/flwechat/public/article', data, function (result) {
-                if (result == 'true') {
-                    if (reply_id != 0) {
-                        window.location.href = "article_detail.html?id=" + reply_id;
+            // $.post('/flwechat/public/article', data, function (result) {
+            //     if (result == 'true') {
+            //         if (reply_id != 0) {
+            //             window.location.href = "article_detail.html?id=" + reply_id;
+            //         } else {
+            //             window.location.href = 'mine.html';
+            //         }
+            //     } else {
+            //         console.log(result);
+            //         alert('系统出故障了！！！');
+            //     }
+            // });
+            $.ajax({
+                url: '/flwechat/public/article',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result == 'true') {
+                        if (reply_id != 0) {
+                            window.location.href = "article_detail.html?id=" + reply_id;
+                        } else {
+                            window.location.href = 'mine.html';
+                        }
                     } else {
-                        window.location.href = 'mine.html';
+                        console.log(result);
+                        alert('系统出故障了！！！');
                     }
-                } else {
-                    console.log(result);
-                    alert('系统出故障了！！！');
                 }
             });
         }
@@ -98,6 +94,8 @@ $(function () {
 
     edit();
 });
+
+var formData = new FormData();
 
 function get_select_list() {
     $.getJSON('/flwechat/public/topic', function (result) {
@@ -118,10 +116,10 @@ function get_select_list() {
     });
 }
 
-var reply_id = GetQueryString('id');
+var reply_id = GetQueryString('reply_id');
 if (reply_id == null) {
     reply_id = 0;
-}else{
+} else {
     $('title').html('评论');
 }
 var action = GetQueryString('action');
@@ -140,6 +138,7 @@ function edit() {
 
 var canvas = $('#canvas')[0];
 var show_img, signaturePad, url;
+var w, h;
 
 //设置canvas的长宽
 function set_canvas() {
@@ -147,11 +146,13 @@ function set_canvas() {
     var image = new Image();
     image.src = url;
     image.onload = function () {
-        var w = image.width;
-        var h = image.height;
+        w = image.width;
+        h = image.height;
+        console.log('原始宽' + w);
+        console.log('原始高' + h);
         var brower_width = $(window).width();
         var brower_height = $(window).height();
-        var image_scale = h / w;
+        image_scale = h / w;
         var brower_scale = brower_height / brower_width;
         var ratio = Math.max(window.devicePixelRatio || 1, 1);
         //如果长大于宽
@@ -162,28 +163,33 @@ function set_canvas() {
             canvas.width = brower_width * 0.7 * ratio;
             canvas.height = canvas.width * image_scale;
         }
-        canvas.getContext("2d").scale(ratio,ratio);
-        console.log(canvas.height);
-        console.log(canvas.width);
-        console.log(canvas.offsetHeight);
-        console.log(canvas.offsetWidth);
+        canvas.getContext("2d").scale(ratio, ratio);
         signaturePad = new SignaturePad(canvas, {
-            penColor: "rgba(229,43,28,0.15)"
+            penColor: "rgb(229,43,28)"
         });
-        signaturePad.fromDataURL(url);
-        $('#canvas').css('height',canvas.height/ratio);
-        $('#canvas').css('width',canvas.width/ratio);
-
+        //signaturePad.fromDataURL(url);
+        $('#canvas').css('height', canvas.height / ratio);
+        $('#canvas').css('width', canvas.width / ratio);
+        $('#canvas').css('background-image', "url(" + url + ")");
+        $('#canvas').css('background-size', "cover");
+        console.log('压缩后高' + $('#canvas').height());
+        console.log('压缩后宽' + $('#canvas').width());
     };
 }
 
 function show() {
-    show_img.attr('src', signaturePad.toDataURL())
+    // show_img.attr('src', signaturePad.toDataURL());
+    console.log(signaturePad.toData());
+    var positions = getMarkPosition(signaturePad.toData());
+    positions.mark = signaturePad.toDataURL();
+    console.log(positions);
+    formData.append(show_img.attr('id'), JSON.stringify(positions));
+    formData.append(show_img.attr('id') + 'file', $("[name=" + show_img.attr('id') + "]")[0].files[0]);
 }
 
 $('#clear').on('click', function () {
     signaturePad.clear();
-    signaturePad.fromDataURL(url);
+    // signaturePad.fromDataURL(url);
 });
 
 function resizeCanvas() {
@@ -194,8 +200,24 @@ function resizeCanvas() {
     canvas.width = canvas.offsetWidth * ratio;
     canvas.height = canvas.offsetHeight * ratio;
     canvas.getContext("2d").scale(ratio, ratio);
-
 }
 
 // window.onresize = resizeCanvas;
 // resizeCanvas();
+
+function getMarkPosition(arr) {
+    var positions = {'max_x': arr[0][0].x, 'min_x': arr[0][0].x, 'max_y': arr[0][0].y, 'min_y': arr[0][0].y};
+    for (var i = 0; i < arr.length; i++) {
+        for (var j = 1; j < arr[i].length; j++) {
+            positions.max_x = Math.max(positions.max_x, arr[i][j].x);
+            positions.min_x = Math.max(Math.min(positions.min_x, arr[i][j].x), 0);
+            positions.max_y = Math.max(positions.max_y, arr[i][j].y);
+            positions.min_y = Math.max(Math.min(positions.min_y, arr[i][j].y), 0);
+        }
+    }
+    positions.max_x *= w / $('#canvas').width();
+    positions.min_x *= w / $('#canvas').width();
+    positions.max_y *= h / $('#canvas').height();
+    positions.min_y *= h / $('#canvas').height();
+    return positions;
+}
