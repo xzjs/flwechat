@@ -215,5 +215,10 @@ function getMarkPosition(arr) {
             positions.min_y = Math.max(Math.min(positions.min_y, arr[i][j].y), 0);
         }
     }
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    positions.max_x*=ratio;
+    positions.min_x*=ratio;
+    positions.max_y*=ratio;
+    positions.min_y*=ratio;
     return positions;
 }
