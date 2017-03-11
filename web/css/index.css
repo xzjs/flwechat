@@ -120,9 +120,9 @@ a{
 }
 
 .mark_img{
+    margin:0 auto;
     position: relative;
     top:0;
-    left:15px;
     background-size: cover;
 }
 
