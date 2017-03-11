@@ -6,6 +6,7 @@ function init_showimg() {
     if (gallery.length == 0) {
         var html = '<div class="weui-gallery" id="gallery">' +
             '<span class="weui-gallery__img correct" id="galleryImg" style="background-image: url()">' +
+            '<div class="mark_img" style="background-image: url(\'images/red_circle.png\')">'+
             '<div class="galleryImgUser">' +
             '<img id="img_head_img" src="images/lan.jpg" alt="" class="galleryImgUserImg">' +
             '<span id="img_user_name">微信</span><span>-</span><span id="img_article_content">评论内容</span></div>' +
@@ -15,7 +16,7 @@ function init_showimg() {
             // '<div id="img_expands" class="url_list" style="display: none"></div>' +
             // '<img src="images/close.png" alt="" class="galleryImgCenter">' +
             '<div id="danmu" class="galleryImgBulletScreen"></div>' +
-            '</span>' +
+            '</div></span>' +
             '<div class="opposite"><div class="" style="opacity: 0">'+
             '<div class="opposite-content">'+
             '<p>相关阅读</p>'+
@@ -38,8 +39,7 @@ function init_showimg() {
             '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content" style="display: none">' +
             '</div></div>';
         $('body').append(html);
-        // $('.opposite').css('height',$('.weui-gallery__img').height());
-        // $('.opposite').width($('.weui-gallery__img').width());
+
     }
 
 
@@ -78,8 +78,8 @@ function init_showimg() {
         this.placeholder = '吐槽';
     });
 
-    $('.img_show').on('click', function () {
-        var image_id = $(this).data('id');
+    $('.userImg').on('click', function () {
+        var image_id = $('.img_show').data('id');
         $.getJSON('/flwechat/public/image/' + image_id, function (result) {
             img_data = result;
             for (var i = 0; i < img_data.length; i++) {
@@ -91,6 +91,8 @@ function init_showimg() {
             change_img(index);
 
             gallery.fadeIn(100);
+            $('.mark_img').width($('.weui-gallery__img').width()-15);
+            $('.mark_img').css('height',$('.weui-gallery__img').height());
         });
     });
 

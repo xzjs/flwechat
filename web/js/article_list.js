@@ -133,7 +133,9 @@ function showArticleList(result) {
             var html_img = '';
             for (var j = 0; j < result[i].images.length; j++) {
                 html_img += '<div class="userImg">' +
-                    '<img data-id="' + result[i].images[j].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show"></div>';
+                    '<img data-id="' + result[i].images[j].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show">'+
+                    '<img src="images/red_circle.png" alt="" class="article_list_mark_img">'+
+                    '</div>';
             }
             var html = '<div class="content">'
                 + '<div class="content_top"><a href="mine.html?user_id=' + result[i].user.id + '">'

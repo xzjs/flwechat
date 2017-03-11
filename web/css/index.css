@@ -101,6 +101,7 @@ a{
     text-align: center;
 }
 .userImg{
+    position: relative;
     width:100px;
     height:100px;
     margin:0 3px;
@@ -109,6 +110,19 @@ a{
 }
 .pic_show img{
     width:100px;
+}
+
+.article_list_mark_img{
+    width:100px;
+    position: absolute;
+    top:0;
+    left: 0;
+}
+
+.mark_img{
+    position: relative;
+    top:0;
+    background-size: cover;
 }
 
 /*图片放大后显示用户评论*/
