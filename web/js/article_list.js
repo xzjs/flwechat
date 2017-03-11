@@ -134,7 +134,7 @@ function showArticleList(result) {
             for (var j = 0; j < result[i].images.length; j++) {
                 html_img += '<div class="userImg">' +
                     '<img data-id="' + result[i].images[j].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show">'+
-                    '<img src="images/red_circle.png" alt="" class="article_list_mark_img">'+
+                    '<img src="/flwechat/public/storage/'+result[i].images[j].mark+'" alt="" class="article_list_mark_img">'+
                     '</div>';
             }
             var html = '<div class="content">'
