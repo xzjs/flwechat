@@ -33,7 +33,7 @@ function loadMainData() {
             for (var i = 0; i < result.images.length; i++) {
                 img_html += '<div class="userImg">'+
                 '<img data-id="' + result.images[i].id + '" class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt="" onclick="bandImageClick('+result.images[i].id+')">'+
-                '<img src="images/red_circle.png" alt="" class="article_list_mark_img">'+
+                '<img src="/flwechat/public/storage/' + result.images[i].mark + '" alt="" class="article_list_mark_img">'+
                 '</div>';
             }
             $('#img').html(img_html);
