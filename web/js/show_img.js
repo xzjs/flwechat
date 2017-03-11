@@ -160,6 +160,7 @@ function change_img(num) {
         $("#danmu").danmu('clear');
         //设置图片
         $('#galleryImg').css('background-image', 'url(/flwechat/public/storage/' + img_data[index].img + ')');
+        $('.mark_img').css('background-image', 'url(/flwechat/public/storage/' + img_data[index].mark + ')');
         //设置弹幕
         for (var i = 0; i < img_data[index].comments.length; i++) {
             var text = '{"text":"' + img_data[index].comments[i].content + '","color":"' + getcolor() + '","size":"' + getsize() + '","position":"0","time":' + ((i + 1) * 5) + '}';
