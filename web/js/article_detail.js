@@ -53,7 +53,7 @@ function loadMainData() {
             $('#action').html(action_html);
 
             //评论按钮
-            $('.comment_input a').attr('href', 'publish.html?id=' + result.id);
+            $('.comment_input a').attr('href', 'publish.html?reply_id=' + result.id);
             // $('.comment_input').html('<a href="publish.html?id=' + result.id + '">');
             //设置分享
             $.post('/flwechat/public/getconfig',
@@ -130,7 +130,7 @@ function cancel() {
 }
 
 function confirm() {
-    var article_id = GetQueryString('id');
+    var article_id = GetQueryString('reply_id');
     $.ajax({
         url: '/flwechat/public/article/' + article_id,
         type: 'DELETE',

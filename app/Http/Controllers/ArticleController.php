@@ -307,7 +307,7 @@ class ArticleController extends Controller
                 $articles = $articles->where('topic_id', $topic_id)->where('reply_id', 0);
             }
             //用户id查询
-            if ($user_id != null) {
+            elseif($user_id != null) {
                 if ($comment == 1) {
                     $reply_ids = Article::where('user_id', $user_id)->where('reply_id', '>', 0)->get(['reply_id'])->toArray();
                     $articles = Article::with('images', 'topic', 'user')->whereIn('id', $reply_ids);
@@ -316,12 +316,15 @@ class ArticleController extends Controller
                 }
             }
             //回复id查询
-            if ($reply_id != null) {
+            elseif ($reply_id != null) {
                 $articles = $articles->where('reply_id', $reply_id);
             }
             //关键字查询
-            if ($key_word != null) {
+            elseif ($key_word != null) {
                 $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
+            }
+            else{
+                $articles=$articles->where('reply_id',0);
             }
             $articles = $articles->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
             return response()->json($articles);

@@ -79,7 +79,7 @@ $(function () {
                 success: function (result) {
                     if (result == 'true') {
                         if (reply_id != 0) {
-                            window.location.href = "article_detail.html?id=" + reply_id;
+                            window.location.href = "article_detail.html?reply_id=" + reply_id;
                         } else {
                             window.location.href = 'mine.html';
                         }
