@@ -79,7 +79,7 @@ function init_showimg() {
     });
 
     $('.userImg').on('click', function () {
-        var image_id = $('.img_show').data('id');
+        var image_id = $(this).children('.img_show').data('id');
         $.getJSON('/flwechat/public/image/' + image_id, function (result) {
             img_data = result;
             for (var i = 0; i < img_data.length; i++) {

@@ -253,5 +253,6 @@ $('.container').dropload({
                 me.resetload();
             }
         });
-    }
+    },
+    threshold : 128
 });
