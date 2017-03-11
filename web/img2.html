@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>友连</title>
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/dropload.css">
+    <link rel="stylesheet" href="css/show_img_url.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="weui-gallery" id="gallery">
+    <span class="weui-gallery__img correct" id="galleryImg" style="background-image: url('images/123.jpg')">
+            <div class="mark_img" style="background-image: url('images/red_circle.png')">
+                <div class="galleryImgUser">
+                    <img id="img_head_img" src="images/lan.jpg" alt="" class="galleryImgUserImg">
+                    <span id="img_user_name">微信</span><span>-</span><span id="img_article_content">评论内容</span>
+                </div>
+                <div id="danmu" class="galleryImgBulletScreen"></div>
+            </div>
+    </span>
+    <div class="opposite">
+        <div class="" style="opacity: 0">
+            <div class="opposite-content">
+                <p>相关阅读</p>
+                <ul>
+                    <li><a href="">扩展阅读1</a></li>
+                </ul>
+            </div>
+            <div class="turn_to_img"><img src="images/back_to_original.png" alt=""><span>返回</span></div>
+            <div class="ads_box">
+                <div></div>
+                <img src="images/ads.jpg" alt=""></div>
+        </div>
+    </div>
+    <div class="bullet_screen">
+        <div class="bullet_screen_button">
+            <input type="checkbox" class="bullet_screen_button_checkbox" checked="checked">
+            <span>弹幕</span>
+        </div>
+        <img src="images/left2.png" alt="" class="galleryImgLeft">
+        <img src="images/right2.png" alt="" class="galleryImgRight">
+        <img src="images/url2.png" alt="" class="galleryImgUrl">
+        <img src="images/close2.png" alt="" class="galleryImgCenter">
+        <span id="submit" class="bullet_screen_submit">吐槽</span>
+        <input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content">
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jsweixin.js"></script>
+<script type="text/javascript" src="js/jquery.danmu.js"></script>
+<script type="text/javascript" src="js/searchbar.js"></script>
+<script type="text/javascript" src="js/show_img.js"></script>
+<script type="text/javascript" src="js/dropload.min.js"></script>
+<script type="text/javascript" src="js/article_list.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

@@ -5,20 +5,56 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="css/test.css">
+    <title>图片翻转</title>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script>
+        $(function(){
+            var $opposite = $('#opposite');
+//            $(".wrap").hover(function(){
+//                $opposite.removeClass();
+//                $opposite.addClass('test2');
+//            },function(){
+//                $opposite.removeClass();
+//                $opposite.addClass('test');
+//            });
+
+            $(".well-item").click(function(){
+//                $(this).removeClass().addClass("well-item2");
+//                $(this).find(".correct").children().removeClass();
+//                $(this).find(".opposite").children().removeClass();
+                $(this).find(".correct").children().toggleClass("test").toggleClass("test2");
+                $(this).find(".opposite").children().toggleClass('test2').toggleClass('test');
+            },function(){
+//                $(this).find(".correct").children().removeClass();
+//                $(this).find(".opposite").children().removeClass();
+                $(this).find(".correct").children().toggleClass("test2");
+                $(this).find(".opposite").children().toggleClass('test');
+            });
+//            $(".well-item2").hover(function () {
+//                $(this).removeClass().addClass("well-item");
+//                $(this).find(".correct").children().removeClass();
+//                $(this).find(".opposite").children().removeClass();
+//                $(this).find(".correct").children().addClass("test2");
+//                $(this).find(".opposite").children().addClass('test');
+//            });
+        });
+    </script>
 </head>
 <body>
-<div id="app">
-    {{ message }}
+<div class="well">
+    <div class="well-item">
+        <div class="correct"><img  class="" src="images/lan.jpg" /></div>
+        <div class="opposite">
+            <div class="">
+                <div class="opposite-content">
+                    <div class="opposite-content-text">
+                        背面
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            message: 'Hello Vue!'
-        }
-    })
-</script>
 </body>
 </html>

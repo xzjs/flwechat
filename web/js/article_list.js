@@ -133,7 +133,9 @@ function showArticleList(result) {
             var html_img = '';
             for (var j = 0; j < result[i].images.length; j++) {
                 html_img += '<div class="userImg">' +
-                    '<img data-id="' + result[i].images[j].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show"></div>';
+                    '<img data-id="' + result[i].images[j].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show">'+
+                    '<img src="/flwechat/public/storage/'+result[i].images[j].mark+'" alt="" class="article_list_mark_img">'+
+                    '</div>';
             }
             var html = '<div class="content">'
                 + '<div class="content_top"><a href="mine.html?user_id=' + result[i].user.id + '">'
@@ -196,46 +198,34 @@ function showArticleList(result) {
 //上拉加载
 // dropload
 $('.container').dropload({
-    scrollArea: window,
-    domUp: {
-        domClass: 'dropload-up',
-        domRefresh: '<div class="dropload-refresh">↓下拉刷新-自定义内容</div>',
-        domUpdate: '<div class="dropload-update">↑释放更新-自定义内容</div>',
-        domLoad: '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>'
-    },
-    domDown: {
-        domClass: 'dropload-down',
-        domRefresh: '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
-        domLoad: '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
-        domNoData: '<div class="dropload-noData">已无更多数据</div>'
-    },
-    loadUpFn: function (me) {
-        data['page'] = 0;
-        $.ajax({
-            type: 'POST',
-            url: '/flwechat/public/article/article_list',
-            dataType: 'json',
-            data: data,
-            success: function (data) {
-                $('.content_box').html('');
-                showArticleList(data);
-
-                // 每次数据加载完，必须重置
-                me.resetload();
-                // 重置页数，重新获取loadDownFn的数据
-                data['page'] = 0;
-                // 解锁loadDownFn里锁定的情况
-                me.unlock();
-                me.noData(false);
-
-            },
-            error: function (xhr, type) {
-                console.log(xhr.responseText);
-                // 即使加载出错，也得重置
-                me.resetload();
-            }
-        });
-    },
+    scrollArea : window,
+    // loadUpFn: function (me) {
+    //     data['page'] = 0;
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/flwechat/public/article/article_list',
+    //         dataType: 'json',
+    //         data: data,
+    //         success: function (data) {
+    //             $('.content_box').html('');
+    //             showArticleList(data);
+    //
+    //             // 每次数据加载完，必须重置
+    //             me.resetload();
+    //             // 重置页数，重新获取loadDownFn的数据
+    //             data['page'] = 0;
+    //             // 解锁loadDownFn里锁定的情况
+    //             me.unlock();
+    //             me.noData(false);
+    //
+    //         },
+    //         error: function (xhr, type) {
+    //             console.log(xhr.responseText);
+    //             // 即使加载出错，也得重置
+    //             me.resetload();
+    //         }
+    //     });
+    // },
     loadDownFn: function (me) {
         data['page']++;
         $.ajax({
@@ -264,5 +254,5 @@ $('.container').dropload({
             }
         });
     },
-    threshold: 50
+    threshold : 128
 });
