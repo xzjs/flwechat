@@ -85,36 +85,44 @@ class ArticleController extends Controller
 //                }
                 foreach ($arr as $value) {
                     if ($request->$value != null) {
-                        $temp = $request->$value;
-                        $r = explode(',', $temp);
+                        $path = $request->file($value . 'file')->store('public');
+                        $path = explode('/', $path)[1];
+                        $temp = \GuzzleHttp\json_decode($request->$value);
+                        $r = explode(',', $temp->mark);
                         $img = base64_decode($r[1]);
-                        $extension = explode(';', explode('/', $r[0])[1])[0];
-                        $img_name = time() . rand(0, 10000) . '.' . $extension;
+                        $img_name = time() . rand(0, 10000) . '.png';
                         $status = Storage::put("public/$img_name", $img);
                         if ($status == false) {
                             throw new \Exception('图片存储错误');
                         }
-                        $img = new Image(['img' => $img_name, 'article_id', $article->id]);
+                        $img = new Image;
+                        $img->img = $path;
+                        $img->article_id = $article->id;
                         $img->position = $value;
+                        $img->max_x = $temp->max_x;
+                        $img->min_x = $temp->min_x;
+                        $img->max_y = $temp->max_y;
+                        $img->min_y = $temp->min_y;
+                        $img->mark = $img_name;
                         $article->images()->save($img);
                         dispatch(new GetUrl($img));
                     }
                 }
             } else {
-                $article = Article::find($id);
-                $article->content = $request->comment;
-                $article->topic_id = $request->topic_id;
-                $article->save();
-                foreach ($arr as $value) {
-                    if ($request->hasFile($value)) {
-                        $path = $request->file($value)->store('public');
-                        $path = explode('/', $path)[1];
-                        $img = new Image(['img' => $path, 'article_id', $article->id]);
-                        $img->position = $value;
-                        $article->images()->save($img);
-                        dispatch(new GetUrl($img));
-                    }
-                }
+//                $article = Article::find($id);
+//                $article->content = $request->comment;
+//                $article->topic_id = $request->topic_id;
+//                $article->save();
+//                foreach ($arr as $value) {
+//                    if ($request->hasFile($value)) {
+//                        $path = $request->file($value)->store('public');
+//                        $path = explode('/', $path)[1];
+//                        $img = new Image(['img' => $path, 'article_id', $article->id]);
+//                        $img->position = $value;
+//                        $article->images()->save($img);
+//                        dispatch(new GetUrl($img));
+//                    }
+//                }
             }
 
             return response('true');
@@ -299,21 +307,24 @@ class ArticleController extends Controller
                 $articles = $articles->where('topic_id', $topic_id)->where('reply_id', 0);
             }
             //用户id查询
-            if ($user_id != null) {
+            elseif($user_id != null) {
                 if ($comment == 1) {
                     $reply_ids = Article::where('user_id', $user_id)->where('reply_id', '>', 0)->get(['reply_id'])->toArray();
-                    $articles = Article::with('images', 'topic', 'user')->whereIn('id',$reply_ids);
+                    $articles = Article::with('images', 'topic', 'user')->whereIn('id', $reply_ids);
                 } else {
                     $articles = $articles->where('user_id', $user_id);
                 }
             }
             //回复id查询
-            if ($reply_id != null) {
+            elseif ($reply_id != null) {
                 $articles = $articles->where('reply_id', $reply_id);
             }
             //关键字查询
-            if ($key_word != null) {
+            elseif ($key_word != null) {
                 $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
+            }
+            else{
+                $articles=$articles->where('reply_id',0);
             }
             $articles = $articles->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
             return response()->json($articles);
