@@ -35,10 +35,14 @@ class GetUrl implements ShouldQueue
         try {
             //此处需要图片识别获取url
             $ch = curl_init();
-            $uri='public/'.Storage::url($this->image->img);
+            $uri = 'public/' . Storage::url($this->image->img);
             //echo $uri;
             //echo getcwd();
             $data['image'] = curl_file_create($uri);
+            $data['max_x'] = $this->image->max_x;
+            $data['min_x'] = $this->image->min_x;
+            $data['max_y'] = $this->image->max_y;
+            $data['min_y'] = $this->image->min_y;
             curl_setopt($ch, CURLOPT_SAFE_UPLOAD, true);
             curl_setopt($ch, CURLOPT_URL, 'http://112.74.36.180:8080/api/getimginfo');
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -55,13 +59,13 @@ class GetUrl implements ShouldQueue
             echo $return_data;
             $url_data = \GuzzleHttp\json_decode($return_data);
             foreach ($url_data as $item) {
-                $expand=new Expand;
-                $expand->image_id=$this->image->id;
-                $expand->href=$item->href;
-                $expand->title=$item->title;
-                $expand->abstract=$item->abstract;
-                $expand->domain=$item->domain;
-                $expand->pubdate=$item->pubdate;
+                $expand = new Expand;
+                $expand->image_id = $this->image->id;
+                $expand->href = $item->href;
+                $expand->title = $item->title;
+                $expand->abstract = $item->abstract;
+                $expand->domain = $item->domain;
+                $expand->pubdate = $item->pubdate;
                 $expand->save();
             }
         } catch (\Exception $exception) {

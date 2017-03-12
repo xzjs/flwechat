@@ -33,7 +33,7 @@ function loadMainData() {
             for (var i = 0; i < result.images.length; i++) {
                 img_html += '<div class="userImg">'+
                 '<img data-id="' + result.images[i].id + '" class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt="" onclick="bandImageClick('+result.images[i].id+')">'+
-                '<img src="images/red_circle.png" alt="" class="article_list_mark_img">'+
+                '<img src="/flwechat/public/storage/' + result.images[i].mark + '" alt="" class="article_list_mark_img">'+
                 '</div>';
             }
             $('#img').html(img_html);
@@ -53,7 +53,7 @@ function loadMainData() {
             $('#action').html(action_html);
 
             //评论按钮
-            $('.comment_input a').attr('href', 'publish.html?id=' + result.id);
+            $('.comment_input a').attr('href', 'publish.html?reply_id=' + result.id);
             // $('.comment_input').html('<a href="publish.html?id=' + result.id + '">');
             //设置分享
             $.post('/flwechat/public/getconfig',
@@ -130,7 +130,7 @@ function cancel() {
 }
 
 function confirm() {
-    var article_id = GetQueryString('id');
+    var article_id = GetQueryString('reply_id');
     $.ajax({
         url: '/flwechat/public/article/' + article_id,
         type: 'DELETE',
