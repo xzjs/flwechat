@@ -123,7 +123,7 @@ a{
     margin:0 auto;
     position: relative;
     top:0;
-    background-size: cover;
+    background-size: contain;
 }
 
 /*图片放大后显示用户评论*/
