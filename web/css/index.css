@@ -124,6 +124,7 @@ a{
     position: relative;
     top:0;
     background-size: contain;
+    background-repeat: no-repeat;
 }
 
 /*图片放大后显示用户评论*/
