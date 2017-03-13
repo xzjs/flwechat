@@ -91,7 +91,7 @@ function init_showimg() {
             change_img(index);
 
             gallery.fadeIn(100);
-            $('.mark_img').width($('.weui-gallery__img').width()-30);
+            $('.mark_img').width($('.weui-gallery__img').width());
             $('.mark_img').height($('.weui-gallery__img').height());
         });
     });
