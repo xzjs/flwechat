@@ -122,9 +122,9 @@ a{
 .mark_img{
     margin:0 auto;
     position: relative;
-    top:0;
     background-size: contain;
     background-repeat: no-repeat;
+    background-position:inherit;
 }
 
 /*图片放大后显示用户评论*/
