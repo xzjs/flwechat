@@ -23,6 +23,12 @@ $(function () {
 
 });
 
+//显示大图
+function show(image_id) {
+    $.cookie('back', window.location.href);
+    window.location.href = 'show.html?image_id=' + image_id;
+}
+
 function loadMainData() {
     $.getJSON('/flwechat/public/article/' + data['reply_id'], function (result) {
         $('#head_img').attr('src', result.user.head_img);
@@ -31,8 +37,8 @@ function loadMainData() {
             $('#article_content').html(result.content);
             var img_html = '';
             for (var i = 0; i < result.images.length; i++) {
-                img_html += '<div class="userImg">'+
-                '<img data-id="' + result.images[i].id + '" class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt="" onclick="bandImageClick('+result.images[i].id+')">'+
+                img_html += '<div class="userImg" onclick="show('+result.images[i].id+')">'+
+                '<img class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt="">'+
                 '<img src="/flwechat/public/storage/' + result.images[i].mark + '" alt="" class="article_list_mark_img">'+
                 '</div>';
             }
