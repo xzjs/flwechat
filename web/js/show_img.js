@@ -7,7 +7,7 @@ function init_showimg() {
         console.log('参数错误');
         return;
     }
-
+    $('.mark_img').height($('.weui-gallery__img').height());
     $.getJSON('/flwechat/public/image/' + image_id, function (result) {
         img_data = result;
         for (var i = 0; i < img_data.length; i++) {
