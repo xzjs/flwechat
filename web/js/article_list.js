@@ -123,6 +123,12 @@ function comment(reply_id) {
     window.location.href = 'publish.html';
 }
 
+//显示大图
+function show(image_id) {
+    $.cookie('back', window.location.href);
+    window.location.href = 'show.html?image_id=' + image_id;
+}
+
 //渲染文章列表
 function showArticleList(result) {
     var myPublish = $('.content_box');
@@ -132,9 +138,9 @@ function showArticleList(result) {
         if (result[i].is_deleted == 0) {
             var html_img = '';
             for (var j = 0; j < result[i].images.length; j++) {
-                html_img += '<div class="userImg">' +
-                    '<img data-id="' + result[i].images[j].id + '" src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show">'+
-                    '<img src="/flwechat/public/storage/'+result[i].images[j].mark+'" alt="" class="article_list_mark_img">'+
+                html_img += '<div class="userImg" onclick="show(' + result[i].images[j].id + ')">' +
+                    '<img src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show">' +
+                    '<img src="/flwechat/public/storage/' + result[i].images[j].mark + '" alt="" class="article_list_mark_img">' +
                     '</div>';
             }
             var html = '<div class="content">'
@@ -146,7 +152,6 @@ function showArticleList(result) {
                 html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
                     + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
                     + '</a>';
-
             }
             html += '</div>'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
@@ -198,7 +203,7 @@ function showArticleList(result) {
 //上拉加载
 // dropload
 $('.container').dropload({
-    scrollArea : window,
+    scrollArea: window,
     // loadUpFn: function (me) {
     //     data['page'] = 0;
     //     $.ajax({
@@ -254,5 +259,5 @@ $('.container').dropload({
             }
         });
     },
-    threshold : 128
+    threshold: 128
 });

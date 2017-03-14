@@ -2,67 +2,60 @@
  * Created by xzjs on 2017/2/19.
  */
 function init_showimg() {
-    var gallery = $("#gallery");
-    if (gallery.length == 0) {
-        var html = '<div class="weui-gallery" id="gallery">' +
-            '<span class="weui-gallery__img correct" id="galleryImg" style="background-image: url()">' +
-            '<div class="mark_img" style="background-image: url(\'images/red_circle.png\')">'+
-            '<div class="galleryImgUser">' +
-            '<img id="img_head_img" src="images/lan.jpg" alt="" class="galleryImgUserImg">' +
-            '<span id="img_user_name">微信</span><span>-</span><span id="img_article_content">评论内容</span></div>' +
-            // '<img src="images/left.png" alt="" class="galleryImgLeft">' +
-            // '<img src="images/right.png" alt="" class="galleryImgRight">' +
-            // '<img src="images/url.png" alt="" class="galleryImgUrl">' +
-            // '<div id="img_expands" class="url_list" style="display: none"></div>' +
-            // '<img src="images/close.png" alt="" class="galleryImgCenter">' +
-            '<div id="danmu" class="galleryImgBulletScreen"></div>' +
-            '</div></span>' +
-            '<div class="opposite"><div class="" style="opacity: 0">'+
-            '<div class="opposite-content">'+
-            '<p>相关阅读</p>'+
-            '<ul><li><a href="">扩展阅读1</a></li></ul>'+
-            '</div><div class="turn_to_img"><img src="images/back_to_original.png" alt=""><span>返回</span></div>'+
-            '<div class="ads_box"><div></div><img src="images/ads.jpg" alt=""></div>'+
-            '</div></div>'+
-            '<div class="bullet_screen">' +
-            '<div class="bullet_screen_button">' +
-            '<input type="checkbox" class="bullet_screen_button_checkbox" checked="checked">' +
-            '<span>弹幕</span>' +
-            '</div>' +
-            '<img src="images/left2.png" alt="" class="galleryImgLeft">' +
-            '<img src="images/right2.png" alt="" class="galleryImgRight">' +
-            '<img src="images/url2.png" alt="" class="galleryImgUrl">' +
-            // '<div id="img_expands" class="url_list" style="display: none"></div>' +
-            '<img src="images/close2.png" alt="" class="galleryImgCenter">' +
-            // '<div class="tucao_button">吐槽</div>'+
-            '<span id="submit" class="bullet_screen_submit">吐槽</span>' +
-            '<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content" style="display: none">' +
-            '</div></div>';
-        $('body').append(html);
-
+    var image_id=GetQueryString('image_id');
+    if(image_id==null) {
+        console.log('参数错误');
+        return;
     }
-
+    $('.mark_img').height($('.weui-gallery__img').height());
+    $.getJSON('/flwechat/public/image/' + image_id, function (result) {
+        img_data = result;
+        for (var i = 0; i < img_data.length; i++) {
+            if (img_data[i].id == image_id) {
+                index = i;
+                break;
+            }
+        }
+        change_img(index);
+    });
 
     $('.galleryImgUrl').on('click', function () {
         $(".correct").removeClass('test2');
         $(".opposite").children().removeClass("test");
         $(".correct").addClass("test");
         $(".opposite").children().addClass('test2');
+
+        //修改地址栏历史
+        var turn=GetQueryString('turn');
+        if(turn==null){
+            history.pushState({},"扩展",window.location.href+'&turn=true');
+        }
     });
+
+    var turn=GetQueryString('turn');
+    if(turn!=null){
+        $('.galleryImgUrl').click();
+    }
+
     $('.turn_to_img').on('click',function(){
         $(".correct").removeClass("test");
         $(this).parent().removeClass('test2');
         $(".correct").addClass("test2");
         $(this).parent().addClass('test');
+
+        //修改地址栏历史
+        var href=window.location.href.split('&')[0];
+        history.pushState({},"图片展示",href);
     });
 
-    gallery = $("#gallery");
+    var gallery = $("#gallery");
     $('.galleryImgCenter').on("click", function () {
-        $(".correct").attr('class','weui-gallery__img correct');
-        $(".opposite").children().removeClass();
-        gallery.fadeOut(100);
-        $('#danmu').danmu('danmu_stop');
-        index = 0;
+        // $(".correct").attr('class','weui-gallery__img correct');
+        // $(".opposite").children().removeClass();
+        // gallery.fadeOut(100);
+        // $('#danmu').danmu('danmu_stop');
+        // index = 0;
+        window.location.href=$.cookie('back');
     });
 
     $('.bullet_screen_content').keydown(function (event) {
@@ -78,23 +71,23 @@ function init_showimg() {
         this.placeholder = '吐槽';
     });
 
-    $('.userImg').on('click', function () {
-        var image_id = $(this).children('.img_show').data('id');
-        $.getJSON('/flwechat/public/image/' + image_id, function (result) {
-            img_data = result;
-            for (var i = 0; i < img_data.length; i++) {
-                if (img_data[i].id == image_id) {
-                    index = i;
-                    break;
-                }
-            }
-            change_img(index);
-
-            gallery.fadeIn(100);
-            $('.mark_img').width($('.weui-gallery__img').width());
-            $('.mark_img').height($('.weui-gallery__img').height());
-        });
-    });
+    // $('.userImg').on('click', function () {
+    //     var image_id = $(this).children('.img_show').data('id');
+    //     $.getJSON('/flwechat/public/image/' + image_id, function (result) {
+    //         img_data = result;
+    //         for (var i = 0; i < img_data.length; i++) {
+    //             if (img_data[i].id == image_id) {
+    //                 index = i;
+    //                 break;
+    //             }
+    //         }
+    //         change_img(index);
+    //
+    //         gallery.fadeIn(100);
+    //         $('.mark_img').width($('.weui-gallery__img').width());
+    //         $('.mark_img').height($('.weui-gallery__img').height());
+    //     });
+    // });
 
     $('.bullet_screen_button_checkbox').on('click', function () {
         if ($('.bullet_screen_button_checkbox').is(':checked')) {
@@ -218,25 +211,13 @@ function getcolor() {
 function getsize() {
     return Math.round(Math.random());
 }
+
 $('.galleryImgUser').on('click', function () {
     $(this).css('height', 'auto')
 });
 
-function bandImageClick(id) {
-    image_id=id;
-    if(image_id==null) {
-        var image_id = $(this).data('id');
-    }
-    $.getJSON('/flwechat/public/image/' + image_id, function (result) {
-        img_data = result;
-        for (var i = 0; i < img_data.length; i++) {
-            if (img_data[i].id == image_id) {
-                index = i;
-                break;
-            }
-        }
-        change_img(index);
+$(function () {
+    init_showimg();
+})
 
-        $("#gallery").fadeIn(100);
-    });
-}
+
