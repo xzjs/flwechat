@@ -11,7 +11,7 @@ $(function () {
 
     $('#edit').on('click', function () {
         $('#do').show();
-        $('#edit_article').attr('href', 'publish.html?id=' + article_id + '&action=edit');
+        $('#edit_article').attr('href', 'publish.html?reply_id=' + article_id + '&action=edit');
         $('#delete_article').one('click', function () {
             $('#dialog1').show();
         })
@@ -48,7 +48,7 @@ function loadMainData() {
             }
             var action_html = '<div class="your_action_left">';
             if (result.reply_id > 0) {
-                action_html += '<a href="article_detail.html?id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
+                action_html += '<a href="article_detail.html?reply_id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
             }
             action_html += '</div><div class="your_action_right">'
                 + '<img src="images/comment.png" alt=""><span id="comment">' + result.comment_num + '</span>'
@@ -116,7 +116,7 @@ function loadMainData() {
             var action_html = '<div class="your_action_left">';
             $('#img').html('');
             if (result.reply_id > 0) {
-                action_html += '<a href="article_detail.html?id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
+                action_html += '<a href="article_detail.html?reply_id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
             }
             action_html += '</div><div class="your_action_right">'
                 + '<a href="#"><img src="images/comment.png" alt=""></a><span id="comment">' + result.comment_num + '</span>'
