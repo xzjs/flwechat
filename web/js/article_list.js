@@ -197,7 +197,6 @@ function showArticleList(result) {
     myPublish.append(myPublic_html);
     follow_topic_list(user_id);
     action_list();
-    init_showimg();
 }
 
 //上拉加载
