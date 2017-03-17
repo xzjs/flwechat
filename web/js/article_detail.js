@@ -50,14 +50,14 @@ function loadMainData() {
             if (result.reply_id > 0) {
                 action_html += '<a href="article_detail.html?reply_id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
             }
-            action_html += '<img id="img_save_' + result.id + '" src="images/save.png" alt="" onclick="action(' + result.id + ',0,this)"></div>'
+            action_html += '</div><div class="your_action_right">'
+                +'<img id="img_save_' + result.id + '" src="images/save.png" alt="" onclick="follow(' + result.id + ',0,this)"></div>'
                 +'</div><div class="your_action_right">'
                 + '<img src="images/comment.png" alt=""><span id="comment">' + result.comment_num + '</span>'
                 + '</div><div class="your_action_right">'
                 + '<img id="img_oppose_' + result.id + '" src="images/oppose.png" alt="" onclick="action(' + result.id + ',1,this)"><span>' + result.oppose_num + '</span>'
                 + '</div><div class="your_action_right">'
-                + '<img id="img_support_' + result.id + '" src="images/support.png" alt="" onclick="action(' + result.id + ',0,this)"><span>' + result.support_num + '</span></div>'
-                + '</div><div class="your_action_right">';
+                + '<img id="img_support_' + result.id + '" src="images/support.png" alt="" onclick="action(' + result.id + ',0,this)"><span>' + result.support_num + '</span></div>';
             $('#action').html(action_html);
 
             //评论按钮

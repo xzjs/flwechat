@@ -7,7 +7,7 @@ function show_user(id) {
     window.location.href = "mine.html";
 }
 
-//关注话题
+//关注话题改为关注文章
 // function follow(topic_id, type) {
 //     $.post('/flwechat/public/follow',
 //         {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
@@ -157,7 +157,7 @@ function showArticleList(result) {
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
                 + '<div class="pic_show">' + html_img + '</div>'
                 + '<div class="your_action">'
-                // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
+                +'<div class="your_action_right"><img src="images/save.png" alt=""></div>'
                 + '<div class="your_action_right">'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
                 + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
