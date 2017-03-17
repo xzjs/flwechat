@@ -3,7 +3,7 @@
  */
 $(function () {
     var article_id = 0;
-
+    $(".container").height($(window).height()-100);
     get_select_list();
     $("[name='my-checkbox']").bootstrapSwitch();
     $("#pic_files1").change(function () {
@@ -93,6 +93,14 @@ $(function () {
     });
 
     edit();
+    $('.weui-switch').change(function () {
+        var flag=$('.weui-switch').prop('checked');
+        if(flag==true){
+            $('#open_close').html('公开');
+        }else{
+            $('#open_close').html('仅自己可见');
+        }
+    });
 });
 
 var formData = new FormData();

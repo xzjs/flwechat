@@ -8,41 +8,68 @@
     <title>发布</title>
     <link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/weui.min.css">
-    <link rel="stylesheet" href="css/bootstrap-switch.min.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/publish.css">
 </head>
 <body>
 <div class="container">
     <form class="publish_content" action="" method="post" enctype="multipart/form-data">
-        <div class="text_insert">
-            <textarea  id="comment" maxlength="300" placeholder="评论" name="comment" onfocus="this.placeholder=''" onblur="this.placeholder='评论'"></textarea>
+        <div class="weui-cells__title">评论</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>
+                    <div class="weui-textarea-counter"><span>0</span>/200</div>
+                </div>
+            </div>
         </div>
-        <div class="pic_insert" id="pic_insert1">
-            <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file1">
-            <input class="pic_input" id="pic_files1" type="file" name="pic_file1">
+        <!--<div class="text_insert">-->
+            <!--<textarea  id="comment" maxlength="300" placeholder="评论" name="comment" onfocus="this.placeholder=''" onblur="this.placeholder='评论'"></textarea>-->
+        <!--</div>-->
+        <div class="weui-cells__title">最多添加3张截图</div>
+        <div class="weui-cells">
+            <div class="pic_insert" id="pic_insert1">
+                <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file1">
+                <input class="pic_input" id="pic_files1" type="file" name="pic_file1">
+            </div>
+            <div class="pic_insert" id="pic_insert2">
+                <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file2">
+                <input class="pic_input" id="pic_files2" type="file" name="pic_file2">
+            </div>
+            <div class="pic_insert" id="pic_insert3">
+                <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file3">
+                <input class="pic_input" id="pic_files3" type="file" name="pic_file3">
+            </div>
         </div>
-        <div class="pic_insert" id="pic_insert2">
-            <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file2">
-            <input class="pic_input" id="pic_files2" type="file" name="pic_file2">
+
+        <!--<div id="pic_blank">-->
+            <!--添加3张截图-->
+        <!--</div>-->
+        <div class="weui-cells__title">话题分类</div>
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_select">
+                <div class="weui-cell__bd">
+                    <select class="weui-select" name="select1" id="topic_select">
+                        <option selected="" value="0">请选择话题分类</option>
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="pic_insert" id="pic_insert3">
-            <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file3">
-            <input class="pic_input" id="pic_files3" type="file" name="pic_file3">
-        </div>
-        <div id="pic_blank">
-            添加3张截图
+        <div class="weui-cells__title">公开/仅自己可见</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell weui-cell_switch">
+                <div class="weui-cell__bd" id="open_close">公开</div>
+                <div class="weui-cell__ft">
+                    <input class="weui-switch" type="checkbox" checked>
+                </div>
+            </div>
         </div>
         <div class="topic_choose">
-            <select name="" id="topic_select">
-                <option value="0">选择话题</option>
-            </select>
+            <!--<select name="" id="topic_select">-->
+                <!--<option value="0">选择话题</option>-->
+            <!--</select>-->
             <!--<input type="text" placeholder="请选择合适的话题" onfocus="this.placeholder=''" onblur="this.placeholder='请选择合适的话题'">-->
             <!--<span class="weui-btn weui-btn_mini weui-btn_primary">话题</span>-->
-            <div class="switch" data-on-label="SI" data-off-label="NO">
-                <input type="checkbox" name="my-checkbox" checked>
-                <lable class="publish_open">公开/隐私</lable>
-            </div>
         </div>
 
         <!--<div class="url_insert">-->
@@ -132,7 +159,6 @@
     </div>
 </div>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 <script src="js/bootstrap-switch.min.js"></script>
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
