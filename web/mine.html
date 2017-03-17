@@ -44,9 +44,11 @@
         </div>
     </div>
     <div class="messages">
-        <span id="publish" v-on:click="getArticles(0,event)" class="selected">发布的文章</span>
-        <span>|</span>
-        <span id="comment" v-on:click="getArticles(1,event)">评论过的文章</span>
+        <ul>
+            <li ><a href="javascript:void(0);" class="selected">收藏</a></li>
+            <li id="publish"><a href="javascript:void(0);" v-on:click="getArticles(0,event)">发布</a></li>
+            <li id="comment"><a href="javascript:void(0);" v-on:click="getArticles(1,event)" >关注</a></li>
+        </ul>
     </div>
     <div class="blank" v-if="show"><img src="images/none.png" alt=""></div>
     <div class="content_box" style="margin-top: 5px">

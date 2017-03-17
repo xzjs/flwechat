@@ -8,26 +8,26 @@ function show_user(id) {
 }
 
 //关注话题
-function follow(topic_id, type) {
-    $.post('/flwechat/public/follow',
-        {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
-        function (result) {
-            if (result > 0) {
-                $('.weui-toast__content').html('已关注');
-                var $toast = $('#toast');
-
-                if ($toast.css('display') != 'none') return;
-
-                $toast.fadeIn(100);
-                setTimeout(function () {
-                    $toast.fadeOut(100);
-                }, 2000);
-                if (type == 1) {
-                    change_follow_topic_style(topic_id);
-                }
-            }
-        });
-}
+// function follow(topic_id, type) {
+//     $.post('/flwechat/public/follow',
+//         {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
+//         function (result) {
+//             if (result > 0) {
+//                 $('.weui-toast__content').html('已关注');
+//                 var $toast = $('#toast');
+//
+//                 if ($toast.css('display') != 'none') return;
+//
+//                 $toast.fadeIn(100);
+//                 setTimeout(function () {
+//                     $toast.fadeOut(100);
+//                 }, 2000);
+//                 if (type == 1) {
+//                     change_follow_topic_style(topic_id);
+//                 }
+//             }
+//         });
+// }
 
 //获取关注列表
 function follow_topic_list(user_id) {
@@ -43,34 +43,34 @@ function follow_topic_list(user_id) {
 }
 
 //取消关注话题
-function cancel_follow(topic_id, type) {
-    $.post('/flwechat/public/follow/cancel_follow',
-        {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
-        function (result) {
-            $('.weui-toast__content').html('已取消关注');
-            var $toast = $('#toast');
-
-            if ($toast.css('display') != 'none') return;
-
-            $toast.fadeIn(100);
-            setTimeout(function () {
-                $toast.fadeOut(100);
-            }, 2000);
-            if (result == 'true' && type == 1) {
-                change_follow_topic_style(topic_id);
-            }
-        });
-}
+// function cancel_follow(topic_id, type) {
+//     $.post('/flwechat/public/follow/cancel_follow',
+//         {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
+//         function (result) {
+//             $('.weui-toast__content').html('已取消关注');
+//             var $toast = $('#toast');
+//
+//             if ($toast.css('display') != 'none') return;
+//
+//             $toast.fadeIn(100);
+//             setTimeout(function () {
+//                 $toast.fadeOut(100);
+//             }, 2000);
+//             if (result == 'true' && type == 1) {
+//                 change_follow_topic_style(topic_id);
+//             }
+//         });
+// }
 
 //改变用户关注话题的样式
-function change_follow_topic_style(topic_id) {
-    $("span[data-id=" + topic_id + "]").toggleClass('topic_followed');
-    if ($("span[data-id=" + topic_id + "]").hasClass('topic_followed')) {
-        $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'cancel_follow(' + topic_id + ',1)');
-    } else {
-        $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'follow(' + topic_id + ',1)');
-    }
-}
+// function change_follow_topic_style(topic_id) {
+//     $("span[data-id=" + topic_id + "]").toggleClass('topic_followed');
+//     if ($("span[data-id=" + topic_id + "]").hasClass('topic_followed')) {
+//         $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'cancel_follow(' + topic_id + ',1)');
+//     } else {
+//         $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'follow(' + topic_id + ',1)');
+//     }
+// }
 
 //点赞或踩
 function action(article_id, type, obj) {

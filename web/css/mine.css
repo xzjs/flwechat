@@ -39,8 +39,13 @@
     background-color: #fff;
     text-align: center;
 }
-.messages span{
+.messages ul li{
+    display: inline-block;
+    width: 28%;
     color: #8a8a8a;
+}
+.messages ul li a{
+    width:100%;
 }
 .messages .selected{
     color:#1aad19;

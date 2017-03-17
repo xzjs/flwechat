@@ -8,6 +8,7 @@
     <title>发布</title>
     <link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/bootstrap-switch.min.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/publish.css">
 </head>
@@ -38,7 +39,12 @@
             </select>
             <!--<input type="text" placeholder="请选择合适的话题" onfocus="this.placeholder=''" onblur="this.placeholder='请选择合适的话题'">-->
             <!--<span class="weui-btn weui-btn_mini weui-btn_primary">话题</span>-->
+            <div class="switch" data-on-label="SI" data-off-label="NO">
+                <input type="checkbox" name="my-checkbox" checked>
+                <lable class="publish_open">公开/隐私</lable>
+            </div>
         </div>
+
         <!--<div class="url_insert">-->
             <!--<div class="url_icon"><img src="images/url.png" alt=""></div>-->
             <!--<textarea name="url" id="url" placeholder="连接" onfocus="this.placeholder=''" onblur="this.placeholder='连接'"></textarea>-->
@@ -127,6 +133,7 @@
 </div>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<script src="js/bootstrap-switch.min.js"></script>
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jsweixin.js"></script>

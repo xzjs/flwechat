@@ -5,7 +5,7 @@ $(function () {
     var article_id = 0;
 
     get_select_list();
-
+    $("[name='my-checkbox']").bootstrapSwitch();
     $("#pic_files1").change(function () {
         url = window.URL.createObjectURL(this.files.item(0));
         set_canvas(url);

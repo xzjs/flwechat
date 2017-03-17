@@ -44,16 +44,20 @@
     color: #888888;
 }
 .topic_choose select{
+    display: inline-block;
     font-size: 14px;
-    margin: 0 0 10px 15px;
-    width: 200px;
-    height: 35px;
+    margin: 0 15px 10px 15px;
+    width: 120px;
+    height: 32px;
     border-radius: 6px;
 }
 .topic_choose select option{
     width: 200px;
     background-color: #fff;
     color: #000;
+}
+.switch{
+    display: inline-block;
 }
 
 .weui-btn_primary{
