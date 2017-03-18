@@ -138,7 +138,7 @@ function showArticleList(result) {
         if (result[i].is_deleted == 0) {
             var html_img = '';
             for (var j = 0; j < result[i].images.length; j++) {
-                html_img += '<div class="userImg" onclick="show(' + result[i].images[j].id + ')">' +
+                html_img += '<div class="swiper-slide userImg" onclick="show(' + result[i].images[j].id + ')">' +
                     '<img src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show">' +
                     '<img src="/flwechat/public/storage/' + result[i].images[j].mark + '" alt="" class="article_list_mark_img">' +
                     '</div>';
@@ -155,7 +155,7 @@ function showArticleList(result) {
             }
             html += '</div>'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
-                + '<div class="pic_show">' + html_img + '</div>'
+                + '<div class="swiper-container pic_show"><div class="swiper-wrapper pic_show_list">' + html_img + '</div></div>'
                 + '<div class="your_action">'
                 +'<div class="your_action_right"><img src="images/save.png" alt=""></div>'
                 + '<div class="your_action_right">'
@@ -197,6 +197,13 @@ function showArticleList(result) {
     myPublish.append(myPublic_html);
     follow_topic_list(user_id);
     action_list();
+    var mySwiper = new Swiper('.swiper-container',{
+
+        effect : 'coverflow',
+        slidesPerView: 3,
+        centeredSlides: true,
+
+    });
 }
 
 //上拉加载

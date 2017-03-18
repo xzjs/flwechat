@@ -45,9 +45,9 @@
     </div>
     <div class="messages">
         <ul>
-            <li ><a href="javascript:void(0);" class="selected">收藏</a></li>
-            <li id="publish"><a href="javascript:void(0);" v-on:click="getArticles(0,event)">发布</a></li>
-            <li id="comment"><a href="javascript:void(0);" v-on:click="getArticles(1,event)" >关注</a></li>
+            <li class="selected">收藏</li>
+            <li id="publish" v-on:click="getArticles(0,event)">发布</li>
+            <li id="comment" v-on:click="getArticles(1,event)">关注</li>
         </ul>
     </div>
     <div class="blank" v-if="show"><img src="images/none.png" alt=""></div>

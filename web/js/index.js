@@ -58,5 +58,7 @@ function check() {
         }, 'json');
     return false;
 }
-
+// $('.pic_show_list').click(function () {
+//    $(this).css('width','500px');
+// });
 

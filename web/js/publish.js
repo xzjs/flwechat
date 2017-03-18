@@ -5,7 +5,6 @@ $(function () {
     var article_id = 0;
     $(".container").height($(window).height()-100);
     get_select_list();
-    $("[name='my-checkbox']").bootstrapSwitch();
     $("#pic_files1").change(function () {
         url = window.URL.createObjectURL(this.files.item(0));
         set_canvas(url);
@@ -25,7 +24,7 @@ $(function () {
         set_canvas(url);
         show_img = $("#pic_file3");
         $('#pic_blank').css('display', 'none');
-        $("#pic_file2").attr("src", url);
+        $("#pic_file3").attr("src", url);
     });
 
     $("#showIOSDialog1").click(function () {
