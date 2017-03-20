@@ -19,12 +19,12 @@
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <textarea class="weui-textarea" id="comment" placeholder="请输入文本" rows="3"></textarea>
-                    <div class="weui-textarea-counter"><span>0</span>/200</div>
+                    <!--<div class="weui-textarea-counter"><span>0</span>/200</div>-->
                 </div>
             </div>
         </div>
         <!--<div class="text_insert">-->
-            <!--<textarea  id="comment" maxlength="300" placeholder="评论" name="comment" onfocus="this.placeholder=''" onblur="this.placeholder='评论'"></textarea>-->
+        <!--<textarea  id="comment" maxlength="300" placeholder="评论" name="comment" onfocus="this.placeholder=''" onblur="this.placeholder='评论'"></textarea>-->
         <!--</div>-->
         <div class="weui-cells__title">最多添加3张截图</div>
         <div class="weui-cells">
@@ -43,7 +43,7 @@
         </div>
 
         <!--<div id="pic_blank">-->
-            <!--添加3张截图-->
+        <!--添加3张截图-->
         <!--</div>-->
         <div class="weui-cells__title">话题分类</div>
         <div class="weui-cells">
@@ -60,22 +60,19 @@
             <div class="weui-cell weui-cell_switch">
                 <div class="weui-cell__bd" id="open_close">公开</div>
                 <div class="weui-cell__ft">
-                    <input class="weui-switch" type="checkbox" checked>
+                    <input id="checkbox" class="weui-switch" type="checkbox" checked>
                 </div>
             </div>
         </div>
         <div class="topic_choose">
             <!--<select name="" id="topic_select">-->
-                <!--<option value="0">选择话题</option>-->
+            <!--<option value="0">选择话题</option>-->
             <!--</select>-->
             <!--<input type="text" placeholder="请选择合适的话题" onfocus="this.placeholder=''" onblur="this.placeholder='请选择合适的话题'">-->
             <!--<span class="weui-btn weui-btn_mini weui-btn_primary">话题</span>-->
         </div>
 
-        <!--<div class="url_insert">-->
-            <!--<div class="url_icon"><img src="images/url.png" alt=""></div>-->
-            <!--<textarea name="url" id="url" placeholder="连接" onfocus="this.placeholder=''" onblur="this.placeholder='连接'"></textarea>-->
-        <!--</div>-->
+
     </form>
     <div>
         <a href="javascript:;" class="weui-btn weui-btn_primary" id="showIOSDialog1">提交</a>
@@ -119,33 +116,13 @@
         </div>
     </div>
 </div>
-<!--<div id="dialog2" style="display: none;">-->
-    <!--<div class="weui-mask"></div>-->
-    <!--<div class="weui-dialog">-->
-        <!--<div class="weui-dialog__hd"><strong class="weui-dialog__title">请确认话题类型</strong></div>-->
-        <!--<div class="weui-dialog__bd">-->
-            <!--<lable>#</lable>-->
-            <!--<input type="text" id="topic" autofocus="autofocus">-->
-            <!--<img src="images/write.png" alt="" id="write_icon">-->
-        <!--</div>-->
-        <!--<div class="weui-dialog__ft">-->
-            <!--<a href="javascript:void(0);" class="weui-dialog__btn weui-dialog__btn_primary" id="sure2">确定</a>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--<div id="toast" style="display: none;">-->
-    <!--<div class="weui-mask_transparent"></div>-->
-    <!--<div class="weui-toast">-->
-        <!--<i class="weui-icon-success-no-circle weui-icon_toast"></i>-->
-        <!--<p class="weui-toast__content">发布成功</p>-->
-    <!--</div>-->
-<!--</div>-->
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">标记图片</h4>
             </div>
             <div class="modal-body">

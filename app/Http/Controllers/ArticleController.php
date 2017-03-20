@@ -65,6 +65,7 @@ class ArticleController extends Controller
                 $article->topic_id = $request->topic_id;
                 $article->reply_id = $request->reply_id;
                 $article->is_deleted = 0;
+                $article->is_public=$request->is_public;
                 if ($article->reply_id != 0) {
                     $article2 = Article::find($article->reply_id);
                     $article2->comment_num += 1;
