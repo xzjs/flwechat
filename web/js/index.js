@@ -38,7 +38,7 @@ function getTopicList() {
         for (var i = 0; i < result.length; i++) {
             topicList += '<a href="index.html?topic_id=' + result[i].id + '" class="topic_index" data-id="' + result[i].id + '">' + result[i].content + '</a>'
         }
-        $('.topic_index_box').append(topicList);
+        $('.topic_index_box nav').append(topicList);
         if (data['topic_id'] != null) {
             $('a[data-id="' + data['topic_id'] + '"]').addClass('topic_index_selected').siblings('.topic_index').removeClass('topic_index_selected');
         }

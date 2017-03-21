@@ -84,9 +84,9 @@ function action(article_id, type, obj) {
                 } else {
                     src = 'images/oppose2.png';
                 }
-                $(obj).attr('src', src);
-                var num = parseInt($(obj).siblings('span').html()) + 1;
-                $(obj).siblings('span').html(num);
+                $(obj).children('img').attr('src', src);
+                var num = parseInt($(obj).children('img').siblings('span').html()) + 1;
+                $(obj).children('img').siblings('span').html(num);
             } else {
                 console.log(result);
             }
@@ -161,10 +161,10 @@ function showArticleList(result) {
                 + '<div class="your_action_right">'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
                 + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
-                + '<div class="your_action_right">'
-                + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt="" onclick="action(' + result[i].id + ',1,this)"><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
-                + '</div><div class="your_action_right">'
-                + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt="" onclick="action(' + result[i].id + ',0,this)"><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
+                + '<div class="your_action_right" onclick="action(' + result[i].id + ',1,this)">'
+                + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
+                + '</div><div class="your_action_right" onclick="action(' + result[i].id + ',0,this)">'
+                + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
                 + '</div></div>';
             myPublic_html += html;
         } else {

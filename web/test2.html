@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3"></canvas>
+<canvas id="myCanvas2" width="200" height="100" style="border:1px solid #c3c3c3"></canvas>
+<canvas id="myCanvas3" width="200" height="100" style="border:1px solid #c3c3c3"></canvas>
+<script>
+    var c=document.getElementById("myCanvas");//首先，找到 <canvas> 元素:
+    var ctx=c.getContext("2d");//首先，找到 <canvas> 元素:
+    ctx.fillStyle="#ff0000";//设置fillStyle属性可以是CSS颜色，渐变，或图案。fillStyle 默认设置是#000000（黑色）。
+    ctx.fillRect(0,0,150,75);//fillRect(x,y,width,height) 方法定义了矩形当前的填充方式。
+
+    var c2=document.getElementById("myCanvas2");
+    var ctx2=c2.getContext("2d");
+    ctx2.moveTo(0,0);
+    ctx2.lineTo(200,100);
+    ctx2.stroke();
+
+    var c2=document.getElementById("myCanvas2");
+    var ctx2=c2.getContext("2d");
+</script>
+</body>
+</html>
