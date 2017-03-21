@@ -24,6 +24,7 @@ class CreateArticlesTable extends Migration
             $table->integer('transmit_num');
             $table->integer('reply_id');
             $table->integer('is_deleted');
+            $table->integer('is_public');
             $table->timestamps();
         });
     }

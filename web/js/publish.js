@@ -1,10 +1,26 @@
 /**
  * Created by yanlli on 2017/1/24.
  */
+
+var formData = new FormData();
+var reply_id = GetQueryString('reply_id');
+if (reply_id == null) {
+    reply_id = 0;
+} else {
+    $('title').html('评论');
+}
+var action = GetQueryString('action');
+var canvas = $('#canvas')[0];
+var show_img, signaturePad, url;
+var w, h;
+
 $(function () {
     var article_id = 0;
-    $(".container").height($(window).height()-100);
     get_select_list();
+    edit();
+
+    $(".container").height($(window).height()-100);
+
     $("#pic_files1").change(function () {
         url = window.URL.createObjectURL(this.files.item(0));
         set_canvas(url);
@@ -26,7 +42,6 @@ $(function () {
         $('#pic_blank').css('display', 'none');
         $("#pic_file3").attr("src", url);
     });
-
     $("#showIOSDialog1").click(function () {
         var id = $.cookie('id');
         var comment = $.trim($('#comment').val());
@@ -41,34 +56,15 @@ $(function () {
                 $('#dialog1').fadeOut(200)
             });
         } else {
-            // $('.publish_content').prepend('<input name="user_id" type="hidden" value=' + id + '>');
-
-            // var formData = new FormData($('.publish_content')[0]);
             formData.append('reply_id', reply_id);
             formData.append('topic_id', topic_id);
             formData.append('user_id', user_id);
             formData.append('comment', $('#comment').val());
-            // data.user_id = user_id;
-            // data.reply_id = reply_id;
-            // data.topic_id = topic_id;
-            // data.comment = $('#comment').val();
-            // $('.pic_preview').each(function () {
-            //     if ($(this).attr('src') != 'images/pic_insert.png') {
-            //         data[$(this).attr('id')] = $(this).attr('src');
-            //     }
-            // });
-            // $.post('/flwechat/public/article', data, function (result) {
-            //     if (result == 'true') {
-            //         if (reply_id != 0) {
-            //             window.location.href = "article_detail.html?id=" + reply_id;
-            //         } else {
-            //             window.location.href = 'mine.html';
-            //         }
-            //     } else {
-            //         console.log(result);
-            //         alert('系统出故障了！！！');
-            //     }
-            // });
+            if($('#checkbox').attr('checked')){
+                formData.append('is_public', 1);
+            }else{
+                formData.append('is_public', 1);
+            }
             $.ajax({
                 url: '/flwechat/public/article',
                 type: 'POST',
@@ -90,8 +86,6 @@ $(function () {
             });
         }
     });
-
-    edit();
     $('.weui-switch').change(function () {
         var flag=$('.weui-switch').prop('checked');
         if(flag==true){
@@ -101,8 +95,6 @@ $(function () {
         }
     });
 });
-
-var formData = new FormData();
 
 function get_select_list() {
     $.getJSON('/flwechat/public/topic', function (result) {
@@ -123,16 +115,7 @@ function get_select_list() {
     });
 }
 
-var reply_id = GetQueryString('reply_id');
-if (reply_id == null) {
-    reply_id = 0;
-} else {
-    $('title').html('评论');
-}
-var action = GetQueryString('action');
-
 function edit() {
-
     if (action == 'edit') {
         $.getJSON('/flwechat/public/article/' + reply_id, function (result) {
             $('#comment').val(result.content);
@@ -142,10 +125,6 @@ function edit() {
         });
     }
 }
-
-var canvas = $('#canvas')[0];
-var show_img, signaturePad, url;
-var w, h;
 
 //设置canvas的长宽
 function set_canvas() {
@@ -208,9 +187,6 @@ function resizeCanvas() {
     canvas.height = canvas.offsetHeight * ratio;
     canvas.getContext("2d").scale(ratio, ratio);
 }
-
-// window.onresize = resizeCanvas;
-// resizeCanvas();
 
 function getMarkPosition(arr) {
     var positions = {'max_x': arr[0][0].x, 'min_x': arr[0][0].x, 'max_y': arr[0][0].y, 'min_y': arr[0][0].y};
