@@ -78,10 +78,92 @@ function set_friend(type, show_id) {
     }
 }
 
-var user=GetQueryString('user_id');
-if(user==null){
-    user=user_id;
+var user = GetQueryString('user_id');
+if (user == null) {
+    user = user_id;
 }
+
+Vue.component('action',{
+    template:`<div class="your_action" id="action">
+                <div class="your_action_left">
+                    <a v-if="article.reply_id>0" :href="['article_detail.html?reply_id=' + article.reply_id]">
+                        <img src="images/back_to_original.png" alt="">
+                        <span>原文</span></a>
+                </div>
+                <!--<div class="your_action_right">-->
+                <!--<img src="images/share.png" alt=""><span></span>-->
+                <!--</div>-->
+                <template v-if="article.user_id!=userId">
+                <div class="your_action_right">
+                    <img v-if="article.is_follow==0" src="images/save.png" alt="">
+                    <img v-else src="images/saved.png" alt="">
+                </div>
+                </template>
+                <div class="your_action_right">
+                    <img src="images/comment.png" alt="">
+                    <span id="comment">{{article.comment_num}}</span>
+                </div>
+                <div class="your_action_right">
+                    <img v-if="article.is_oppose==0" src="images/oppose.png" alt="">
+                    <img v-else src="images/oppose2.png" alt="">
+                    <span id="oppose">{{article.oppose_num}}</span>
+                </div>
+                <div class="your_action_right">
+                    <img v-if="article.is_support==0" src="images/support.png" alt="">
+                    <img v-else src="images/support2.png" alt="">
+                    <span id="support">{{article.support_num}}</span>
+                </div>
+            </div>`,
+    props:['article'],
+})
+
+Vue.component('article-list', {
+    template: `
+        <div class="content_box" style="margin-top: 5px">
+            <div v-cloak v-for="item in article_list" class="content">
+                <div class="content_top">
+                    <a :href="['mine.html?user_id='+item.user.id]">
+                        <img :src="item.user.head_img" alt="" class="head_portrait">
+                    </a>
+                    <span class="wei_name">{{ item.user.nickname }}</span>
+                    <a href="javascript:void(0)" onclick="follow(1,1)">
+                        <span class="topic" :data-id="item.topic.id">{{item.topic.content}}</span>
+                    </a>
+                </div>
+                <a :href="['article_detail.html?reply_id='+item.id]"><p class="content_txt">{{item.content}}</p></a>
+                <div class=" swiper-container pic_show">
+                    <div  class="swiper-wrapper pic_show_list">
+                        <div v-for="img in item.images" class="swiper-slide userImg" @click="show_img(img.id)" >
+                            <img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">
+                            <img :src="['/flwechat/public/storage/' + img.mark]" alt="" class="article_list_mark_img">
+                        </div>
+                    </div>
+                </div>
+                <div class="your_action">
+                    <div class="your_action_right">
+                        <a :href="['article_detail.html?reply_id='+item.id]">
+                            <img src="images/comment.png" alt=""><span>{{item.comment_num}}</span></a>
+                    </div>
+                    <div class="your_action_right">
+                        <img id="img_oppose_19" src="images/oppose.png" alt="" onclick="action(19,1,this)">
+                        <span id="span_oppose_19">{{item.oppose_num}}</span>
+                    </div>
+                    <div class="your_action_right">
+                        <img id="img_support_19" src="images/support.png" alt="" onclick="action(19,0,this)">
+                        <span id="span_support_19">{{item.support_num}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `,
+    props:['article_list'],
+    methods:{
+        show_img: function (image_id) {
+            $.cookie('back', window.location.href);
+            window.location.href = 'show.html?image_id=' + image_id;
+        }
+    }
+})
 
 var app = new Vue({
     el: '#app',
@@ -98,26 +180,34 @@ var app = new Vue({
         this.getArticles(0)
     },
     methods: {
-        getArticles: function (comment,event) {
+        getArticles: function (comment, event) {
             var vm = this;
             vm.postData['comment'] = comment;
-            vm.$http.post('/flwechat/public/article/article_list', vm.postData)
+            axios.post('/flwechat/public/article/article_list', vm.postData)
                 .then(
-                    function(response){
-                    console.log(response.data);
-                    vm.items = response.data;
-                    if(response.data.length>0){
-                        vm.show = false;
-                    }else{
-                        vm.show = true;
-                    }
-                }, function(response){
-                    console.log(response.data);
-                });
-            if(event!=null){
-                var element=$(event.target);
+                    function (response) {
+                        console.log(response.data);
+                        vm.items = response.data;
+                        if (response.data.length > 0) {
+                            vm.show = false;
+                        } else {
+                            vm.show = true;
+                        }
+                    }, function (response) {
+                        console.log(response.data);
+                    });
+            if (event != null) {
+                var element = $(event.target);
                 element.addClass('selected').siblings().removeClass('selected');
             }
         }
+
+    },
+    updated: function () {
+        var mySwiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            slidesPerView: 3,
+            centeredSlides: true,
+        });
     }
 })

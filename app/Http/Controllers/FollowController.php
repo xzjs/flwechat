@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Follow;
 use App\Topic;
 use App\User;
@@ -120,7 +121,7 @@ class FollowController extends Controller
             if($request->type==0){
                 $be_follow=User::find($be_follow_ids);
             }else{
-                $be_follow=Topic::find($be_follow_ids);
+                $be_follow=Article::find($be_follow_ids);
             }
             echo \GuzzleHttp\json_encode($be_follow);
         }catch (\Exception $exception){

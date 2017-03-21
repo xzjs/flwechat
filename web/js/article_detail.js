@@ -3,10 +3,12 @@
  */
 var icon = '/flwechat/web/images/topic.png';
 var desc = '';
+var follow_list;
+var article;
 
 $(function () {
 
-    loadMainData();
+    //loadMainData();
     //getArticleList('/flwechat/public/article/article_list/' + article_id);
 
     $('#edit').on('click', function () {
@@ -37,10 +39,10 @@ function loadMainData() {
             $('#article_content').html(result.content);
             var img_html = '';
             for (var i = 0; i < result.images.length; i++) {
-                img_html += '<div class="userImg" onclick="show('+result.images[i].id+')">'+
-                '<img class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt="">'+
-                '<img src="/flwechat/public/storage/' + result.images[i].mark + '" alt="" class="article_list_mark_img">'+
-                '</div>';
+                img_html += '<div class="userImg" onclick="show(' + result.images[i].id + ')">' +
+                    '<img class="img_show" src="/flwechat/public/storage/' + result.images[i].img + '" alt="">' +
+                    '<img src="/flwechat/public/storage/' + result.images[i].mark + '" alt="" class="article_list_mark_img">' +
+                    '</div>';
             }
             $('#img').html(img_html);
             if (result.user_id == user_id) {
@@ -148,3 +150,61 @@ function confirm() {
         }
     });
 }
+
+function getFollowHtml() {
+
+    $.post('/flwechat/public/follow/get_follow_list',
+        {'id': user_id, 'type': 1},
+        function (result) {
+
+        })
+}
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        article: null,
+        article_list: [],
+        article_id:0,
+        userId:0
+    },
+    methods: {
+        getArticle: function (id) {
+            var vm = this;
+            axios.post('/flwechat/public/article/get_article',
+                {article_id:vm.article_id,user_id:vm.userId})
+                .then(
+                    function (response) {
+                        console.log(response.data);
+                        vm.article = response.data;
+                    }
+                ).catch(
+                function (error) {
+                    console.log(error);
+                }
+            )
+        },
+        getArticleList:function (reply_id) {
+
+        },
+        setAction:function (type) {
+
+        }
+    },
+    created:function () {
+        this.article_id=GetQueryString('reply_id');
+        this.userId=user_id;
+        console.log(this.article_id,this.userId);
+    },
+    mounted:function () {
+        this.getArticle(this.article_id);
+        this.getArticleList(this.id);
+    },
+    updated:function () {
+        var mySwiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            slidesPerView: 3,
+            centeredSlides: true,
+        });
+    }
+})

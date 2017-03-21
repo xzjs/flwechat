@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Action;
 use App\Article;
+use App\Follow;
 use App\Image;
 use App\Jobs\GetUrl;
 use App\Topic;
@@ -329,6 +331,23 @@ class ArticleController extends Controller
             }
             $articles = $articles->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
             return response()->json($articles);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
+
+    /**
+     * 获取单个文章
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_article(Request $request){
+        try {
+            $article = Article::with('images', 'topic', 'user')->find($request->article_id);
+            $article->is_support=Action::where('article_id',$request->article_id)->where('user_id',$request->user_id)->where('type',0)->count();
+            $article->is_oppose=Action::where('article_id',$request->article_id)->where('user_id',$request->user_id)->where('type',1)->count();
+            $article->is_follow=Follow::where('follow_user',$request->user_id)->where('be_follow_user',$request->article_id)->count();
+            return response()->json($article);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
