@@ -157,7 +157,7 @@ function showArticleList(result) {
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
                 + '<div class="swiper-container pic_show"><div class="swiper-wrapper pic_show_list">' + html_img + '</div></div>'
                 + '<div class="your_action">'
-                +'<div class="your_action_right"><img src="images/save.png" alt=""></div>'
+                // +'<div class="your_action_right"><img src="images/save.png" alt=""></div>'
                 + '<div class="your_action_right">'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
                 + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'

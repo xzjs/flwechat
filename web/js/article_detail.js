@@ -51,7 +51,7 @@ function loadMainData() {
                 action_html += '<a href="article_detail.html?reply_id=' + result.reply_id + '"><img src="images/back_to_original.png" alt=""><span>原文</span></a>';
             }
             action_html += '</div><div class="your_action_right">'
-                +'<img id="img_save_' + result.id + '" src="images/save.png" alt="" onclick="follow(' + result.id + ',0,this)"></div>'
+                +'<img id="img_save_' + result.id + '" src="images/follow.png" alt="" onclick="follow(' + result.id + ',0,this)"></div>'
                 +'</div><div class="your_action_right">'
                 + '<img src="images/comment.png" alt=""><span id="comment">' + result.comment_num + '</span>'
                 + '</div><div class="your_action_right">'
