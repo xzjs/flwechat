@@ -83,10 +83,10 @@ if (user == null) {
     user = user_id;
 }
 
-Vue.component('action',{
-    template:`<div class="your_action" id="action">
-                <div class="your_action_left">
-                    <a v-if="article.reply_id>0" :href="['article_detail.html?reply_id=' + article.reply_id]">
+var action = Vue.extend({
+    template: `<div class="your_action" id="action">
+                <div class="your_action_right">
+                    <a v-if="article.reply_id>0" :href="'article_detail.html?reply_id=' + article.reply_id">
                         <img src="images/back_to_original.png" alt="">
                         <span>原文</span></a>
                 </div>
@@ -99,22 +99,61 @@ Vue.component('action',{
                     <img v-else src="images/saved.png" alt="">
                 </div>
                 </template>
-                <div class="your_action_right">
-                    <img src="images/comment.png" alt="">
-                    <span id="comment">{{article.comment_num}}</span>
+                <div class="your_action_right" @click="detail()">
+                    <p>评论<span>{{article.comment_num}}</span></p>
                 </div>
-                <div class="your_action_right">
-                    <img v-if="article.is_oppose==0" src="images/oppose.png" alt="">
-                    <img v-else src="images/oppose2.png" alt="">
-                    <span id="oppose">{{article.oppose_num}}</span>
+                <div class="your_action_right" @click="oppose()">
+                    <p v-if="article.is_oppose==0" style="color:#000">踩<span>{{article.oppose_num}}</span></p>
+                    <p v-else style="color:#ec971f">踩<span>{{article.oppose_num}}</span></p>
+
                 </div>
-                <div class="your_action_right">
-                    <img v-if="article.is_support==0" src="images/support.png" alt="">
-                    <img v-else src="images/support2.png" alt="">
-                    <span id="support">{{article.support_num}}</span>
+                <div class="your_action_right" @click="support">
+                    <p v-if="article.is_support==0" style="color:#000">赞<span>{{article.support_num}}</span></p>
+                    <p v-else style="color:#ec971f">赞<span>{{article.support_num}}</span></p>
                 </div>
             </div>`,
-    props:['article'],
+    props: ['article'],
+    data: function () {
+        return {
+            userId: 0
+        }
+    },
+    created: function () {
+        this.userId = user_id;
+    },
+    methods: {
+        detail: function () {
+            window.location.href = 'article_detail.html?reply_id=' + this.article.id;
+        },
+        support: function () {
+            if (this.article.is_support == 0) {
+                this.article.is_support = 1;
+                this.article.support_num += 1;
+                axios.post('/flwechat/public/action',
+                    {article_id:this.article.id,user_id:this.userId,type:0})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }
+        },
+        oppose:function () {
+            if (this.article.is_oppose == 0) {
+                this.article.is_oppose = 1;
+                this.article.oppose_num += 1;
+                axios.post('/flwechat/public/action',
+                    {article_id:this.article.id,user_id:this.userId,type:1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }
+        }
+    }
 })
 
 Vue.component('article-list', {
@@ -126,11 +165,11 @@ Vue.component('article-list', {
                         <img :src="item.user.head_img" alt="" class="head_portrait">
                     </a>
                     <span class="wei_name">{{ item.user.nickname }}</span>
-                    <a href="javascript:void(0)" onclick="follow(1,1)">
+                    <a href="javascript:void(0)">
                         <span class="topic" :data-id="item.topic.id">{{item.topic.content}}</span>
                     </a>
                 </div>
-                <a :href="['article_detail.html?reply_id='+item.id]"><p class="content_txt">{{item.content}}</p></a>
+                <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
                 <div class=" swiper-container pic_show">
                     <div  class="swiper-wrapper pic_show_list">
                         <div v-for="img in item.images" class="swiper-slide userImg" @click="show_img(img.id)" >
@@ -139,29 +178,19 @@ Vue.component('article-list', {
                         </div>
                     </div>
                 </div>
-                <div class="your_action">
-                    <div class="your_action_right">
-                        <a :href="['article_detail.html?reply_id='+item.id]">
-                            <img src="images/comment.png" alt=""><span>{{item.comment_num}}</span></a>
-                    </div>
-                    <div class="your_action_right">
-                        <img id="img_oppose_19" src="images/oppose.png" alt="" onclick="action(19,1,this)">
-                        <span id="span_oppose_19">{{item.oppose_num}}</span>
-                    </div>
-                    <div class="your_action_right">
-                        <img id="img_support_19" src="images/support.png" alt="" onclick="action(19,0,this)">
-                        <span id="span_support_19">{{item.support_num}}</span>
-                    </div>
-                </div>
+                <action :article="item"></action>
             </div>
         </div>
     `,
-    props:['article_list'],
-    methods:{
+    props: ['article_list'],
+    methods: {
         show_img: function (image_id) {
             $.cookie('back', window.location.href);
             window.location.href = 'show.html?image_id=' + image_id;
         }
+    },
+    components: {
+        'action': action
     }
 })
 

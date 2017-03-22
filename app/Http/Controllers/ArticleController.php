@@ -304,6 +304,8 @@ class ArticleController extends Controller
             $reply_id = $request->reply_id;
             $key_word = $request->key_word;
             $comment = $request->comment;
+            $is_public=$request->is_public;
+
             $articles = Article::with('images', 'topic', 'user');
             //话题查询
             if ($topic_id != null) {
@@ -311,11 +313,17 @@ class ArticleController extends Controller
             }
             //用户id查询
             elseif($user_id != null) {
+                //获取评论过的文章
                 if ($comment == 1) {
                     $reply_ids = Article::where('user_id', $user_id)->where('reply_id', '>', 0)->get(['reply_id'])->toArray();
                     $articles = Article::with('images', 'topic', 'user')->whereIn('id', $reply_ids);
                 } else {
+                    //获取用户发布的文章
                     $articles = $articles->where('user_id', $user_id);
+                }
+                if($is_public!=null){
+                    //查询用户未公开的文章
+                    $articles=$articles->where('is_public',$is_public);
                 }
             }
             //回复id查询
@@ -326,10 +334,16 @@ class ArticleController extends Controller
             elseif ($key_word != null) {
                 $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
             }
+            //首页展示文章查询
             else{
                 $articles=$articles->where('reply_id',0);
             }
             $articles = $articles->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
+            foreach ($articles as $article) {
+                $article->is_support=Action::where('article_id',$article->id)->where('user_id',$request->user_id)->where('type',0)->count();
+                $article->is_oppose=Action::where('article_id',$article->id)->where('user_id',$request->user_id)->where('type',1)->count();
+                $article->is_follow=Follow::where('follow_user',$article->id)->where('be_follow_user',$request->article_id)->count();
+            }
             return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
