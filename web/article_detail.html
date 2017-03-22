@@ -21,7 +21,10 @@
 <div id="app" class="container">
     <div class="article_box">
         <div v-cloak class="content">
-            <div class="content_top"><img id="head_img" :src="article.user.head_img" alt="" class="head_portrait"><span id="nick_name" class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
+            <div class="content_top">
+                <a :href="['mine.html?user_id='+article.user.id]">
+                    <img id="head_img" :src="article.user.head_img" alt="" class="head_portrait"><span id="nick_name" class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
+                </a>
             <span id="edit" class="do_icon" style="float: right;display: none">
                 <img class="do_open" src="images/down.png" alt="">
             </span>
@@ -36,40 +39,13 @@
                     </div>
                 </div>
             </div>
-            <div class="your_action" id="action">
-                <div class="your_action_left">
-                    <a v-if="article.reply_id>0" :href="['article_detail.html?reply_id=' + article.reply_id]">
-                        <img src="images/back_to_original.png" alt="">
-                        <span>原文</span></a>
-                </div>
-                <!--<div class="your_action_right">-->
-                <!--<img src="images/share.png" alt=""><span></span>-->
-                <!--</div>-->
-                <template v-if="article.user_id!=userId">
-                <div class="your_action_right">
-                    <img v-if="article.is_follow==0" src="images/save.png" alt="">
-                    <img v-else src="images/saved.png" alt="">
-                </div>
-                </template>
-                <div class="your_action_right">
-                    <p src="images/comment.png" alt="">评论<span id="comment">{{article.comment_num}}</span></p>
-                </div>
-                <div class="your_action_right">
-                    <p v-if="article.is_oppose==0" style="color:#000">踩</p>
-                    <p v-else style="color:#ec971f">踩<span id="oppose">{{article.oppose_num}}</span></p>
-
-                </div>
-                <div class="your_action_right">
-                    <p v-if="article.is_support==0" style="color:#000">赞</p>
-                    <p v-else style="color:#ec971f">赞<span id="support">{{article.support_num}}</span></p>
-                </div>
-            </div>
+            <action_module :article="article"></action_module>
         </div>
         <div class="comment_box">
-            <div class="content_box"></div>
+            <article_module :article_list="article_list"></article_module>
         </div>
         <div class="comment_input">
-            <a href="">评论</a>
+            <a :href="'publish.html?reply_id='+article.id">评论</a>
         </div>
     </div>
     <!--<div class="comment_box">-->

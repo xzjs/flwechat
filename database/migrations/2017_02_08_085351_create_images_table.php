@@ -23,6 +23,7 @@ class CreateImagesTable extends Migration
             $table->double('min_x');
             $table->double('max_y');
             $table->double('min_y');
+
             $table->timestamps();
         });
     }

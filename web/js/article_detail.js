@@ -22,7 +22,7 @@ $(function () {
     $('#close_dialog').on('click', function () {
         $('#do').hide();
     });
-    if($('.pic_show_list').html()==''){
+    if ($('.pic_show_list').html() == '') {
         $(this).hide();
     }
 
@@ -57,12 +57,12 @@ function loadMainData() {
             }
             action_html += '</div><div class="your_action_right">'
                 + '<img id="img_support_' + result.id + '" src="images/support.png" alt="" onclick="action(' + result.id + ',0,this)"><span>' + result.support_num + '</span></div>'
-                +'</div><div class="your_action_right">'
+                + '</div><div class="your_action_right">'
                 + '<img id="img_oppose_' + result.id + '" src="images/oppose.png" alt="" onclick="action(' + result.id + ',1,this)"><span>' + result.oppose_num + '</span>'
                 + '</div><div class="your_action_right">'
                 + '<img src="images/comment.png" alt=""><span id="comment">' + result.comment_num + '</span>'
                 + '</div><div class="your_action_right">'
-                +'<img id="img_save_' + result.id + '" src="images/follow.png" alt="" onclick="follow(' + result.id + ',0,this)"></div>';
+                + '<img id="img_save_' + result.id + '" src="images/follow.png" alt="" onclick="follow(' + result.id + ',0,this)"></div>';
             $('#action').html(action_html);
 
             //评论按钮
@@ -163,19 +163,152 @@ function getFollowHtml() {
         })
 }
 
+var action_module = Vue.extend({
+    template: `<div class="your_action" id="action">
+                <div class="your_action_right">
+                    <a v-if="article.reply_id>0" :href="'article_detail.html?reply_id=' + article.reply_id">
+                        <img src="images/back_to_original.png" alt="">
+                        <span>原文</span>
+                     </a>
+                </div>
+                <div class="your_action_right" @click="support">
+                    <p v-if="article.is_support==0" style="color:#000">赞<span>{{article.support_num}}</span></p>
+                    <p v-else style="color:#ec971f">赞<span>{{article.support_num}}</span></p>
+                </div>
+                <div class="your_action_right" @click="oppose()">
+                    <p v-if="article.is_oppose==0" style="color:#000">踩<span>{{article.oppose_num}}</span></p>
+                    <p v-else style="color:#ec971f">踩<span>{{article.oppose_num}}</span></p>
+                </div>
+                <!--<div class="your_action_right">-->
+                <!--<img src="images/share.png" alt=""><span></span>-->
+                <!--</div>-->
+                <div class="your_action_right" @click="detail()">
+                    <p>评论<span>{{article.comment_num}}</span></p>
+                </div>
+                <template v-if="article.user_id!=userId">
+                <div class="your_action_right" @click="follow()">
+                    <img v-if="article.is_follow==0" src="images/save.png" alt="">
+                    <img v-else src="images/saved.png" alt="">
+                </div>
+                </template>               
+            </div>`,
+    props: ['article'],
+    data: function () {
+        return {
+            userId: 0
+        }
+    },
+    created: function () {
+        this.userId = user_id;
+    },
+    methods: {
+        detail: function () {
+            window.location.href = 'article_detail.html?reply_id=' + this.article.id;
+        },
+        support: function () {
+            if (this.article.is_support == 0) {
+                this.article.is_support = 1;
+                this.article.support_num += 1;
+                axios.post('/flwechat/public/action',
+                    {article_id: this.article.id, user_id: this.userId, type: 0})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }
+        },
+        oppose: function () {
+            if (this.article.is_oppose == 0) {
+                this.article.is_oppose = 1;
+                this.article.oppose_num += 1;
+                axios.post('/flwechat/public/action',
+                    {article_id: this.article.id, user_id: this.userId, type: 1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }
+        },
+        follow: function () {
+            if (this.article.is_follow == 0) {
+                this.article.is_follow = 1;
+                axios.post('/flwechat/public/follow',
+                    {follow_user_id: this.userId, be_follow_id: this.article.id, type: 1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }else{
+                this.article.is_follow = 0;
+                axios.post('/flwechat/public/follow/cancel_follow',
+                    {follow_user_id: this.userId, be_follow_id: this.article.id, type: 1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }
+        }
+    }
+})
+
+var article_module = Vue.extend({
+    template: `
+        <div class="content_box" style="margin-top: 5px">
+            <div v-cloak v-for="item in article_list" class="content">
+                <div class="content_top">
+                    <a :href="['mine.html?user_id='+item.user.id]">
+                        <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{item.user.nickname}}&bull;<span>{{item.topic.content}}</span></span>
+                    </a>                    
+                </div>
+                <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
+                <div class=" swiper-container pic_show">
+                    <div  class="swiper-wrapper pic_show_list">
+                        <div v-for="img in item.images" class="swiper-slide userImg" @click="show_img(img.id)" >
+                            <img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">
+                            <img :src="['/flwechat/public/storage/' + img.mark]" alt="" class="article_list_mark_img">
+                        </div>
+                    </div>
+                </div>
+                <action_module :article="item"></action_module>
+            </div>
+        </div>
+    `,
+    props: ['article_list'],
+    methods: {
+        show_img: function (image_id) {
+            $.cookie('back', window.location.href);
+            window.location.href = 'show.html?image_id=' + image_id;
+        }
+    },
+    components: {
+        action_module
+    }
+})
 var app = new Vue({
     el: '#app',
     data: {
         article: null,
         article_list: [],
-        article_id:0,
-        userId:0
+        article_id: 0,
+        userId: 0
+    },
+    components: {
+        action_module,
+        article_module
     },
     methods: {
-        getArticle: function (id) {
+        getArticle: function () {
             var vm = this;
             axios.post('/flwechat/public/article/get_article',
-                {article_id:vm.article_id,user_id:vm.userId})
+                {article_id: vm.article_id, user_id: vm.userId})
                 .then(
                     function (response) {
                         console.log(response.data);
@@ -187,23 +320,33 @@ var app = new Vue({
                 }
             )
         },
-        getArticleList:function (reply_id) {
+        getArticleList: function () {
+            var vm = this;
+            axios.post('/flwechat/public/article/article_list',
+                {page: 0, size: 15, reply_id: vm.article_id})
+                .then(
+                    function (response) {
+                        console.log(response.data);
+                        vm.article_list = response.data;
 
+                    }, function (response) {
+                        console.log(response.data);
+                    });
         },
-        setAction:function (type) {
+        setAction: function (type) {
 
         }
     },
-    created:function () {
-        this.article_id=GetQueryString('reply_id');
-        this.userId=user_id;
-        console.log(this.article_id,this.userId);
+    created: function () {
+        this.article_id = GetQueryString('reply_id');
+        this.userId = user_id;
+        console.log(this.article_id, this.userId);
     },
-    mounted:function () {
-        this.getArticle(this.article_id);
-        this.getArticleList(this.id);
+    mounted: function () {
+        this.getArticle();
+        this.getArticleList();
     },
-    updated:function () {
+    updated: function () {
         var mySwiper = new Swiper('.swiper-container', {
             effect: 'coverflow',
             slidesPerView: 3,

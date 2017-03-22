@@ -43,6 +43,7 @@ Route::resource('friend', 'FriendController');
 
 Route::resource('action', 'ActionController');
 
+Route::get('/image/get_children_imgs/{id}','ImageController@get_children_imgs');
 Route::resource('image', 'ImageController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {

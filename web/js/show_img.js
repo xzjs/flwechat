@@ -2,8 +2,8 @@
  * Created by xzjs on 2017/2/19.
  */
 function init_showimg() {
-    var image_id=GetQueryString('image_id');
-    if(image_id==null) {
+    var image_id = GetQueryString('image_id');
+    if (image_id == null) {
         console.log('参数错误');
         return;
     }
@@ -18,15 +18,15 @@ function init_showimg() {
         }
         change_img(index);
     });
-    flag=1;
+    flag = 1;
     console.log(flag);
-    $('.galleryImgUrl img').attr('src','images/url2.png');
-    $('.galleryImgUrl').on('click',function(){
+    $('.galleryImgUrl img').attr('src', 'images/url2.png');
+    $('.galleryImgUrl').on('click', function () {
         change_icon();
     });
 
-    var turn=GetQueryString('turn');
-    if(turn!=null){
+    var turn = GetQueryString('turn');
+    if (turn != null) {
         $('.galleryImgUrl').click();
     }
 
@@ -49,7 +49,7 @@ function init_showimg() {
         // gallery.fadeOut(100);
         // $('#danmu').danmu('danmu_stop');
         // index = 0;
-        window.location.href=$.cookie('back');
+        window.location.href = $.cookie('back');
     });
 
     $('.bullet_screen_content').keydown(function (event) {
@@ -92,13 +92,13 @@ function init_showimg() {
     });
 
     $('#submit').on('click', function () {
-        var danmu_text=$('#danmu_text');
-        if (danmu_text.css('display')=='none'){
+        var danmu_text = $('#danmu_text');
+        if (danmu_text.css('display') == 'none') {
             danmu_text.show();
-            $('.bullet_screen_submit').css('border-top-left-radius','0');
-            $('.bullet_screen_submit').css('border-bottom-left-radius','0');
-        }else{
-            if (danmu_text.val()!=''){
+            $('.bullet_screen_submit').css('border-top-left-radius', '0');
+            $('.bullet_screen_submit').css('border-bottom-left-radius', '0');
+        } else {
+            if (danmu_text.val() != '') {
                 var text = danmu_text.val();
                 var time = $('#danmu').data("nowtime") + 5;
                 $.post('/flwechat/public/comment',
@@ -109,10 +109,10 @@ function init_showimg() {
                 var new_obj = eval('(' + text_obj + ')');       //转化为js对象
                 $('#danmu').danmu("add_danmu", new_obj);    //向插件中添加该danmu对象
                 danmu_text.val('');  //清空用户输入框
-            }else{
+            } else {
                 $('#danmu_text').hide();
-                $('.bullet_screen_submit').css('border-top-left-radius','5px');
-                $('.bullet_screen_submit').css('border-bottom-left-radius','5px');
+                $('.bullet_screen_submit').css('border-top-left-radius', '5px');
+                $('.bullet_screen_submit').css('border-bottom-left-radius', '5px');
             }
         }
     });
@@ -135,7 +135,7 @@ function init_showimg() {
 }
 var img_data = [];
 var index = 0;
-var flag=1;
+var flag = 1;
 function change_img(num) {
     if (num < 0) {
         alert('已经是第一张了');
@@ -165,7 +165,18 @@ function change_img(num) {
         //设置链接
         var expands_html = '';
         for (var i = 0; i < img_data[index].expands.length; i++) {
-            expands_html += '<li><a href="' + img_data[index].expands[i].href + '"><p class="expands_title">' + img_data[index].expands[i].title + '</p><p class="expands_abstract">' + img_data[index].expands[i].abstract + '</p></a></li>';
+            expands_html += '<li ';
+            if (img_data[index].expands[i].dimension == 'variant' || img_data[index].expands[i].dimension == 'implicit') {
+                expands_html += 'class="expands_li_background_color"';
+            }
+            expands_html += '><a href="' + img_data[index].expands[i].href + '"><p class="expands_title">';
+            if (img_data[index].expands[i].title.length > 19) {
+                var temp = img_data[index].expands[i].title.substring(0, 18) + '...';
+                expands_html += temp;
+            } else {
+                expands_html += img_data[index].expands[i].title;
+            }
+            expands_html += '</p><p class="expands_abstract">' + img_data[index].expands[i].abstract + '</p></a></li>';
         }
         // $('#img_expands').html(expands_html);
         $('.opposite-content ul').append(expands_html);
@@ -222,7 +233,7 @@ function change_icon() {
         $(".opposite").children().addClass('test2');
         setTimeout(function () {
             $('.galleryImgUrl img').attr('src', 'images/back_to_original2.png');
-        },375);
+        }, 375);
 
 
         //修改地址栏历史
@@ -238,7 +249,7 @@ function change_icon() {
         $(".opposite").children().addClass('test');
         setTimeout(function () {
             $('.galleryImgUrl img').attr('src', 'images/url2.png');
-        },375);
+        }, 375);
 
 
         //修改地址栏历史

@@ -35,7 +35,7 @@ function follow_topic_list(user_id) {
         {'id': user_id, 'type': 1},
         function (result) {
             for (var i = 0; i < result.length; i++) {
-                change_follow_topic_style(result[i].id);
+                // change_follow_topic_style(result[i].id);
             }
         },
         "json"

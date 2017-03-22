@@ -354,7 +354,7 @@ a{
 }
 .your_action span,.your_action p{
     font-size: 10px;
-    color: #8a8a8a;
+    color: #8a8a8a !important;
 }
 .bottom{
     height: 100px;

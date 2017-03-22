@@ -51,10 +51,6 @@ class FollowController extends Controller
                 $be_follow_user=User::find($request->be_follow_id);
                 $be_follow_user->be_follow+=1;
                 $be_follow_user->save();
-            }else{
-                $topic=Topic::find($request->be_follow_id);
-                $topic->follow_num+=1;
-                $topic->save();
             }
             echo $follow->id;
         }catch (\Exception $exception){
@@ -147,12 +143,6 @@ class FollowController extends Controller
                     $be_follow->be_follow-=1;
                 }
                 $be_follow->save();
-            }else{
-                $topic=Topic::find($request->be_follow_id);
-                if($topic->follow_num>0){
-                    $topic->follow_num-=1;
-                }
-                $topic->save();
             }
             $follow->delete();
             echo \GuzzleHttp\json_encode(true);

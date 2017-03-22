@@ -63,7 +63,7 @@ $(function () {
             formData.append('topic_id', topic_id);
             formData.append('user_id', user_id);
             formData.append('comment', $('#comment').val());
-            if($('#checkbox').attr('checked')){
+            if($('#checkbox').prop('checked')){
                 formData.append('is_public', 1);
             }else{
                 formData.append('is_public', 0);

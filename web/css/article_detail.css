@@ -57,15 +57,15 @@
     font-size: 14px;
 }
 .comment_box .content .content_txt{
-    margin-left: 40px;
+    /*margin-left: 40px;*/
     /*font-size:12px;*/
 }
 .comment_box .content .pic_show .userImg{
     width: 60px;
-    height:60px;
+    /*height:60px;*/
 }
 .comment_box .content .pic_show .userImg img{
-    width: 60px;
+    /*width: 60px;*/
 }
 /*.comment_box .topic{*/
     /*float: right;*/
