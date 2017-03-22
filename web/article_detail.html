@@ -52,18 +52,16 @@
                 </div>
                 </template>
                 <div class="your_action_right">
-                    <img src="images/comment.png" alt="">
-                    <span id="comment">{{article.comment_num}}</span>
+                    <p src="images/comment.png" alt="">评论<span id="comment">{{article.comment_num}}</span></p>
                 </div>
                 <div class="your_action_right">
-                    <img v-if="article.is_oppose==0" src="images/oppose.png" alt="">
-                    <img v-else src="images/oppose2.png" alt="">
-                    <span id="oppose">{{article.oppose_num}}</span>
+                    <p v-if="article.is_oppose==0" style="color:#000">踩</p>
+                    <p v-else style="color:#ec971f">踩<span id="oppose">{{article.oppose_num}}</span></p>
+
                 </div>
                 <div class="your_action_right">
-                    <img v-if="article.is_support==0" src="images/support.png" alt="">
-                    <img v-else src="images/support2.png" alt="">
-                    <span id="support">{{article.support_num}}</span>
+                    <p v-if="article.is_support==0" style="color:#000">赞</p>
+                    <p v-else style="color:#ec971f">赞<span id="support">{{article.support_num}}</span></p>
                 </div>
             </div>
         </div>

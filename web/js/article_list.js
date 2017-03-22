@@ -78,15 +78,15 @@ function action(article_id, type, obj) {
         {'user_id': user_id, 'article_id': article_id, 'type': type},
         function (result) {
             if (result == 'true') {
-                var src = "";
-                if (type == 0) {
-                    src = 'images/support2.png';
-                } else {
-                    src = 'images/oppose2.png';
-                }
-                $(obj).children('img').attr('src', src);
-                var num = parseInt($(obj).children('img').siblings('span').html()) + 1;
-                $(obj).children('img').siblings('span').html(num);
+                // var src = "";
+                // if (type == 0) {
+                //     src = 'images/support2.png';
+                // } else {
+                //     src = 'images/oppose2.png';
+                // }
+                $(obj).children('p').css('color', '#ec971f');
+                var num = parseInt($(obj).children('p').children('span').html()) + 1;
+                $(obj).children('p').siblings('span').html(num);
             } else {
                 console.log(result);
             }
@@ -94,20 +94,30 @@ function action(article_id, type, obj) {
 }
 
 //设置点赞或者踩的图片
-function set_img(article_id, type) {
+// function set_img(article_id, type) {
+//     var temp = 'support_';
+//     var src = 'images/support2.png';
+//     if (type == 1) {
+//         temp = 'oppose_'
+//         src = 'images/oppose2.png';
+//     }
+//     $('#img_' + temp + article_id).attr('src', src);
+// }
+//设置点赞或者踩的字体颜色
+function set_p_color(article_id, type) {
     var temp = 'support_';
-    var src = 'images/support2.png';
+    // var src = 'images/support2.png';
     if (type == 1) {
         temp = 'oppose_'
-        src = 'images/oppose2.png';
+        // src = 'images/oppose2.png';
     }
-    $('#img_' + temp + article_id).attr('src', src);
+    $('#img_' + temp + article_id).css('color', '#ec971f');
 }
-
 function action_list() {
     $.getJSON('/flwechat/public/action/' + user_id, function (result) {
         for (var i = 0; i < result.length; i++) {
-            set_img(result[i].article_id, result[i].type);
+            // set_img(result[i].article_id, result[i].type);
+            set_p_color(result[i].article_id, result[i].type);
         }
     })
 }
@@ -159,12 +169,15 @@ function showArticleList(result) {
                 + '<div class="your_action">'
                 // +'<div class="your_action_right"><img src="images/save.png" alt=""></div>'
                 + '<div class="your_action_right" onclick="action(' + result[i].id + ',0,this)">'
-                + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
+                // + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
+                + '<p id="img_support_' + result[i].id + '">赞<span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></p></div>'
                 + '<div class="your_action_right" onclick="action(' + result[i].id + ',1,this)">'
-                + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span></div>'
+                // + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span></div>'
+                + '<p id="img_oppose_' + result[i].id + '">踩<span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span></p></div>'
                 + '<div class="your_action_right">'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
-                + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
+                // + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
+                + '<p>评论<span>' + result[i].comment_num + '</span></p></a></div>'
                 + '</div></div>';
             myPublic_html += html;
         } else {
