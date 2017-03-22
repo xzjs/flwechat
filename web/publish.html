@@ -14,97 +14,119 @@
 <body>
 <div class="container">
     <form class="publish_content" action="" method="post" enctype="multipart/form-data">
-        <div class="text_insert">
-            <textarea  id="comment" maxlength="300" placeholder="评论" name="comment" onfocus="this.placeholder=''" onblur="this.placeholder='评论'"></textarea>
+        <div class="weui-cells__title">话题分类 <sup>*</sup></div>
+        <div class="weui-cells">
+            <div class="weui-cell weui-cell_select">
+                <div class="weui-cell__bd">
+                    <select class="weui-select" name="select1" id="topic_select">
+                        <option selected="" value="0">请选择话题分类</option>
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="pic_insert" id="pic_insert1">
-            <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file1">
-            <input class="pic_input" id="pic_files1" type="file" name="pic_file1">
+        <div class="weui-cells__title">评论 <sup>*</sup></div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" id="comment" placeholder="请输入文本" rows="3"></textarea>
+                    <!--<div class="weui-textarea-counter"><span>0</span>/200</div>-->
+                </div>
+            </div>
         </div>
-        <div class="pic_insert" id="pic_insert2">
-            <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file2">
-            <input class="pic_input" id="pic_files2" type="file" name="pic_file2">
+        <!--<div class="text_insert">-->
+        <!--<textarea  id="comment" maxlength="300" placeholder="评论" name="comment" onfocus="this.placeholder=''" onblur="this.placeholder='评论'"></textarea>-->
+        <!--</div>-->
+        <div class="weui-cells__title">上传1至3张截图 <sup class="pic_sup">*</sup></div>
+        <div class="weui-cells">
+            <div class="pic_insert" id="pic_insert1">
+                <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file1">
+                <input class="pic_input" id="pic_files1" type="file" name="pic_file1">
+            </div>
+            <div class="pic_insert" id="pic_insert2">
+                <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file2">
+                <input class="pic_input" id="pic_files2" type="file" name="pic_file2">
+            </div>
+            <div class="pic_insert" id="pic_insert3">
+                <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file3">
+                <input class="pic_input" id="pic_files3" type="file" name="pic_file3">
+            </div>
         </div>
-        <div class="pic_insert" id="pic_insert3">
-            <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file3">
-            <input class="pic_input" id="pic_files3" type="file" name="pic_file3">
-        </div>
-        <div id="pic_blank">
-            添加3张截图
+
+        <!--<div id="pic_blank">-->
+        <!--添加3张截图-->
+        <!--</div>-->
+        <div class="weui-cells__title">公开/仅自己可见</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell weui-cell_switch">
+                <div class="weui-cell__bd" id="open_close">公开</div>
+                <div class="weui-cell__ft">
+                    <input id="checkbox" class="weui-switch" type="checkbox" checked>
+                </div>
+            </div>
         </div>
         <div class="topic_choose">
-            <select name="" id="topic_select">
-                <option value="0">选择话题</option>
-            </select>
+            <!--<select name="" id="topic_select">-->
+            <!--<option value="0">选择话题</option>-->
+            <!--</select>-->
             <!--<input type="text" placeholder="请选择合适的话题" onfocus="this.placeholder=''" onblur="this.placeholder='请选择合适的话题'">-->
             <!--<span class="weui-btn weui-btn_mini weui-btn_primary">话题</span>-->
         </div>
-        <!--<div class="url_insert">-->
-            <!--<div class="url_icon"><img src="images/url.png" alt=""></div>-->
-            <!--<textarea name="url" id="url" placeholder="连接" onfocus="this.placeholder=''" onblur="this.placeholder='连接'"></textarea>-->
-        <!--</div>-->
     </form>
     <div>
         <a href="javascript:;" class="weui-btn weui-btn_primary" id="showIOSDialog1">提交</a>
     </div>
-    <div class="weui-tabbar">
-        <a href="index.html" class="weui-tabbar__item">
+    <div class="instructions">
+        <ol>
+            <li>打开文章详情可以对文章进行关注</li>
+        </ol>
+    </div>
+</div>
+<div class="weui-tabbar">
+    <a href="index.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/homepage.png" alt="" class="weui-tabbar__icon">
                         <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>-->
                     </span>
-            <p class="weui-tabbar__label">首页</p>
-        </a>
-        <a href="follow.html" class="weui-tabbar__item">
-            <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
-            <p class="weui-tabbar__label">关注</p>
-        </a>
-        <a href="publish.html" class="weui-tabbar__item weui-bar__item_on">
-            <img src="./images/release2.png" alt="" class="weui-tabbar__icon">
-            <p class="weui-tabbar__label">发布</p>
-        </a>
-        <a href="friends.html" class="weui-tabbar__item">
+        <p class="weui-tabbar__label">首页</p>
+    </a>
+    <a href="follow.html" class="weui-tabbar__item">
+        <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
+        <p class="weui-tabbar__label">关注</p>
+    </a>
+    <a href="publish.html" class="weui-tabbar__item weui-bar__item_on">
+        <img src="./images/release2.png" alt="" class="weui-tabbar__icon">
+        <p class="weui-tabbar__label">发布</p>
+    </a>
+    <a href="friends.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/friend.png" alt="" class="weui-tabbar__icon friend_icon">
                         <!--<span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>-->
                     </span>
-            <p class="weui-tabbar__label">好友</p>
-        </a>
-        <a href="mine.html" class="weui-tabbar__item">
-            <img src="./images/me.png" alt="" class="weui-tabbar__icon mine_icon">
-            <p class="weui-tabbar__label">我</p>
-        </a>
-    </div>
+        <p class="weui-tabbar__label">好友</p>
+    </a>
+    <a href="mine.html" class="weui-tabbar__item">
+        <img src="./images/me.png" alt="" class="weui-tabbar__icon mine_icon">
+        <p class="weui-tabbar__label">我</p>
+    </a>
 </div>
 <div id='dialog1' style="display: none;">
     <div class="weui-mask"></div>
     <div class="weui-dialog">
         <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
-        <div class="weui-dialog__bd">评论不能为空</div>
+        <div class="weui-dialog__bd">话题分类及评论不能为空<br>且至少上传1张截图</div>
         <div class="weui-dialog__ft">
             <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="sure1">知道了</a>
         </div>
     </div>
 </div>
-<!--<div id="dialog2" style="display: none;">-->
+<!--<div id='dialog2' style="display: none;">-->
     <!--<div class="weui-mask"></div>-->
     <!--<div class="weui-dialog">-->
-        <!--<div class="weui-dialog__hd"><strong class="weui-dialog__title">请确认话题类型</strong></div>-->
-        <!--<div class="weui-dialog__bd">-->
-            <!--<lable>#</lable>-->
-            <!--<input type="text" id="topic" autofocus="autofocus">-->
-            <!--<img src="images/write.png" alt="" id="write_icon">-->
-        <!--</div>-->
+        <!--<div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>-->
+        <!--<div class="weui-dialog__bd">至少上传1张截图</div>-->
         <!--<div class="weui-dialog__ft">-->
-            <!--<a href="javascript:void(0);" class="weui-dialog__btn weui-dialog__btn_primary" id="sure2">确定</a>-->
+            <!--<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="sure2">知道了</a>-->
         <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--<div id="toast" style="display: none;">-->
-    <!--<div class="weui-mask_transparent"></div>-->
-    <!--<div class="weui-toast">-->
-        <!--<i class="weui-icon-success-no-circle weui-icon_toast"></i>-->
-        <!--<p class="weui-toast__content">发布成功</p>-->
     <!--</div>-->
 <!--</div>-->
 <!-- Modal -->
@@ -112,7 +134,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">标记图片</h4>
             </div>
             <div class="modal-body">
@@ -127,6 +150,7 @@
 </div>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<!--<script src="js/bootstrap-switch.min.js"></script>-->
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jsweixin.js"></script>

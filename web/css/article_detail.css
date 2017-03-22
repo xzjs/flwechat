@@ -1,15 +1,11 @@
-.do_icon {
-    text-align: right;
-    width: 30px;
-    float: right
+:root{
+    --main-color:#0084FF;
 }
-/*#do .weui-dialog{*/
-    /*position: fixed;*/
-    /*top:50px;*/
-    /*right:-200px;*/
-    /*width: 40%;*/
-    /*border-radius: 3px;*/
-/*}*/
+.do_icon {
+    text-align: center;
+    width: 45px;
+    margin-right:-15px;
+}
 .article_do{
     position: fixed;
     z-index: 5000;
@@ -54,22 +50,22 @@
     text-align: center;
     display: inline-block;
     border-radius: 20px;
-    background-color: #09bb07;
+    background-color: #0084FF;
     color: #fff;
 }
 .comment_box .content .wei_name{
     font-size: 14px;
 }
 .comment_box .content .content_txt{
-    margin-left: 40px;
+    /*margin-left: 40px;*/
     /*font-size:12px;*/
 }
 .comment_box .content .pic_show .userImg{
     width: 60px;
-    height:60px;
+    /*height:60px;*/
 }
 .comment_box .content .pic_show .userImg img{
-    width: 60px;
+    /*width: 60px;*/
 }
 /*.comment_box .topic{*/
     /*float: right;*/

@@ -8,10 +8,11 @@
     <title>我</title>
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/dropload.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/mine.css">
     <style>
-        [v-cloak]{
+        [v-cloak] {
             display: none;
         }
     </style>
@@ -44,44 +45,46 @@
         </div>
     </div>
     <div class="messages">
-        <span id="publish" v-on:click="getArticles(0,event)" class="selected">发布的文章</span>
-        <span>|</span>
-        <span id="comment" v-on:click="getArticles(1,event)">评论过的文章</span>
+        <ul>
+            <li :class="{selected:select[0]}" @click="getArticles(0)">收藏</li>
+            <li :class="{selected:select[1]}" @click="getArticles(1)">发布</li>
+            <li :class="{selected:select[2]}" @click="getArticles(2)">关注</li>
+        </ul>
     </div>
     <div class="blank" v-if="show"><img src="images/none.png" alt=""></div>
-    <div class="content_box" style="margin-top: 5px">
-        <div v-cloak v-for="item in items" class="content">
-            <div class="content_top">
-                <a :href="['mine.html?user_id='+item.user.id]">
-                    <img :src="item.user.head_img" alt="" class="head_portrait">
-                </a>
-                <span class="wei_name">{{ item.user.nickname }}</span>
-                <a href="javascript:void(0)" onclick="follow(1,1)">
-                    <span class="topic" :data-id="item.topic.id">{{item.topic.content}}</span>
-                </a>
-            </div>
-            <a :href="['article_detail.html?reply_id='+item.id]"><p class="content_txt">{{item.content}}</p></a>
-            <div class="pic_show">
-                <div v-for="img in item.images" class="userImg">
-                    <img :data-id="img.id" :src="['/flwechat/public/storage/'+img.img]" alt="" class="img_show">
-                </div>
-            </div>
-            <div class="your_action">
-                <div class="your_action_right">
-                    <a :href="['article_detail.html?reply_id='+item.id]">
-                        <img src="images/comment.png" alt=""><span>{{item.comment_num}}</span></a>
-                </div>
-                <div class="your_action_right">
-                    <img id="img_oppose_19" src="images/oppose.png" alt="" onclick="action(19,1,this)">
-                    <span id="span_oppose_19">{{item.oppose_num}}</span>
-                </div>
-                <div class="your_action_right">
-                    <img id="img_support_19" src="images/support.png" alt="" onclick="action(19,0,this)">
-                    <span id="span_support_19">{{item.support_num}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--<div class="content_box" style="margin-top: 5px">-->
+    <!--<div v-cloak v-for="item in items" class="content">-->
+    <!--<div class="content_top">-->
+    <!--<a :href="['mine.html?user_id='+item.user.id]">-->
+    <!--<img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{ item.user.nickname }}•{{item.topic.content}}</span>-->
+    <!--</a>-->
+    <!--&lt;!&ndash;<a href="javascript:void(0)" onclick="follow(1,1)">&ndash;&gt;-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--&lt;!&ndash;</a>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>-->
+    <!--<div class="pic_show">-->
+    <!--<div v-for="img in item.images" class="userImg">-->
+    <!--<img :data-id="img.id" :src="['/flwechat/public/storage/'+img.img]" alt="" class="img_show">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="your_action">-->
+    <!--<div class="your_action_right">-->
+    <!--<a :href="['article_detail.html?reply_id='+item.id]">-->
+    <!--<img src="images/comment.png" alt=""><span>{{item.comment_num}}</span></a>-->
+    <!--</div>-->
+    <!--<div class="your_action_right">-->
+    <!--<img id="img_oppose_19" src="images/oppose.png" alt="" onclick="action(19,1,this)">-->
+    <!--<span id="span_oppose_19">{{item.oppose_num}}</span>-->
+    <!--</div>-->
+    <!--<div class="your_action_right">-->
+    <!--<img id="img_support_19" src="images/support.png" alt="" onclick="action(19,0,this)">-->
+    <!--<span id="span_support_19">{{item.support_num}}</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <article-list :article_list="items"></article-list>
     <div class="weui-tabbar">
         <a href="index.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
@@ -121,7 +124,8 @@
 <!--<script type="text/javascript" src="js/article_list.js"></script>-->
 <script type="text/javascript" src="js/follow_tool.js"></script>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="//cdn.bootcss.com/vue-resource/1.2.1/vue-resource.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/swiper.min.js"></script>
 <script type="text/javascript" src="js/mine.js"></script>
 </body>
 </html>

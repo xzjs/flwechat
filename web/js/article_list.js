@@ -7,27 +7,27 @@ function show_user(id) {
     window.location.href = "mine.html";
 }
 
-//关注话题
-function follow(topic_id, type) {
-    $.post('/flwechat/public/follow',
-        {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
-        function (result) {
-            if (result > 0) {
-                $('.weui-toast__content').html('已关注');
-                var $toast = $('#toast');
-
-                if ($toast.css('display') != 'none') return;
-
-                $toast.fadeIn(100);
-                setTimeout(function () {
-                    $toast.fadeOut(100);
-                }, 2000);
-                if (type == 1) {
-                    change_follow_topic_style(topic_id);
-                }
-            }
-        });
-}
+//关注话题改为关注文章
+// function follow(topic_id, type) {
+//     $.post('/flwechat/public/follow',
+//         {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
+//         function (result) {
+//             if (result > 0) {
+//                 $('.weui-toast__content').html('已关注');
+//                 var $toast = $('#toast');
+//
+//                 if ($toast.css('display') != 'none') return;
+//
+//                 $toast.fadeIn(100);
+//                 setTimeout(function () {
+//                     $toast.fadeOut(100);
+//                 }, 2000);
+//                 if (type == 1) {
+//                     change_follow_topic_style(topic_id);
+//                 }
+//             }
+//         });
+// }
 
 //获取关注列表
 function follow_topic_list(user_id) {
@@ -35,7 +35,7 @@ function follow_topic_list(user_id) {
         {'id': user_id, 'type': 1},
         function (result) {
             for (var i = 0; i < result.length; i++) {
-                change_follow_topic_style(result[i].id);
+                // change_follow_topic_style(result[i].id);
             }
         },
         "json"
@@ -43,34 +43,34 @@ function follow_topic_list(user_id) {
 }
 
 //取消关注话题
-function cancel_follow(topic_id, type) {
-    $.post('/flwechat/public/follow/cancel_follow',
-        {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
-        function (result) {
-            $('.weui-toast__content').html('已取消关注');
-            var $toast = $('#toast');
-
-            if ($toast.css('display') != 'none') return;
-
-            $toast.fadeIn(100);
-            setTimeout(function () {
-                $toast.fadeOut(100);
-            }, 2000);
-            if (result == 'true' && type == 1) {
-                change_follow_topic_style(topic_id);
-            }
-        });
-}
+// function cancel_follow(topic_id, type) {
+//     $.post('/flwechat/public/follow/cancel_follow',
+//         {'follow_user_id': user_id, 'be_follow_id': topic_id, 'type': type},
+//         function (result) {
+//             $('.weui-toast__content').html('已取消关注');
+//             var $toast = $('#toast');
+//
+//             if ($toast.css('display') != 'none') return;
+//
+//             $toast.fadeIn(100);
+//             setTimeout(function () {
+//                 $toast.fadeOut(100);
+//             }, 2000);
+//             if (result == 'true' && type == 1) {
+//                 change_follow_topic_style(topic_id);
+//             }
+//         });
+// }
 
 //改变用户关注话题的样式
-function change_follow_topic_style(topic_id) {
-    $("span[data-id=" + topic_id + "]").toggleClass('topic_followed');
-    if ($("span[data-id=" + topic_id + "]").hasClass('topic_followed')) {
-        $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'cancel_follow(' + topic_id + ',1)');
-    } else {
-        $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'follow(' + topic_id + ',1)');
-    }
-}
+// function change_follow_topic_style(topic_id) {
+//     $("span[data-id=" + topic_id + "]").toggleClass('topic_followed');
+//     if ($("span[data-id=" + topic_id + "]").hasClass('topic_followed')) {
+//         $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'cancel_follow(' + topic_id + ',1)');
+//     } else {
+//         $("span[data-id=" + topic_id + "]").parent().attr('onclick', 'follow(' + topic_id + ',1)');
+//     }
+// }
 
 //点赞或踩
 function action(article_id, type, obj) {
@@ -78,15 +78,15 @@ function action(article_id, type, obj) {
         {'user_id': user_id, 'article_id': article_id, 'type': type},
         function (result) {
             if (result == 'true') {
-                var src = "";
-                if (type == 0) {
-                    src = 'images/support2.png';
-                } else {
-                    src = 'images/oppose2.png';
-                }
-                $(obj).attr('src', src);
-                var num = parseInt($(obj).siblings('span').html()) + 1;
-                $(obj).siblings('span').html(num);
+                // var src = "";
+                // if (type == 0) {
+                //     src = 'images/support2.png';
+                // } else {
+                //     src = 'images/oppose2.png';
+                // }
+                $(obj).children('p').css('color', '#ec971f');
+                var num = parseInt($(obj).children('p').children('span').html()) + 1;
+                $(obj).children('p').siblings('span').html(num);
             } else {
                 console.log(result);
             }
@@ -94,20 +94,30 @@ function action(article_id, type, obj) {
 }
 
 //设置点赞或者踩的图片
-function set_img(article_id, type) {
+// function set_img(article_id, type) {
+//     var temp = 'support_';
+//     var src = 'images/support2.png';
+//     if (type == 1) {
+//         temp = 'oppose_'
+//         src = 'images/oppose2.png';
+//     }
+//     $('#img_' + temp + article_id).attr('src', src);
+// }
+//设置点赞或者踩的字体颜色
+function set_p_color(article_id, type) {
     var temp = 'support_';
-    var src = 'images/support2.png';
+    // var src = 'images/support2.png';
     if (type == 1) {
         temp = 'oppose_'
-        src = 'images/oppose2.png';
+        // src = 'images/oppose2.png';
     }
-    $('#img_' + temp + article_id).attr('src', src);
+    $('#img_' + temp + article_id).css('color', '#ec971f');
 }
-
 function action_list() {
     $.getJSON('/flwechat/public/action/' + user_id, function (result) {
         for (var i = 0; i < result.length; i++) {
-            set_img(result[i].article_id, result[i].type);
+            // set_img(result[i].article_id, result[i].type);
+            set_p_color(result[i].article_id, result[i].type);
         }
     })
 }
@@ -138,47 +148,51 @@ function showArticleList(result) {
         if (result[i].is_deleted == 0) {
             var html_img = '';
             for (var j = 0; j < result[i].images.length; j++) {
-                html_img += '<div class="userImg" onclick="show(' + result[i].images[j].id + ')">' +
+                html_img += '<div class="swiper-slide userImg" onclick="show(' + result[i].images[j].id + ')">' +
                     '<img src="/flwechat/public/storage/' + result[i].images[j].img + '" alt="" class="img_show">' +
                     '<img src="/flwechat/public/storage/' + result[i].images[j].mark + '" alt="" class="article_list_mark_img">' +
                     '</div>';
             }
             var html = '<div class="content">'
-                + '<div class="content_top"><a href="mine.html?user_id=' + result[i].user.id + '">'
+                + '<div class="content_top"><a class="head_portrait_a" href="mine.html?user_id=' + result[i].user.id + '">'
                 + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
-                + '</a>'
-                + '<span class="wei_name">' + result[i].user.nickname + '</span>';
-            if (result[i].topic_id != null) {
-                html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
-                    + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
-                    + '</a>';
-            }
+                + '<span class="wei_name">' + result[i].user.nickname+ '•'+result[i].topic.content + '</span>'
+                + '</a>';
+            // if (result[i].topic_id != null) {
+            //     html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
+            //         + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
+            //         + '</a>';
+            // }
             html += '</div>'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
-                + '<div class="pic_show">' + html_img + '</div>'
+                + '<div class="swiper-container pic_show"><div class="swiper-wrapper pic_show_list">' + html_img + '</div></div>'
                 + '<div class="your_action">'
-                // +'<div><img src="images/share.png" alt=""><span>'+result_?+'</span></div>'
+                // +'<div class="your_action_right"><img src="images/save.png" alt=""></div>'
+                + '<div class="your_action_right" onclick="action(' + result[i].id + ',0,this)">'
+                // + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
+                + '<p id="img_support_' + result[i].id + '">赞<span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></p></div>'
+                + '<div class="your_action_right" onclick="action(' + result[i].id + ',1,this)">'
+                // + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span></div>'
+                + '<p id="img_oppose_' + result[i].id + '">踩<span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span></p></div>'
                 + '<div class="your_action_right">'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
-                + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
-                + '<div class="your_action_right">'
-                + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt="" onclick="action(' + result[i].id + ',1,this)"><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
-                + '</div><div class="your_action_right">'
-                + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt="" onclick="action(' + result[i].id + ',0,this)"><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
+                // + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
+                + '<p>评论<span>' + result[i].comment_num + '</span></p></a></div>'
                 + '</div></div>';
             myPublic_html += html;
         } else {
             var html = '<div class="content">'
                 + '<div class="content_top"><a href="mine.html?user_id=' + result[i].user.id + '">'
                 + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
-                + '</a>'
-                + '<span class="wei_name">' + result[i].user.nickname + '</span>';
-            if (result[i].topic_id != null) {
-                html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
-                    + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
-                    + '</a>';
-
-            }
+                + '<span class="wei_name">' + result[i].user.nickname + '•'+result[i].topic.content + '</span>'
+                + '</a>';
+                // +'<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>';
+            // if (result[i].topic_id != null) {
+            //     html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
+            //         + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
+            //         + '</a>';
+            //
+            // }
             html += '</div>'
                 + '<a href="article_detail.html?id=' + result[i].id + '"><p class="content_txt">作者已删除该文章</p></a>'
                 + '<div class="your_action">'
@@ -197,6 +211,13 @@ function showArticleList(result) {
     myPublish.append(myPublic_html);
     follow_topic_list(user_id);
     action_list();
+    var mySwiper = new Swiper('.swiper-container',{
+
+        effect : 'coverflow',
+        slidesPerView: 3,
+        centeredSlides: true,
+
+    });
 }
 
 //上拉加载

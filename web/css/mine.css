@@ -1,3 +1,6 @@
+:root{
+    --main-color:#0084FF;
+}
 .container{
     background-color: #f5f5f5;
 }
@@ -39,11 +42,16 @@
     background-color: #fff;
     text-align: center;
 }
-.messages span{
+.messages ul li{
+    display: inline-block;
+    width: 28%;
     color: #8a8a8a;
 }
+.messages ul li a{
+    width:100%;
+}
 .messages .selected{
-    color:#1aad19;
+    color:#0084FF;
 }
 .blank{
     padding-top:30%;

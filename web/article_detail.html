@@ -6,60 +6,58 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>详情</title>
-    <link rel="stylesheet" href="css/weui.min.css">
-    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/dropload.css">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/article_detail.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
+<div id="app" class="container">
     <div class="article_box">
-        <div class="content">
-            <img id="head_img" src="" alt="" class="head_portrait"><span id="nick_name" class="wei_name"></span>
+        <div v-cloak class="content">
+            <div class="content_top">
+                <a :href="['mine.html?user_id='+article.user.id]">
+                    <img id="head_img" :src="article.user.head_img" alt="" class="head_portrait"><span id="nick_name" class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
+                </a>
             <span id="edit" class="do_icon" style="float: right;display: none">
                 <img class="do_open" src="images/down.png" alt="">
             </span>
-            <p id="article_content" class="content_txt"></p>
-            <div class="pic_show" id="img">
-                <div class="userImg"><img src="" alt=""></div>
-                <div class="userImg"><img src="" alt=""></div>
-                <div class="userImg"><img src="" alt=""></div>
             </div>
-            <div class="your_action" id="action">
-                <!--<div class="your_action_left">-->
-                    <!--<img src="images/back_to_original.png" alt=""><span>原文</span>-->
-                <!--</div>-->
-                <!--<div class="your_action_right">-->
-                    <!--<img src="images/share.png" alt=""><span></span>-->
-                <!--</div>-->
-                <!--<div class="your_action_right">-->
-                    <!--<img src="images/comment.png" alt=""><span id="comment"></span>-->
-                <!--</div>-->
-                <!--<div class="your_action_right">-->
-                    <!--<img src="images/oppose.png" alt=""><span id="oppose"></span>-->
-                <!--</div>-->
-                <!--<div class="your_action_right">-->
-                    <!--<img src="images/support.png" alt=""><span id="support"></span>-->
-                <!--</div>-->
+            <p id="article_content" class="content_txt">{{article.content}}</p>
+
+            <div class=" swiper-container pic_show">
+                <div class="swiper-wrapper pic_show_list">
+                    <div v-for="img in article.images" class="swiper-slide userImg" @click="show(img.id)">
+                        <img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">
+                        <img :src="['/flwechat/public/storage/' + img.mark]" alt="" class="article_list_mark_img">
+                    </div>
+                </div>
             </div>
+            <action_module :article="article"></action_module>
         </div>
         <div class="comment_box">
-            <div class="content_box"></div>
+            <article_module :article_list="article_list"></article_module>
         </div>
         <div class="comment_input">
-            <a href="">评论</a>
+            <a :href="'publish.html?reply_id='+article.id">评论</a>
         </div>
     </div>
     <!--<div class="comment_box">-->
-        <!--<div class="follow">-->
-            <!--<img src="images/comment.png" alt="">-->
-            <!--<img src="images/support.png" alt="">-->
-        <!--</div>-->
-        <!--<img src="images/lan.jpg" alt="" class="comment_head_portrait">-->
-        <!--<div class="comment">-->
-            <!--<p class="wei_name">奥巴马</p>-->
-            <!--<p class="comment_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。&#45;&#45;阿尔伯特·爱因斯坦</p>-->
-        <!--</div>-->
+    <!--<div class="follow">-->
+    <!--<img src="images/comment.png" alt="">-->
+    <!--<img src="images/support.png" alt="">-->
+    <!--</div>-->
+    <!--<img src="images/lan.jpg" alt="" class="comment_head_portrait">-->
+    <!--<div class="comment">-->
+    <!--<p class="wei_name">奥巴马</p>-->
+    <!--<p class="comment_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。&#45;&#45;阿尔伯特·爱因斯坦</p>-->
+    <!--</div>-->
     <!--</div>-->
     <!--<div class="bottom">-->
     <!--</div>-->
@@ -124,8 +122,11 @@
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script type="text/javascript" src="js/jsweixin.js"></script>
-<script type="text/javascript" src="js/dropload.min.js"></script>
-<script type="text/javascript" src="js/article_list.js"></script>
+<!--<script type="text/javascript" src="js/dropload.min.js"></script>-->
+<!--<script type="text/javascript" src="js/article_list.js"></script>-->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/swiper.min.js"></script>
 <script type="text/javascript" src="js/article_detail.js"></script>
 </body>
 </html>

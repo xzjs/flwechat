@@ -28,6 +28,7 @@ Route::post('/article/article_list', 'ArticleController@article_list');
 Route::get('/article/comment_articles/{user_id}', 'ArticleController@comment_articles');
 Route::get('/article/get_article_by_topic/{topic_id}', 'ArticleController@get_article_by_topic');
 Route::post('/article/search', 'ArticleController@search');
+Route::post('/article/get_article', 'ArticleController@get_article');
 Route::resource('article', 'ArticleController');
 
 Route::get('/comment/get_comments_by_user_id/{user_id}', 'CommentController@get_comments_by_user_id');
@@ -42,6 +43,7 @@ Route::resource('friend', 'FriendController');
 
 Route::resource('action', 'ActionController');
 
+Route::get('/image/get_children_imgs/{id}','ImageController@get_children_imgs');
 Route::resource('image', 'ImageController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {

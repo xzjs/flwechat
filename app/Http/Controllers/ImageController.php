@@ -102,9 +102,6 @@ class ImageController extends Controller
     {
         $imgs = Image::where('article_id', $id)->get(['id'])->toArray();
         $this->img_ids=array_merge($this->img_ids,$imgs);
-//        foreach ($imgs as $img) {
-//            array_push($this->img_ids, $img);
-//        }
         $article_ids = Article::where('reply_id', $id)->get(['id'])->toArray();
         foreach ($article_ids as $article_id) {
             $this->get_img_after($article_id);
@@ -122,6 +119,22 @@ class ImageController extends Controller
 //        }
             $this->get_img_before($article->reply_id);
 
+        }
+    }
+
+    /**
+     * 获取子孙的图片
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|string
+     */
+    public function get_children_imgs($id){
+        try {
+            $this->img_ids = [];
+            $this->get_img_after($id);
+            $imgs = Image::with('comments', 'article.user', 'expands')->find($this->img_ids);
+            return response()->json($imgs);
+        }catch (\Exception $exception){
+            return $exception->getMessage();
         }
     }
 }

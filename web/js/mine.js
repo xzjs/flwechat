@@ -78,10 +78,142 @@ function set_friend(type, show_id) {
     }
 }
 
-var user=GetQueryString('user_id');
-if(user==null){
-    user=user_id;
+var user = GetQueryString('user_id');
+if (user == null) {
+    user = user_id;
 }
+
+var action = Vue.extend({
+    template: `<div class="your_action" id="action">
+                <div class="your_action_right">
+                    <a v-if="article.reply_id>0" :href="'article_detail.html?reply_id=' + article.reply_id">
+                        <img src="images/back_to_original.png" alt="">
+                        <span>原文</span>
+                     </a>
+                </div>
+                <div class="your_action_right" @click="support">
+                    <p v-if="article.is_support==0" style="color:#000">赞<span>{{article.support_num}}</span></p>
+                    <p v-else style="color:#ec971f">赞<span>{{article.support_num}}</span></p>
+                </div>
+                <div class="your_action_right" @click="oppose()">
+                    <p v-if="article.is_oppose==0" style="color:#000">踩<span>{{article.oppose_num}}</span></p>
+                    <p v-else style="color:#ec971f">踩<span>{{article.oppose_num}}</span></p>
+                </div>
+                <!--<div class="your_action_right">-->
+                <!--<img src="images/share.png" alt=""><span></span>-->
+                <!--</div>-->
+                <div class="your_action_right" @click="detail()">
+                    <p>评论<span>{{article.comment_num}}</span></p>
+                </div>
+                <template v-if="article.user_id!=userId">
+                <div class="your_action_right">
+                    <img v-if="article.is_follow==0" src="images/save.png" alt="">
+                    <img v-else src="images/saved.png" alt="">
+                </div>
+                </template>               
+            </div>`,
+    props: ['article'],
+    data: function () {
+        return {
+            userId: 0
+        }
+    },
+    created: function () {
+        this.userId = user_id;
+    },
+    methods: {
+        detail: function () {
+            window.location.href = 'article_detail.html?reply_id=' + this.article.id;
+        },
+        support: function () {
+            if (this.article.is_support == 0) {
+                this.article.is_support = 1;
+                this.article.support_num += 1;
+                axios.post('/flwechat/public/action',
+                    {article_id: this.article.id, user_id: this.userId, type: 0})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }
+        },
+        oppose: function () {
+            if (this.article.is_oppose == 0) {
+                this.article.is_oppose = 1;
+                this.article.oppose_num += 1;
+                axios.post('/flwechat/public/action',
+                    {article_id: this.article.id, user_id: this.userId, type: 1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }
+        }
+    }
+})
+
+var image_moudle=Vue.extend({
+    template:`<div class=" swiper-container pic_show">
+                    <div  class="swiper-wrapper pic_show_list">
+                        <div v-for="img in images" class="swiper-slide userImg" @click="show_img(img.id)" >
+                            <img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">
+                            <img :src="['/flwechat/public/storage/' + img.mark]" alt="" class="article_list_mark_img">
+                        </div>
+                    </div>
+                </div>`,
+    props:['images'],
+    methods:{
+        show_img: function (image_id) {
+            $.cookie('back', window.location.href);
+            window.location.href = 'show.html?image_id=' + image_id;
+        }
+    },
+    mounted:function () {
+        console.log('mounted');
+        var mySwiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            slidesPerView: 3,
+            centeredSlides: true,
+        });
+    },
+    updated: function () {
+        console.log('updated');
+        var mySwiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            slidesPerView: 3,
+            centeredSlides: true,
+        });
+    }
+})
+
+Vue.component('article-list', {
+    template: `
+        <div class="content_box" style="margin-top: 5px">
+            <div v-cloak v-for="item in article_list" class="content">
+                <div class="content_top">
+                    <a :href="['mine.html?user_id='+item.user.id]">
+                        <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{item.user.nickname}}&bull;<span>{{item.topic.content}}</span></span>
+                    </a>                    
+                </div>
+                <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
+                <image_moudle :images="item.images"></image_moudle>
+                <action :article="item"></action>
+            </div>
+        </div>
+    `,
+    props: ['article_list'],
+    methods: {
+
+    },
+    components: {
+        action,
+        image_moudle
+    }
+})
 
 var app = new Vue({
     el: '#app',
@@ -92,30 +224,45 @@ var app = new Vue({
             page: 0,
             size: 15,
             user_id: user
-        }
+        },
+        select: [true, false, false]
     },
     mounted: function () {
         this.getArticles(0)
     },
     methods: {
-        getArticles: function (comment,event) {
+        getArticles: function (index) {
             var vm = this;
-            vm.postData['comment'] = comment;
-            vm.$http.post('/flwechat/public/article/article_list', vm.postData)
+            for (var i = 0; i < vm.select.length; i++) {
+                vm.select[i] = false;
+            }
+            vm.select[index] = true;
+            switch (index) {
+                case 0:
+                    vm.postData = {page: 0, size: 15, user_id: user, is_public: 0};
+                    break;
+                case 1:
+                    vm.postData = {page: 0, size: 15, user_id: user, is_public: 1};
+                    break;
+                case 2:
+                    vm.postData = {page: 0, size: 15, user_id: user, follow_article: 1};
+                    break;
+            }
+            axios.post('/flwechat/public/article/article_list', vm.postData)
                 .then(
-                    function(response){
-                    console.log(response.data);
-                    vm.items = response.data;
-                    if(response.data.length>0){
-                        vm.show = false;
-                    }else{
-                        vm.show = true;
-                    }
-                }, function(response){
-                    console.log(response.data);
-                });
-            if(event!=null){
-                var element=$(event.target);
+                    function (response) {
+                        console.log(response.data);
+                        vm.items = response.data;
+                        if (response.data.length > 0) {
+                            vm.show = false;
+                        } else {
+                            vm.show = true;
+                        }
+                    }, function (response) {
+                        console.log(response.data);
+                    });
+            if (event != null) {
+                var element = $(event.target);
                 element.addClass('selected').siblings().removeClass('selected');
             }
         }

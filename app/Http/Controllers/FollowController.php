@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Follow;
 use App\Topic;
 use App\User;
@@ -50,10 +51,6 @@ class FollowController extends Controller
                 $be_follow_user=User::find($request->be_follow_id);
                 $be_follow_user->be_follow+=1;
                 $be_follow_user->save();
-            }else{
-                $topic=Topic::find($request->be_follow_id);
-                $topic->follow_num+=1;
-                $topic->save();
             }
             echo $follow->id;
         }catch (\Exception $exception){
@@ -120,7 +117,7 @@ class FollowController extends Controller
             if($request->type==0){
                 $be_follow=User::find($be_follow_ids);
             }else{
-                $be_follow=Topic::find($be_follow_ids);
+                $be_follow=Article::find($be_follow_ids);
             }
             echo \GuzzleHttp\json_encode($be_follow);
         }catch (\Exception $exception){
@@ -146,12 +143,6 @@ class FollowController extends Controller
                     $be_follow->be_follow-=1;
                 }
                 $be_follow->save();
-            }else{
-                $topic=Topic::find($request->be_follow_id);
-                if($topic->follow_num>0){
-                    $topic->follow_num-=1;
-                }
-                $topic->save();
             }
             $follow->delete();
             echo \GuzzleHttp\json_encode(true);
