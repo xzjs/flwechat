@@ -30,8 +30,8 @@
     padding:0px 10px;
 }
 .topic_index_selected{
-    color: var(--main-color);
-    border-bottom:2px solid var(--main-color);
+    color: #0084FF;
+    border-bottom:2px solid #0084FF;
 }
 .more_topic{
     height:35px;
@@ -352,7 +352,7 @@ a{
     height:18px;
     margin-right: 2px;
 }
-.your_action span{
+.your_action span,.your_action p{
     font-size: 10px;
     color: #8a8a8a;
 }

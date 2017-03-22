@@ -51,7 +51,7 @@
     width:100%;
 }
 .messages .selected{
-    color:var(--main-color);
+    color:#0084FF;
 }
 .blank{
     padding-top:30%;
