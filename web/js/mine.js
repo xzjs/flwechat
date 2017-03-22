@@ -130,7 +130,7 @@ var action = Vue.extend({
                 this.article.is_support = 1;
                 this.article.support_num += 1;
                 axios.post('/flwechat/public/action',
-                    {article_id:this.article.id,user_id:this.userId,type:0})
+                    {article_id: this.article.id, user_id: this.userId, type: 0})
                     .then(
                         function (response) {
                             console.log(response.data);
@@ -139,12 +139,12 @@ var action = Vue.extend({
                         });
             }
         },
-        oppose:function () {
+        oppose: function () {
             if (this.article.is_oppose == 0) {
                 this.article.is_oppose = 1;
                 this.article.oppose_num += 1;
                 axios.post('/flwechat/public/action',
-                    {article_id:this.article.id,user_id:this.userId,type:1})
+                    {article_id: this.article.id, user_id: this.userId, type: 1})
                     .then(
                         function (response) {
                             console.log(response.data);
@@ -203,15 +203,29 @@ var app = new Vue({
             page: 0,
             size: 15,
             user_id: user
-        }
+        },
+        select: [true, false, false]
     },
     mounted: function () {
         this.getArticles(0)
     },
     methods: {
-        getArticles: function (comment, event) {
+        getArticles: function (index) {
             var vm = this;
-            vm.postData['comment'] = comment;
+            for (var i = 0; i < vm.select.length; i++) {
+                vm.select[i] = false;
+            }
+            vm.select[index] = true;
+            switch (index) {
+                case 0:
+                    vm.postData = {page: 0, size: 15, user_id: user, is_public: 0};
+                    break;
+                case 1:
+                    vm.postData = {page: 0, size: 15, user_id: user, is_public: 1};
+                    break;
+                case 2:
+                    break;
+            }
             axios.post('/flwechat/public/article/article_list', vm.postData)
                 .then(
                     function (response) {

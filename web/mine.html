@@ -46,9 +46,9 @@
     </div>
     <div class="messages">
         <ul>
-            <li class="selected">收藏</li>
-            <li >发布</li>
-            <li >关注</li>
+            <li :class="{selected:select[0]}" @click="getArticles(0)">收藏</li>
+            <li :class="{selected:select[1]}" @click="getArticles(1)">发布</li>
+            <li :class="{selected:select[2]}" @click="getArticles(2)">关注</li>
         </ul>
     </div>
     <div class="blank" v-if="show"><img src="images/none.png" alt=""></div>

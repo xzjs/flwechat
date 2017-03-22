@@ -66,7 +66,7 @@ $(function () {
             if($('#checkbox').attr('checked')){
                 formData.append('is_public', 1);
             }else{
-                formData.append('is_public', 1);
+                formData.append('is_public', 0);
             }
             $.ajax({
                 url: '/flwechat/public/article',
