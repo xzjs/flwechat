@@ -52,43 +52,38 @@
         </ul>
     </div>
     <div class="blank" v-if="show"><img src="images/none.png" alt=""></div>
-    <!--<div class="content_box" style="margin-top: 5px">-->
-        <!--<div v-cloak v-for="item in items" class="content">-->
-            <!--<div class="content_top">-->
-                <!--<a :href="['mine.html?user_id='+item.user.id]">-->
-                    <!--<img :src="item.user.head_img" alt="" class="head_portrait">-->
-                <!--</a>-->
-                <!--<span class="wei_name">{{ item.user.nickname }}</span>-->
+    <div class="content_box" style="margin-top: 5px">
+        <div v-cloak v-for="item in items" class="content">
+            <div class="content_top">
+                <a :href="['mine.html?user_id='+item.user.id]">
+                    <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{ item.user.nickname }}•{{item.topic.content}}</span>
+                </a>
                 <!--<a href="javascript:void(0)" onclick="follow(1,1)">-->
-                    <!--<span class="topic" :data-id="item.topic.id">{{item.topic.content}}</span>-->
+                    <!---->
                 <!--</a>-->
-            <!--</div>-->
-            <!--<a :href="['article_detail.html?reply_id='+item.id]"><p class="content_txt">{{item.content}}</p></a>-->
-            <!--<div class=" swiper-container pic_show">-->
-                <!--<div  class="swiper-wrapper pic_show_list">-->
-                    <!--<div v-for="img in item.images" class="swiper-slide userImg" @click="show_img(img.id)" >-->
-                        <!--<img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">-->
-                        <!--<img :src="['/flwechat/public/storage/' + img.mark]" alt="" class="article_list_mark_img">-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="your_action">-->
-                <!--<div class="your_action_right">-->
-                    <!--<a :href="['article_detail.html?reply_id='+item.id]">-->
-                        <!--<img src="images/comment.png" alt=""><span>{{item.comment_num}}</span></a>-->
-                <!--</div>-->
-                <!--<div class="your_action_right">-->
-                    <!--<img id="img_oppose_19" src="images/oppose.png" alt="" onclick="action(19,1,this)">-->
-                    <!--<span id="span_oppose_19">{{item.oppose_num}}</span>-->
-                <!--</div>-->
-                <!--<div class="your_action_right">-->
-                    <!--<img id="img_support_19" src="images/support.png" alt="" onclick="action(19,0,this)">-->
-                    <!--<span id="span_support_19">{{item.support_num}}</span>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <article-list :article_list="items"></article-list>
+            </div>
+            <a :href="['article_detail.html?reply_id='+item.id]"><p class="content_txt">{{item.content}}</p></a>
+            <div class="pic_show">
+                <div v-for="img in item.images" class="userImg">
+                    <img :data-id="img.id" :src="['/flwechat/public/storage/'+img.img]" alt="" class="img_show">
+                </div>
+            </div>
+            <div class="your_action">
+                <div class="your_action_right">
+                    <a :href="['article_detail.html?reply_id='+item.id]">
+                        <img src="images/comment.png" alt=""><span>{{item.comment_num}}</span></a>
+                </div>
+                <div class="your_action_right">
+                    <img id="img_oppose_19" src="images/oppose.png" alt="" onclick="action(19,1,this)">
+                    <span id="span_oppose_19">{{item.oppose_num}}</span>
+                </div>
+                <div class="your_action_right">
+                    <img id="img_support_19" src="images/support.png" alt="" onclick="action(19,0,this)">
+                    <span id="span_support_19">{{item.support_num}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="weui-tabbar">
         <a href="index.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">

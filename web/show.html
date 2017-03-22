@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>图片展示</title>
     <link rel="stylesheet" href="css/weui.min.css">
-    <link rel="stylesheet" href="css/show_img_url.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/show_img_url.css">
 </head>
 <body>
 <div class="weui-gallery" id="gallery" style="display: block;">
@@ -26,26 +26,49 @@
     </span>
     <div class="opposite">
         <div class="" style="opacity: 0">
-            <div class="opposite-content"><p>相关阅读</p>
-                <ul></ul>
+            <div class="opposite-content"><p class="expands">相关阅读</p>
+               <!--另外一种颜色的class是expands_li_background_color-->
+                <ul>
+                    <li><a href="javascript:void(0)">
+                        <p class="expands_title">题目</p>
+                        <p class="expands_abstract">
+                            在维护性方面：做成SVG对设计师之前的工作量也有一定的提升，过去他们同一个图不同尺寸在PS输出都需要调整一次图形在维护性方面：做成SVG对设计师之前的工作量也有一定的提升，过去他们同一个图不同尺寸在PS输出都需要调整一次图形
+                        </p>
+                    </a>
+                    </li>
+                    <li class="expands_li_background_color"><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要SVG对设计师之前的工作量也有SVG对设计师之前的工作量也有</p></a></li>
+                    <li><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要</p></a></li>
+                    <li class="expands_li_background_color"><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要</p></a></li>
+                    <li><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要</p></a></li>
+                    <li><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要</p></a></li>
+                    <li><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要</p></a></li>
+                    <li><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要</p></a></li>
+                </ul>
             </div>
-            <div class="turn_to_img"><img src="images/back_to_original.png" alt=""><span>返回</span></div>
             <div class="ads_box">
-                <div></div>
-                <img src="images/ads.jpg" alt=""></div>
+                <img src="images/ads.jpg" alt="">
+            </div>
         </div>
     </div>
     <div class="bullet_screen">
-        <div class="bullet_screen_button"><input type="checkbox" class="bullet_screen_button_checkbox"
-                                                 checked="checked">
-            <span>弹幕</span>
+        <div class="bullet_screen_mask">
+
         </div>
-        <img src="images/left2.png" alt="" class="galleryImgLeft">
-        <img src="images/right2.png" alt="" class="galleryImgRight">
-        <img src="images/url2.png" alt="" class="galleryImgUrl">
-        <img src="images/close2.png" alt="" class="galleryImgCenter">
-        <span id="submit" class="bullet_screen_submit">吐槽</span>
-        <input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content" style="display: none">
+        <div class="bullet_screen_panel">
+            <div class="bullet_screen_button"><input type="checkbox" class="bullet_screen_button_checkbox"
+                                                     checked="checked">
+                <span>弹幕</span>
+            </div>
+
+            <div class="bullet_screen_submit_box">
+                <span id="submit" class="bullet_screen_submit">吐槽</span>
+                <input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content" style="display: none">
+            </div>
+            <div class="bullet_screen_img">
+                <span class="galleryImgLeft"><img src="images/left2.png" alt=""></span><span class="galleryImgRight"><img src="images/right2.png" alt=""></span><span class="galleryImgUrl"><img src="images/url2.png" alt=""></span><span class="galleryImgCenter"><img src="images/close2.png" alt=""></span>
+            </div>
+        </div>
+
     </div>
 </div>
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>

@@ -21,6 +21,9 @@ body{
 .weui-cells:after, .weui-cells:before{
     border:none;
 }
+.weui-cells__title sup{
+    color: red;
+}
 .text_insert{
     padding:10px 15px;
     height:100px;

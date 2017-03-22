@@ -1,3 +1,6 @@
+:root{
+    --main-color:#0084FF;
+}
 .container{
     background-color: #f5f5f5;
 }
@@ -48,7 +51,7 @@
     width:100%;
 }
 .messages .selected{
-    color:#0084FF;
+    color:var(--main-color);
 }
 .blank{
     padding-top:30%;

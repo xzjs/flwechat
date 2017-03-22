@@ -14,7 +14,7 @@
 <body>
 <div class="container">
     <form class="publish_content" action="" method="post" enctype="multipart/form-data">
-        <div class="weui-cells__title">话题分类</div>
+        <div class="weui-cells__title">话题分类 <sup>*</sup></div>
         <div class="weui-cells">
             <div class="weui-cell weui-cell_select">
                 <div class="weui-cell__bd">
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="weui-cells__title">评论</div>
+        <div class="weui-cells__title">评论 <sup>*</sup></div>
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -36,7 +36,7 @@
         <!--<div class="text_insert">-->
         <!--<textarea  id="comment" maxlength="300" placeholder="评论" name="comment" onfocus="this.placeholder=''" onblur="this.placeholder='评论'"></textarea>-->
         <!--</div>-->
-        <div class="weui-cells__title">最多添加3张截图</div>
+        <div class="weui-cells__title">上传1至3张截图 <sup class="pic_sup">*</sup></div>
         <div class="weui-cells">
             <div class="pic_insert" id="pic_insert1">
                 <img src="images/pic_insert.png" alt="" class="pic_preview" id="pic_file1">
@@ -71,48 +71,61 @@
             <!--<input type="text" placeholder="请选择合适的话题" onfocus="this.placeholder=''" onblur="this.placeholder='请选择合适的话题'">-->
             <!--<span class="weui-btn weui-btn_mini weui-btn_primary">话题</span>-->
         </div>
-
-
     </form>
     <div>
         <a href="javascript:;" class="weui-btn weui-btn_primary" id="showIOSDialog1">提交</a>
     </div>
-    <div class="weui-tabbar">
-        <a href="index.html" class="weui-tabbar__item">
+    <div class="instructions">
+        <ol>
+            <li>打开文章详情可以对文章进行关注</li>
+        </ol>
+    </div>
+</div>
+<div class="weui-tabbar">
+    <a href="index.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/homepage.png" alt="" class="weui-tabbar__icon">
                         <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>-->
                     </span>
-            <p class="weui-tabbar__label">首页</p>
-        </a>
-        <a href="follow.html" class="weui-tabbar__item">
-            <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
-            <p class="weui-tabbar__label">关注</p>
-        </a>
-        <a href="publish.html" class="weui-tabbar__item weui-bar__item_on">
-            <img src="./images/release2.png" alt="" class="weui-tabbar__icon">
-            <p class="weui-tabbar__label">发布</p>
-        </a>
-        <a href="friends.html" class="weui-tabbar__item">
+        <p class="weui-tabbar__label">首页</p>
+    </a>
+    <a href="follow.html" class="weui-tabbar__item">
+        <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
+        <p class="weui-tabbar__label">关注</p>
+    </a>
+    <a href="publish.html" class="weui-tabbar__item weui-bar__item_on">
+        <img src="./images/release2.png" alt="" class="weui-tabbar__icon">
+        <p class="weui-tabbar__label">发布</p>
+    </a>
+    <a href="friends.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/friend.png" alt="" class="weui-tabbar__icon friend_icon">
                         <!--<span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>-->
                     </span>
-            <p class="weui-tabbar__label">好友</p>
-        </a>
-        <a href="mine.html" class="weui-tabbar__item">
-            <img src="./images/me.png" alt="" class="weui-tabbar__icon mine_icon">
-            <p class="weui-tabbar__label">我</p>
-        </a>
-    </div>
+        <p class="weui-tabbar__label">好友</p>
+    </a>
+    <a href="mine.html" class="weui-tabbar__item">
+        <img src="./images/me.png" alt="" class="weui-tabbar__icon mine_icon">
+        <p class="weui-tabbar__label">我</p>
+    </a>
 </div>
 <div id='dialog1' style="display: none;">
     <div class="weui-mask"></div>
     <div class="weui-dialog">
         <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
-        <div class="weui-dialog__bd">评论不能为空</div>
+        <div class="weui-dialog__bd">话题分类或评论不能为空</div>
         <div class="weui-dialog__ft">
             <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="sure1">知道了</a>
+        </div>
+    </div>
+</div>
+<div id='dialog2' style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__hd"><strong class="weui-dialog__title">提示</strong></div>
+        <div class="weui-dialog__bd">至少上传1张截图</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="sure2">知道了</a>
         </div>
     </div>
 </div>

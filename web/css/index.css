@@ -1,7 +1,9 @@
 *:focus{
     outline:none;
 }
-@zhihu_blue: #0084FF
+:root{
+    --main-color:#0084FF;
+}
 .container{
     /*background-color: #fff;*/
     padding-bottom:84px;
@@ -28,8 +30,8 @@
     padding:0px 10px;
 }
 .topic_index_selected{
-    color: #0084FF;
-    border-bottom:2px solid #0084FF;
+    color: var(--main-color);
+    border-bottom:2px solid var(--main-color);
 }
 .more_topic{
     height:35px;
@@ -54,15 +56,23 @@
 .content_top{
     width:100%;
     position: relative;
+    height:30px;
+    line-height: 30px;
+}
+.head_portrait_a{
+    height:30px;
+    display: inline-block;
+    /*vertical-align: middle;*/
 }
 a{
     color: #000;
 }
 .head_portrait{
-    width:30px;
-    height:30px;
-    margin:5px 10px 5px 0;
-    border-radius: 20px;
+    width:20px;
+    height:20px;
+    margin-right:10px;
+    border-radius: 10px;
+    margin-top: -4px;
     vertical-align: middle;
 }
 .wei_name{
@@ -70,16 +80,11 @@ a{
     color: #888888;
 }
 .topic{
-    position: absolute;
-    right:0;
-    font-size:10px;
     height:18px;
     line-height: 18px;
     margin: 5px 0;
     padding:0 3px;
     border-radius: 3px;
-    background-color: #64B3F2;
-    color:#fff;
 }
 .topic_followed{
     background-color: #ec971f;
@@ -96,9 +101,9 @@ a{
     background-color: #e8e8e8;
 }
 .content_txt{
-    margin-left: 50px;
-    font-size:16px;
-    line-height: 1.5em;
+    font-size:18px;
+    height:32px;
+    line-height: 32px;
 }
 .pic_show_list{
     width: 318px;
@@ -190,31 +195,45 @@ a{
     height:24px;
     border-radius: 12px;
 }
-.galleryImgLeft{
-    position: absolute;
-    bottom:15px;
-    /*left:20px;*/
-    left:25%;
+.bullet_screen_img{
+    height:50px;
+    margin: 0 75px 0 75px;
 }
-.galleryImgRight{
-    position: absolute;
-    bottom:15px;
-    /*right:20px;*/
-    left:70%;
+.bullet_screen_img div{
+    width:100%;
 }
-.galleryImgCenter{
-    position: absolute;
-    bottom:15px;
-    /*right:58%;*/
-    left:40%;
+.bullet_screen_img span{
+    display: inline-block;
+    height:50px;
+    width:25%;
+    text-align: center;
+    margin-top: 15px;
 }
-.galleryImgUrl{
-    position: absolute;
-    bottom:15px;
-    /*right:30%;*/
-    /*bottom: 30px;*/
-    left:55%;
-}
+/*.galleryImgLeft{*/
+    /*position: absolute;*/
+    /*bottom:15px;*/
+    /*!*left:20px;*!*/
+    /*left:25%;*/
+/*}*/
+/*.galleryImgRight{*/
+    /*position: absolute;*/
+    /*bottom:15px;*/
+    /*!*right:20px;*!*/
+    /*left:70%;*/
+/*}*/
+/*.galleryImgCenter{*/
+    /*position: absolute;*/
+    /*bottom:15px;*/
+    /*!*right:58%;*!*/
+    /*left:40%;*/
+/*}*/
+/*.galleryImgUrl{*/
+    /*position: absolute;*/
+    /*bottom:15px;*/
+    /*!*right:30%;*!*/
+    /*!*bottom: 30px;*!*/
+    /*left:55%;*/
+/*}*/
 .url_list{
     position: absolute;
     bottom:50px;
@@ -269,7 +288,6 @@ a{
 .bullet_screen_button span{
     color: #fff;
     background: none;
-    margin:0 5px;
 }
 .bullet_screen_content{
     border-top-left-radius: 5px;
@@ -278,24 +296,30 @@ a{
     border-bottom-right-radius: 0;
 }
 .bullet_screen .bullet_screen_content{
-    position: relative;
+    position: absolute;
     top:8px;
-    right:15px;
+    right:60px;
     padding:0 5px;
     font-size: 16px;
     color: #000;
     display: inline-block;
-    width:57%;
+    width:55%;
     height:34px;
     line-height: 34px;
     float: right;
     border: none;
     margin-bottom: 10px;
 }
+.bullet_screen_submit_box{
+    width: 50px;
+    height:50px;
+    float: right;
+    margin:8px 15px 8px 0;
+}
 .bullet_screen_submit{
-    position: relative;
-    top:8px;
-    right:15px;
+    /*position: absolute;*/
+    /*top:8px;*/
+    /*right:15px;*/
     text-align: center;
     width:45px;
     background-color: #b2b2b2;
@@ -320,7 +344,7 @@ a{
 .your_action .your_action_right{
     width:16%;
     line-height: 44px;
-    float: right;
+    float: left;
     text-align: center;
 }
 .your_action img{
@@ -335,6 +359,13 @@ a{
 .bottom{
     height: 100px;
     width: 100%;
+}
+.instructions{
+    margin:0 15px;
+    padding:0 30px;
+    position: absolute;
+    bottom:60px;
+    color: #888888;
 }
 .weui-tabbar{
     position: fixed;

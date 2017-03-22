@@ -18,18 +18,11 @@ function init_showimg() {
         }
         change_img(index);
     });
-
-    $('.galleryImgUrl').on('click', function () {
-        $(".correct").removeClass('test2');
-        $(".opposite").children().removeClass("test");
-        $(".correct").addClass("test");
-        $(".opposite").children().addClass('test2');
-
-        //修改地址栏历史
-        var turn=GetQueryString('turn');
-        if(turn==null){
-            history.pushState({},"扩展",window.location.href+'&turn=true');
-        }
+    flag=1;
+    console.log(flag);
+    $('.galleryImgUrl img').attr('src','images/url2.png');
+    $('.galleryImgUrl').on('click',function(){
+        change_icon();
     });
 
     var turn=GetQueryString('turn');
@@ -37,16 +30,17 @@ function init_showimg() {
         $('.galleryImgUrl').click();
     }
 
-    $('.turn_to_img').on('click',function(){
-        $(".correct").removeClass("test");
-        $(this).parent().removeClass('test2');
-        $(".correct").addClass("test2");
-        $(this).parent().addClass('test');
-
-        //修改地址栏历史
-        var href=window.location.href.split('&')[0];
-        history.pushState({},"图片展示",href);
-    });
+    // $('.turn_to_img').on('click',function(){
+    //     $(".correct").removeClass("test");
+    //     $(this).parent().removeClass('test2');
+    //     $(".correct").addClass("test2");
+    //     $(this).parent().addClass('test');
+    //     $('.galleryImgUrl img').attr('src','images/url.png');
+    //
+    //     //修改地址栏历史
+    //     var href=window.location.href.split('&')[0];
+    //     history.pushState({},"图片展示",href);
+    // });
 
     var gallery = $("#gallery");
     $('.galleryImgCenter').on("click", function () {
@@ -141,7 +135,7 @@ function init_showimg() {
 }
 var img_data = [];
 var index = 0;
-
+var flag=1;
 function change_img(num) {
     if (num < 0) {
         alert('已经是第一张了');
@@ -171,10 +165,10 @@ function change_img(num) {
         //设置链接
         var expands_html = '';
         for (var i = 0; i < img_data[index].expands.length; i++) {
-            expands_html += '<li><a href="' + img_data[index].expands[i].href + '">' + img_data[index].expands[i].title + '</a></li>';
+            expands_html += '<li><a href="' + img_data[index].expands[i].href + '"><p class="expands_title">' + img_data[index].expands[i].title + '</p><p class="expands_abstract">' + img_data[index].expands[i].abstract + '</p></a></li>';
         }
         // $('#img_expands').html(expands_html);
-        $('.opposite-content ul').html(expands_html);
+        $('.opposite-content ul').append(expands_html);
     }
 }
 
@@ -218,6 +212,38 @@ $('.galleryImgUser').on('click', function () {
 
 $(function () {
     init_showimg();
-})
+});
+
+function change_icon() {
+    if (flag == 1) {
+        $(".correct").removeClass('test2');
+        $(".opposite").children().removeClass("test");
+        $(".correct").addClass("test");
+        $(".opposite").children().addClass('test2');
+        setTimeout(function () {
+            $('.galleryImgUrl img').attr('src', 'images/back_to_original2.png');
+        },375);
 
 
+        //修改地址栏历史
+        var turn = GetQueryString('turn');
+        if (turn == null) {
+            history.pushState({}, "扩展", window.location.href + '&turn=true');
+        }
+        flag = 0;
+    } else {
+        $(".correct").removeClass("test");
+        $(".opposite").children().removeClass('test2');
+        $(".correct").addClass("test2");
+        $(".opposite").children().addClass('test');
+        setTimeout(function () {
+            $('.galleryImgUrl img').attr('src', 'images/url2.png');
+        },375);
+
+
+        //修改地址栏历史
+        var href = window.location.href.split('&')[0];
+        history.pushState({}, "图片展示", href);
+        flag = 1;
+    }
+}

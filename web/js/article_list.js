@@ -144,41 +144,42 @@ function showArticleList(result) {
                     '</div>';
             }
             var html = '<div class="content">'
-                + '<div class="content_top"><a href="mine.html?user_id=' + result[i].user.id + '">'
+                + '<div class="content_top"><a class="head_portrait_a" href="mine.html?user_id=' + result[i].user.id + '">'
                 + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
-                + '</a>'
-                + '<span class="wei_name">' + result[i].user.nickname + '</span>';
-            if (result[i].topic_id != null) {
-                html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
-                    + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
-                    + '</a>';
-            }
+                + '<span class="wei_name">' + result[i].user.nickname+ '•'+result[i].topic.content + '</span>'
+                + '</a>';
+            // if (result[i].topic_id != null) {
+            //     html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
+            //         + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
+            //         + '</a>';
+            // }
             html += '</div>'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '"><p class="content_txt">' + result[i].content + '</p></a>'
                 + '<div class="swiper-container pic_show"><div class="swiper-wrapper pic_show_list">' + html_img + '</div></div>'
                 + '<div class="your_action">'
                 // +'<div class="your_action_right"><img src="images/save.png" alt=""></div>'
+                + '<div class="your_action_right" onclick="action(' + result[i].id + ',0,this)">'
+                + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
+                + '<div class="your_action_right" onclick="action(' + result[i].id + ',1,this)">'
+                + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span></div>'
                 + '<div class="your_action_right">'
                 + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
                 + '<img src="images/comment.png" alt=""><span>' + result[i].comment_num + '</span></a></div>'
-                + '<div class="your_action_right" onclick="action(' + result[i].id + ',1,this)">'
-                + '<img id="img_oppose_' + result[i].id + '" src="images/oppose.png" alt=""><span id="span_oppose_' + result[i].id + '">' + result[i].oppose_num + '</span>'
-                + '</div><div class="your_action_right" onclick="action(' + result[i].id + ',0,this)">'
-                + '<img id="img_support_' + result[i].id + '" src="images/support.png" alt=""><span id="span_support_' + result[i].id + '">' + result[i].support_num + '</span></div>'
                 + '</div></div>';
             myPublic_html += html;
         } else {
             var html = '<div class="content">'
                 + '<div class="content_top"><a href="mine.html?user_id=' + result[i].user.id + '">'
                 + '<img src="' + result[i].user.head_img + '" alt="" class="head_portrait">'
-                + '</a>'
-                + '<span class="wei_name">' + result[i].user.nickname + '</span>';
-            if (result[i].topic_id != null) {
-                html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
-                    + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
-                    + '</a>';
-
-            }
+                + '<span class="wei_name">' + result[i].user.nickname + '•'+result[i].topic.content + '</span>'
+                + '</a>';
+                // +'<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>';
+            // if (result[i].topic_id != null) {
+            //     html += "<a href=\"javascript:void(0)\" onclick=\"follow(" + result[i].topic.id + ",1)\">"
+            //         + '<span class="topic" data-id="' + result[i].topic.id + '">#' + result[i].topic.content + '</span>'
+            //         + '</a>';
+            //
+            // }
             html += '</div>'
                 + '<a href="article_detail.html?id=' + result[i].id + '"><p class="content_txt">作者已删除该文章</p></a>'
                 + '<div class="your_action">'

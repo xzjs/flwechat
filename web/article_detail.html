@@ -21,11 +21,11 @@
 <div id="app" class="container">
     <div class="article_box">
         <div v-cloak class="content">
-            <img id="head_img" :src="article.user.head_img" alt="" class="head_portrait">
-            <span id="nick_name" class="wei_name">{{article.user.nickname}}</span>
+            <div class="content_top"><img id="head_img" :src="article.user.head_img" alt="" class="head_portrait"><span id="nick_name" class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
             <span id="edit" class="do_icon" style="float: right;display: none">
                 <img class="do_open" src="images/down.png" alt="">
             </span>
+            </div>
             <p id="article_content" class="content_txt">{{article.content}}</p>
 
             <div class=" swiper-container pic_show">
@@ -36,7 +36,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="your_action" id="action">
                 <div class="your_action_left">
                     <a v-if="article.reply_id>0" :href="['article_detail.html?reply_id=' + article.reply_id]">

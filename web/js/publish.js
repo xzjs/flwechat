@@ -42,20 +42,27 @@ $(function () {
         $('#pic_blank').css('display', 'none');
         $("#pic_file3").attr("src", url);
     });
+    if(GetQueryString('reply_id')!=0){
+        $('.pic_sup').hide();
+    }
     $("#showIOSDialog1").click(function () {
         var id = $.cookie('id');
         var comment = $.trim($('#comment').val());
         var topic_id = $('#topic_select').val();
-        if (topic_id == 0) {
-            alert('请选择话题');
-            return;
-        }
-        if (comment == '') {
+        var pic_input = $('.pic_input').val();
+        if (comment == ''||topic_id==0) {
             $('#dialog1').fadeIn(200);
             $('#sure1').click(function () {
-                $('#dialog1').fadeOut(200)
+                $('#dialog1').fadeOut(200);
+                return
             });
-        } else {
+        }else if(GetQueryString('reply_id')==0&&pic_input==''){
+            $('#dialog2').fadeIn(200);
+            $('#sure2').click(function () {
+                $('#dialog2').fadeOut(200);
+                return
+            });
+        }else {
             formData.append('reply_id', reply_id);
             formData.append('topic_id', topic_id);
             formData.append('user_id', user_id);
