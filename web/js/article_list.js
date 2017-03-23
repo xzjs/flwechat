@@ -86,7 +86,7 @@ function action(article_id, type, obj) {
                 // }
                 $(obj).children('p').css('color', '#ec971f');
                 var num = parseInt($(obj).children('p').children('span').html()) + 1;
-                $(obj).children('p').siblings('span').html(num);
+                $(obj).children('p').children('span').html(num);
             } else {
                 console.log(result);
             }

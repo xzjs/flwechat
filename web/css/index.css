@@ -353,7 +353,7 @@ a{
 }
 .your_action span,.your_action p{
     font-size: 10px;
-    color: #8a8a8a !important;
+    color: #8a8a8a;
 }
 .bottom{
     height: 100px;
@@ -365,6 +365,7 @@ a{
     position: absolute;
     bottom:30px;
     color: #888888;
+    font-size: 12px;
 }
 .weui-tabbar{
     position: fixed;
