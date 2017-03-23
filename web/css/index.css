@@ -353,8 +353,11 @@ a{
     margin-right: 2px;
 }
 .your_action span,.your_action p{
-    font-size: 10px;
+    font-size: 12px;
     color: #8a8a8a;
+}
+.your_action span{
+    padding-left: 3px;
 }
 .bottom{
     height: 100px;

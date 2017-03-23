@@ -12,7 +12,7 @@ if (user_id == null) {
 }
 
 //上拉下拉数据
-var data = {'page': -1, 'size': 15};
+var data = {'page': -1, 'size': 15, 'reply_id': 0};
 
 //获取url中的参数
 function GetQueryString(name) {
@@ -22,10 +22,10 @@ function GetQueryString(name) {
     return null;
 }
 
-data['topic_id'] = GetQueryString('topic_id');
-data['user_id'] = GetQueryString('user_id');
-data['reply_id'] = GetQueryString('reply_id');
-data['comment'] = GetQueryString('comment');
+// data['topic_id'] = GetQueryString('topic_id');
+// data['user_id'] = GetQueryString('user_id');
+// data['reply_id'] = GetQueryString('reply_id');
+// data['comment'] = GetQueryString('comment');
 
 var homepage_icon = $('.homepage_icon'),
     follow_icon = $('.follow_icon'),

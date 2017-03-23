@@ -31,8 +31,12 @@
     top:6px;
     padding:0 22px;
 }
+.comment_box{
+    margin-bottom: 80px;
+}
 .content_box{
-    margin: 0px;
+    margin: 0;
+
 }
 .comment_box .content{
     background-color: #f5f5f5;
@@ -86,12 +90,12 @@
 .article_box{
     /*margin-bottom: 84px;*/
 }
-.clearfloat:after{
-    display:block;clear:both;content:"";visibility:hidden;height:0
-}
-.clearfloat{
-    zoom:1
-}
+/*.clearfloat:after{*/
+    /*display:block;clear:both;content:"";visibility:hidden;height:0*/
+/*}*/
+/*.clearfloat{*/
+    /*zoom:1*/
+/*}*/
 /*.comment{*/
     /*margin: 5px 0 5px 35px;*/
 /*}*/
