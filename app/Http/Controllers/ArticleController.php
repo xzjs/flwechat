@@ -14,7 +14,8 @@ use phpDocumentor\Reflection\Types\Null_;
 
 class ArticleController extends Controller
 {
-    private $img_ids=[];
+    private $img_ids = [];
+
     /**
      * Display a listing of the resource.
      *
@@ -307,7 +308,7 @@ class ArticleController extends Controller
             $key_word = $request->key_word;
             $comment = $request->comment;
             $is_public = $request->is_public;
-            $follow_article=$request->follow_article;
+            $follow_article = $request->follow_article;
 
             $articles = Article::with('topic', 'user');
             //话题查询
@@ -326,10 +327,12 @@ class ArticleController extends Controller
                 if (!is_null($is_public)) {
                     //查询用户未公开的文章
                     $articles = $articles->where('is_public', $is_public);
+                } else {
+                    $article = $articles->where('is_public', 1);
                 }
                 if (!is_null($follow_article)) {
                     //查询用户关注的文章
-                    $article_ids=Follow::where('follow_user',$user_id)->where('type',1)->get(['be_follow_user'])->toArray();
+                    $article_ids = Follow::where('follow_user', $user_id)->where('type', 1)->get(['be_follow_user'])->toArray();
                     $articles = Article::with('topic', 'user')->whereIn('id', $article_ids);
                 }
             } //回复id查询
@@ -347,9 +350,9 @@ class ArticleController extends Controller
                 $article->is_support = Action::where('article_id', $article->id)->where('user_id', $request->user_id)->where('type', 0)->count();
                 $article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $request->user_id)->where('type', 1)->count();
                 $article->is_follow = Follow::where('follow_user', $article->id)->where('be_follow_user', $request->article_id)->count();
-                $this->img_ids=[];
+                $this->img_ids = [];
                 $this->get_img_after($article->id);
-                $article->images=Image::find($this->img_ids);
+                $article->images = Image::find($this->img_ids);
             }
 
             return response()->json($articles);
@@ -370,9 +373,9 @@ class ArticleController extends Controller
             $article->is_support = Action::where('article_id', $request->article_id)->where('user_id', $request->user_id)->where('type', 0)->count();
             $article->is_oppose = Action::where('article_id', $request->article_id)->where('user_id', $request->user_id)->where('type', 1)->count();
             $article->is_follow = Follow::where('follow_user', $request->user_id)->where('be_follow_user', $request->article_id)->count();
-            $this->img_ids=[];
+            $this->img_ids = [];
             $this->get_img_after($article->id);
-            $article->images=Image::find($this->img_ids);
+            $article->images = Image::find($this->img_ids);
             return response()->json($article);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
@@ -386,7 +389,7 @@ class ArticleController extends Controller
     private function get_img_after($id)
     {
         $imgs = Image::where('article_id', $id)->get(['id'])->toArray();
-        $this->img_ids=array_merge($this->img_ids,$imgs);
+        $this->img_ids = array_merge($this->img_ids, $imgs);
         $article_ids = Article::where('reply_id', $id)->get(['id'])->toArray();
         foreach ($article_ids as $article_id) {
             $this->get_img_after($article_id);
