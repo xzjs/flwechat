@@ -73,7 +73,6 @@
 /*.comment_box .content .your_action{*/
    /*height: 20px;*/
 /*}*/
-
 .comment_box .content .head_portrait{
     width:20px;
     height:20px;
@@ -87,7 +86,12 @@
 .article_box{
     /*margin-bottom: 84px;*/
 }
-
+.clearfloat:after{
+    display:block;clear:both;content:"";visibility:hidden;height:0
+}
+.clearfloat{
+    zoom:1
+}
 /*.comment{*/
     /*margin: 5px 0 5px 35px;*/
 /*}*/

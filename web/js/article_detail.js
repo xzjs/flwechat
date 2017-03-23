@@ -165,15 +165,14 @@ function getFollowHtml() {
 
 var action_module = Vue.extend({
     template: `<div class="your_action" id="action">
-                <div class="your_action_right">
-                    <a v-if="article.reply_id>0" :href="'article_detail.html?reply_id=' + article.reply_id">
-                        <img src="images/back_to_original.png" alt="">
-                        <span>原文</span>
-                     </a>
+                <div class="your_action_right"  v-if="article.reply_id>0">
+                    <a :href="'article_detail.html?reply_id=' + article.reply_id">
+                        <img src="images/back_to_original.png" alt=""><span>原文</span>
+                    </a>
                 </div>
                 <div class="your_action_right" @click="support">
-                    <p  v-if="article.is_support==0">赞<span>{{article.support_num}}</span></p>
-                    <p  v-else style="color:#ec971f">赞<span>{{article.support_num}}</span></p>
+                    <p v-if="article.is_support==0">赞<span>{{article.support_num}}</span></p>
+                    <p v-else style="color:#ec971f">赞<span>{{article.support_num}}</span></p>
                 </div>
                 <div class="your_action_right" @click="oppose()">
                     <p v-if="article.is_oppose==0">踩<span>{{article.oppose_num}}</span></p>
@@ -261,10 +260,10 @@ var action_module = Vue.extend({
 
 var article_module = Vue.extend({
     template: `
-        <div class="content_box" style="margin-top: 5px">
+        <div class="content_box">
             <div v-cloak v-for="item in article_list" class="content">
                 <div class="content_top">
-                    <a :href="['mine.html?user_id='+item.user.id]">
+                <a :href="['mine.html?user_id='+item.user.id]">
                         <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{item.user.nickname}}&bull;<span>{{item.topic.content}}</span></span>
                     </a>                    
                 </div>
@@ -291,7 +290,7 @@ var article_module = Vue.extend({
     components: {
         action_module
     }
-})
+});
 var app = new Vue({
     el: '#app',
     data: {
