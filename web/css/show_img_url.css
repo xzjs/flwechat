@@ -161,7 +161,7 @@
     /*background-color: #c4e3f3;*/
     background-color: #bce8f1;
     margin-bottom: 10px;
-    max-height: 130px;
+    max-height: 140px;
     min-height:70px;
     overflow: hidden;
 }
@@ -178,6 +178,9 @@
     font-size: 24px;
     height:40px;
     line-height:40px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 .opposite-content ul li a .expands_abstract{
     line-height: 30px;
