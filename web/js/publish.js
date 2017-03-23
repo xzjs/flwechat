@@ -19,7 +19,7 @@ $(function () {
     get_select_list();
     edit();
 
-    $(".container").height($(window).height()-100);
+    $(".container").height($(window).height() - 100);
 
     $("#pic_files1").change(function () {
         url = window.URL.createObjectURL(this.files.item(0));
@@ -42,58 +42,71 @@ $(function () {
         $('#pic_blank').css('display', 'none');
         $("#pic_file3").attr("src", url);
     });
-    if(GetQueryString('reply_id')!=0&&GetQueryString('reply_id')!=null){
+    if (reply_id != 0) {
         $('.pic_sup').hide();
-    }else if(GetQueryString('reply_id')==0){
-        $('.pic_sup').css('display','inline');
+    } else {
+        $('.pic_sup').css('display', 'inline');
     }
     $("#showIOSDialog1").click(function () {
         var id = $.cookie('id');
         var comment = $.trim($('#comment').val());
         var topic_id = $('#topic_select').val();
         var pic_input = $('.pic_input').val();
-        if (comment == ''||topic_id==0||pic_input=='') {
-            $('#dialog1').fadeIn(200);
-            $('#sure1').click(function () {
-                $('#dialog1').fadeOut(200);
-                return
-            });
-        }else {
-            formData.append('reply_id', reply_id);
-            formData.append('topic_id', topic_id);
-            formData.append('user_id', user_id);
-            formData.append('comment', $('#comment').val());
-            if($('#checkbox').prop('checked')){
-                formData.append('is_public', 1);
-            }else{
-                formData.append('is_public', 0);
+        if (reply_id != 0) {
+            if (comment == '' || topic_id == 0) {
+                $('#dialog2').fadeIn(200);
+                $('#sure2').click(function () {
+                    $('#dialog2').fadeOut(200);
+                    return
+                });
+                return;
             }
-            $.ajax({
-                url: '/flwechat/public/article',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (result) {
-                    if (result == 'true') {
-                        if (reply_id != 0) {
-                            window.location.href = "article_detail.html?reply_id=" + reply_id;
-                        } else {
-                            window.location.href = 'mine.html';
-                        }
-                    } else {
-                        console.log(result);
-                        alert('系统出故障了！！！');
-                    }
-                }
-            });
+        } else {
+            if (comment == '' || topic_id == 0 || pic_input == '') {
+                $('#dialog1').fadeIn(200);
+                $('#sure1').click(function () {
+                    $('#dialog1').fadeOut(200);
+                    return
+                });
+                return;
+            }
         }
+
+        formData.append('reply_id', reply_id);
+        formData.append('topic_id', topic_id);
+        formData.append('user_id', user_id);
+        formData.append('comment', $('#comment').val());
+        if ($('#checkbox').prop('checked')) {
+            formData.append('is_public', 1);
+        } else {
+            formData.append('is_public', 0);
+        }
+        $.ajax({
+            url: '/flwechat/public/article',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (result == 'true') {
+                    if (reply_id != 0) {
+                        window.location.href = "article_detail.html?reply_id=" + reply_id;
+                    } else {
+                        window.location.href = 'mine.html';
+                    }
+                } else {
+                    console.log(result);
+                    alert('系统出故障了！！！');
+                }
+            }
+        });
+
     });
     $('.weui-switch').change(function () {
-        var flag=$('.weui-switch').prop('checked');
-        if(flag==true){
+        var flag = $('.weui-switch').prop('checked');
+        if (flag == true) {
             $('#open_close').html('公开');
-        }else{
+        } else {
             $('#open_close').html('仅自己可见');
         }
     });
