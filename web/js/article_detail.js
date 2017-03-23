@@ -323,7 +323,7 @@ var app = new Vue({
         getArticleList: function () {
             var vm = this;
             axios.post('/flwechat/public/article/article_list',
-                {page: 0, size: 15, reply_id: vm.article_id})
+                {page: 0, size: 15, reply_id: vm.article_id, user_id: vm.userId})
                 .then(
                     function (response) {
                         console.log(response.data);
