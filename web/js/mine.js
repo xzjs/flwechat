@@ -85,8 +85,8 @@ if (user == null) {
 
 var action = Vue.extend({
     template: `<div class="your_action" id="action">
-                <div class="your_action_right">
-                    <a v-if="article.reply_id>0" :href="'article_detail.html?reply_id=' + article.reply_id">
+                <div v-if="article.reply_id>0" class="your_action_right">
+                    <a  :href="'article_detail.html?reply_id=' + article.reply_id">
                         <img src="images/back_to_original.png" alt="">
                         <span>原文</span>
                      </a>
