@@ -327,8 +327,6 @@ class ArticleController extends Controller
                 if (!is_null($is_public)) {
                     //查询用户未公开的文章
                     $articles = $articles->where('is_public', $is_public);
-                } else {
-                    $article = $articles->where('is_public', 1);
                 }
                 if (!is_null($follow_article)) {
                     //查询用户关注的文章
@@ -343,7 +341,7 @@ class ArticleController extends Controller
                 $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
             } //首页展示文章查询
             else {
-                $articles = $articles->where('reply_id', 0);
+                $articles = $articles->where('reply_id', 0)->where('is_public',1);
             }
             $articles = $articles->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
             foreach ($articles as $article) {
