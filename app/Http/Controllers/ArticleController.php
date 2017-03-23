@@ -10,7 +10,6 @@ use App\Jobs\GetUrl;
 use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use phpDocumentor\Reflection\Types\Null_;
 
 class ArticleController extends Controller
 {

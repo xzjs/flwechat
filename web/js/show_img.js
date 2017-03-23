@@ -170,12 +170,9 @@ function change_img(num) {
                 expands_html += 'class="expands_li_background_color"';
             }
             expands_html += '><a href="' + img_data[index].expands[i].href + '"><p class="expands_title">';
-            if (img_data[index].expands[i].title.length > 19) {
-                var temp = img_data[index].expands[i].title.substring(0, 18) + '...';
-                expands_html += temp;
-            } else {
+
                 expands_html += img_data[index].expands[i].title;
-            }
+
             expands_html += '</p><p class="expands_abstract">' + img_data[index].expands[i].abstract + '</p></a></li>';
         }
         // $('#img_expands').html(expands_html);
