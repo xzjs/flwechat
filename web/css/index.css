@@ -334,21 +334,22 @@ a{
     width:100%;
     height:44px;
 }
-.your_action .your_action_left{
-    width:16%;
-    line-height: 44px;
-    position: absolute;
-    left:15px;
-}
+/*.your_action .your_action_left{*/
+    /*width:16%;*/
+    /*line-height: 44px;*/
+    /*position: absolute;*/
+    /*left:15px;*/
+/*}*/
 .your_action .your_action_right{
-    width:17%;
+    padding: 0 8px;
     line-height: 44px;
-    float: left;
+    display: inline-block;
     text-align: center;
 }
 .your_action img{
-    width:30%;
-    height:30%;
+    vertical-align: middle;
+    width:16px;
+    height:16px;
     margin-right: 2px;
 }
 .your_action span,.your_action p{
