@@ -307,46 +307,37 @@ class ArticleController extends Controller
             $key_word = $request->key_word;
             $comment = $request->comment;
             $is_public = $request->is_public;
+            if (is_null($is_public)) {
+                $is_public = 1;
+            }
             $follow_article = $request->follow_article;
 
             $articles = Article::with('topic', 'user');
             //话题查询
-            if ($topic_id != null) {
-                $articles = $articles->where('topic_id', $topic_id)->where('reply_id', 0);
-            } //用户id查询
-            elseif ($user_id != null) {
-                //获取评论过的文章
-                if ($comment == 1) {
-                    $reply_ids = Article::where('user_id', $user_id)->where('reply_id', '>', 0)->get(['reply_id'])->toArray();
-                    $articles = Article::with('topic', 'user')->whereIn('id', $reply_ids);
-                } else {
-                    //获取用户发布的文章
-                    $articles = $articles->where('user_id', $user_id);
+            if (!is_null($topic_id)) {
+                if($topic_id!=0) {
+                    $articles = $articles->where('topic_id', $topic_id)->where('reply_id', 0);
                 }
-                if (!is_null($is_public)) {
-                    //查询用户未公开的文章
-                    $articles = $articles->where('is_public', $is_public);
-                }
-                if (!is_null($follow_article)) {
-                    //查询用户关注的文章
-                    $article_ids = Follow::where('follow_user', $user_id)->where('type', 1)->get(['be_follow_user'])->toArray();
-                    $articles = Article::with('topic', 'user')->whereIn('id', $article_ids);
-                }
-            } //回复id查询
-            elseif ($reply_id != null) {
+            } //回复id查询,为0就是首页的文章
+            elseif (!is_null($reply_id)) {
                 $articles = $articles->where('reply_id', $reply_id);
             } //关键字查询
-            elseif ($key_word != null) {
+            elseif (!is_null($key_word)) {
                 $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
-            } //首页展示文章查询
-            else {
-                $articles = $articles->where('reply_id', 0)->where('is_public',1);
+            } //查询用户关注的文章
+            elseif (!is_null($follow_article)){
+                $article_ids=Follow::where('follow_user', $user_id)->get(['be_follow_user'])->toArray();
+                $articles->whereIn('id',$article_ids);
             }
-            $articles = $articles->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
+            //个人文章查询
+            else {
+                $articles = $articles->where('user_id', $request->user_id);
+            }
+            $articles = $articles->where('is_public', $is_public)->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
             foreach ($articles as $article) {
-                $article->is_support = Action::where('article_id', $article->id)->where('user_id', $request->user_id)->where('type', 0)->count();
-                $article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $request->user_id)->where('type', 1)->count();
-                $article->is_follow = Follow::where('follow_user', $article->id)->where('be_follow_user', $request->article_id)->count();
+                $article->is_support = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 0)->count();
+                $article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 1)->count();
+                $article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $article->id)->count();
                 $this->img_ids = [];
                 $this->get_img_after($article->id);
                 $article->images = Image::find($this->img_ids);
