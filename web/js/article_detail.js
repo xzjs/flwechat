@@ -269,7 +269,7 @@ var article_module = Vue.extend({
                     </a>                    
                 </div>
                 <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
-                <div class=" swiper-container pic_show">
+                <div v-if="item.images.length>0" class=" swiper-container pic_show">
                     <div  class="swiper-wrapper pic_show_list">
                         <div v-for="img in item.images" class="swiper-slide userImg" @click="show_img(img.id)" >
                             <img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">
