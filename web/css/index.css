@@ -356,6 +356,9 @@ a{
     font-size: 10px;
     color: #8a8a8a;
 }
+.your_action span{
+    padding-left: 3px;
+}
 .bottom{
     height: 100px;
     width: 100%;
