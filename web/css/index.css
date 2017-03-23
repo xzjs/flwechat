@@ -341,14 +341,14 @@ a{
     left:15px;
 }
 .your_action .your_action_right{
-    width:16%;
+    width:17%;
     line-height: 44px;
     float: left;
     text-align: center;
 }
 .your_action img{
-    width:18px;
-    height:18px;
+    width:30%;
+    height:30%;
     margin-right: 2px;
 }
 .your_action span,.your_action p{
