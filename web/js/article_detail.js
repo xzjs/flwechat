@@ -172,11 +172,11 @@ var action_module = Vue.extend({
                      </a>
                 </div>
                 <div class="your_action_right" @click="support">
-                    <p v-if="article.is_support==0" style="color:#000">赞<span>{{article.support_num}}</span></p>
-                    <p v-else style="color:#ec971f">赞<span>{{article.support_num}}</span></p>
+                    <p  v-if="article.is_support==0">赞<span>{{article.support_num}}</span></p>
+                    <p  v-else style="color:#ec971f">赞<span>{{article.support_num}}</span></p>
                 </div>
                 <div class="your_action_right" @click="oppose()">
-                    <p v-if="article.is_oppose==0" style="color:#000">踩<span>{{article.oppose_num}}</span></p>
+                    <p v-if="article.is_oppose==0">踩<span>{{article.oppose_num}}</span></p>
                     <p v-else style="color:#ec971f">踩<span>{{article.oppose_num}}</span></p>
                 </div>
                 <!--<div class="your_action_right">-->
