@@ -84,7 +84,7 @@ function action(article_id, type, obj) {
                 // } else {
                 //     src = 'images/oppose2.png';
                 // }
-                $(obj).children('p').css('color', '#ec971f');
+                $(obj).children('p').css('color', '#0084FF');
                 var num = parseInt($(obj).children('p').children('span').html()) + 1;
                 $(obj).children('p').children('span').html(num);
             } else {
@@ -111,7 +111,7 @@ function set_p_color(article_id, type) {
         temp = 'oppose_'
         // src = 'images/oppose2.png';
     }
-    $('#img_' + temp + article_id).css('color', '#ec971f');
+    $('#img_' + temp + article_id).css('color', '#0084FF');
 }
 function action_list() {
     $.getJSON('/flwechat/public/action/' + user_id, function (result) {

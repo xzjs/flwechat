@@ -10,6 +10,7 @@
 <body>
 <canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3"></canvas>
 <canvas id="myCanvas2" width="200" height="100" style="border:1px solid #c3c3c3"></canvas>
+<img src="images/ads.jpg" alt="" width="150" height="100" id="a1">
 <canvas id="myCanvas3" width="200" height="100" style="border:1px solid #c3c3c3"></canvas>
 <script>
     var c=document.getElementById("myCanvas");//首先，找到 <canvas> 元素:
@@ -19,12 +20,30 @@
 
     var c2=document.getElementById("myCanvas2");
     var ctx2=c2.getContext("2d");
+//    var grd=ctx2.createLinearGradient(0,0,200,0);
+    var grd=ctx2.createRadialGradient(75,50,5,90,60,100);//createRadialGradient(x,y,r,x1,y1,r1)
+    grd.addColorStop(0,"red");
+    grd.addColorStop(0.4,"yellow");
+    grd.addColorStop(1,"black");
+    ctx2.fillStyle=grd;
+    ctx2.fillRect(10,10,150,80);
     ctx2.moveTo(0,0);
     ctx2.lineTo(200,100);
     ctx2.stroke();
 
-    var c2=document.getElementById("myCanvas2");
-    var ctx2=c2.getContext("2d");
+
+    var c3=document.getElementById("myCanvas3");
+    var ctx3=c3.getContext("2d");
+    var img=document.getElementById("a1");
+    img.onload = function() {
+        ctx3.drawImage(img,0,0);
+        ctx3.beginPath();
+        ctx3.arc(95,50,40,1.5*Math.PI,0);//arc(x,y,r,start,stop)圆心位置，半径，起始角度,顺时针转
+        ctx3.stroke();
+        ctx3.font="30px Arial";
+        ctx3.fillText("hello world",10,50);
+        ctx3.strokeText("hello world",10,80);
+    }
 </script>
 </body>
 </html>

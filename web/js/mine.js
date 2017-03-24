@@ -92,12 +92,12 @@ var action = Vue.extend({
                      </a>
                 </div>
                 <div class="your_action_right" @click="support">
-                    <p v-if="article.is_support==0" style="color:#000">赞<span>{{article.support_num}}</span></p>
-                    <p v-else style="color:#ec971f">赞<span>{{article.support_num}}</span></p>
+                    <p v-if="article.is_support==0">赞<span>{{article.support_num}}</span></p>
+                    <p v-else style="color:#0084FF">赞<span>{{article.support_num}}</span></p>
                 </div>
                 <div class="your_action_right" @click="oppose()">
-                    <p v-if="article.is_oppose==0" style="color:#000">踩<span>{{article.oppose_num}}</span></p>
-                    <p v-else style="color:#ec971f">踩<span>{{article.oppose_num}}</span></p>
+                    <p v-if="article.is_oppose==0">踩<span>{{article.oppose_num}}</span></p>
+                    <p v-else style="color:#0084FF">踩<span>{{article.oppose_num}}</span></p>
                 </div>
                 <!--<div class="your_action_right">-->
                 <!--<img src="images/share.png" alt=""><span></span>-->
@@ -107,8 +107,8 @@ var action = Vue.extend({
                 </div>
                 <template v-if="article.user_id!=userId">
                 <div class="your_action_right">
-                    <img v-if="article.is_follow==0" src="images/save.png" alt="">
-                    <img v-else src="images/saved.png" alt="">
+                    <img v-if="article.is_follow==0" src="images/follow.png" alt="">
+                    <img v-else src="images/follow3.png" alt="">
                 </div>
                 </template>               
             </div>`,
