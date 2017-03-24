@@ -312,6 +312,8 @@ class ArticleController extends Controller
             }
             $follow_article = $request->follow_article;
 
+            $order_by='desc';
+
             $articles = Article::with('topic', 'user');
             //话题查询
             if (!is_null($topic_id)) {
@@ -321,6 +323,9 @@ class ArticleController extends Controller
             } //回复id查询,为0就是首页的文章
             elseif (!is_null($reply_id)) {
                 $articles = $articles->where('reply_id', $reply_id);
+                if($reply_id>0){
+                    $order_by='asc';
+                }
             } //关键字查询
             elseif (!is_null($key_word)) {
                 $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
@@ -333,7 +338,7 @@ class ArticleController extends Controller
             else {
                 $articles = $articles->where('user_id', $request->user_id);
             }
-            $articles = $articles->where('is_public', $is_public)->orderBy('created_at', 'desc')->skip($page * $size)->take($size)->get();
+            $articles = $articles->where('is_public', $is_public)->orderBy('created_at', $order_by)->skip($page * $size)->take($size)->get();
             foreach ($articles as $article) {
                 $article->is_support = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 0)->count();
                 $article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 1)->count();
