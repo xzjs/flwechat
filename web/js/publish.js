@@ -57,7 +57,7 @@ $(function () {
                 $('#dialog2').fadeIn(200);
                 $('#sure2').click(function () {
                     $('#dialog2').fadeOut(200);
-                    return
+                    return;
                 });
                 return;
             }
@@ -66,7 +66,7 @@ $(function () {
                 $('#dialog1').fadeIn(200);
                 $('#sure1').click(function () {
                     $('#dialog1').fadeOut(200);
-                    return
+                    return;
                 });
                 return;
             }
@@ -92,7 +92,12 @@ $(function () {
                     if (reply_id != 0) {
                         window.location.href = "article_detail.html?reply_id=" + reply_id;
                     } else {
-                        window.location.href = 'mine.html';
+                        if ($('#checkbox').prop('checked')) {
+                            window.location.href = 'index.html';
+                        } else {
+                            window.location.href = 'mine.html';
+                        }
+
                     }
                 } else {
                     console.log(result);
