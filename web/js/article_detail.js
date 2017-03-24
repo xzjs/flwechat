@@ -163,9 +163,11 @@ function getFollowHtml() {
         })
 }
 
+Vue.config.devtools = true
+
 var action_module = Vue.extend({
     template: `<div class="your_action" id="action">
-                <div class="your_action_right"  v-if="article.reply_id>0">
+                <div class="your_action_right"  v-if="article.reply_id>0 && is_comment==false">
                     <a :href="'article_detail.html?reply_id=' + article.reply_id">
                         <img src="images/back_to_original.png" alt=""><span>原文</span>
                     </a>
@@ -191,19 +193,27 @@ var action_module = Vue.extend({
                 </div>
                 </template>               
             </div>`,
-    props: ['article'],
+    props: {
+        article,
+        is_comment: {
+            default: false
+        },
+    },
     data: function () {
         return {
             userId: 0
         }
-    },
+    }
+    ,
     created: function () {
         this.userId = user_id;
-    },
+    }
+    ,
     methods: {
         detail: function () {
             window.location.href = 'article_detail.html?reply_id=' + this.article.id;
-        },
+        }
+        ,
         support: function () {
             if (this.article.is_support == 0) {
                 this.article.is_support = 1;
@@ -217,7 +227,8 @@ var action_module = Vue.extend({
                             console.log(response.data);
                         });
             }
-        },
+        }
+        ,
         oppose: function () {
             if (this.article.is_oppose == 0) {
                 this.article.is_oppose = 1;
@@ -231,7 +242,8 @@ var action_module = Vue.extend({
                             console.log(response.data);
                         });
             }
-        },
+        }
+        ,
         follow: function () {
             if (this.article.is_follow == 0) {
                 this.article.is_follow = 1;
@@ -243,7 +255,7 @@ var action_module = Vue.extend({
                         }, function (response) {
                             console.log(response.data);
                         });
-            }else{
+            } else {
                 this.article.is_follow = 0;
                 axios.post('/flwechat/public/follow/cancel_follow',
                     {follow_user_id: this.userId, be_follow_id: this.article.id, type: 1})
@@ -276,7 +288,7 @@ var article_module = Vue.extend({
                         </div>
                     </div>
                 </div>
-                <action_module :article="item"></action_module>
+                <action_module :article="item" :is_comment="true"></action_module>
             </div>
         </div>
     `,
