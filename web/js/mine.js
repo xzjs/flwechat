@@ -83,6 +83,8 @@ if (user == null) {
     user = user_id;
 }
 
+Vue.config.devtools = true
+
 var action = Vue.extend({
     template: `<div class="your_action" id="action">
                 <div v-if="article.reply_id>0" class="your_action_right">
@@ -137,6 +139,17 @@ var action = Vue.extend({
                         }, function (response) {
                             console.log(response.data);
                         });
+            } else {
+                this.article.is_support = 0;
+                this.article.support_num -= 1;
+                axios.post('/flwechat/public/action/cancel',
+                    {article_id: this.article.id, user_id: this.userId, type: 0})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
             }
         },
         oppose: function () {
@@ -151,13 +164,24 @@ var action = Vue.extend({
                         }, function (response) {
                             console.log(response.data);
                         });
+            } else {
+                this.article.is_oppose = 0;
+                this.article.oppose_num -= 1;
+                axios.post('/flwechat/public/action/cancel',
+                    {article_id: this.article.id, user_id: this.userId, type: 1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
             }
         }
     }
 })
 
-var image_moudle=Vue.extend({
-    template:`<div class=" swiper-container pic_show">
+var image_moudle = Vue.extend({
+    template: `<div class=" swiper-container pic_show">
                     <div  class="swiper-wrapper pic_show_list">
                         <div v-for="img in images" class="swiper-slide userImg" @click="show_img(img.id)" >
                             <img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">
@@ -165,14 +189,14 @@ var image_moudle=Vue.extend({
                         </div>
                     </div>
                 </div>`,
-    props:['images'],
-    methods:{
+    props: ['images'],
+    methods: {
         show_img: function (image_id) {
             $.cookie('back', window.location.href);
             window.location.href = 'show.html?image_id=' + image_id;
         }
     },
-    mounted:function () {
+    mounted: function () {
         console.log('mounted');
         var mySwiper = new Swiper('.swiper-container', {
             effect: 'coverflow',
@@ -206,9 +230,7 @@ Vue.component('article-list', {
         </div>
     `,
     props: ['article_list'],
-    methods: {
-
-    },
+    methods: {},
     components: {
         action,
         image_moudle
