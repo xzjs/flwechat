@@ -242,11 +242,6 @@ var app = new Vue({
                     function (response) {
                         console.log(response.data);
                         vm.items = response.data;
-                        if (response.data.length > 0) {
-                            vm.show = false;
-                        } else {
-                            vm.show = true;
-                        }
                     })
                 .catch(
                     function (response) {
@@ -282,26 +277,21 @@ var app = new Vue({
         },
         search:function () {
             var vm = this;
-            vm.postData.topic_id = vm.topics[vm.selectIndex].id;
             axios.post('/flwechat/public/article/article_list',
-                {page:0,size:15,user_id:user_id,})
+                {page:0,size:15,user_id:user_id,key_word:$('#searchInput').val()})
                 .then(
                     function (response) {
                         console.log(response.data);
                         vm.items = response.data;
-                        if (response.data.length > 0) {
-                            vm.show = false;
-                        } else {
-                            vm.show = true;
-                        }
                     })
                 .catch(
                     function (response) {
                         console.log(response.data);
                     }
                 );
-            alert('hello');
-
+            $('#searchBar').removeClass('weui-search-bar_focusing');
+            $('#searchText').show();
+            $('#searchInput').blur();
         }
     }
 })

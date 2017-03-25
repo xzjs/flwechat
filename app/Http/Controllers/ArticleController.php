@@ -332,7 +332,7 @@ class ArticleController extends Controller
             }
             //关键字查询2
             if (!is_null($key_word)) {
-                $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
+                $articles = $articles->where('content', 'like', "%" . $key_word . "%");
             }
             //查询用户关注的文章3
             if (!is_null($follow_article)) {
