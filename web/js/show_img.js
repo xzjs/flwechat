@@ -176,7 +176,7 @@ function change_img(num) {
             expands_html += '</p><p class="expands_abstract">' + img_data[index].expands[i].abstract + '</p></a></li>';
         }
         // $('#img_expands').html(expands_html);
-        $('.opposite-content ul').append(expands_html);
+        $('.opposite-content ul').html(expands_html);
     }
 }
 
