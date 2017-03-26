@@ -291,31 +291,50 @@ var app = new Vue({
         },
         loadUser: function () {
             var vm = this;
+            //获取用户信息
             axios.get('/flwechat/public/user/' + vm.show_user_id)
                 .then(function (response) {
                     vm.user = response.data;
                     console.log(response.data);
-                    if (vm.show_user_id != vm.user_id) {
-                        axios.post('/flwechat/public/follow/get_follow_list',
-                            {id: vm.user_id, type: 0})
-                            .then(function (response) {
-                                var follows = response.data;
-                                console.log(follows);
-                                for (var i = 0; i < follows.length; i++) {
-                                    if (follows[i].id == vm.show_user_id) {
-                                        vm.is_follow = true;
-                                        return;
-                                    }
-                                }
-                            })
-                            .catch(function (response) {
-                                console.log(response);
-                            })
-                    }
                 })
                 .catch(function (response) {
                     console.log(response);
-                })
+                });
+            if (vm.show_user_id != vm.user_id) {
+                //检测是否关注
+                axios.post('/flwechat/public/follow/get_follow_list',
+                    {id: vm.user_id, type: 0})
+                    .then(function (response) {
+                        var follows = response.data;
+                        console.log(follows);
+                        for (var i = 0; i < follows.length; i++) {
+                            if (follows[i].id == vm.show_user_id) {
+                                vm.is_follow = true;
+                                break;
+                            }
+                        }
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+                //检测是否为好友
+                axios.post('/flwechat/public/friend/get_friends',
+                    {id:vm.user_id,type:0})
+                    .then(function (response) {
+                        var friends = response.data;
+                        console.log(friends);
+                        for (var i = 0; i < friends.length; i++) {
+                            if (friends[i].id == vm.show_user_id) {
+                                vm.is_friend = true;
+                                break;
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            }
+
         },
         follow:function () {
             var vm=this;
