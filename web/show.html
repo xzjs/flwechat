@@ -16,9 +16,7 @@
         <div class="mark_img" style="background-image: url();">
             <div class="galleryImgUser">
                 <img id="img_head_img" src="" alt="" class="galleryImgUserImg">
-                <span id="img_user_name"></span>
-                <span>-</span>
-                <span id="img_article_content"></span>
+                <span id="img_user_name"></span><span>&bull;</span><span>{{article.topic.content}}</span><span id="img_article_content"></span>
             </div>
             <div id="danmu" class="galleryImgBulletScreen">
             </div>
@@ -29,13 +27,13 @@
             <div class="opposite-content"><p class="expands">相关阅读</p>
                <!--另外一种颜色的class是expands_li_background_color-->
                 <ul>
-                    <!--<li><a href="javascript:void(0)">-->
-                        <!--<p class="expands_title">题目</p>-->
-                        <!--<p class="expands_abstract">-->
-                            <!--在维护性方面：做成SVG对设计师之前的工作量也有一定的提升，过去他们同一个图不同尺寸在PS输出都需要调整一次图形在维护性方面：做成SVG对设计师之前的工作量也有一定的提升，过去他们同一个图不同尺寸在PS输出都需要调整一次图形-->
-                        <!--</p>-->
-                    <!--</a>-->
-                    <!--</li>-->
+                    <li><a href="index.html">
+                        <p class="expands_title">题目</p>
+                        <p class="expands_abstract">
+                            在维护性方面：做成SVG对设计师之前的工作量也有一定的提升，过去他们同一个图不同尺寸在PS输出都需要调整一次图形在维护性方面：做成SVG对设计师之前的工作量也有一定的提升，过去他们同一个图不同尺寸在PS输出都需要调整一次图形
+                        </p>
+                    </a>
+                    </li>
                     <!--<li class="expands_li_background_color"><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要SVG对设计师之前的工作量也有SVG对设计师之前的工作量也有</p></a></li>-->
                     <!--<li><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要</p></a></li>-->
                     <!--<li class="expands_li_background_color"><a href="javascript:void(0)"><p class="expands_title">题目</p><p class="expands_abstract">摘要</p></a></li>-->
@@ -75,6 +73,8 @@
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jquery.danmu.js"></script>
 <script type="text/javascript" src="js/jsweixin.js"></script>
+<script src="//cdn.bootcss.com/vue/2.2.4/vue.min.js"></script>
+<script src="//cdn.bootcss.com/axios/0.15.3/axios.min.js"></script>
 <script type="text/javascript" src="js/show_img.js"></script>
 </body>
 </html>
