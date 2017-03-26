@@ -33,27 +33,27 @@ class FollowController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        try{
-            $follow=new Follow;
-            $follow->follow_user=$request->follow_user_id;
-            $follow->be_follow_user=$request->be_follow_id;
-            $follow->type=$request->type;
+        try {
+            $follow = new Follow;
+            $follow->follow_user = $request->follow_user_id;
+            $follow->be_follow_user = $request->be_follow_id;
+            $follow->type = $request->type;
             $follow->save();
-            if($request->type==0){
-                $follow_user=User::find($request->follow_user_id);
-                $follow_user->follow+=1;
+            if ($request->type == 0) {
+                $follow_user = User::find($request->follow_user_id);
+                $follow_user->follow += 1;
                 $follow_user->save();
-                $be_follow_user=User::find($request->be_follow_id);
-                $be_follow_user->be_follow+=1;
+                $be_follow_user = User::find($request->be_follow_id);
+                $be_follow_user->be_follow += 1;
                 $be_follow_user->save();
             }
             echo $follow->id;
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             echo 0;
         }
     }
@@ -61,7 +61,7 @@ class FollowController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -72,7 +72,7 @@ class FollowController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -83,8 +83,8 @@ class FollowController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -95,32 +95,34 @@ class FollowController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        try{
+        try {
 
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
     }
 
     /**
-     * 获取用户关注的列表
+     * 获取用户关注列表
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function get_follow_list(Request $request){
-        try{
-            $be_follow_ids=Follow::where('type',$request->type)->where('follow_user',$request->id)->pluck('be_follow_user')->toArray();
-            if($request->type==0){
-                $be_follow=User::find($be_follow_ids);
-            }else{
-                $be_follow=Article::find($be_follow_ids);
+    public function get_follow_list(Request $request)
+    {
+        try {
+            $be_follow_ids = Follow::where('type', $request->type)->where('follow_user', $request->id)->pluck('be_follow_user')->toArray();
+            if ($request->type == 0) {
+                $be_follow = User::find($be_follow_ids);
+            } else {
+                $be_follow = Article::find($be_follow_ids);
             }
-            echo \GuzzleHttp\json_encode($be_follow);
-        }catch (\Exception $exception){
+            return response()->json($be_follow);
+        } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
     }
@@ -129,24 +131,25 @@ class FollowController extends Controller
      * 取消关注
      * @param Request $request
      */
-    public function cancel_follow(Request $request){
-        try{
-            $follow=Follow::where('type',$request->type)->where('follow_user',$request->follow_user_id)->where('be_follow_user',$request->be_follow_id)->first();
-            if($request->type==0){
-                $follow_user=User::find($request->follow_user_id);
-                if($follow_user->follow>0){
-                    $follow_user->follow-=1;
+    public function cancel_follow(Request $request)
+    {
+        try {
+            $follow = Follow::where('type', $request->type)->where('follow_user', $request->follow_user_id)->where('be_follow_user', $request->be_follow_id)->first();
+            if ($request->type == 0) {
+                $follow_user = User::find($request->follow_user_id);
+                if ($follow_user->follow > 0) {
+                    $follow_user->follow -= 1;
                 }
                 $follow_user->save();
-                $be_follow=User::find($request->be_follow_id);
-                if($be_follow->be_follow>0){
-                    $be_follow->be_follow-=1;
+                $be_follow = User::find($request->be_follow_id);
+                if ($be_follow->be_follow > 0) {
+                    $be_follow->be_follow -= 1;
                 }
                 $be_follow->save();
             }
             $follow->delete();
             echo \GuzzleHttp\json_encode(true);
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
     }
