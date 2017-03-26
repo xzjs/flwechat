@@ -311,31 +311,36 @@ class ArticleController extends Controller
                 $is_public = 1;
             }
             $follow_article = $request->follow_article;
+            $type = $request->type;
 
-            $order_by='desc';
+            $order_by = 'desc';
 
             $articles = Article::with('topic', 'user');
-            //话题查询
+            //话题查询0
             if (!is_null($topic_id)) {
-                if($topic_id!=0) {
-                    $articles = $articles->where('topic_id', $topic_id)->where('reply_id', 0);
+                if ($topic_id != 0) {
+                    $articles = $articles->where('topic_id', $topic_id);
                 }
-            } //回复id查询,为0就是首页的文章
-            elseif (!is_null($reply_id)) {
-                $articles = $articles->where('reply_id', $reply_id);
-                if($reply_id>0){
-                    $order_by='asc';
-                }
-            } //关键字查询
-            elseif (!is_null($key_word)) {
-                $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
-            } //查询用户关注的文章
-            elseif (!is_null($follow_article)){
-                $article_ids=Follow::where('follow_user', $user_id)->get(['be_follow_user'])->toArray();
-                $articles->whereIn('id',$article_ids);
+                $articles = $articles->where('reply_id', 0);
             }
-            //个人文章查询
-            else {
+            //回复id查询,为0就是首页的文章1
+            if (!is_null($reply_id)) {
+                $articles = $articles->where('reply_id', $reply_id);
+                if ($reply_id > 0) {
+                    $order_by = 'asc';
+                }
+            }
+            //关键字查询2
+            if (!is_null($key_word)) {
+                $articles = $articles->where('content', 'like', "%" . $key_word . "%");
+            }
+            //查询用户关注的文章3
+            if (!is_null($follow_article)) {
+                $article_ids = Follow::where('follow_user', $user_id)->get(['be_follow_user'])->toArray();
+                $articles->whereIn('id', $article_ids);
+            }
+            //个人文章查询4
+            if ($type == 4) {
                 $articles = $articles->where('user_id', $request->user_id);
             }
             $articles = $articles->where('is_public', $is_public)->orderBy('created_at', $order_by)->skip($page * $size)->take($size)->get();

@@ -154,15 +154,6 @@ function confirm() {
     });
 }
 
-function getFollowHtml() {
-
-    $.post('/flwechat/public/follow/get_follow_list',
-        {'id': user_id, 'type': 1},
-        function (result) {
-
-        })
-}
-
 Vue.config.devtools = true
 
 var action_module = Vue.extend({
@@ -226,14 +217,35 @@ var action_module = Vue.extend({
                         }, function (response) {
                             console.log(response.data);
                         });
+            } else {
+                this.article.is_support = 0;
+                this.article.support_num -= 1;
+                axios.post('/flwechat/public/action/cancel',
+                    {article_id: this.article.id, user_id: this.userId, type: 0})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
             }
-        }
-        ,
+        },
         oppose: function () {
             if (this.article.is_oppose == 0) {
                 this.article.is_oppose = 1;
                 this.article.oppose_num += 1;
                 axios.post('/flwechat/public/action',
+                    {article_id: this.article.id, user_id: this.userId, type: 1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            } else {
+                this.article.is_oppose = 0;
+                this.article.oppose_num -= 1;
+                axios.post('/flwechat/public/action/cancel',
                     {article_id: this.article.id, user_id: this.userId, type: 1})
                     .then(
                         function (response) {

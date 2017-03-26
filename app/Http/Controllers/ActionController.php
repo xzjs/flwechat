@@ -105,4 +105,30 @@ class ActionController extends Controller
     {
         //
     }
+
+    /**
+     * 取消点赞或者踩
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function cancel(Request $request){
+        try {
+            $action=Action::where('user_id',$request->user_id)->where('article_id',$request->article_id)->where('type',$request->type)->first();
+            $article=Article::find($request->article_id);
+            if($request->type==0){
+                if($article->support_num>0){
+                    $article->support_num-=1;
+                }
+            }else{
+                if($article->oppose_num>0){
+                    $article->oppose_num-=1;
+                }
+            }
+            $article->save();
+            $action->delete();
+            return response('true');
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
+    }
 }

@@ -41,6 +41,7 @@ Route::post('/friend/get_friends', 'FriendController@get_friends');
 Route::post('/friend/agree_friend', 'FriendController@agree_friend');
 Route::resource('friend', 'FriendController');
 
+Route::post('/action/cancel','ActionController@cancel');
 Route::resource('action', 'ActionController');
 
 Route::get('/image/get_children_imgs/{id}','ImageController@get_children_imgs');
