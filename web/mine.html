@@ -36,11 +36,13 @@
         </div>
         <div class="my_messages_right">
             <img v-if="show_user_id==user_id" class="follow_action" src="images/message.png" alt="">
-            <img v-else-if="is_follow==true" class="follow_action" src="images/follow2.png" alt="" @click="cancel_follow()">
+            <img v-else-if="is_follow==true" class="follow_action" src="images/follow3.png" alt="" @click="cancelFollow()">
             <img v-else class="follow_action" src="images/follow.png" alt="" @click="follow()">
 
             <div class="my_messages_friend">
-                <img src="images/add_friend.png" alt="" id="friend">
+                <img v-if="show_user_id==user_id" src="images/add_friend.png" alt="" @click="goMessage()">
+                <img v-else-if="is_friend==true" src="images/add_friend2.png" alt="">
+                <img v-else src="images/add_friend.png" alt="" @click="makeFriend()">
                 <span class="weui-badge weui-badge_dot"
                       style="position: absolute;top: 5px;right: 15px;display: none"></span>
             </div>

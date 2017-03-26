@@ -250,7 +250,8 @@ var app = new Vue({
         show_user_id: show_user_id,
         user_id: user_id,
         user: {},
-        is_follow: false
+        is_follow: false,
+        is_friend:false
     },
     mounted: function () {
         this.getArticles(0);
@@ -331,7 +332,7 @@ var app = new Vue({
                     console.log(error);
                 })
         },
-        cancel_follow:function () {
+        cancelFollow:function () {
             var vm=this;
             axios.post('/flwechat/public/follow/cancel_follow',
                 {follow_user_id:vm.user_id,be_follow_id:vm.show_user_id,type:0})
@@ -347,6 +348,23 @@ var app = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 })
+        },
+        makeFriend:function () {
+            var vm=this;
+            axios.post('/flwechat/public/friend',
+                {friend_post_id: vm.user_id, friend_receive_id: vm.show_user_id})
+                .then(function (response) {
+                    console.log(response.data);
+                    if(response.data==true){
+                        alert('好友请求已发送');
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        },
+        goMessage:function () {
+            window.location.href = 'friend_add_messages.html';
         }
     }
 })
