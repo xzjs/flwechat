@@ -1,7 +1,14 @@
 /**
  * Created by xzjs on 2017/2/19.
  */
+
 function init_showimg() {
+    $('.weui-gallery').on('click',function () {
+        // $('.bullet_screen').toggle(500);
+        // $('.bullet_screen').fadeIn(500);
+        // setTimeout("$('.bullet_screen').fadeOut(500)",5000);
+    });
+    // setTimeout("$('.bullet_screen').fadeOut(500)",3000);
     var image_id = GetQueryString('image_id');
     if (image_id == null) {
         console.log('参数错误');
@@ -221,13 +228,14 @@ $('.galleryImgUser').on('click', function () {
 $(function () {
     init_showimg();
 });
-
+var opposite=$(".opposite"),correct=$(".correct");
 function change_icon() {
     if (flag == 1) {
-        $(".correct").removeClass('test2');
-        $(".opposite").children().removeClass("test");
-        $(".correct").addClass("test");
-        $(".opposite").children().addClass('test2');
+        opposite.children().children().css('display','block');
+        correct.removeClass('test2');
+        opposite.children().removeClass("test");
+        correct.addClass("test");
+        opposite.children().addClass('test2');
         setTimeout(function () {
             $('.galleryImgUrl img').attr('src', 'images/back_to_original2.png');
         }, 375);
@@ -240,14 +248,18 @@ function change_icon() {
         }
         flag = 0;
     } else {
-        $(".correct").removeClass("test");
-        $(".opposite").children().removeClass('test2');
-        $(".correct").addClass("test2");
-        $(".opposite").children().addClass('test');
+        correct.removeClass("test");
+        opposite.children().removeClass('test2');
+        correct.addClass("test2");
+        opposite.children().addClass('test');
+
         setTimeout(function () {
             $('.galleryImgUrl img').attr('src', 'images/url2.png');
         }, 375);
-
+        setTimeout(function () {
+            opposite.children().children().css('display','none');
+        },750);
+        // opposite.children().css('display','none');
 
         //修改地址栏历史
         var href = window.location.href.split('&')[0];
