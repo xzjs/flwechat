@@ -7,7 +7,6 @@ use App\Article;
 use App\Follow;
 use App\Image;
 use App\Jobs\GetUrl;
-use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -187,105 +186,6 @@ class ArticleController extends Controller
             $article = Article::find($id);
             $article->is_deleted = 1;
             $article->save();
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 为文章增加话题
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function add_topic(Request $request)
-    {
-        try {
-            $topic = Topic::firstOrNew(['content' => $request->name]);
-            if ($topic->user_id == null) {
-                $topic->user_id = $request->user_id;
-                $topic->follow_num = 0;
-                $topic->save();
-            }
-            $article = Article::find($request->article_id);
-            $article->topic_id = $topic->id;
-            $article->save();
-            return response('true');
-        } catch (\Exception $exception) {
-            return response($exception->getMessage());
-        }
-    }
-
-    /**
-     * 获取用户发布的文章
-     * @param $user_id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get_article_by_user_id($user_id)
-    {
-        try {
-            $articles = Article::with('images', 'topic', 'user')->where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 根据回复id获取文章列表
-     * @param $reply_id 回复文章的id
-     * @return \Illuminate\Http\JsonResponse
-     */
-//    public function article_list($reply_id)
-//    {
-//        try {
-//            $articles = Article::with('images', 'topic', 'user')->where('reply_id', $reply_id)->orderBy('created_at', 'desc')->get();
-//            return response()->json($articles);
-//        } catch (\Exception $exception) {
-//            echo $exception->getMessage();
-//        }
-//    }
-
-    /**
-     * 获取用户评论过的文章
-     * @param $user_id 用户id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function comment_articles($user_id)
-    {
-        try {
-            $reply_ids = Article::where('user_id', $user_id)->where('reply_id', '>', 0)->get(['reply_id'])->toArray();
-            $articles = Article::with('images', 'topic', 'user')->find($reply_ids);
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 根据话题id获取文章
-     * @param $topic_id 话题id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get_article_by_topic($topic_id)
-    {
-        try {
-            $articles = Article::with('images', 'topic', 'user')->where('topic_id', $topic_id)->where('reply_id', 0)->orderBy('created_at', 'desc')->get();
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 搜索文章
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function search(Request $request)
-    {
-        try {
-            $articles = Article::with('images', 'topic', 'user')->where('content', 'like', "%" . $request->keyword . "%")->orderBy('created_at', 'desc')->get();
-            return response()->json($articles);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }

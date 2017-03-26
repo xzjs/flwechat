@@ -1,86 +1,86 @@
 /**
  * Created by xzjs on 2017/2/8.
  */
-$(document).ready(function () {
-    var id = 0;
+// $(document).ready(function () {
+//     var id = 0;
+//
+//     var show_id = data['user_id'];
+//     if (show_id != null) {
+//         if (show_id == user_id) {
+//             id = user_id;
+//             set_friend(1);
+//         } else {
+//             id = show_id;
+//             //为图片设置data
+//             $('.follow_action').data('id', id);
+//             set_follow(0);
+//             set_friend(0, show_id);
+//         }
+//     } else {
+//         id = user_id;
+//         set_friend(1);
+//     }
+//     $.getJSON('/flwechat/public/user/' + id, function (result) {
+//         $('#head_img')[0].src = result.head_img;
+//         $('.name').html(result.nickname);
+//         $('title').html(result.nickname);
+//         $('#follow_num').html(result.follow);
+//         $('#be_follow_num').html(result.be_follow);
+//     });
+//     // $('.messages span').on('click', function () {
+//     //     $(this).addClass('selected').siblings().removeClass('selected');
+//     //     $('.content_box').html('');
+//     //     var html = $(this).html();
+//     //     var url = '';
+//     //     if (html != '发布的文章') {
+//     //         // url = '/flwechat/public/article/comment_articles/' + id;
+//     //         // getArticleList(url);
+//     //         window.location.href = 'mine.html?user_id=' + user_id + '&comment=1';
+//     //     }
+//     // });
+//     // $('span').removeClass('selected');
+//     // if (data['comment'] == 1) {
+//     //     $('#comment').addClass('selected');
+//     // } else {
+//     //     $('#publish').addClass('selected');
+//     // }
+// });
 
-    var show_id = data['user_id'];
-    if (show_id != null) {
-        if (show_id == user_id) {
-            id = user_id;
-            set_friend(1);
-        } else {
-            id = show_id;
-            //为图片设置data
-            $('.follow_action').data('id', id);
-            set_follow(0);
-            set_friend(0, show_id);
-        }
-    } else {
-        id = user_id;
-        set_friend(1);
-    }
-    $.getJSON('/flwechat/public/user/' + id, function (result) {
-        $('#head_img')[0].src = result.head_img;
-        $('.name').html(result.nickname);
-        $('title').html(result.nickname);
-        $('#follow_num').html(result.follow);
-        $('#be_follow_num').html(result.be_follow);
-    });
-    // $('.messages span').on('click', function () {
-    //     $(this).addClass('selected').siblings().removeClass('selected');
-    //     $('.content_box').html('');
-    //     var html = $(this).html();
-    //     var url = '';
-    //     if (html != '发布的文章') {
-    //         // url = '/flwechat/public/article/comment_articles/' + id;
-    //         // getArticleList(url);
-    //         window.location.href = 'mine.html?user_id=' + user_id + '&comment=1';
-    //     }
-    // });
-    // $('span').removeClass('selected');
-    // if (data['comment'] == 1) {
-    //     $('#comment').addClass('selected');
-    // } else {
-    //     $('#publish').addClass('selected');
-    // }
-});
+// function set_friend(type, show_id) {
+//     if (type == 0) {
+//         var html = '<div id="friend_toast" style="display: none;">'
+//             + '<div class="weui-mask_transparent"></div>'
+//             + '<div class="weui-toast">'
+//             + '<i class="weui-icon-success-no-circle weui-icon_toast"></i>'
+//             + '<p class="weui-toast__content">已发送好友邀请</p>'
+//             + '</div></div>';
+//         $('body').append(html);
+//         $('#friend').on('click', function () {
+//             $.post('/flwechat/public/friend',
+//                 {'friend_post_id': user_id, 'friend_receive_id': show_id},
+//                 function (result) {
+//                     if (result == 'true') {
+//                         var $toast = $('#friend_toast');
+//
+//                         if ($toast.css('display') != 'none') return;
+//
+//                         $toast.fadeIn(100);
+//                         setTimeout(function () {
+//                             $toast.fadeOut(100);
+//                         }, 2000);
+//                     }
+//                 });
+//         });
+//     } else {
+//         $('#friend').on('click', function () {
+//             window.location.href = 'friend_add_messages.html';
+//         })
+//     }
+// }
 
-function set_friend(type, show_id) {
-    if (type == 0) {
-        var html = '<div id="friend_toast" style="display: none;">'
-            + '<div class="weui-mask_transparent"></div>'
-            + '<div class="weui-toast">'
-            + '<i class="weui-icon-success-no-circle weui-icon_toast"></i>'
-            + '<p class="weui-toast__content">已发送好友邀请</p>'
-            + '</div></div>';
-        $('body').append(html);
-        $('#friend').on('click', function () {
-            $.post('/flwechat/public/friend',
-                {'friend_post_id': user_id, 'friend_receive_id': show_id},
-                function (result) {
-                    if (result == 'true') {
-                        var $toast = $('#friend_toast');
-
-                        if ($toast.css('display') != 'none') return;
-
-                        $toast.fadeIn(100);
-                        setTimeout(function () {
-                            $toast.fadeOut(100);
-                        }, 2000);
-                    }
-                });
-        });
-    } else {
-        $('#friend').on('click', function () {
-            window.location.href = 'friend_add_messages.html';
-        })
-    }
-}
-
-var user = GetQueryString('user_id');
-if (user == null) {
-    user = user_id;
+var show_user_id = GetQueryString('user_id');
+if (show_user_id == null) {
+    show_user_id = user_id;
 }
 
 Vue.config.devtools = true
@@ -212,7 +212,7 @@ var image_moudle = Vue.extend({
             centeredSlides: true,
         });
     }
-})
+});
 
 Vue.component('article-list', {
     template: `
@@ -235,7 +235,7 @@ Vue.component('article-list', {
         action,
         image_moudle
     }
-})
+});
 
 var app = new Vue({
     el: '#app',
@@ -244,13 +244,17 @@ var app = new Vue({
         items: [],
         postData: {
             page: 0,
-            size: 15,
-            user_id: user
+            size: 15
         },
-        select: [true, false, false]
+        select: [true, false, false],
+        show_user_id: show_user_id,
+        user_id: user_id,
+        user: {},
+        is_follow: false
     },
     mounted: function () {
-        this.getArticles(0)
+        this.getArticles(0);
+        this.loadUser()
     },
     methods: {
         getArticles: function (index) {
@@ -261,13 +265,13 @@ var app = new Vue({
             vm.select[index] = true;
             switch (index) {
                 case 0:
-                    vm.postData = {page: 0, size: 15, user_id: user, is_public: 0};
+                    vm.postData = {page: 0, size: 15, user_id: vm.show_user_id, is_public: 0, type: 4};
                     break;
                 case 1:
-                    vm.postData = {page: 0, size: 15, user_id: user, is_public: 1};
+                    vm.postData = {page: 0, size: 15, user_id: vm.show_user_id, is_public: 1, type: 4};
                     break;
                 case 2:
-                    vm.postData = {page: 0, size: 15, user_id: user, follow_article: 1};
+                    vm.postData = {page: 0, size: 15, user_id: vm.show_user_id, follow_article: 1};
                     break;
             }
             axios.post('/flwechat/public/article/article_list', vm.postData)
@@ -283,10 +287,66 @@ var app = new Vue({
                     }, function (response) {
                         console.log(response.data);
                     });
-            if (event != null) {
-                var element = $(event.target);
-                element.addClass('selected').siblings().removeClass('selected');
-            }
+        },
+        loadUser: function () {
+            var vm = this;
+            axios.get('/flwechat/public/user/' + vm.show_user_id)
+                .then(function (response) {
+                    vm.user = response.data;
+                    console.log(response.data);
+                    if (vm.show_user_id != vm.user_id) {
+                        axios.post('/flwechat/public/follow/get_follow_list',
+                            {id: vm.user_id, type: 0})
+                            .then(function (response) {
+                                var follows = response.data;
+                                console.log(follows);
+                                for (var i = 0; i < follows.length; i++) {
+                                    if (follows[i].id == vm.show_user_id) {
+                                        vm.is_follow = true;
+                                        return;
+                                    }
+                                }
+                            })
+                            .catch(function (response) {
+                                console.log(response);
+                            })
+                    }
+                })
+                .catch(function (response) {
+                    console.log(response);
+                })
+        },
+        follow:function () {
+            var vm=this;
+            axios.post('/flwechat/public/follow',
+                {follow_user_id:vm.user_id,be_follow_id:vm.show_user_id,type:0})
+                .then(function (response) {
+                    console.log(response.data);
+                    if(response.data>0){
+                        vm.user.be_follow+=1;
+                        vm.is_follow=true;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        },
+        cancel_follow:function () {
+            var vm=this;
+            axios.post('/flwechat/public/follow/cancel_follow',
+                {follow_user_id:vm.user_id,be_follow_id:vm.show_user_id,type:0})
+                .then(function (response) {
+                    console.log(response.data);
+                    if(response.data==true){
+                        if(vm.user.be_follow>0){
+                            vm.user.be_follow-=1;
+                            vm.is_follow=false;
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
     }
 })
