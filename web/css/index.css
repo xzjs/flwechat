@@ -273,6 +273,7 @@ a{
 .galleryImgUserContent{
     margin:5px;
     font-size: 12px;
+    text-align: justify;
 }
 /*.galleryImgUser_all{*/
     /*height:auto!important;*/
