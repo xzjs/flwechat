@@ -246,7 +246,7 @@ var app = new Vue({
             page: 0,
             size: 15
         },
-        select: [true, false, false],
+        select: [false, true, false],
         show_user_id: show_user_id,
         user_id: user_id,
         user: {},
@@ -254,7 +254,7 @@ var app = new Vue({
         is_friend:false
     },
     mounted: function () {
-        this.getArticles(0);
+        this.getArticles(1);
         this.loadUser()
     },
     methods: {

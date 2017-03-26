@@ -50,8 +50,8 @@
     </div>
     <div class="messages">
         <ul>
-            <li :class="{selected:select[0]}" @click="getArticles(0)">收藏</li>
             <li :class="{selected:select[1]}" @click="getArticles(1)">发布</li>
+            <li v-if="show_user_id==user_id" :class="{selected:select[0]}" @click="getArticles(0)">收藏</li>
             <li :class="{selected:select[2]}" @click="getArticles(2)">关注</li>
         </ul>
     </div>
