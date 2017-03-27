@@ -22,6 +22,7 @@ class CreateExpandsTable extends Migration
             $table->string('domain');
             $table->string('pubdate')->nullable();
             $table->string('dimension');
+            $table->string('src')->nullable();
             $table->timestamps();
         });
     }

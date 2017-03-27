@@ -178,7 +178,7 @@ var action = Vue.extend({
             }
         }
     }
-})
+});
 
 var image_moudle = Vue.extend({
     template: `<div class=" swiper-container pic_show">
@@ -386,4 +386,4 @@ var app = new Vue({
             window.location.href = 'friend_add_messages.html';
         }
     }
-})
+});

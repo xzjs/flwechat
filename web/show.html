@@ -2,23 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>图片展示</title>
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/show_img_url.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div class="weui-gallery" id="gallery" style="display: block;">
-    <span class="weui-gallery__img correct" id="galleryImg"
-          style="background-image: url();">
-        <div class="mark_img" style="background-image: url();">
+<div id="app" class="weui-gallery" id="gallery" style="display: block;">
+    <span v-cloak class="weui-gallery__img correct" id="galleryImg"
+          :style="'background-image: url(/flwechat/public/storage/'+ images[index].img +');'">
+        <div class="mark_img" :style="'background-image: url(/flwechat/public/storage/'+ images[index].mark +');'">
             <div class="galleryImgUser">
                 <div class="galleryImgUserContent">
-                    <img id="img_head_img" src="" alt="" class="galleryImgUserImg">
-                    <span id="img_user_name"></span><span>&bull;</span><span>互联网</span>
-                    <p id="img_article_content"></p>
+                    <img :src="images[index].article.user.head_img" alt="" class="galleryImgUserImg">
+                    <span>{{images[index].article.user.nickname}}</span><span>&bull;</span><span>{{images[index].article.topic.content}}</span>
+                    <p id="img_article_content">{{images[index].article.content}}</p>
                 </div>
             </div>
             <!--<div id="danmu" class="galleryImgBulletScreen">-->
@@ -28,15 +34,17 @@
     <div class="opposite">
         <div class="" style="opacity: 0">
             <div class="opposite-content"><p class="expands">相关阅读</p>
-               <!--另外一种颜色的class是expands_li_background_color-->
+                <!--另外一种颜色的class是expands_li_background_color-->
                 <ul>
-                    <!--<li><a href="index.html">-->
-                        <!--<p class="expands_title">题目</p>-->
-                        <!--<p class="expands_abstract">-->
-                            <!--在维护性方面一次图形在维护性方面：做成SVG对设计师之前的工作量也有一定的提升，过去他们同一个图不同尺寸在PS输出都需要调整一次图形-->
-                        <!--</p>-->
-                    <!--</a>-->
-                    <!--</li>-->
+                    <li v-for="(item,index) in images[index].expands" :class="{expands_li_background_color:classActive[index]}">
+                        <a :href="item.href">
+                            <p class="expands_title">{{item.title}}</p>
+                            <p class="expands_abstract">
+                                {{item.abstract}}
+                            </p>
+                        </a>
+                    </li>
+
                 </ul>
             </div>
             <div class="ads_box">
@@ -49,36 +57,12 @@
 
         </div>
         <div class="bullet_screen_panel">
-            <!--<div class="bullet_screen_button"><input type="checkbox" class="bullet_screen_button_checkbox"-->
-                                                     <!--checked="checked">-->
-                <!--<span>弹幕</span>-->
-            <!--</div>-->
-
-            <!--<div class="bullet_screen_submit_box">-->
-                <!--<span id="submit" class="bullet_screen_submit">吐槽</span>-->
-                <!--<input id="danmu_text" type="text" placeholder="吐槽" class="bullet_screen_content" style="display: none">-->
-            <!--</div>-->
-            <div class="your_action" id="action">
-                <!--<div class="your_action_right"  v-if="article.reply_id>0 && is_comment==false">-->
-                    <!--<a :href="'article_detail.html?reply_id=' + article.reply_id">-->
-                        <!--<img src="images/back_to_original.png" alt=""><span>原文</span>-->
-                    <!--</a>-->
-                <!--</div>-->
-                <div class="your_action_right" @click="support">
-                    <p>赞<span>1</span></p>
-                </div>
-                <div class="your_action_right" @click="oppose()">
-                    <p>踩<span>1</span></p>
-                </div>
-                <!--<div class="your_action_right">-->
-                <!--<img src="images/share.png" alt=""><span></span>-->
-                <!--</div>-->
-                <div class="your_action_right" @click="detail()">
-                    <p>评论<span></span></p>
-                </div>
-            </div>
+            <action :article="images[index].article"></action>
             <div class="bullet_screen_img">
-                <span class="galleryImgLeft"><img src="images/left2.png" alt=""></span><span class="galleryImgRight"><img src="images/right2.png" alt=""></span><span class="galleryImgUrl"><img src="images/url2.png" alt=""></span><span class="galleryImgCenter"><img src="images/close2.png" alt=""></span>
+                <span class="galleryImgLeft" @click="changeIndex(-1)"><img src="images/left2.png" alt=""></span><span
+                    class="galleryImgRight" @click="changeIndex(1)"><img src="images/right2.png" alt=""></span><span
+                    class="galleryImgUrl" @click="changeIcon()"><img src="images/url2.png" alt=""></span><span
+                    class="galleryImgCenter" @click="close()"><img src="images/close2.png" alt=""></span>
             </div>
         </div>
 
