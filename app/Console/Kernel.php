@@ -50,9 +50,10 @@ class Kernel extends ConsoleKernel
                     $url_data = \GuzzleHttp\json_decode($return_data);
                     $expand->href=$url_data->href;
                     $expand->save();
+                    echo 'true\n';
                 }
             } catch (\Exception $exception) {
-                echo $exception->getMessage();
+                echo $exception->getMessage().'\n';
             }
         })->hourly()->appendOutputTo('/usr/share/nginx/html/flwechat/public/log');
     }
