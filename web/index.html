@@ -9,7 +9,7 @@
     <meta name="full-screen" content="yes">
     <!-- QQ强制全屏 -->
     <meta name="x5-fullscreen" content="true">
-    <title>友连</title>
+    <title>众报</title>
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/dropload.css">
     <link rel="stylesheet" href="css/show_img_url.css">
@@ -41,10 +41,10 @@
         <nav>
             <a v-for="(item , index) in topics"  class="topic_index recommend" :class="{topic_index_selected:select[index]}" @click="selectTopic(index)">{{item.content}}</a>
         </nav>
-        <div class="more_topic">
-            <img src="images/more.png" alt="" class="more">
-            <img src="images/up_close.png" alt="" class="close" style="display: none">
-        </div>
+        <!--<div class="more_topic">-->
+            <!--<img src="images/more.png" alt="" class="more">-->
+            <!--<img src="images/up_close.png" alt="" class="close" style="display: none">-->
+        <!--</div>-->
     </div>
     <article-list :article_list="items"></article-list>
 </div>
