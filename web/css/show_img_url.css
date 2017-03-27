@@ -103,8 +103,9 @@
 /*}*/
 .weui-gallery__img{
     bottom:0px;
-    -webkit-background-size:cover;
-    background-size:cover;
+    -webkit-background-size:contain;
+    background-size:contain;
+    background-color: #000;
 }
 .correct{
     text-align: center;

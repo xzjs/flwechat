@@ -257,7 +257,7 @@ a{
 .mark_img{
     margin:0 auto;
     position: relative;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position:inherit;
 }
