@@ -76,17 +76,17 @@
     animation-fill-mode: both;
 }
 /*抵消index中点赞操作的样式*/
-.your_action{
+.your_action_show_img{
     height:20px;
     text-align: center;
     margin-bottom: 10px;
 }
-.your_action p{
+.your_action_show_img p{
     height:20px;
     line-height: 20px;
     color: #fff;
 }
-.your_action .your_action_right{
+.your_action_show_img .your_action_right{
     padding: 0 10px;
 }
 /*.well{ width: 200px;  min-height: 250px;!*  margin: auto;*/

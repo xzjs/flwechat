@@ -16,8 +16,8 @@
     </style>
 </head>
 <body>
-<div id="app" class="weui-gallery" id="gallery" style="display: block;">
-    <span v-cloak class="weui-gallery__img correct" id="galleryImg"
+<div id="app" class="weui-gallery" style="display: block;">
+    <div v-cloak class="weui-gallery__img correct" id="galleryImg"
           :style="'background-image: url(/flwechat/public/storage/'+ images[index].img +');'">
         <div class="mark_img" :style="'background-image: url(/flwechat/public/storage/'+ images[index].mark +');'" @click="imgClick()">
             <div v-if="show" class="galleryImgUser">
@@ -30,7 +30,7 @@
             <!--<div id="danmu" class="galleryImgBulletScreen">-->
             <!--</div>-->
         </div>
-    </span>
+    </div>
     <div class="opposite">
         <div class="" style="opacity: 0">
             <div class="opposite-content"><p class="expands">相关阅读</p>
@@ -69,7 +69,7 @@
 </div>
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
-<script type="text/javascript" src="js/jquery.danmu.js"></script>
+<!--<script type="text/javascript" src="js/jquery.danmu.js"></script>-->
 <script type="text/javascript" src="js/jsweixin.js"></script>
 <script src="//cdn.bootcss.com/vue/2.2.4/vue.min.js"></script>
 <script src="//cdn.bootcss.com/axios/0.15.3/axios.min.js"></script>
