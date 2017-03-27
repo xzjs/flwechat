@@ -216,8 +216,9 @@
 .ads_box{
     text-align: center;
     color: #fff;
-    padding:0px 3px;
-    height:100px;
+    height:99px;
+    position: relative;
+    top:8px
 }
 .ads_box img{
     width: 100%;
