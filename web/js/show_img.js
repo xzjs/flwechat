@@ -154,7 +154,7 @@ var turn = GetQueryString('turn');
 Vue.config.devtools = true;
 
 var action = Vue.extend({
-    template: `<div class="your_action">
+    template: `<div class="your_action your_action_show_img">
                 <div class="your_action_right" @click="support">
                     <p v-if="article.is_support==0">赞<span>{{article.support_num}}</span></p>
                     <p v-else style="color:#0084FF">赞<span>{{article.support_num}}</span></p>
