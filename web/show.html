@@ -19,8 +19,8 @@
 <div id="app" class="weui-gallery" id="gallery" style="display: block;">
     <span v-cloak class="weui-gallery__img correct" id="galleryImg"
           :style="'background-image: url(/flwechat/public/storage/'+ images[index].img +');'">
-        <div class="mark_img" :style="'background-image: url(/flwechat/public/storage/'+ images[index].mark +');'">
-            <div class="galleryImgUser">
+        <div class="mark_img" :style="'background-image: url(/flwechat/public/storage/'+ images[index].mark +');'" @click="imgClick()">
+            <div v-if="show" class="galleryImgUser">
                 <div class="galleryImgUserContent">
                     <img :src="images[index].article.user.head_img" alt="" class="galleryImgUserImg">
                     <span>{{images[index].article.user.nickname}}</span><span>&bull;</span><span>{{images[index].article.topic.content}}</span>
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="bullet_screen">
+    <div v-if="show" class="bullet_screen">
         <div class="bullet_screen_mask">
 
         </div>

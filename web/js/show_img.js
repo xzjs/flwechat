@@ -242,7 +242,8 @@ var app = new Vue({
         userId: user_id,
         flag: 1,
         isTurn:turn,
-        classActive:[]
+        classActive:[],
+        show:true
     },
     components: {
         action
@@ -324,6 +325,11 @@ var app = new Vue({
                 history.pushState({}, "图片展示", href);
                 this.flag = 1;
             }
+        },
+        imgClick:function () {
+
+            this.show=(!this.show);
+            console.log('hello');
         }
     },
     updated: function () {
@@ -331,6 +337,12 @@ var app = new Vue({
         if (this.isTurn == 'true') {
             this.changeIcon();
             console.log("执行了");
+        }
+        var opposite = $(".opposite");
+        if(this.flag==1){
+            opposite.children().children().css('display', 'none');
+        }else{
+            opposite.children().children().css('display', 'block');
         }
     }
 });
