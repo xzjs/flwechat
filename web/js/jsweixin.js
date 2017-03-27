@@ -1,7 +1,7 @@
 /**
  * Created by yanlli on 2017/2/6.
  */
-var user_id = null;
+
 $(".container").height($(window).height());
 var user_id = $.cookie('id');
 if (user_id == null) {

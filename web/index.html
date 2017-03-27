@@ -15,11 +15,16 @@
     <link rel="stylesheet" href="css/show_img_url.css">
     <link rel="stylesheet" href="css/swiper.min.css">
     <link rel="stylesheet" href="css/index.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="app">
     <div class="weui-search-bar" id="searchBar">
-        <form class="weui-search-bar__form" onsubmit="return check()">
+        <form class="weui-search-bar__form" @submit.prevent="search()">
             <div class="weui-search-bar__box">
                 <i class="weui-icon-search"></i>
                 <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
@@ -32,17 +37,16 @@
         </form>
         <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
     </div>
-    <div class="topic_index_box">
+    <div v-cloak class="topic_index_box">
         <nav>
-            <a href="index.html" class="topic_index topic_index_selected recommend">全部</a>
+            <a v-for="(item , index) in topics"  class="topic_index recommend" :class="{topic_index_selected:select[index]}" @click="selectTopic(index)">{{item.content}}</a>
         </nav>
         <!--<div class="more_topic">-->
             <!--<img src="images/more.png" alt="" class="more">-->
             <!--<img src="images/up_close.png" alt="" class="close" style="display: none">-->
         <!--</div>-->
     </div>
-    <div class="content_box">
-    </div>
+    <article-list :article_list="items"></article-list>
 </div>
 <div class="weui-tabbar">
     <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
@@ -85,8 +89,10 @@
 <script type="text/javascript" src="js/searchbar.js"></script>
 <script type="text/javascript" src="js/dropload.min.js"></script>
 <!--<script type="text/javascript" src="js/dropload.js"></script>-->
+<script src="//cdn.bootcss.com/vue/2.2.4/vue.min.js"></script>
+<script src="//cdn.bootcss.com/axios/0.15.3/axios.min.js"></script>
 <script src="js/swiper.min.js"></script>
-<script type="text/javascript" src="js/article_list.js"></script>
+<!--<script type="text/javascript" src="js/article_list.js"></script>-->
 <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

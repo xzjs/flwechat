@@ -20,14 +20,7 @@ Route::get('/test', function () {
 
 Route::resource('user', 'UserController');
 
-Route::post('/article/add_topic', 'ArticleController@add_topic');
-Route::get('/article/get_article_by_user_id/{user_id}', 'ArticleController@get_article_by_user_id');
-Route::get('/article/support/{id}', 'ArticleController@support');
-Route::get('/article/oppose/{id}', 'ArticleController@oppose');
 Route::post('/article/article_list', 'ArticleController@article_list');
-Route::get('/article/comment_articles/{user_id}', 'ArticleController@comment_articles');
-Route::get('/article/get_article_by_topic/{topic_id}', 'ArticleController@get_article_by_topic');
-Route::post('/article/search', 'ArticleController@search');
 Route::post('/article/get_article', 'ArticleController@get_article');
 Route::resource('article', 'ArticleController');
 
@@ -41,9 +34,11 @@ Route::post('/friend/get_friends', 'FriendController@get_friends');
 Route::post('/friend/agree_friend', 'FriendController@agree_friend');
 Route::resource('friend', 'FriendController');
 
+Route::post('/action/cancel','ActionController@cancel');
 Route::resource('action', 'ActionController');
 
 Route::get('/image/get_children_imgs/{id}','ImageController@get_children_imgs');
+Route::post('/image/get_image','ImageController@get_image');
 Route::resource('image', 'ImageController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {

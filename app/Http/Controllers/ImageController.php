@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Image;
+use App\Action;
+use App\Follow;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -53,7 +55,15 @@ class ImageController extends Controller
             $article = Image::with('article')->find($id)->article;
             $this->get_img_after($article->id);
             $this->get_img_before($article->reply_id);
-            $imgs = Image::with('comments','article.user','expands')->find($this->img_ids);
+            $imgs = Image::with('comments','article.user','expands','article.topic')->find($this->img_ids);
+            foreach ($imgs->article() as $article) {
+                $article->is_support = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 0)->count();
+                $article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 1)->count();
+                $article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $article->id)->count();
+                $this->img_ids = [];
+                $this->get_img_after($article->id);
+                $article->images = Image::find($this->img_ids);
+            }
             return response()->json($imgs);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
@@ -135,6 +145,29 @@ class ImageController extends Controller
             return response()->json($imgs);
         }catch (\Exception $exception){
             return $exception->getMessage();
+        }
+    }
+
+    /**
+     * 获取图片接口
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_image(Request $request){
+        try {
+            $article = Image::with('article')->find($request->id)->article;
+            $user_id=$request->user_id;
+            $this->get_img_after($article->id);
+            $this->get_img_before($article->reply_id);
+            $imgs = Image::with('comments','article.user','expands','article.topic')->find($this->img_ids);
+            foreach ($imgs as $img) {
+                $img->article->is_support = Action::where('article_id', $img->article->id)->where('user_id', $user_id)->where('type', 0)->count();
+                $img->article->is_oppose = Action::where('article_id', $img->article->id)->where('user_id', $user_id)->where('type', 1)->count();
+                $img->article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $img->article->id)->count();
+            }
+            return response()->json($imgs);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
         }
     }
 }

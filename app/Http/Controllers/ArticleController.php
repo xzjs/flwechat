@@ -7,7 +7,6 @@ use App\Article;
 use App\Follow;
 use App\Image;
 use App\Jobs\GetUrl;
-use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -193,105 +192,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * 为文章增加话题
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function add_topic(Request $request)
-    {
-        try {
-            $topic = Topic::firstOrNew(['content' => $request->name]);
-            if ($topic->user_id == null) {
-                $topic->user_id = $request->user_id;
-                $topic->follow_num = 0;
-                $topic->save();
-            }
-            $article = Article::find($request->article_id);
-            $article->topic_id = $topic->id;
-            $article->save();
-            return response('true');
-        } catch (\Exception $exception) {
-            return response($exception->getMessage());
-        }
-    }
-
-    /**
-     * 获取用户发布的文章
-     * @param $user_id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get_article_by_user_id($user_id)
-    {
-        try {
-            $articles = Article::with('images', 'topic', 'user')->where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 根据回复id获取文章列表
-     * @param $reply_id 回复文章的id
-     * @return \Illuminate\Http\JsonResponse
-     */
-//    public function article_list($reply_id)
-//    {
-//        try {
-//            $articles = Article::with('images', 'topic', 'user')->where('reply_id', $reply_id)->orderBy('created_at', 'desc')->get();
-//            return response()->json($articles);
-//        } catch (\Exception $exception) {
-//            echo $exception->getMessage();
-//        }
-//    }
-
-    /**
-     * 获取用户评论过的文章
-     * @param $user_id 用户id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function comment_articles($user_id)
-    {
-        try {
-            $reply_ids = Article::where('user_id', $user_id)->where('reply_id', '>', 0)->get(['reply_id'])->toArray();
-            $articles = Article::with('images', 'topic', 'user')->find($reply_ids);
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 根据话题id获取文章
-     * @param $topic_id 话题id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get_article_by_topic($topic_id)
-    {
-        try {
-            $articles = Article::with('images', 'topic', 'user')->where('topic_id', $topic_id)->where('reply_id', 0)->orderBy('created_at', 'desc')->get();
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 搜索文章
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function search(Request $request)
-    {
-        try {
-            $articles = Article::with('images', 'topic', 'user')->where('content', 'like', "%" . $request->keyword . "%")->orderBy('created_at', 'desc')->get();
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
      * 获取文章列表
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -311,31 +211,36 @@ class ArticleController extends Controller
                 $is_public = 1;
             }
             $follow_article = $request->follow_article;
+            $type = $request->type;
 
-            $order_by='desc';
+            $order_by = 'desc';
 
             $articles = Article::with('topic', 'user');
-            //话题查询
+            //话题查询0
             if (!is_null($topic_id)) {
-                if($topic_id!=0) {
-                    $articles = $articles->where('topic_id', $topic_id)->where('reply_id', 0);
+                if ($topic_id != 0) {
+                    $articles = $articles->where('topic_id', $topic_id);
                 }
-            } //回复id查询,为0就是首页的文章
-            elseif (!is_null($reply_id)) {
-                $articles = $articles->where('reply_id', $reply_id);
-                if($reply_id>0){
-                    $order_by='asc';
-                }
-            } //关键字查询
-            elseif (!is_null($key_word)) {
-                $articles = $articles->where('content', 'like', "%" . $request->keyword . "%");
-            } //查询用户关注的文章
-            elseif (!is_null($follow_article)){
-                $article_ids=Follow::where('follow_user', $user_id)->get(['be_follow_user'])->toArray();
-                $articles->whereIn('id',$article_ids);
+                $articles = $articles->where('reply_id', 0);
             }
-            //个人文章查询
-            else {
+            //回复id查询,为0就是首页的文章1
+            if (!is_null($reply_id)) {
+                $articles = $articles->where('reply_id', $reply_id);
+                if ($reply_id > 0) {
+                    $order_by = 'asc';
+                }
+            }
+            //关键字查询2
+            if (!is_null($key_word)) {
+                $articles = $articles->where('content', 'like', "%" . $key_word . "%");
+            }
+            //查询用户关注的文章3
+            if (!is_null($follow_article)) {
+                $article_ids = Follow::where('follow_user', $user_id)->get(['be_follow_user'])->toArray();
+                $articles->whereIn('id', $article_ids);
+            }
+            //个人文章查询4
+            if ($type == 4) {
                 $articles = $articles->where('user_id', $request->user_id);
             }
             $articles = $articles->where('is_public', $is_public)->orderBy('created_at', $order_by)->skip($page * $size)->take($size)->get();

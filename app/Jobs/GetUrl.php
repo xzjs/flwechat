@@ -67,6 +67,7 @@ class GetUrl implements ShouldQueue
                 $expand->domain = $item->domain;
                 $expand->pubdate = $item->pubdate;
                 $expand->dimension=$item->dimension;
+                $expand->src=$item->src;
                 $expand->save();
             }
         } catch (\Exception $exception) {

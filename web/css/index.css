@@ -257,7 +257,7 @@ a{
 .mark_img{
     margin:0 auto;
     position: relative;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position:inherit;
 }
@@ -265,35 +265,41 @@ a{
 /*图片放大后显示用户评论*/
 .galleryImgUser{
     position: absolute;
-    top:10px;
-    padding: 0 5px;
-    height: 27px;
-    line-height: 27px;
+    width: 100%;
     overflow: hidden;
     background-color: #000;
-    opacity:0.7;
     color: #fff;
-    border-radius: 13.5px;
 }
+.galleryImgUserContent{
+    margin:5px;
+    font-size: 12px;
+    text-align: justify;
+}
+/*.galleryImgUser_all{*/
+    /*height:auto!important;*/
+/*}*/
 .galleryImgUserImg{
     vertical-align: middle;
-    width: 24px;
-    height:24px;
-    border-radius: 12px;
+    width: 20px;
+    height:20px;
+    border-radius: 10px;
 }
 .bullet_screen_img{
-    height:50px;
-    margin: 0 75px 0 75px;
+    height:30px;
+    /*margin-top: 0 75px 0 75px;*/
 }
 .bullet_screen_img div{
     width:100%;
 }
 .bullet_screen_img span{
     display: inline-block;
-    height:50px;
+    height:16px;
     width:25%;
     text-align: center;
-    margin-top: 15px;
+    margin: 4px 0 10px 0;
+}
+.bullet_screen_img span img{
+    width: 16px;
 }
 /*.galleryImgLeft{*/
     /*position: absolute;*/
@@ -340,81 +346,81 @@ a{
 
 .bullet_screen{
     width:100%;
-    height:50px;
+    height:60px;
     position: fixed;
     bottom:0px;
 }
 .bullet_screen_mask{
     width:100%;
-    height:50px;
+    height:60px;
     position: relative;
     left:0;
     z-index: -100;
     background-color: #000;
-    opacity: 0.5;
 }
 .bullet_screen_panel{
     width:100%;
-    height:50px;
+    height:60px;
     position: absolute;
     top:0;
 }
-.bullet_screen_button {
-    font-size: 16px;
-    height:50px;
-    line-height: 50px;
-    margin-left: 15px;
-    float: left;
-}
-.bullet_screen_button_checkbox{
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-}
-.bullet_screen_button span{
-    color: #fff;
-    background: none;
-}
-.bullet_screen_content{
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-.bullet_screen .bullet_screen_content{
-    position: absolute;
-    top:8px;
-    right:60px;
-    padding:0 5px;
-    font-size: 16px;
-    color: #000;
-    display: inline-block;
-    width:55%;
-    height:34px;
-    line-height: 34px;
-    float: right;
-    border: none;
-    margin-bottom: 10px;
-}
-.bullet_screen_submit_box{
-    width: 50px;
-    height:50px;
-    float: right;
-    margin:8px 15px 8px 0;
-}
-.bullet_screen_submit{
+/*弹幕相关样式*/
+/*.bullet_screen_button {*/
+    /*font-size: 16px;*/
+    /*height:50px;*/
+    /*line-height: 50px;*/
+    /*margin-left: 15px;*/
+    /*float: left;*/
+/*}*/
+/*.bullet_screen_button_checkbox{*/
+    /*width: 20px;*/
+    /*height: 20px;*/
+    /*vertical-align: middle;*/
+/*}*/
+/*.bullet_screen_button span{*/
+    /*color: #fff;*/
+    /*background: none;*/
+/*}*/
+/*.bullet_screen_content{*/
+    /*border-top-left-radius: 5px;*/
+    /*border-bottom-left-radius: 5px;*/
+    /*border-top-right-radius: 0;*/
+    /*border-bottom-right-radius: 0;*/
+/*}*/
+/*.bullet_screen .bullet_screen_content{*/
     /*position: absolute;*/
     /*top:8px;*/
-    /*right:15px;*/
-    text-align: center;
-    width:45px;
-    background-color: #b2b2b2;
-    line-height: 34px;
-    height:34px;
-    float: right;
-    border: none;
-    border-radius:5px;
-}
+    /*right:60px;*/
+    /*padding:0 5px;*/
+    /*font-size: 16px;*/
+    /*color: #000;*/
+    /*display: inline-block;*/
+    /*width:55%;*/
+    /*height:34px;*/
+    /*line-height: 34px;*/
+    /*float: right;*/
+    /*border: none;*/
+    /*margin-bottom: 10px;*/
+/*}*/
+/*.bullet_screen_submit_box{*/
+    /*width: 50px;*/
+    /*height:50px;*/
+    /*float: right;*/
+    /*margin:8px 15px 8px 0;*/
+/*}*/
+/*.bullet_screen_submit{*/
+    /*!*position: absolute;*!*/
+    /*!*top:8px;*!*/
+    /*!*right:15px;*!*/
+    /*text-align: center;*/
+    /*width:45px;*/
+    /*background-color: #b2b2b2;*/
+    /*line-height: 34px;*/
+    /*height:34px;*/
+    /*float: right;*/
+    /*border: none;*/
+    /*border-radius:5px;*/
+/*}*/
 
 /*操作按钮*/
 .your_action{
