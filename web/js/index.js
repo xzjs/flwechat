@@ -87,7 +87,7 @@ var action = Vue.extend({
                     <p>评论<span>{{article.comment_num}}</span></p>
                 </div>
                 <template v-if="article.user_id!=userId">
-                <div class="your_action_right">
+                <div class="your_action_right" @click="follow()">
                     <img v-if="article.is_follow==0" src="images/follow.png" alt="">
                     <img v-else src="images/follow3.png" alt="">
                 </div>
@@ -148,6 +148,29 @@ var action = Vue.extend({
                 this.article.oppose_num -= 1;
                 axios.post('/flwechat/public/action/cancel',
                     {article_id: this.article.id, user_id: this.userId, type: 1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            }
+        },
+        follow: function () {
+            if (this.article.is_follow == 0) {
+                this.article.is_follow = 1;
+                axios.post('/flwechat/public/follow',
+                    {follow_user_id: this.userId, be_follow_id: this.article.id, type: 1})
+                    .then(
+                        function (response) {
+                            console.log(response.data);
+                        }, function (response) {
+                            console.log(response.data);
+                        });
+            } else {
+                this.article.is_follow = 0;
+                axios.post('/flwechat/public/follow/cancel_follow',
+                    {follow_user_id: this.userId, be_follow_id: this.article.id, type: 1})
                     .then(
                         function (response) {
                             console.log(response.data);
