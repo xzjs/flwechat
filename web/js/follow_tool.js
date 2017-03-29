@@ -80,7 +80,7 @@ function init(obj) {
 //改变关注图标的状态
 function change_follow(type, obj) {
     if (type == 0) {
-        obj.attr('src', 'images/follow2.png');
+        obj.attr('src', 'images/follow3.png');
         obj.one('click', function () {
             cancel_follow_user(obj);
         });

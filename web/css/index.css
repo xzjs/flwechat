@@ -1,6 +1,9 @@
 *:focus{
     outline:none;
 }
+a{
+    color: #000;
+}
 .container{
     padding-bottom:84px;
 }
@@ -38,10 +41,11 @@
     right:0px;
     line-height: 35px;
 }
-.more,.close{
-    width:20px;
-}
-
+/*话题分类导航more，暂时去掉*/
+/*.more,.close{*/
+    /*width:20px;*/
+/*}*/
+/*文章内容盒子，index，detail，mine*/
 .content_box{
     padding-bottom:80px;
 }
@@ -56,14 +60,6 @@
     height:30px;
     line-height: 30px;
 }
-.head_portrait_a{
-    height:30px;
-    display: inline-block;
-    /*vertical-align: middle;*/
-}
-a{
-    color: #000;
-}
 .head_portrait{
     width:20px;
     height:20px;
@@ -76,31 +72,11 @@ a{
     font-size:14px;
     color: #888888;
 }
-.topic{
-    height:18px;
-    line-height: 18px;
-    margin: 5px 0;
-    padding:0 3px;
-    border-radius: 3px;
-}
-.topic_followed{
-    background-color: #ec971f;
-    color: #fff;
-}
-#topic_example{
-    display: inline-block;
-    height: 30px;
-    line-height: 30px;
-    width: 50px;
-    margin: 5px 0;
-    padding:0 3px;
-    border-radius: 3px;
-    background-color: #e8e8e8;
-}
 .content_txt{
     font-size:18px;
     line-height: 32px;
 }
+/*图片大小调整*/
 @media screen and (min-height: 669px)and (max-height: 1024px){
     .pic_show_list{
         width: 738px;
@@ -251,117 +227,6 @@ a{
     }
 }
 
-.mark_img{
-    margin:0 auto;
-    position: relative;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position:inherit;
-}
-
-/*图片放大后显示用户评论*/
-.galleryImgUser{
-    position: absolute;
-    width: 100%;
-    overflow: hidden;
-    background-color: #000;
-    color: #fff;
-}
-.galleryImgUserContent{
-    margin:5px;
-    font-size: 12px;
-    text-align: justify;
-}
-/*.galleryImgUser_all{*/
-    /*height:auto!important;*/
-/*}*/
-.galleryImgUserImg{
-    vertical-align: middle;
-    width: 20px;
-    height:20px;
-    border-radius: 10px;
-}
-.bullet_screen_img{
-    height:30px;
-    /*margin-top: 0 75px 0 75px;*/
-}
-.bullet_screen_img div{
-    width:100%;
-}
-.bullet_screen_img span{
-    display: inline-block;
-    height:16px;
-    width:25%;
-    text-align: center;
-    margin: 4px 0 10px 0;
-}
-.bullet_screen_img span img{
-    width: 16px;
-}
-/*.galleryImgLeft{*/
-    /*position: absolute;*/
-    /*bottom:15px;*/
-    /*!*left:20px;*!*/
-    /*left:25%;*/
-/*}*/
-/*.galleryImgRight{*/
-    /*position: absolute;*/
-    /*bottom:15px;*/
-    /*!*right:20px;*!*/
-    /*left:70%;*/
-/*}*/
-/*.galleryImgCenter{*/
-    /*position: absolute;*/
-    /*bottom:15px;*/
-    /*!*right:58%;*!*/
-    /*left:40%;*/
-/*}*/
-/*.galleryImgUrl{*/
-    /*position: absolute;*/
-    /*bottom:15px;*/
-    /*!*right:30%;*!*/
-    /*!*bottom: 30px;*!*/
-    /*left:55%;*/
-/*}*/
-.url_list{
-    position: absolute;
-    bottom:50px;
-    right:20%;
-    width:50%;
-    background-color: #000;
-    opacity:0.7;
-    border-radius: 5px;
-}
-.url_list a{
-    overflow: hidden;
-    height:30px;
-    border-bottom: 1px solid #fff;
-    padding: 0 5px;
-    color: #fff;
-    display: block;
-}
-
-.bullet_screen{
-    width:100%;
-    height:60px;
-    position: fixed;
-    bottom:0;
-    z-index: 100;
-}
-.bullet_screen_mask{
-    width:100%;
-    height:60px;
-    position: relative;
-    left:0;
-    z-index: -100;
-    background-color: #000;
-}
-.bullet_screen_panel{
-    width:100%;
-    height:60px;
-    position: absolute;
-    top:0;
-}
 /*弹幕相关样式*/
 /*.bullet_screen_button {*/
     /*font-size: 16px;*/
@@ -420,17 +285,11 @@ a{
     /*border-radius:5px;*/
 /*}*/
 
-/*操作按钮*/
+/*index操作按钮*/
 .your_action{
     width:100%;
     height:44px;
 }
-/*.your_action .your_action_left{*/
-    /*width:16%;*/
-    /*line-height: 44px;*/
-    /*position: absolute;*/
-    /*left:15px;*/
-/*}*/
 .your_action .your_action_right{
     padding: 0 8px;
     line-height: 44px;
@@ -455,6 +314,7 @@ a{
     height: 100px;
     width: 100%;
 }
+/*操作方法提示*/
 .instructions{
     margin:0 15px;
     padding:0 30px;

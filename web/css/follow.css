@@ -92,3 +92,7 @@ a{
     color: #888888;
     font-size: 12px;
 }
+.weui-tabbar{
+    position: fixed;
+    bottom:0;
+}

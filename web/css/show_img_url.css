@@ -7,7 +7,40 @@
  *
  * Copyright (c) 2016 Daniel Eden
  */
+/*图片show样式*/
+.weui-gallery__img{
+    bottom:0px;
+    -webkit-background-size:contain;
+    background-size:contain;
+    background-color: #000;
+}
+.mark_img{
+    margin:0 auto;
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position:inherit;
+}
 
+/*图片放大后显示用户评论*/
+.galleryImgUser{
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+    background-color: #000;
+    color: #fff;
+}
+.galleryImgUserContent{
+    margin:5px;
+    font-size: 12px;
+    text-align: justify;
+}
+.galleryImgUserImg{
+    vertical-align: middle;
+    width: 20px;
+    height:20px;
+    border-radius: 10px;
+}
 
 
 @-webkit-keyframes flipOutYtest {
@@ -76,6 +109,28 @@
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
+/*图片放大操作区样式*/
+.bullet_screen{
+    width:100%;
+    height:60px;
+    position: fixed;
+    bottom:0;
+    z-index: 100;
+}
+.bullet_screen_mask{
+    width:100%;
+    height:60px;
+    position: relative;
+    left:0;
+    z-index: -100;
+    background-color: #000;
+}
+.bullet_screen_panel{
+    width:100%;
+    height:60px;
+    position: absolute;
+    top:0;
+}
 /*抵消index中点赞操作的样式*/
 .your_action_show_img{
     height:20px;
@@ -86,31 +141,33 @@
     height:20px;
     line-height: 20px;
     color: #fff;
+    font-size: 12px;
 }
 .your_action_show_img .your_action_right{
+    display: inline-block;
     padding: 0 10px;
 }
-/*.well{ width: 200px;  min-height: 250px;!*  margin: auto;*/
-  /*min-width: 1250px;*/
-  /*column-width: 250px;*/
-  /*-webkit-column-width: 250px;*/
-  /*-webkit-column-gap: 0px;*/
-  /*column-gap: 0px;*! margin-left: auto; margin-right: auto; height: auto; }*/
-
-/*.well .well-item{ position: relative; float: left; width: 23%; min-height: 250px; margin: 1%; }*/
-/*.well .well-item img{*/
-    /*width: 200px;*/
-    /*height: 200px;*/
-/*}*/
-.weui-gallery__img{
-    bottom:0px;
-    -webkit-background-size:contain;
-    background-size:contain;
-    background-color: #000;
+/*翻页，url，close*/
+.bullet_screen_img{
+    height:30px;
+    /*margin-top: 0 75px 0 75px;*/
 }
-.correct{
+.bullet_screen_img div{
+    width:100%;
+}
+.bullet_screen_img span{
+    display: inline-block;
+    height:16px;
+    width:25%;
     text-align: center;
+    margin: 4px 0 10px 0;
 }
+.bullet_screen_img span img{
+    width: 16px;
+}
+/*.correct{*/
+    /*text-align: center;*/
+/*}*/
 .opposite{
     padding:10px 15px 60px 15px;
     background-color: #fff;
@@ -125,10 +182,6 @@
     font-size: 22px;
     margin-bottom: 10px;
 }
-/*.opposite-content ul{*/
-    /*height:438px;*/
-    /*overflow-y: scroll;*/
-/*}*/
 @media screen and (max-height: 568px){
     .opposite-content ul{
         height:328px;
@@ -165,9 +218,6 @@
         width: 59%;
     }
 }
-/*.galleryImgUser p{*/
-    /*width: 100%;*/
-/*}*/
 .opposite-content ul li{
     padding-left:15px;
     list-style: none;
@@ -210,9 +260,6 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     padding-bottom: 5px;
-}
-.turn_to_img{
-    text-align: center;
 }
 .ads_box{
     text-align: center;

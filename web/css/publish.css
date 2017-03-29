@@ -122,8 +122,15 @@ lable{
 .weui-tabbar__label{
     margin-bottom: 0;
 }
-
-/*#canvas{*/
-    /*width: 289px;*/
-    /*height: 512px;*/
-/*}*/
+.instructions{
+    margin:0 15px;
+    padding:0 30px;
+    position: absolute;
+    bottom:35px;
+    color: #888888;
+    font-size: 12px;
+}
+.weui-tabbar{
+    position: fixed;
+    bottom:0;
+}
