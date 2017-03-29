@@ -123,12 +123,16 @@ lable{
     margin-bottom: 0;
 }
 .instructions{
-    margin:0 15px;
-    padding:0 30px;
+    width: 100%;
     position: absolute;
-    bottom:35px;
+    bottom:55px;
     color: #888888;
     font-size: 12px;
+    text-align: center;
+}
+.instructions ol{
+    margin: 0;
+    list-style-position: inside;
 }
 .weui-tabbar{
     position: fixed;
