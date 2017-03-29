@@ -85,10 +85,17 @@ a{
     /*vertical-align: middle;*/
 /*}*/
 .instructions{
-    margin:0 15px;
-    padding:0 30px;
+    width: 100%;
     position: absolute;
-    bottom:54px;
+    bottom:55px;
     color: #888888;
     font-size: 12px;
+    text-align: center;
+}
+.instructions ol{
+    list-style-position: inside;
+}
+.weui-tabbar{
+    position: fixed;
+    bottom:0;
 }
