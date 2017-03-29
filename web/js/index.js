@@ -201,8 +201,11 @@ Vue.component('article-list', {
                         <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{item.user.nickname}}&bull;<span>{{item.topic.content}}</span></span>
                     </a>                    
                 </div>
-                <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
+                <div v-if="item.is_deleted==0">
+                    <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
                 <image_moudle :images="item.images"></image_moudle>
+                </div>
+                <a v-else :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">该文章已被作者删除</p></a>
                 <action :article="item"></action>
             </div>
         </div>
@@ -224,11 +227,11 @@ var app = new Vue({
             page: 0,
             size: 15,
             user_id: user_id,
-            reply_id:0
+            reply_id: 0
         },
         topics: [{'id': 0, 'content': '全部'}],
         selectIndex: 0,
-        select:[true],
+        select: [true],
     },
     mounted: function () {
         this.getTopics();
@@ -255,30 +258,30 @@ var app = new Vue({
                 .then(
                     function (response) {
                         console.log(response.data);
-                        Array.prototype.push.apply(vm.topics,response.data);
-                        for(var i=1;i<vm.topics.length;i++){
+                        Array.prototype.push.apply(vm.topics, response.data);
+                        for (var i = 1; i < vm.topics.length; i++) {
                             vm.select.push(false);
                         }
                         vm.getArticles();
                     }
                 ).catch(
-                    function (error) {
-                        console.log(error);
-                    }
+                function (error) {
+                    console.log(error);
+                }
             )
         },
-        selectTopic:function (index) {
-            for(var i=0;i<this.select.length;i++){
-                this.select[i]=false;
+        selectTopic: function (index) {
+            for (var i = 0; i < this.select.length; i++) {
+                this.select[i] = false;
             }
-            this.select[index]=true;
-            this.selectIndex=index;
+            this.select[index] = true;
+            this.selectIndex = index;
             this.getArticles();
         },
-        search:function () {
+        search: function () {
             var vm = this;
             axios.post('/flwechat/public/article/article_list',
-                {page:0,size:15,user_id:user_id,key_word:$('#searchInput').val()})
+                {page: 0, size: 15, user_id: user_id, key_word: $('#searchInput').val()})
                 .then(
                     function (response) {
                         console.log(response.data);

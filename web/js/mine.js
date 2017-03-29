@@ -223,8 +223,11 @@ Vue.component('article-list', {
                         <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{item.user.nickname}}&bull;<span>{{item.topic.content}}</span></span>
                     </a>                    
                 </div>
-                <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
+                <div v-if="item.is_deleted==0">
+                    <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
                 <image_moudle :images="item.images"></image_moudle>
+                </div>
+                <a v-else :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">该文章已被作者删除</p></a>
                 <action :article="item"></action>
             </div>
         </div>
