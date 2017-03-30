@@ -38,16 +38,20 @@ a{
     color: #fff;
 }
 .user_list{
-    padding: 12px 8px;
+    min-height: 32px;
+    padding: 6px 0 6px 8px;
     background-color: #fff;
     border-bottom:1px solid #bababa;
 }
 .user_list a{
-    display: inline-block;
-    width:90%;
+    display: block;
+    /*width:90%;*/
+    margin:0 40px;
+    padding-top: 4px;
 }
-.user_list a div{
-    display: inline-block;
+.head_portrait_box{
+    float: left;
+    /*display: inline-block;*/
 }
 .user_name{
     font-size: 16px;
@@ -58,18 +62,27 @@ a{
     color: #8a8a8a;
 }
 .follow_icon_box{
-    height:85px;
-    line-height: 85px;
-    display: inline-block;
+    /*height:64px;*/
+    /*line-height: 64px;*/
+    /*vertical-align: middle;*/
+    padding: 3px 8px 3px 0px;
+
+    display: block;
     float: right;
-    width:10%;
+    width:32px;
+    text-align: right;
+}
+.follow_action{
+    width: 24px;
+    height:24px;
+    vertical-align: middle;
 }
 .head_portrait{
-    width:80px;
-    height:80px;
+    width:32px;
+    height:32px;
     border-radius: 5px;
     vertical-align: middle;
-    margin-right: 12px;
+    /*margin-right: 12px;*/
 }
 /*.blank{*/
     /*color: #888;*/
