@@ -17,7 +17,7 @@ function get_content() {
                     + '<img src="images/topic.png" alt="" class="head_portrait"/>'
                     +'</div>'
                     + '<div class="follow_icon_box"><img class="follow_action" src="images/follow3.png" alt="" id="follow_icon" data-id="'+result[i].id+'"></div>'
-                    + '<a href="index.html?reply_id=' + result[i].id + '">'
+                    + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
                     + '<div class="user_name">' + result[i].content + '</div>'
                     + '<!--<p class="new_messages_num">5<span>条新状态</span></p>-->'
                     + '</a>'
