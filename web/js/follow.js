@@ -12,7 +12,7 @@ function get_content() {
             var html = '';
             for (var i = 0; i < result.length; i++) {
                 html += '<div class="user_list">'
-                    + '<a href="mine.html?id=' + result[i].id + '">'
+                    + '<a href="mine.html?user_id=' + result[i].id + '">'
                     + '<img src="' + result[i].head_img + '" alt="" class="head_portrait"/>'
                     + '<div>'
                     + '<div class="user_name">' + result[i].nickname + '</div>'

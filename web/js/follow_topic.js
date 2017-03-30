@@ -13,7 +13,7 @@ function get_content() {
             var html = '';
             for (var i = 0; i < result.length; i++) {
                 html += '<div class="user_list">'
-                    + '<a href="index.html?id=' + result[i].id + '">'
+                    + '<a href="article_detail.html?reply_id=' + result[i].id + '">'
                     + '<img src="images/topic.png" alt="" class="head_portrait"/>'
                     + '<div>'
                     + '<div class="user_name">' + result[i].content + '</div>'
