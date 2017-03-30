@@ -12,15 +12,14 @@ function get_content() {
             var html = '';
             for (var i = 0; i < result.length; i++) {
                 html += '<div class="user_list">'
-                    + '<a href="mine.html?user_id=' + result[i].id + '">'
+                    + '<a class="follow_user" href="mine.html?user_id=' + result[i].id + '">'
                     + '<img src="' + result[i].head_img + '" alt="" class="head_portrait"/>'
-                    + '<div>'
-                    + '<div class="user_name">' + result[i].nickname + '</div>'
+                    + '<span class="user_name">' + result[i].nickname + '</span>'
                     + '<!--<p class="new_messages_num">5<span>条新状态</span></p>-->'
-                    + '</div></a>'
-                    + '<div class="follow_icon_box"><img class="follow_action" src="images/follow2.png" alt="" id="follow_icon" data-id="'+result[i].id+'"></div> </div>';
+                    + '</a>'
+                    + '<div class="follow_icon_box"><img class="follow_action" src="images/follow2.png" alt="" id="follow_icon" data-id="'+result[i].id+'"></div></div>';
             }
-            $('#follow_list').html(html);
+            $('#follow_list').append(html);
             if ($('#follow_list').html()==''){
                 $('.blank').css('display','block');
             }else{

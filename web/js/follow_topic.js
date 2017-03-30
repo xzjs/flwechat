@@ -12,7 +12,7 @@ function get_content() {
         function (result) {
             var html = '';
             for (var i = 0; i < result.length; i++) {
-                html += '<div class="user_list">'
+                html += '<div class="topic_list">'
                     + '<div class="head_portrait_box">'
                     + '<img src="images/topic.png" alt="" class="head_portrait"/>'
                     +'</div>'
