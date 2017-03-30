@@ -2,7 +2,7 @@
  * Created by yanlli on 2017/2/6.
  */
 
-$(".container").height($(window).height());
+$(".container").css('min-height',$(window).height());
 var user_id = $.cookie('id');
 if (user_id == null) {
     var test = window.location.href;
