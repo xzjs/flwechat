@@ -6,9 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>详情</title>
-    <link rel="stylesheet" href="css/dropload.css">
+
     <link rel="stylesheet" href="css/weui.min.css">
     <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui@1/lib/style.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/article_detail.css">
     <style>
@@ -18,106 +19,99 @@
     </style>
 </head>
 <body>
-<div id="app" class="container">
-    <div class="article_box">
-        <div v-cloak class="content">
-            <div class="content_top">
-                <a :href="['mine.html?user_id='+article.user.id]">
-                    <img id="head_img" :src="article.user.head_img" alt="" class="head_portrait"><span id="nick_name" class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
-                </a>
-            <span id="edit" class="do_icon" style="float: right;display: none">
+<div id="app">
+    <div  class="container">
+        <div class="article_box">
+            <div v-cloak class="content">
+                <div class="content_top">
+                    <a :href="['mine.html?user_id='+article.user.id]">
+                        <img id="head_img" :src="article.user.head_img" alt="" class="head_portrait"><span
+                            id="nick_name" class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
+                    </a>
+                    <span v-if="article.user.id==userId" class="do_icon" style="float: right;" @click="changeDo">
                 <img class="do_open" src="images/down.png" alt="">
             </span>
-            </div>
-            <p id="article_content" class="content_txt">{{article.content}}</p>
-
-            <div class=" swiper-container pic_show">
-                <div class="swiper-wrapper pic_show_list">
-                    <div v-for="img in article.images" class="swiper-slide userImg" @click="show(img.id)">
-                        <img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">
-                        <img :src="['/flwechat/public/storage/' + img.mark]" alt="" class="article_list_mark_img">
+                </div>
+                <div v-if="article.is_deleted==0">
+                    <p id="article_content" class="content_txt">{{article.content}}</p>
+                    <div class=" swiper-container pic_show">
+                        <div class="swiper-wrapper pic_show_list">
+                            <div v-for="img in article.images" class="swiper-slide userImg" @click="show(img.id)">
+                                <img :src="['/flwechat/public/storage/' + img.img]" alt="" class="img_show">
+                                <img :src="['/flwechat/public/storage/' + img.mark]" alt="" class="article_list_mark_img">
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <p v-else class="content_txt">该文章已被作者删除</p>
+                <action_module :article="article"></action_module>
             </div>
-            <action_module :article="article"></action_module>
+            <div class="comment_box">
+                <article_module :article_list="article_list"></article_module>
+            </div>
+            <div class="comment_input">
+                <a :href="'publish.html?reply_id='+article.id">评论</a>
+            </div>
         </div>
-        <div class="comment_box">
-            <article_module :article_list="article_list"></article_module>
-        </div>
-        <div class="comment_input">
-            <a :href="'publish.html?reply_id='+article.id">评论</a>
-        </div>
+        <!--<div class="comment_box">-->
+        <!--<div class="follow">-->
+        <!--<img src="images/comment.png" alt="">-->
+        <!--<img src="images/support.png" alt="">-->
+        <!--</div>-->
+        <!--<img src="images/lan.jpg" alt="" class="comment_head_portrait">-->
+        <!--<div class="comment">-->
+        <!--<p class="wei_name">奥巴马</p>-->
+        <!--<p class="comment_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。&#45;&#45;阿尔伯特·爱因斯坦</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="bottom">-->
+        <!--</div>-->
+
+
     </div>
-    <!--<div class="comment_box">-->
-    <!--<div class="follow">-->
-    <!--<img src="images/comment.png" alt="">-->
-    <!--<img src="images/support.png" alt="">-->
-    <!--</div>-->
-    <!--<img src="images/lan.jpg" alt="" class="comment_head_portrait">-->
-    <!--<div class="comment">-->
-    <!--<p class="wei_name">奥巴马</p>-->
-    <!--<p class="comment_txt">如果你无法简介的表达你的想法，那只能说明你还不够了解它。&#45;&#45;阿尔伯特·爱因斯坦</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="bottom">-->
-    <!--</div>-->
-
-
-</div>
-<div class="weui-tabbar">
-    <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
+    <div class="weui-tabbar">
+        <a href="index.html" class="weui-tabbar__item weui-bar__item_on">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/homepage2.png" alt="" class="weui-tabbar__icon">
                         <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>-->
                     </span>
-        <p class="weui-tabbar__label">首页</p>
-    </a>
-    <a href="follow.html" class="weui-tabbar__item">
-        <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">关注</p>
-    </a>
-    <a href="publish.html" class="weui-tabbar__item">
-        <img src="./images/release.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">发布</p>
-    </a>
-    <a href="friends.html" class="weui-tabbar__item">
+            <p class="weui-tabbar__label">首页</p>
+        </a>
+        <a href="follow.html" class="weui-tabbar__item">
+            <img src="./images/follow.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">关注</p>
+        </a>
+        <a href="publish.html" class="weui-tabbar__item">
+            <img src="./images/release.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">发布</p>
+        </a>
+        <a href="friends.html" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img src="./images/friend.png" alt="" class="weui-tabbar__icon friend_icon">
                         <!--<span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>-->
                     </span>
-        <p class="weui-tabbar__label">好友</p>
-    </a>
-    <a href="mine.html" class="weui-tabbar__item">
-        <img src="./images/me.png" alt="" class="weui-tabbar__icon mine_icon">
-        <p class="weui-tabbar__label">我</p>
-    </a>
-</div>
-<div id="do" style="display: none">
-    <div id="close_dialog" class="weui-mask"></div>
-    <div class="article_do">
-        <a id="edit_article" href=""><img src="images/rewrite.png" alt="">编辑</a>
-        <a id="delete_article" href="javascript:void(0);"><img src="images/delete.png" alt="">删除</a>
+            <p class="weui-tabbar__label">好友</p>
+        </a>
+        <a href="mine.html" class="weui-tabbar__item">
+            <img src="./images/me.png" alt="" class="weui-tabbar__icon mine_icon">
+            <p class="weui-tabbar__label">我</p>
+        </a>
     </div>
-</div>
-<div id="toast" style="display: none;">
-    <div class="weui-mask_transparent"></div>
-    <div class="weui-toast">
-        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
-        <p class="weui-toast__content">已关注</p>
+    <div v-cloak v-if="isDoShow == true">
+        <div @click="changeDo" class="weui-mask"></div>
+        <div class="article_do">
+            <!--<a id="edit_article" href=""><img src="images/rewrite.png" alt="">编辑</a>-->
+            <a href="javascript:void(0);" @click="deleteArticle()"><img src="images/delete.png" alt="">删除</a>
+        </div>
     </div>
-</div>
-<div id="dialog1" style="display: none;">
-    <div class="weui-mask"></div>
-    <div class="weui-dialog">
-        <div class="weui-dialog__hd"><strong class="weui-dialog__title">确认删除</strong></div>
-        <div class="weui-dialog__bd">删除后您和您的好友都将无法看到这篇文章</div>
-        <div class="weui-dialog__ft">
-            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" onclick="cancel()">取消</a>
-            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="confirm()">确认</a>
+    <div id="toast" style="display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+            <p class="weui-toast__content">已关注</p>
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
@@ -126,6 +120,7 @@
 <!--<script type="text/javascript" src="js/article_list.js"></script>-->
 <script src="//cdn.bootcss.com/vue/2.2.4/vue.min.js"></script>
 <script src="//cdn.bootcss.com/axios/0.15.3/axios.min.js"></script>
+
 <script src="js/swiper.min.js"></script>
 <script type="text/javascript" src="js/article_detail.js"></script>
 </body>

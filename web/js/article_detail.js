@@ -203,8 +203,7 @@ var action_module = Vue.extend({
     methods: {
         detail: function () {
             window.location.href = 'article_detail.html?reply_id=' + this.article.id;
-        }
-        ,
+        },
         support: function () {
             if (this.article.is_support == 0) {
                 this.article.is_support = 1;
@@ -254,8 +253,7 @@ var action_module = Vue.extend({
                             console.log(response.data);
                         });
             }
-        }
-        ,
+        },
         follow: function () {
             if (this.article.is_follow == 0) {
                 this.article.is_follow = 1;
@@ -291,7 +289,8 @@ var article_module = Vue.extend({
                         <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{item.user.nickname}}&bull;<span>{{item.topic.content}}</span></span>
                     </a>                    
                 </div>
-                <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
+                <div v-if="item.is_deleted==0">
+                    <a :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">{{item.content}}</p></a>
                 <div v-if="item.images.length>0" class=" swiper-container pic_show">
                     <div  class="swiper-wrapper pic_show_list">
                         <div v-for="img in item.images" class="swiper-slide userImg" @click="show_img(img.id)" >
@@ -300,6 +299,9 @@ var article_module = Vue.extend({
                         </div>
                     </div>
                 </div>
+                </div>
+                <a v-else :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">该文章已被作者删除</p></a>
+                
                 <action_module :article="item" :is_comment="true"></action_module>
             </div>
         </div>
@@ -321,7 +323,8 @@ var app = new Vue({
         article: null,
         article_list: [],
         article_id: 0,
-        userId: 0
+        userId: 0,
+        isDoShow:false
     },
     components: {
         action_module,
@@ -356,8 +359,20 @@ var app = new Vue({
                         console.log(response.data);
                     });
         },
-        setAction: function (type) {
-
+        changeDo:function () {
+            this.isDoShow=(!this.isDoShow);
+        },
+        deleteArticle:function () {
+            var vm=this;
+            axios.delete('/flwechat/public/article/' + vm.article_id)
+                .then(function (response) {
+                    console.log(response.data);
+                    vm.isDoShow=false;
+                    vm.article.is_deleted=1;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
     },
     created: function () {

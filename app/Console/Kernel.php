@@ -55,7 +55,7 @@ class Kernel extends ConsoleKernel
             } catch (\Exception $exception) {
                 echo $exception->getMessage().'\n';
             }
-        })->hourly()->appendOutputTo('/usr/share/nginx/html/flwechat/public/log');
+        })->hourly()->appendOutputTo('/usr/share/nginx/html/flwechat/storage/log');
     }
 
     /**
