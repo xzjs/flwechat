@@ -54,7 +54,7 @@ $(function () {
             var html = '';
             for (var i = 0; i < result.length; i++) {
                 html += '<div class="contacts">' +
-                    '<a href="mine.html?id=' + result[i].id + '">' +
+                    '<a href="mine.html?user_id=' + result[i].id + '">' +
                     '<img src="' + result[i].head_img + '" alt="' + result[i].nickname + '" class="head_portrait">' +
                     '<span class="friend_name">' + result[i].nickname + '</span></a></div>';
             }
