@@ -188,7 +188,12 @@ function show() {
     // show_img.attr('src', signaturePad.toDataURL());
     console.log(signaturePad.toData());
     var positions = getMarkPosition(signaturePad.toData());
-    positions.mark = signaturePad.toDataURL();
+    signaturePad.clear();
+    var context = canvas.getContext('2d');
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    context.strokeStyle = "red";
+    context.strokeRect(positions.min_x/ratio*0.7, positions.min_y/ratio*0.7, (positions.max_x-positions.min_x)/ratio*0.7, (positions.max_y-positions.min_y)/ratio*0.7);
+    positions.mark = canvas.toDataURL();
     console.log(positions);
     formData.append(show_img.attr('id'), JSON.stringify(positions));
     formData.append(show_img.attr('id') + 'file', $("[name=" + show_img.attr('id') + "]")[0].files[0]);
