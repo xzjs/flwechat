@@ -189,12 +189,17 @@ function show() {
     console.log(signaturePad.toData());
     var positions = getMarkPosition(signaturePad.toData());
     signaturePad.clear();
-    var context = canvas.getContext('2d');
     var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    var context = canvas.getContext('2d');
+
     context.strokeStyle = "red";
-    context.strokeRect(positions.min_x/ratio*0.7, positions.min_y/ratio*0.7, (positions.max_x-positions.min_x)/ratio*0.7, (positions.max_y-positions.min_y)/ratio*0.7);
+    context.strokeRect(positions.min_x , positions.min_y , (positions.max_x - positions.min_x) , (positions.max_y - positions.min_y));
     positions.mark = canvas.toDataURL();
     console.log(positions);
+    positions.max_x *= w / $('#canvas').width();
+    positions.min_x *= w / $('#canvas').width();
+    positions.max_y *= h / $('#canvas').height();
+    positions.min_y *= h / $('#canvas').height();
     formData.append(show_img.attr('id'), JSON.stringify(positions));
     formData.append(show_img.attr('id') + 'file', $("[name=" + show_img.attr('id') + "]")[0].files[0]);
 }
@@ -224,9 +229,6 @@ function getMarkPosition(arr) {
             positions.min_y = Math.max(Math.min(positions.min_y, arr[i][j].y), 0);
         }
     }
-    positions.max_x *= w / $('#canvas').width();
-    positions.min_x *= w / $('#canvas').width();
-    positions.max_y *= h / $('#canvas').height();
-    positions.min_y *= h / $('#canvas').height();
+
     return positions;
 }
