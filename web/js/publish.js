@@ -22,25 +22,47 @@ $(function () {
     $(".container").height($(window).height() - 100);
 
     $("#pic_files1").change(function () {
-        url = window.URL.createObjectURL(this.files.item(0));
-        set_canvas(url);
+        var file = this.files.item(0);
+        EXIF.getData(file, function () {
+            var Orientation = EXIF.getTag(this, "Orientation");
+            console.log(Orientation);
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                $("#pic_file1").attr("src", this.result);
+                set_canvas(this.result, Orientation);
+            };
+        });
         show_img = $("#pic_file1");
-        $('#pic_blank').css('display', 'none');
-        $("#pic_file1").attr("src", url);
+        // $('#pic_blank').css('display', 'none');
     });
     $("#pic_files2").change(function () {
-        url = window.URL.createObjectURL(this.files.item(0));
-        set_canvas(url);
+        var file = this.files.item(0);
+        EXIF.getData(file, function () {
+            var Orientation = EXIF.getTag(this, "Orientation");
+            console.log(Orientation);
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                $("#pic_file2").attr("src", this.result);
+                set_canvas(this.result, Orientation);
+            };
+        });
         show_img = $("#pic_file2");
-        $('#pic_blank').css('display', 'none');
-        $("#pic_file2").attr("src", url);
     });
     $("#pic_files3").change(function () {
-        url = window.URL.createObjectURL(this.files.item(0));
-        set_canvas(url);
+        var file = this.files.item(0);
+        EXIF.getData(file, function () {
+            var Orientation = EXIF.getTag(this, "Orientation");
+            console.log(Orientation);
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                $("#pic_file3").attr("src", this.result);
+                set_canvas(this.result, Orientation);
+            };
+        });
         show_img = $("#pic_file3");
-        $('#pic_blank').css('display', 'none');
-        $("#pic_file3").attr("src", url);
     });
     if (reply_id != 0) {
         $('.pic_sup').hide();
@@ -148,39 +170,56 @@ function edit() {
 }
 
 //设置canvas的长宽
-function set_canvas() {
+function set_canvas(img, Orientation) {
     $('#myModal').modal();
     var image = new Image();
-    image.src = url;
+    image.src = img;
     image.onload = function () {
-        w = image.width;
-        h = image.height;
-        console.log('原始宽' + w);
-        console.log('原始高' + h);
-        var brower_width = $(window).width();
-        var brower_height = $(window).height();
-        image_scale = h / w;
-        var brower_scale = brower_height / brower_width;
-        var ratio = Math.max(window.devicePixelRatio || 1, 1);
-        //如果长大于宽
-        if (image_scale > brower_scale) {
-            canvas.height = brower_height * 0.7 * ratio;
-            canvas.width = canvas.height / image_scale;
-        } else {//宽大于长
-            canvas.width = brower_width * 0.7 * ratio;
-            canvas.height = canvas.width * image_scale;
+
+        w = this.naturalWidth;
+        h = this.naturalHeight;
+        var expectWidth = 0, expectHeight = 0;
+        var lookWidth = $(window).width() * 0.7;
+        var lookHeight = $(window).height() * 0.7;
+
+        if (this.naturalWidth > this.naturalHeight && this.naturalWidth > lookWidth) {
+            expectWidth = lookWidth;
+            expectHeight = expectWidth * this.naturalHeight / this.naturalWidth;
+        } else if (this.naturalHeight > this.naturalWidth && this.naturalHeight > lookHeight) {
+            expectHeight = lookHeight;
+            expectWidth = expectHeight * this.naturalWidth / this.naturalHeight;
         }
-        canvas.getContext("2d").scale(ratio, ratio);
+        if (Orientation == 6) {
+            var canvas1 = document.createElement("canvas");
+            var ctx = canvas1.getContext("2d");
+            var ratio = Math.max(window.devicePixelRatio || 1, 1);
+            var height = expectHeight * ratio;
+            var width = expectWidth * ratio;
+            canvas1.width = height;
+            canvas1.height = width;
+            ctx.rotate(0.5 * Math.PI);
+            ctx.drawImage(this, 0, -height, width, height);
+            img = canvas1.toDataURL();
+            canvas.width = expectHeight;
+            canvas.height = expectWidth;
+            $('#canvas').css('height', expectWidth);
+            $('#canvas').css('width', expectHeight);
+        } else {
+
+            canvas.width = expectWidth;
+            canvas.height = expectHeight;
+            $('#canvas').css('height', expectHeight);
+            $('#canvas').css('width', expectWidth);
+        }
+
+        //canvas.getContext("2d").scale(ratio, ratio);
+
+        $('#canvas').css('background-image', 'url(' + img + ')');
+        $('#canvas').css('background-size', "cover");
+
         signaturePad = new SignaturePad(canvas, {
             penColor: "rgb(229,43,28)"
         });
-        //signaturePad.fromDataURL(url);
-        $('#canvas').css('height', canvas.height / ratio);
-        $('#canvas').css('width', canvas.width / ratio);
-        $('#canvas').css('background-image', "url(" + url + ")");
-        $('#canvas').css('background-size', "cover");
-        console.log('压缩后高' + $('#canvas').height());
-        console.log('压缩后宽' + $('#canvas').width());
     };
 }
 
@@ -193,7 +232,7 @@ function show() {
     var context = canvas.getContext('2d');
 
     context.strokeStyle = "red";
-    context.strokeRect(positions.min_x , positions.min_y , (positions.max_x - positions.min_x) , (positions.max_y - positions.min_y));
+    context.strokeRect(positions.min_x, positions.min_y, (positions.max_x - positions.min_x), (positions.max_y - positions.min_y));
     positions.mark = canvas.toDataURL();
     console.log(positions);
     positions.max_x *= w / $('#canvas').width();

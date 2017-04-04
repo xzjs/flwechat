@@ -61,7 +61,18 @@ return [
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
-
+        'qiniu' => [
+            'driver' => 'qiniu',
+            'domains' => [
+                'default' => 'iduz4l7.qiniudns.com',
+                'https'     => '',
+                'custom' => 'images.frilink.cn',     //你的自定义域名
+            ],
+            'access_key' => env('ACCESS_KEY'),  //AccessKey
+            'secret_key' => env('SECRET_KEY'),  //SecretKey
+            'bucket' => env('BUCKET'),  //Bucket名字
+            'notify_url' => '',  //持久化处理回调地址
+        ],
     ],
 
 ];
