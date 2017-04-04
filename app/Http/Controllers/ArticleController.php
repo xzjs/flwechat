@@ -77,20 +77,16 @@ class ArticleController extends Controller
                 }
                 $article->saveOrFail();
 
-//                foreach ($arr as $value) {
-//                    if ($request->hasFile($value)) {
-//                        $path = $request->file($value)->store('public');
-//                        $path = explode('/', $path)[1];
-//                        $img = new Image(['img' => $path, 'article_id', $article->id]);
-//                        $img->position=$value;
-//                        $article->images()->save($img);
-//                        dispatch(new GetUrl($img));
-//                    }
-//                }
                 foreach ($arr as $value) {
                     if ($request->$value != null) {
                         $path = $request->file($value . 'file')->store('public');
                         $path = explode('/', $path)[1];
+
+                        $disk=\Storage::disk('qiniu');
+                        if(!$disk->exists($path)){
+                            $disk->put($path,Storage::get('public/'.$path));
+                        }
+
                         $temp = \GuzzleHttp\json_decode($request->$value);
                         $r = explode(',', $temp->mark);
                         $img = base64_decode($r[1]);

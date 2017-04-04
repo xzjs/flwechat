@@ -179,6 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Overtrue\LaravelWechat\ServiceProvider::class,
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
 
     ],
 
