@@ -3,6 +3,7 @@
  */
 
 $(".container").css('min-height',$(window).height());
+$(".content_box").css('width',$(window).width());
 var user_id = $.cookie('id');
 if (user_id == null) {
     var test = window.location.href;
