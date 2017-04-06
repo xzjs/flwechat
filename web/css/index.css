@@ -48,6 +48,7 @@ a{
 /*文章内容盒子，index，detail，mine*/
 .content_box{
     padding-bottom:80px;
+    overflow: hidden;
 }
 .content{
     /*padding:0 15px;*/
@@ -83,7 +84,7 @@ a{
 @media screen and (min-width: 768px)and (max-width: 1024px){
     .pic_show{
         width:808px;
-        margin:0 auto;
+        /*margin:0 auto;*/
         padding-top:5px;
         left:-20px;
     }
@@ -110,7 +111,7 @@ a{
 @media screen and (min-width: 414px)and (max-width: 767px){
     .pic_show{
         width:454px;
-        margin:0 auto;
+        /*margin:0 auto;*/
         padding-top:5px;
         left:-20px;
     }
@@ -136,7 +137,7 @@ a{
 @media screen and (min-width: 375px)and (max-width: 413px){
     .pic_show{
         width:415px;
-        margin:0 auto;
+        /*margin:0 auto;*/
         padding-top:5px;
         left:-20px;
     }
@@ -162,7 +163,7 @@ a{
 @media screen and (min-width: 360px)and (max-width: 374px){
     .pic_show{
         width:400px;
-        margin:0 auto;
+        /*margin:0 auto;*/
         padding-top:5px;
         left:-20px;
     }
@@ -187,7 +188,7 @@ a{
 @media screen and (max-width: 320px){
     .pic_show{
         width:360px;
-        margin:0 auto;
+        /*margin:0 auto;*/
         padding-top:5px;
         left:-20px;
     }
