@@ -70,6 +70,8 @@ $(function () {
         $('.pic_sup').css('display', 'inline');
     }
     $("#showIOSDialog1").click(function () {
+        $(this).attr('disabled','disabled');
+        $(this).html('正在提交，请稍后');
         var id = $.cookie('id');
         var comment = $.trim($('#comment').val());
         var topic_id = $('#topic_select').val();
