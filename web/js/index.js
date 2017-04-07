@@ -254,7 +254,7 @@ var app = new Vue({
         },
         topics: [{'id': 0, 'content': '全部'}],
         selectIndex: 0,
-        select: [true],
+        select: [true]
     },
     mounted: function () {
         this.getTopics();

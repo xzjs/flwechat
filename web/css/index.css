@@ -45,19 +45,20 @@ a{
 /*.more,.close{*/
     /*width:20px;*/
 /*}*/
-/*文章内容盒子，index，detail，mine*/
+/*文章内容盒子，index，detail-评论，mine*/
 .content_box{
     padding-bottom:80px;
     overflow: hidden;
 }
+/*detail-原文*/
 .content{
     /*padding:0 15px;*/
     border-bottom: 6px solid #e8e8e8;
     background-color: #fff;
+    overflow: hidden;
 }
 .content_top{
     padding:0 15px;
-    width:100%;
     position: relative;
     height:30px;
     line-height: 30px;
