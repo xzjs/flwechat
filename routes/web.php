@@ -42,7 +42,7 @@ Route::post('/image/get_image','ImageController@get_image');
 Route::resource('image', 'ImageController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
-    Route::get('/getuser', 'WechatController@getuser');
+    Route::get('/getuser/{callback}', 'WechatController@getuser')->where('callback','.*');
 });
 
 Route::resource('topic', 'TopicController');
