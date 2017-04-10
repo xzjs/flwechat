@@ -1,52 +1,52 @@
 <template>
-    <div class="your_action" id="action">
-        <div v-if="article.reply_id>0" class="your_action_right">
-            <a  :href="'article_detail.html?reply_id=' + article.reply_id">
+    <div class="your_action">
+        <div v-if="my_article.reply_id>0" class="your_action_right">
+            <a  :href="'article_detail.html?reply_id=' + my_article.reply_id">
                 <img src="images/back_to_original.png" alt="">
                 <span>原文</span>
             </a>
         </div>
         <div class="your_action_right" @click="support">
-            <p v-if="article.is_support==0">赞<span>{{article.support_num}}</span></p>
-            <p v-else style="color:#0084FF">赞<span>{{article.support_num}}</span></p>
+            <p v-if="my_article.is_support==0">赞<span>{{my_article.support_num}}</span></p>
+            <p v-else style="color:#0084FF">赞<span>{{my_article.support_num}}</span></p>
         </div>
         <div class="your_action_right" @click="oppose()">
-            <p v-if="article.is_oppose==0">踩<span>{{article.oppose_num}}</span></p>
-            <p v-else style="color:#0084FF">踩<span>{{article.oppose_num}}</span></p>
+            <p v-if="my_article.is_oppose==0">踩<span>{{my_article.oppose_num}}</span></p>
+            <p v-else style="color:#0084FF">踩<span>{{my_article.oppose_num}}</span></p>
         </div>
         <div class="your_action_right" @click="detail()">
-            <p>评论<span>{{article.comment_num}}</span></p>
+            <p>评论<span>{{my_article.comment_num}}</span></p>
         </div>
-        <template v-if="article.user_id!=userId">
+        <template v-if="my_article.user_id!=userId">
             <div class="your_action_right" @click="follow()">
-                <img v-if="article.is_follow==0" src="images/follow.png" alt="">
-                <img v-else src="images/follow3.png" alt="">
+                <img v-if="my_article.is_follow==0" src="../../static/images/follow.png" alt="">
+                <img v-else src="../../static/images/follow3.png" alt="">
             </div>
         </template>
     </div>
 </template>
 
 <script>
+    import { mapState } from 'vuex'
+
     export default {
         props: ['article'],
-        data: function () {
-            return {
-                userId: 0
-            }
-        },
-        created: function () {
-            this.userId = user_id;
+        computed:{
+            my_article:function () {
+                return this.article;
+            },
+            ...mapState(['userId'])
         },
         methods: {
             detail: function () {
-                window.location.href = 'article_detail.html?reply_id=' + this.article.id;
+                window.location.href = 'article_detail.html?reply_id=' + this.my_article.id;
             },
             support: function () {
-                if (this.article.is_support == 0) {
-                    this.article.is_support = 1;
-                    this.article.support_num += 1;
+                if (this.my_article.is_support == 0) {
+                    this.my_article.is_support = 1;
+                    this.my_article.support_num += 1;
                     axios.post('/flwechat/public/action',
-                            {article_id: this.article.id, user_id: this.userId, type: 0})
+                            {article_id: this.my_article.id, user_id: this.userId, type: 0})
                             .then(
                                     function (response) {
                                         console.log(response.data);
@@ -54,10 +54,10 @@
                                         console.log(response.data);
                                     });
                 } else {
-                    this.article.is_support = 0;
-                    this.article.support_num -= 1;
+                    this.my_article.is_support = 0;
+                    this.my_article.support_num -= 1;
                     axios.post('/flwechat/public/action/cancel',
-                            {article_id: this.article.id, user_id: this.userId, type: 0})
+                            {article_id: this.my_article.id, user_id: this.userId, type: 0})
                             .then(
                                     function (response) {
                                         console.log(response.data);
@@ -67,11 +67,11 @@
                 }
             },
             oppose: function () {
-                if (this.article.is_oppose == 0) {
-                    this.article.is_oppose = 1;
-                    this.article.oppose_num += 1;
+                if (this.my_article.is_oppose == 0) {
+                    this.my_article.is_oppose = 1;
+                    this.my_article.oppose_num += 1;
                     axios.post('/flwechat/public/action',
-                            {article_id: this.article.id, user_id: this.userId, type: 1})
+                            {article_id: this.my_article.id, user_id: this.userId, type: 1})
                             .then(
                                     function (response) {
                                         console.log(response.data);
@@ -79,10 +79,10 @@
                                         console.log(response.data);
                                     });
                 } else {
-                    this.article.is_oppose = 0;
-                    this.article.oppose_num -= 1;
+                    this.my_article.is_oppose = 0;
+                    this.my_article.oppose_num -= 1;
                     axios.post('/flwechat/public/action/cancel',
-                            {article_id: this.article.id, user_id: this.userId, type: 1})
+                            {article_id: this.my_article.id, user_id: this.userId, type: 1})
                             .then(
                                     function (response) {
                                         console.log(response.data);
@@ -92,10 +92,10 @@
                 }
             },
             follow: function () {
-                if (this.article.is_follow == 0) {
-                    this.article.is_follow = 1;
+                if (this.my_article.is_follow == 0) {
+                    this.my_article.is_follow = 1;
                     axios.post('/flwechat/public/follow',
-                            {follow_user_id: this.userId, be_follow_id: this.article.id, type: 1})
+                            {follow_user_id: this.userId, be_follow_id: this.my_article.id, type: 1})
                             .then(
                                     function (response) {
                                         console.log(response.data);
@@ -103,9 +103,9 @@
                                         console.log(response.data);
                                     });
                 } else {
-                    this.article.is_follow = 0;
+                    this.my_article.is_follow = 0;
                     axios.post('/flwechat/public/follow/cancel_follow',
-                            {follow_user_id: this.userId, be_follow_id: this.article.id, type: 1})
+                            {follow_user_id: this.userId, be_follow_id: this.my_article.id, type: 1})
                             .then(
                                     function (response) {
                                         console.log(response.data);

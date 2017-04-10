@@ -8,6 +8,8 @@ import store from './store'
 Vue.config.productionTip = false
 Vue.config.debug = true
 
+import $ from 'jquery';
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

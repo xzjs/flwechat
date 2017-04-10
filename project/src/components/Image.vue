@@ -9,8 +9,8 @@
     </div>
 </template>
 
-<script src="../../static/js/swiper.min.js"></script>
 <script>
+    import Swiper from '../../static/js/swiper.min.js';
     export default {
         props: ['images'],
         methods: {
@@ -28,7 +28,6 @@
             });
         },
         updated: function () {
-            console.log('updated');
             var mySwiper = new Swiper('.swiper-container', {
                 effect: 'coverflow',
                 slidesPerView: 3,

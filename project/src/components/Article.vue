@@ -11,20 +11,20 @@
                 <images :images="item.images"></images>
             </div>
             <a v-else :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">该文章已被作者删除</p></a>
-            <!--<action :article="item"></action>-->
+            <action :article="item"></action>
         </div>
     </div>
 </template>
 
 
 <script>
-//    import action from '@/components/Action';
+    import action from '@/components/Action';
     import images from '@/components/Image'
 
     export default {
         props: ['article_list'],
         components: {
-//            action,
+            action,
             images
         }
     }
