@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Navigation from '@/components/Navigation'
 import Index from '@/components/Index'
+import Main from '@/components/Main'
+import Login from '@/components/Login'
 
 Vue.use(Router);
 
@@ -14,21 +16,31 @@ export default new Router({
             component: Hello
         },
         {
-            path:'/',
-            name:'Navigation',
-            component:Navigation,
-            // children:[
-            //     {
-            //         path:'/index/:type',
-            //         name:'Index',
-            //         component:Index,
-            //     },
-            //     {
-            //         path:'/follow/',
-            //         name:'Follow',
-            //         component:Index,
-            //     }
-            // ]
+            path:'',
+            redirect:'/main/nav/index'
+        },
+        {
+            path:'/main',
+            component:Main,
+            children:[
+                {
+                    path:'nav',
+                    component:Navigation,
+                    children:[
+                        {
+                            path:'index/:topic_id?',
+                            name:'Index',
+                            component:Index
+                        }
+                    ]
+                },
+
+            ]
+        },
+        {
+            path:'/login/:id',
+            name:'Login',
+            component:Login
         }
     ]
 })

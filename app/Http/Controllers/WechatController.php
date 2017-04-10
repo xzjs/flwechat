@@ -36,13 +36,8 @@ class WechatController extends Controller
                     $u->be_follow = 0;
                     $u->save();
                 }
-//            echo $u->id;
-                setcookie('id', $u->id, time() + 3600, "/");
-                $url = '/flwechat/web/index.html';
-                if (isset($_COOKIE["parameter"])) {
-                    $url = $_COOKIE["parameter"];
-                }
-                header("Location: $callback?id=$u->id");
+                $call_back=env('CALL_BACK');
+                header("Location: $call_back/#/login/$u->id");
                 exit;
             } else {
                 echo 0;

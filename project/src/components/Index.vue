@@ -15,8 +15,8 @@
             <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
         </div>
         <nav class="topic_index_box">
-            <router-link to="/index" class="topic_index topic_index_selected recommend">全部</router-link>
-            <router-link v-for="item in topic_list" to="/index" class="topic_index">
+            <router-link to="./" class="topic_index topic_index_selected recommend">全部</router-link>
+            <router-link v-for="item in topics" :to="{name:'Index',params:{topic_id:item.id}}" class="topic_index">
                 {{item.content}}
             </router-link>
         </nav>
@@ -24,142 +24,109 @@
             <img src="../../static/images/more.png" alt="" class="more">
             <img src="../../static/images/up_close.png" alt="" class="close" style="display: none">
         </div>
-        <router-view></router-view>
-        <!--<div class="content_box"></div>-->
+        <articles :article_list="articles"></articles>
     </div>
 </template>
 
 <script>
-    export default{
-        data(){
-            return {
+    import articles from '@/components/Article';
+    import {mapState} from 'vuex';
 
+    export default{
+        data: function () {
+            return {
+                topic_id: 0,
             }
         },
-        computed:{
-            topic_list(){
-                return this.$store.state.topics
-            }
-        },
-        created:function () {
-            getTopics();
+        computed: mapState([
+            'topics', 'userId','articles'
+        ]),
+        created: function () {
+            this.getTopics();
+            this.getArticles();
         },
         methods: {
             getTopics(){
                 this.$store.dispatch('getTopics')
+            },
+            getArticles(){
+                this.topic_id = this.$route.params.topic_id;
+                if(this.topic_id==null){
+                    this.topic_id=0;
+                }
+                console.log(this.topic_id);
+                var postData = {
+                    page: 0,
+                    size: 15,
+                    user_id:this.userId,
+                    reply_id:0,
+                    topic_id:this.topic_id
+                }
+                this.$store.dispatch('getArticles',postData)
             }
         },
-        component:{
+        components: {
+            articles
+        },
+        watch: {
+            '$route'(to, from){
+                this.getArticles();
+            }
         }
     }
 </script>
 
 <style scoped>
-    *:focus{
-        outline:none;
+    *:focus {
+        outline: none;
     }
-    .container{
+
+    .container {
         /*background-color: #fff;*/
-        padding-bottom:84px;
+        padding-bottom: 84px;
     }
-    .weui-search-bar{
-        width:100%;
+
+    .weui-search-bar {
+        width: 100%;
         position: fixed;
-        top:0;
+        top: 0;
         z-index: 100;
     }
-    .topic_index_box{
+
+    .topic_index_box {
         background-color: #f8f8f8;
         height: 30px;
         line-height: 28px;
         margin-top: 44px;
         overflow: hidden;
     }
-    .topic_index{
+
+    .topic_index {
         display: inline-block;
         text-align: center;
-        padding:0px 10px;
+        padding: 0px 10px;
     }
-    .topic_index_selected{
+
+    .topic_index_selected {
         color: #09bb07;
-        border-bottom:2px solid #09bb07;
+        border-bottom: 2px solid #09bb07;
     }
-    .more_topic{
-        height:30px;
-        width:30px;
+
+    .more_topic {
+        height: 30px;
+        width: 30px;
         text-align: right;
         position: absolute;
-        top:45px;
-        right:15px;
+        top: 45px;
+        right: 15px;
         line-height: 30px;
     }
-    .more,.close{
-        width:20px;
+
+    .more, .close {
+        width: 20px;
     }
 
-
-    a{
+    a {
         color: #000;
-    }
-
-
-    .pic_show img{
-        width:100px;
-    }
-
-    @media screen and (max-width: 320px){
-        .pic_show img{
-            width:90px;
-        }
-    }
-    .url_list a{
-        overflow: hidden;
-        height:30px;
-        border-bottom: 1px solid #fff;
-        padding: 0 5px;
-        color: #fff;
-        display: block;
-    }
-    .bullet_screen_button span{
-        color: #fff;
-        background: none;
-        margin:0 5px;
-    }
-    .bullet_screen .bullet_screen_content{
-        position: absolute;
-        right:60px;
-        padding:0 5px;
-        font-size: 16px;
-        color: #000;
-        display: inline-block;
-        width:56%;
-        height:35px;
-        line-height: 35px;
-        float: right;
-        border: none;
-        margin-bottom: 10px;
-    }
-
-    /*操作按钮*/
-    .your_action .your_action_left{
-        width:14%;
-        line-height: 30px;
-        position: absolute;
-        left:15px;
-    }
-    .your_action .your_action_right{
-        width:14%;
-        line-height: 30px;
-        float: right;
-        text-align: center;
-    }
-    .your_action img{
-        width:16px;
-        height:16px;
-        margin-right: 2px;
-    }
-    .your_action span{
-        font-size: 10px;
-        color: #8a8a8a;
     }
 </style>

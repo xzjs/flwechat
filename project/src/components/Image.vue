@@ -9,15 +9,9 @@
     </div>
 </template>
 
-<script src="/project/static/js/swiper.min.js"></script>
+<script src="../../static/js/swiper.min.js"></script>
 <script>
     export default {
-        name: 'hello',
-        data () {
-            return {
-                msg: 'Welcome xzjs'
-            }
-        },
         props: ['images'],
         methods: {
             show_img: function (image_id) {
@@ -46,7 +40,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    @import "/project/static/css/swiper.min.css";
+    @import "../../static/css/swiper.min.css";
 
     /*图片大小调整*/
     /*ipad mini 768*1024*/

@@ -10,7 +10,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         topics:null,
-        userId:0
+        userId:0,
+        articles:null,
+        topic_id:0,
+
     },
     mutations:{
         setTopics(state,t){
@@ -18,6 +21,9 @@ export default new Vuex.Store({
         },
         setUserId(state,id){
             state.userId=id;
+        },
+        setArticles(state,articles){
+            state.articles=articles;
         }
     }
     ,
@@ -30,6 +36,18 @@ export default new Vuex.Store({
                 .catch(function (error) {
                     console.log(error);
                 })
+        },
+        getArticles(context,postData){
+            axios.post('/flwechat/public/article/article_list', postData)
+                .then(
+                    function (response) {
+                        context.commit('setArticles',response.data);
+                    })
+                .catch(
+                    function (response) {
+                        console.log(response);
+                    }
+                );
         }
     }
 })
