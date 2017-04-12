@@ -1,6 +1,8 @@
 <template>
     <div>
-        <router-view></router-view>
+        <transition>
+            <router-view></router-view>
+        </transition>
         <div class="weui-tabbar">
             <router-link to="/index" class="weui-tabbar__item weui-bar__item_on">
                     <span style="display: inline-block;position: relative;">
@@ -33,7 +35,6 @@
 </template>
 
 <script>
-    import '../../static/css/weui.min.css';
     import home1 from '../../static/images/homepage.png';
     import home2 from '../../static/images/homepage2.png';
     import follow1 from '../../static/images/follow.png';

@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import Index from '@/components/Index'
 import Main from '@/components/Main'
 import Login from '@/components/Login'
+import Detail from '@/components/Detail'
 
 Vue.use(Router);
 
@@ -17,7 +18,7 @@ export default new Router({
         },
         {
             path:'',
-            redirect:'/main/nav/index'
+            redirect:'/main/nav/index/0'
         },
         {
             path:'/main',
@@ -28,9 +29,14 @@ export default new Router({
                     component:Navigation,
                     children:[
                         {
-                            path:'index/:topic_id?',
+                            path:'index/:topic_id',
                             name:'Index',
                             component:Index
+                        },
+                        {
+                            path:'detail/:id',
+                            name:'Detail',
+                            component:Detail
                         }
                     ]
                 },

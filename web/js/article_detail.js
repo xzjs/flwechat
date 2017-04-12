@@ -25,7 +25,6 @@ $(function () {
     if ($('.pic_show_list').html() == '') {
         $(this).hide();
     }
-
 });
 
 //显示大图

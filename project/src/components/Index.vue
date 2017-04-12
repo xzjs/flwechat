@@ -15,15 +15,15 @@
             <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
         </div>
         <nav class="topic_index_box">
-            <router-link to="./" class="topic_index topic_index_selected recommend">全部</router-link>
+            <router-link to="0" class="topic_index recommend">全部</router-link>
             <router-link v-for="item in topics" :to="{name:'Index',params:{topic_id:item.id}}" class="topic_index">
                 {{item.content}}
             </router-link>
         </nav>
-        <div class="more_topic">
-            <img src="../../static/images/more.png" alt="" class="more">
-            <img src="../../static/images/up_close.png" alt="" class="close" style="display: none">
-        </div>
+        <!--<div class="more_topic">-->
+            <!--<img src="../../static/images/more.png" alt="" class="more">-->
+            <!--<img src="../../static/images/up_close.png" alt="" class="close" style="display: none">-->
+        <!--</div>-->
         <articles :article_list="articles"></articles>
     </div>
 </template>
@@ -61,7 +61,7 @@
                     user_id:this.userId,
                     reply_id:0,
                     topic_id:this.topic_id
-                }
+                };
                 this.$store.dispatch('getArticles',postData)
             }
         },
@@ -77,10 +77,6 @@
 </script>
 
 <style scoped>
-    *:focus {
-        outline: none;
-    }
-
     .container {
         /*background-color: #fff;*/
         padding-bottom: 84px;
@@ -107,26 +103,8 @@
         padding: 0px 10px;
     }
 
-    .topic_index_selected {
-        color: #09bb07;
-        border-bottom: 2px solid #09bb07;
-    }
-
-    .more_topic {
-        height: 30px;
-        width: 30px;
-        text-align: right;
-        position: absolute;
-        top: 45px;
-        right: 15px;
-        line-height: 30px;
-    }
-
-    .more, .close {
-        width: 20px;
-    }
-
-    a {
-        color: #000;
+    .router-link-active {
+        color: #0084FF;
+        border-bottom:2px solid #0084FF;
     }
 </style>
