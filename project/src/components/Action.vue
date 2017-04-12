@@ -1,8 +1,8 @@
 <template>
     <div class="your_action">
-        <div v-if="my_article.reply_id>0" class="your_action_right">
+        <div v-if="!is_comment" class="your_action_right">
             <a  :href="'article_detail.html?reply_id=' + my_article.reply_id">
-                <img src="images/back_to_original.png" alt="">
+                <img src="../../static/images/back_to_original.png" alt="">
                 <span>原文</span>
             </a>
         </div>
@@ -31,7 +31,12 @@
     import axios from 'axios';
 
     export default {
-        props: ['article'],
+        props: {
+            article:{},
+            is_comment: {
+                default: false
+            }
+        },
         computed:{
             my_article:function () {
                 return this.article;
@@ -40,7 +45,7 @@
         },
         methods: {
             detail: function () {
-                window.location.href = 'article_detail.html?reply_id=' + this.my_article.id;
+                this.$router.push({ name: 'Detail', params: { id: this.article.id }});
             },
             support: function () {
                 if (this.my_article.is_support == 0) {

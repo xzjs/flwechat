@@ -16,10 +16,10 @@
                     <images :images="article.images"></images>
                 </div>
                 <p v-else class="content_txt">该文章已被作者删除</p>
-                <action :article="article"></action>
+                <action :article="article" :is_comment="true"></action>
             </div>
             <div class="comment_box">
-                <articles :article_list="articles"></articles>
+                <articles :article_list="articles" :is_comment="true"></articles>
             </div>
             <div class="comment_input">
                 <a :href="'publish.html?reply_id='+article.id">评论</a>
@@ -98,7 +98,7 @@
         watch: {
             '$route'(to, from){
                 this.getArticle();
-                this.getArticles();
+                this.getArticleList();
             }
         }
     }
@@ -146,5 +146,22 @@
         height:20px;
         border-radius: 10px;
         vertical-align: middle;
+    }
+    .content{
+        /*padding:0 15px;*/
+        border-bottom: 6px solid #e8e8e8;
+        background-color: #fff;
+        overflow: hidden;
+    }
+    .content_top{
+        padding:0 15px;
+        position: relative;
+        height:30px;
+        line-height: 30px;
+    }
+    .content_txt{
+        padding:0 15px;
+        font-size:18px;
+        line-height: 32px;
     }
 </style>

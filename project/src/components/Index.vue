@@ -16,7 +16,7 @@
         </div>
         <nav class="topic_index_box">
             <router-link to="0" class="topic_index recommend">全部</router-link>
-            <router-link v-for="item in topics" :to="{name:'Index',params:{topic_id:item.id}}" class="topic_index">
+            <router-link v-for="item in topics" :key="item.id" :to="{name:'Index',params:{topic_id:item.id}}" class="topic_index">
                 {{item.content}}
             </router-link>
         </nav>

@@ -40,7 +40,10 @@ export default new Router({
                         }
                     ]
                 },
+                {
+                    path:'show/:id',
 
+                }
             ]
         },
         {
