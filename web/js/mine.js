@@ -216,7 +216,7 @@ var image_moudle = Vue.extend({
 
 Vue.component('article-list', {
     template: `
-        <div class="content_box" style="margin-top: 5px">
+        <div class="content_box">
             <div v-cloak v-for="item in article_list" class="content">
                 <div class="content_top">
                     <a :href="['mine.html?user_id='+item.user.id]">

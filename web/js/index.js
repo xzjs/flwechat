@@ -62,7 +62,7 @@ function check() {
 //    $(this).css('width','500px');
 // });
 
-Vue.config.devtools = true
+Vue.config.devtools = true;
 
 var action = Vue.extend({
     template: `<div class="your_action" id="action">
@@ -210,14 +210,14 @@ var image_moudle = Vue.extend({
         var mySwiper = new Swiper('.swiper-container', {
             effect: 'coverflow',
             slidesPerView: 3,
-            centeredSlides: true,
+            centeredSlides: true
         });
     }
-})
+});
 
 Vue.component('article-list', {
     template: `
-        <div class="content_box" style="margin-top: 5px">
+        <div class="content_box">
             <div v-cloak v-for="item in article_list" class="content">
                 <div class="content_top">
                     <a :href="['mine.html?user_id='+item.user.id]">
@@ -239,7 +239,7 @@ Vue.component('article-list', {
         action,
         image_moudle
     }
-})
+});
 
 var app = new Vue({
     el: '#app',
@@ -320,7 +320,7 @@ var app = new Vue({
             $('#searchInput').blur();
         }
     }
-})
+});
 
 
 
