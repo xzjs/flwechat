@@ -46,71 +46,71 @@
 
 <script>
     import axios from 'axios';
-    import mapState from 'vuex';
+    import {mapState} from 'vuex';
 
-//    export default{
-//        data: function () {
-//            return {
-//                user: null,
-//                showId: 0,
-//                is_follow: false,
-//                is_friend: false
-//            }
-//        },
-//        computed: mapState([
-//            'userId'
-//        ]),
-//        methods: {
-//            getUser: function () {
-//                var vm = this;
-//                axios.get('/flwechat/public/user/' + this.userId)
-//                        .then(function (response) {
-//                            vm.user = response.data;
-//                            vm.showId = vm.$route.id;
-//                        })
-//                        .catch(function (response) {
-//                            console.log(response);
-//                        });
-//                if (vm.showId != vm.userId) {
-//                    //检测是否关注
-//                    axios.post('/flwechat/public/follow/get_follow_list',
-//                            {id: vm.userId, type: 0})
-//                            .then(function (response) {
-//                                var follows = response.data;
-//                                console.log(follows);
-//                                for (var i = 0; i < follows.length; i++) {
-//                                    if (follows[i].id == vm.show_user_id) {
-//                                        vm.is_follow = true;
-//                                        break;
-//                                    }
-//                                }
-//                            })
-//                            .catch(function (response) {
-//                                console.log(response);
-//                            });
-//                    //检测是否为好友
-//                    axios.post('/flwechat/public/friend/get_friends',
-//                            {id: vm.userId, type: 0})
-//                            .then(function (response) {
-//                                var friends = response.data;
-//                                console.log(friends);
-//                                for (var i = 0; i < friends.length; i++) {
-//                                    if (friends[i].id == vm.show_user_id) {
-//                                        vm.is_friend = true;
-//                                        break;
-//                                    }
-//                                }
-//                            })
-//                            .catch(function (error) {
-//                                console.log(error);
-//                            });
-//                }
-//            },
-//        },
-//        created: function () {
-//            this.getUser();
-//        }
-//    }
+    export default{
+        data: function () {
+            return {
+                user: null,
+                showId: 0,
+                is_follow: false,
+                is_friend: false
+            }
+        },
+        computed: mapState([
+            'userId'
+        ]),
+        methods: {
+            getUser: function () {
+                var vm = this;
+                axios.get('/flwechat/public/user/' + this.userId)
+                        .then(function (response) {
+                            vm.user = response.data;
+                            vm.showId = vm.$route.id;
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                        });
+                if (vm.showId != vm.userId) {
+                    //检测是否关注
+                    axios.post('/flwechat/public/follow/get_follow_list',
+                            {id: vm.userId, type: 0})
+                            .then(function (response) {
+                                var follows = response.data;
+                                console.log(follows);
+                                for (var i = 0; i < follows.length; i++) {
+                                    if (follows[i].id == vm.showId) {
+                                        vm.is_follow = true;
+                                        break;
+                                    }
+                                }
+                            })
+                            .catch(function (response) {
+                                console.log(response);
+                            });
+                    //检测是否为好友
+                    axios.post('/flwechat/public/friend/get_friends',
+                            {id: vm.userId, type: 0})
+                            .then(function (response) {
+                                var friends = response.data;
+                                console.log(friends);
+                                for (var i = 0; i < friends.length; i++) {
+                                    if (friends[i].id == vm.showId) {
+                                        vm.is_friend = true;
+                                        break;
+                                    }
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                }
+            },
+        },
+        created: function () {
+            this.getUser();
+        }
+    }
 </script>
 
 <style scoped>
