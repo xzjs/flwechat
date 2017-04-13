@@ -24,13 +24,12 @@
             <img src="../../static/images/more.png" alt="" class="more">
             <img src="../../static/images/up_close.png" alt="" class="close" style="display: none">
         </div>
-
+        <router-view></router-view>
         <!--<div class="content_box"></div>-->
     </div>
 </template>
 
 <script>
-
     export default{
         data(){
             return {
@@ -42,13 +41,15 @@
                 return this.$store.state.topics
             }
         },
-        created(){
-            this.getTopics()
+        created:function () {
+            getTopics();
         },
         methods: {
             getTopics(){
                 this.$store.dispatch('getTopics')
             }
+        },
+        component:{
         }
     }
 </script>
@@ -161,20 +162,4 @@
         font-size: 10px;
         color: #8a8a8a;
     }
-    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-        color: #b2b2b2;
-    }
-    input:-moz-placeholder, textarea:-moz-placeholder {
-        color:#b2b2b2;
-    }
-    input::-moz-placeholder, textarea::-moz-placeholder {
-        color:#b2b2b2;
-    }
-    input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-        color:#b2b2b2;
-    }
-
-
-
-
 </style>

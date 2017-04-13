@@ -17,12 +17,18 @@ export default new Router({
             path:'/',
             name:'Navigation',
             component:Navigation,
-            children:[
-                {
-                    path:'/index',
-                    component:Index
-                }
-            ]
+            // children:[
+            //     {
+            //         path:'/index/:type',
+            //         name:'Index',
+            //         component:Index,
+            //     },
+            //     {
+            //         path:'/follow/',
+            //         name:'Follow',
+            //         component:Index,
+            //     }
+            // ]
         }
     ]
 })

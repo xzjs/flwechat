@@ -9,11 +9,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state:{
-        topics:null
+        topics:null,
+        userId:0
     },
     mutations:{
         setTopics(state,t){
             state.topics=t;
+        },
+        setUserId(state,id){
+            state.userId=id;
         }
     }
     ,
