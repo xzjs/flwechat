@@ -7,6 +7,8 @@ import Main from '@/components/Main'
 import Login from '@/components/Login'
 import Detail from '@/components/Detail'
 import Mine from '@/components/Mine'
+import Show from '@/components/Show'
+import Friend from '@/components/Friend'
 
 Vue.use(Router);
 
@@ -39,8 +41,13 @@ export default new Router({
                             name:'Detail',
                             component:Detail
                         },
+                      {
+                        path:'friend',
+                        name:'Friend',
+                        component:Friend
+                      },
                         {
-                            path:'mine/:id?',
+                            path:'mine/:user_id?',
                             name:'Mine',
                             component:Mine
                         }
@@ -48,7 +55,8 @@ export default new Router({
                 },
                 {
                     path:'show/:id',
-
+                    name:'Show',
+                  component:Show
                 }
             ]
         },
