@@ -179,8 +179,8 @@ var action_module = Vue.extend({
                 </div>
                 <template v-if="article.user_id!=userId">
                 <div class="your_action_right" @click="follow()">
-                    <img v-if="article.is_follow==0" src="images/follow.png" alt="">
-                    <img v-else src="images/follow3.png" alt="">
+                    <p v-if="article.is_follow==0">关注</p>
+                    <p v-else style="color:#0084FF">关注</p>
                 </div>
                 </template>               
             </div>`,
