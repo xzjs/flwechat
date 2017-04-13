@@ -1,35 +1,37 @@
 <template>
-    <div>
-        <transition>
-            <router-view></router-view>
-        </transition>
-        <div class="weui-tabbar">
-            <router-link to="/index" class="weui-tabbar__item weui-bar__item_on">
+    <div class="container">
+        <div>
+            <transition>
+                <router-view></router-view>
+            </transition>
+            <div class="weui-tabbar">
+                <router-link to="/index" class="weui-tabbar__item weui-bar__item_on">
                     <span style="display: inline-block;position: relative;">
                         <img :src="img1" alt="" class="weui-tabbar__icon">
                         <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>-->
                     </span>
-                <p class="weui-tabbar__label">首页</p>
-            </router-link>
-            <router-link to="/follow" class="weui-tabbar__item">
-                <img :src="img2" alt="" class="weui-tabbar__icon">
-                <p class="weui-tabbar__label">关注</p>
-            </router-link>
-            <router-link to="/publish" class="weui-tabbar__item">
-                <img :src="img3" alt="" class="weui-tabbar__icon">
-                <p class="weui-tabbar__label">发布</p>
-            </router-link>
-            <router-link to="/friends" class="weui-tabbar__item">
+                    <p class="weui-tabbar__label">首页</p>
+                </router-link>
+                <router-link to="/follow" class="weui-tabbar__item">
+                    <img :src="img2" alt="" class="weui-tabbar__icon">
+                    <p class="weui-tabbar__label">关注</p>
+                </router-link>
+                <router-link to="/publish" class="weui-tabbar__item">
+                    <img :src="img3" alt="" class="weui-tabbar__icon">
+                    <p class="weui-tabbar__label">发布</p>
+                </router-link>
+                <router-link to="/friends" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img :src="img4" alt="" class="weui-tabbar__icon friend_icon">
                         <!--<span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>-->
                     </span>
-                <p class="weui-tabbar__label">好友</p>
-            </router-link>
-            <router-link to="/mine" class="weui-tabbar__item">
-                <img :src="img5" alt="" class="weui-tabbar__icon mine_icon">
-                <p class="weui-tabbar__label">我</p>
-            </router-link>
+                    <p class="weui-tabbar__label">好友</p>
+                </router-link>
+                <router-link to="/mine" class="weui-tabbar__item">
+                    <img :src="img5" alt="" class="weui-tabbar__icon mine_icon">
+                    <p class="weui-tabbar__label">我</p>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>

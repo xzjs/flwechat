@@ -6,6 +6,7 @@ import Index from '@/components/Index'
 import Main from '@/components/Main'
 import Login from '@/components/Login'
 import Detail from '@/components/Detail'
+import Mine from '@/components/Mine'
 
 Vue.use(Router);
 
@@ -37,6 +38,11 @@ export default new Router({
                             path:'detail/:id',
                             name:'Detail',
                             component:Detail
+                        },
+                        {
+                            path:'mine/:id?',
+                            name:'Mine',
+                            component:Mine
                         }
                     ]
                 },
