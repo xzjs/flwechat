@@ -299,11 +299,16 @@ var app = new Vue({
                 .then(function (response) {
                     vm.user = response.data;
                     console.log(response.data);
+                    if (vm.show_user_id != vm.user_id) {
+                        document.title = vm.user.nickname;
+                    }
+
                 })
                 .catch(function (response) {
                     console.log(response);
                 });
             if (vm.show_user_id != vm.user_id) {
+
                 //检测是否关注
                 axios.post('/flwechat/public/follow/get_follow_list',
                     {id: vm.user_id, type: 0})
