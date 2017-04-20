@@ -5,7 +5,7 @@
                 <router-view></router-view>
             </transition>
             <div class="weui-tabbar">
-                <router-link :to="{name:'Index',params:{topic_id:0}}" class="weui-tabbar__item weui-bar__item_on">
+                <router-link :to="{name:'Index',params:{topic_id:0}}" class="weui-tabbar__item">
                     <span style="display: inline-block;position: relative;">
                         <img :src="img1" alt="" class="weui-tabbar__icon">
                         <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>-->
@@ -52,7 +52,7 @@
         name: 'nav',
         data(){
             return {
-                img1: home1,
+                img1: home2,
                 img2: follow1,
                 img3: release1,
                 img4: friend1,
@@ -61,14 +61,36 @@
         },
         watch: {
             '$route' (to, from){
+                this.img1 = home1;
+                this.img4 = friend1;
+                this.img5 = me1;
+                switch (to.name) {
+                    case "Index":
+                        this.img1 = home2;
+                        break;
+                    case "Friend":
+                        this.img4 = friend2;
+                        break;
+                    case "Mine":
+                        this.img5 = me2;
+                        break;
+                }
             }
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .weui-tabbar {
         position: fixed;
         bottom: 0;
+    }
+
+    .router-link-active {
+
+    p {
+        color: #0084FF;
+    }
+
     }
 </style>

@@ -16,15 +16,15 @@
                 </div>
             </div>
             <div class="my_messages_right">
-                <img v-if="show_user_id==user_id" class="follow_action" src="../../static/images/message.png" alt="">
-                <img v-else-if="is_follow==true" class="follow_action" src="images/follow3.png" alt=""
+                <img v-if="showId==userId" class="follow_action" src="../../static/images/message.png" alt="">
+                <img v-else-if="is_follow==true" class="follow_action" src="../../static/images/follow3.png" alt=""
                      @click="cancelFollow()">
-                <img v-else class="follow_action" src="images/follow.png" alt="" @click="follow()">
+                <img v-else class="follow_action" src="../../static/images/follow.png" alt="" @click="follow()">
 
                 <div class="my_messages_friend">
-                    <img v-if="show_user_id==user_id" src="../../static/images/add_friend.png" alt="" @click="goMessage()">
-                    <img v-else-if="is_friend==true" src="images/add_friend2.png" alt="">
-                    <img v-else src="images/add_friend.png" alt="" @click="makeFriend()">
+                    <img v-if="showId==user_id" src="../../static/images/add_friend.png" alt="" @click="goMessage()">
+                    <img v-else-if="is_friend==true" src="../../static/images/add_friend2.png" alt="">
+                    <img v-else src="../../static/images/add_friend.png" alt="" @click="makeFriend()">
                     <span class="weui-badge weui-badge_dot"
                           style="position: absolute;top: 5px;right: 15px;display: none"></span>
                 </div>
@@ -33,13 +33,13 @@
         <div class="messages">
             <ul>
                 <li :class="{selected:select[1]}" @click="getArticles(1)">发布</li>
-                <li v-if="showId==0" :class="{selected:select[0]}" @click="getArticles(0)">收藏</li>
+                <li v-if="showId==userId" :class="{selected:select[0]}" @click="getArticles(0)">收藏</li>
                 <li :class="{selected:select[2]}" @click="getArticles(2)">关注</li>
             </ul>
         </div>
-        <div class="blank" v-if="show"><img src="images/none.png" alt=""></div>
+        <div class="blank" v-if="show"><img src="../../static/images/none.png" alt=""></div>
         <div class="my_article_box">
-            <!--<article-list :article_list="items"></article-list>-->
+            <articles :article_list="items"></articles>
         </div>
     </div>
 </template>
@@ -47,10 +47,12 @@
 <script>
     import axios from 'axios';
     import {mapState} from 'vuex';
+    import articles from '@/components/Article';
 
     export default{
         data: function () {
             return {
+                show:true,
                 user: {},
                 showId: 0,
                 is_follow: false,
@@ -65,13 +67,9 @@
         methods: {
             getUser: function () {
                 var vm = this;
-                axios.get('/flwechat/public/user/' + this.userId)
+                axios.get('/flwechat/public/user/' + this.showId)
                         .then(function (response) {
                             vm.user = response.data;
-                            vm.showId = vm.$route.id;
-                            if(vm.showId==null){
-                                vm.showId=0;
-                            }
                         })
                         .catch(function (response) {
                             console.log(response);
@@ -82,7 +80,6 @@
                             {id: vm.userId, type: 0})
                             .then(function (response) {
                                 var follows = response.data;
-                                console.log(follows);
                                 for (var i = 0; i < follows.length; i++) {
                                     if (follows[i].id == vm.showId) {
                                         vm.is_follow = true;
@@ -98,7 +95,6 @@
                             {id: vm.userId, type: 0})
                             .then(function (response) {
                                 var friends = response.data;
-                                console.log(friends);
                                 for (var i = 0; i < friends.length; i++) {
                                     if (friends[i].id == vm.showId) {
                                         vm.is_friend = true;
@@ -111,9 +107,47 @@
                             });
                 }
             },
+            getArticles: function (index) {
+                var vm = this;
+                for (var i = 0; i < vm.select.length; i++) {
+                    vm.select[i] = false;
+                }
+                vm.select[index] = true;
+                switch (index) {
+                    case 0:
+                        vm.postData = {page: 0, size: 15, user_id: vm.showId, is_public: 0, type: 4};
+                        break;
+                    case 1:
+                        vm.postData = {page: 0, size: 15, user_id: vm.showId, is_public: 1, type: 4};
+                        break;
+                    case 2:
+                        vm.postData = {page: 0, size: 15, user_id: vm.showId, follow_article: 1};
+                        break;
+                }
+                axios.post('/flwechat/public/article/article_list', vm.postData)
+                        .then(
+                                function (response) {
+                                    vm.items = response.data;
+                                    if (response.data.length > 0) {
+                                        vm.show = false;
+                                    } else {
+                                        vm.show = true;
+                                    }
+                                }, function (response) {
+                                    console.log(response.data);
+                                });
+            },
         },
         mounted: function () {
+            this.showId = this.$route.params.id;
+            if(this.showId==null){
+                this.showId=this.userId;
+            }
             this.getUser();
+            this.getArticles(1);
+        },
+        components:{
+            articles
         }
     }
 </script>
@@ -121,6 +155,11 @@
 <style scoped>
     .container{
         background-color: #f5f5f5;
+    }
+    .my_messages{
+        height:88px;
+        padding:8px;
+        border-bottom:1px solid #bababa;
     }
     .my_messages_middle{
         float: left;
@@ -167,7 +206,7 @@
     .messages ul li a{
         width:100%;
     }
-    .selected{
+    .messages .selected{
         color:#0084FF;
     }
     .blank{
