@@ -16,15 +16,15 @@
                 </div>
             </div>
             <div class="my_messages_right">
-                <img v-if="showId==userId" class="follow_action" src="../../static/images/message.png" alt="">
-                <img v-else-if="is_follow==true" class="follow_action" src="../../static/images/follow3.png" alt=""
+                <img v-if="showId==userId" class="follow_action" src="../assets/images/message.png" alt="">
+                <img v-else-if="is_follow==true" class="follow_action" src="../assets/images/follow3.png" alt=""
                      @click="cancelFollow()">
-                <img v-else class="follow_action" src="../../static/images/follow.png" alt="" @click="follow()">
+                <img v-else class="follow_action" src="../assets/images/follow.png" alt="" @click="follow()">
 
                 <div class="my_messages_friend">
-                    <img v-if="showId==user_id" src="../../static/images/add_friend.png" alt="" @click="goMessage()">
-                    <img v-else-if="is_friend==true" src="../../static/images/add_friend2.png" alt="">
-                    <img v-else src="../../static/images/add_friend.png" alt="" @click="makeFriend()">
+                    <img v-if="showId==user_id" src="../assets/images/add_friend.png" alt="" @click="goMessage()">
+                    <img v-else-if="is_friend==true" src="../assets/images/add_friend2.png" alt="">
+                    <img v-else src="../assets/images/add_friend.png" alt="" @click="makeFriend()">
                     <span class="weui-badge weui-badge_dot"
                           style="position: absolute;top: 5px;right: 15px;display: none"></span>
                 </div>
@@ -37,7 +37,7 @@
                 <li :class="{selected:select[2]}" @click="getArticles(2)">关注</li>
             </ul>
         </div>
-        <div class="blank" v-if="show"><img src="../../static/images/none.png" alt=""></div>
+        <div class="blank" v-if="show"><img src="@/assets/images/none.png" alt=""></div>
         <div class="my_article_box">
             <articles :article_list="items"></articles>
         </div>

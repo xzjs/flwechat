@@ -1,19 +1,18 @@
 <template>
   <div>
-    <index-list>
-      <index-section v-for="(value, key) in map" :index="key" :key="key">
-        <cell v-for="item in value" :title="item.nickname" :key="item.id">
+    <mt-index-list>
+      <mt-index-section v-for="(value, key) in map" :index="key" :key="key">
+        <mt-cell v-for="item in value" :title="item.nickname" :key="item.id">
           <img slot="icon" :src="item.head_img" width="30" height="30">
-        </cell>
-      </index-section>
-    </index-list>
+        </mt-cell>
+      </mt-index-section>
+    </mt-index-list>
   </div>
 </template>
 
 <script>
-  import { IndexList, IndexSection ,Cell} from 'mint-ui';
+
   import {mapState} from 'vuex';
-  import axios from 'axios';
 
   export default{
     data:function () {
@@ -25,11 +24,6 @@
     computed: mapState([
       'userId'
     ]),
-    components:{
-      "index-list":IndexList,
-      "index-section":IndexSection,
-      "cell":Cell
-    },
     methods:{
       parseData:function () {
         var vm=this;

@@ -1,5 +1,5 @@
 <template>
-    <div class=" swiper-container pic_show">
+    <div class="swiper-container pic_show">
         <div  class="swiper-wrapper pic_show_list">
             <div v-for="img in images" class="swiper-slide userImg" @click="show_img(img.id)" >
                 <img :src="'http://images.frilink.cn/' + img.img+'_image'" alt="" class="img_show">
@@ -10,7 +10,10 @@
 </template>
 
 <script>
-    import Swiper from '../../static/js/swiper.min.js';
+    import Swiper from 'swiper';
+    import 'swiper/dist/css/swiper.min.css';
+    import 'swiper/dist/js/swiper.min.js';
+
     export default {
         props: ['images'],
         methods: {
@@ -39,8 +42,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    @import "../../static/css/swiper.min.css";
-
     /*图片大小调整*/
     /*ipad mini 768*1024*/
     @media screen and (min-width: 768px)and (max-width: 1024px){

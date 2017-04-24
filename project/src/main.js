@@ -5,13 +5,18 @@ import VueRouter from 'vue-router'
 import App from './App'
 import routes from './router'
 import store from './store'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+import '@/assets/css/weui.min.css'
 
-Vue.config.productionTip = false
-Vue.config.debug = true
+Vue.config.productionTip = false;
+Vue.config.debug = true;
 
-import $ from 'jquery';
+import jQuery from 'jquery'
+window.$ = window.jQuery = jQuery;
 
 Vue.use(VueRouter);
+Vue.use(MintUI);
 
 const router = new VueRouter({
     routes

@@ -1,6 +1,5 @@
 import App from '../App.vue';
 
-const Hello = resolve=>require(['../components/Hello'], resolve);
 const Navigation = resolve=>require(['../components/Navigation'], resolve);
 const Index = resolve=>require(['../components/Index'], resolve);
 const Main = resolve=>require(['../components/Main'], resolve);
@@ -9,23 +8,18 @@ const Detail = resolve=>require(['../components/Detail'], resolve);
 const Mine = resolve=>require(['../components/Mine'], resolve);
 const Show = resolve=>require(['../components/Show'], resolve);
 const Friend = resolve=>require(['../components/Friend'], resolve);
-
+const Publish = resolve=>require(['../components/Publish'], resolve);
 
 export default [{
     path: '/',
     component: App,
     children: [
         {
-            path: '/hello',
-            name: 'Hello',
-            component: Hello
-        },
-        {
             path: '',
             redirect: '/main/nav/index/0'
         },
         {
-            path: '/main',
+            path: 'main',
             component: Main,
             children: [
                 {
@@ -51,6 +45,11 @@ export default [{
                             path: 'mine/:id?',
                             name: 'Mine',
                             component: Mine
+                        },
+                        {
+                            path:'publish/:article_id?',
+                            name:'Publish',
+                            component:Publish
                         }
                     ]
                 },
@@ -62,7 +61,7 @@ export default [{
             ]
         },
         {
-            path: '/login/:id',
+            path: 'login/:id',
             name: 'Login',
             component: Login
         }

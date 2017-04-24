@@ -2,7 +2,7 @@
     <div class="your_action">
         <div v-if="!is_comment" class="your_action_right">
             <a  :href="'article_detail.html?reply_id=' + my_article.reply_id">
-                <img src="../../static/images/back_to_original.png" alt="">
+                <img src="../assets/images/back_to_original.png" alt="">
                 <span>原文</span>
             </a>
         </div>
@@ -19,8 +19,8 @@
         </div>
         <template v-if="my_article.user_id!=userId">
             <div class="your_action_right" @click="follow()">
-                <img v-if="my_article.is_follow==0" src="../../static/images/follow.png" alt="">
-                <img v-else src="../../static/images/follow3.png" alt="">
+                <img v-if="my_article.is_follow==0" src="../assets/images/follow.png" alt="">
+                <img v-else src="../assets/images/follow3.png" alt="">
             </div>
         </template>
     </div>

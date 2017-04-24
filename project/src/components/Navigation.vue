@@ -16,7 +16,7 @@
                     <img :src="img2" alt="" class="weui-tabbar__icon">
                     <p class="weui-tabbar__label">关注</p>
                 </router-link>
-                <router-link to="/publish" class="weui-tabbar__item">
+                <router-link :to="{name:'Publish'}" class="weui-tabbar__item">
                     <img :src="img3" alt="" class="weui-tabbar__icon">
                     <p class="weui-tabbar__label">发布</p>
                 </router-link>
@@ -37,16 +37,16 @@
 </template>
 
 <script>
-    import home1 from '../../static/images/homepage.png';
-    import home2 from '../../static/images/homepage2.png';
-    import follow1 from '../../static/images/follow.png';
-    import follow2 from '../../static/images/follow2.png';
-    import release1 from '../../static/images/release.png';
-    import release12 from '../../static/images/release2.png';
-    import friend1 from '../../static/images/friend.png';
-    import friend2 from '../../static/images/friend2.png';
-    import me1 from '../../static/images/me.png';
-    import me2 from '../../static/images/me2.png';
+    import home1 from '@/assets/images/homepage.png';
+    import home2 from '@/assets/images/homepage2.png';
+    import follow1 from '@/assets/images/follow.png';
+    import follow2 from '@/assets/images/follow2.png';
+    import release1 from '@/assets/images/release.png';
+    import release2 from '@/assets/images/release2.png';
+    import friend1 from '@/assets/images/friend.png';
+    import friend2 from '@/assets/images/friend2.png';
+    import me1 from '@/assets/images/me.png';
+    import me2 from '@/assets/images/me2.png';
 
     export default{
         name: 'nav',
@@ -74,6 +74,9 @@
                     case "Mine":
                         this.img5 = me2;
                         break;
+                    case "Publish":
+                        this.img3=release2;
+                        break;
                 }
             }
         }
@@ -88,9 +91,9 @@
 
     .router-link-active {
 
-    p {
-        color: #0084FF;
-    }
+        p {
+            color: #0084FF;
+        }
 
     }
 </style>
