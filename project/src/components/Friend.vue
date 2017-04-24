@@ -2,9 +2,11 @@
   <div>
     <index-list>
       <index-section v-for="(value, key) in map" :index="key" :key="key">
-        <cell v-for="item in value" :title="item.nickname" :key="item.id">
-          <img slot="icon" :src="item.head_img" width="30" height="30">
-        </cell>
+        <router-link :to="{name:'Mine',params:{id:item.id}}" v-for="item in value">
+          <cell :title="item.nickname" :key="item.id">
+            <img slot="icon" :src="item.head_img" width="30" height="30">
+          </cell>
+        </router-link>
       </index-section>
     </index-list>
   </div>
@@ -79,7 +81,7 @@
           }
         }
         return MAP[idx];
-      },
+      }
     },
     mounted:function () {
       this.parseData();
