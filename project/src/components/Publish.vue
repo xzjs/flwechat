@@ -1,13 +1,13 @@
 <template>
-    <div class="container">
+    <div>
         <form class="publish_content" action="" method="post" enctype="multipart/form-data">
             <div class="weui-cells__title">话题分类 <sup>*</sup></div>
             <div class="weui-cells">
                 <div class="weui-cell weui-cell_select">
                     <div class="weui-cell__bd">
-                        <select class="weui-select" name="select1" id="topic_select">
+                        <select class="weui-select" name="select1" id="topic_select" v-model="topicId">
                             <option selected="selected" value="0">请选择话题分类</option>
-                            <option v-for="item in topics" selected="" :value="item.id">{{item.content}}</option>
+                            <option v-for="item in topics" :value="item.id">{{item.content}}</option>
                         </select>
                     </div>
                 </div>
@@ -16,7 +16,7 @@
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <textarea class="weui-textarea" id="comment" placeholder="请输入文本" rows="3"></textarea>
+                        <textarea class="weui-textarea" id="comment" placeholder="请输入文本" rows="3" v-model="comment"></textarea>
                     </div>
                 </div>
             </div>
@@ -28,12 +28,14 @@
                            accept="image">
                 </div>
                 <div class="pic_insert" id="pic_insert2">
-                    <img src="../assets/images/pic_insert.png" alt="" class="pic_preview" id="pic_file2">
-                    <input class="pic_input" id="pic_files2" type="file" name="pic_file2">
+                    <img :src="image[1]" alt="" class="pic_preview" id="pic_file2">
+                    <input class="pic_input" id="pic_files2" type="file" name="pic_file2" @change="change(1,$event)"
+                           accept="image">
                 </div>
                 <div class="pic_insert" id="pic_insert3">
-                    <img src="../assets/images/pic_insert.png" alt="" class="pic_preview" id="pic_file3">
-                    <input class="pic_input" id="pic_files3" type="file" name="pic_file3">
+                    <img :src="image[2]" alt="" class="pic_preview" id="pic_file3">
+                    <input class="pic_input" id="pic_files3" type="file" name="pic_file3" @change="change(2,$event)"
+                           accept="image">
                 </div>
             </div>
             <!--<div id="pic_blank">-->
@@ -42,18 +44,35 @@
             <div class="weui-cells__title">公开/仅自己可见</div>
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell weui-cell_switch">
-                    <div class="weui-cell__bd" id="open_close">公开</div>
+                    <div class="weui-cell__bd" id="open_close">{{publicText}}</div>
                     <div class="weui-cell__ft">
-                        <input id="checkbox" class="weui-switch" type="checkbox" checked>
+                        <mt-switch v-model="isPublic"></mt-switch>
                     </div>
                 </div>
             </div>
         </form>
-        <div>
-            <a href="javascript:;" class="weui-btn weui-btn_primary" id="showIOSDialog1">提交</a>
-        </div>
-        <mt-popup v-model="popupVisible" position="right" >
-            <canvas id="canvas"></canvas>
+        <el-row type="flex" justify="space-around" class="row">
+            <el-col :span="22">
+                <mt-button type="primary" class="button" @click="submit">提交</mt-button>
+            </el-col>
+        </el-row>
+        <mt-popup v-model="popupVisible" position="right">
+            <el-row>
+                <el-col>
+                    <canvas id="canvas" :width="width" :height="height"></canvas>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="end" class="row">
+                <el-col :span="4">
+                    <el-button @click="cancel">取消</el-button>
+                </el-col>
+                <el-col :span="4">
+                    <el-button @click="clear">清除</el-button>
+                </el-col>
+                <el-col :span="4">
+                    <el-button type="info" @click="save">确认</el-button>
+                </el-col>
+            </el-row>
         </mt-popup>
     </div>
 </template>
@@ -61,18 +80,42 @@
 <script>
     import {mapState} from 'vuex';
     import insert from '../assets/images/pic_insert.png';
-    import Exif from 'exif-js'
+    import Exif from 'exif-js';
+    import SignaturePad from 'signature_pad';
+    import { MessageBox } from 'mint-ui';
 
     export default{
         data(){
             return {
-                image: [insert,insert,insert],
-                popupVisible:false
+                image: [insert, insert, insert],
+                popupVisible: false,
+                width: screen.availWidth,
+                height: 0,
+                signaturePad: null,
+                index: -1,
+                positions: [],
+                imageWidth: 0,
+                isPublic: true,
+                topicId: 0,
+                articleId: 0,
+                comment:''
             }
         },
-        computed: mapState(['topics']),
+        computed: {
+            publicText: function () {
+                if (this.public) {
+                    return '公开';
+                } else {
+                    return '仅自己可见';
+                }
+            },
+            ...mapState(['topics'])
+
+        },
         methods: {
             change: function (index, event) {
+                this.index = index;
+                var vm = this;
                 let file = event.target.files[0];
                 let Orientation;
                 Exif.getData(file, function () {
@@ -84,14 +127,36 @@
                     var result = this.result;
                     let img = new Image();
                     img.src = result;
-                    if(this.result.length>(100*1024)||Orientation!=1){
-                        result=self.compress(img,Orientation);
+                    if (this.result.length > (100 * 1024) || Orientation != 1) {
+                        img.onload = function () {
+                            console.log(img.width, img.height);
+                            if (Orientation == 6 || Orientation == 8) {
+                                vm.height = img.width * vm.width / img.height;
+                                vm.imageWidth = img.height;
+                            } else {
+                                vm.height = img.height * vm.width / img.width;
+                                vm.imageWidth = img.width;
+                            }
+                            result = vm.compress(img, Orientation);
+                            $('#canvas').css('background-image', 'url(' + result + ')');
+                            $('#canvas').css('background-size', "cover");
+                            vm.changePopupStatus();
+                            vm.image[index] = result;
+                        };
                     }
-                    $('#canvas').css('background-image', 'url(' + img + ')');
-                    this.changePopupStatus();
+
+                    vm.signaturePad = new SignaturePad($('#canvas')[0], {
+                        penColor: "rgb(229,43,28)",
+                        onBegin: function () {
+                            console.log('begin');
+                        },
+                        onEnd: function () {
+                            console.log('end');
+                        }
+                    });
                 }
             },
-            rotateImg (img, direction,canvas) {
+            rotateImg (img, direction, canvas) {
                 //最小与最大旋转方向，图片旋转4次后回到原方向
                 const min_step = 0;
                 const max_step = 3;
@@ -140,7 +205,7 @@
                         break;
                 }
             },
-            compress(img,Orientation) {
+            compress(img, Orientation) {
                 let canvas = document.createElement("canvas");
                 let ctx = canvas.getContext('2d');
                 //瓦片canvas
@@ -184,17 +249,17 @@
                     ctx.drawImage(img, 0, 0, width, height);
                 }
                 //修复ios上传图片的时候 被旋转的问题
-                if(Orientation != "" && Orientation != 1){
-                    switch(Orientation){
+                if (Orientation != "" && Orientation != 1) {
+                    switch (Orientation) {
                         case 6://需要顺时针（向左）90度旋转
-                            this.rotateImg(img,'left',canvas);
+                            this.rotateImg(img, 'left', canvas);
                             break;
                         case 8://需要逆时针（向右）90度旋转
-                            this.rotateImg(img,'right',canvas);
+                            this.rotateImg(img, 'right', canvas);
                             break;
                         case 3://需要180度旋转
-                            this.rotateImg(img,'right',canvas);//转两次
-                            this.rotateImg(img,'right',canvas);
+                            this.rotateImg(img, 'right', canvas);//转两次
+                            this.rotateImg(img, 'right', canvas);
                             break;
                     }
                 }
@@ -206,14 +271,77 @@
                 tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
                 return ndata;
             },
-            changePopupStatus:function () {
-                this.popupVisible=!this.popupVisible;
+            changePopupStatus: function () {
+                this.popupVisible = !this.popupVisible;
+            },
+            cancel: function () {
+                this.changePopupStatus();
+                this.image[this.index] = insert;
+            },
+            clear: function () {
+                this.signaturePad.clear();
+            },
+            save: function () {
+                let points = this.signaturePad.toData();
+                var position = {
+                    'max_x': points[0][0].x,
+                    'min_x': points[0][0].x,
+                    'max_y': points[0][0].y,
+                    'min_y': points[0][0].y
+                };
+                for (var i = 0; i < points.length; i++) {
+                    for (var j = 1; j < points[i].length; j++) {
+                        position.max_x = Math.max(position.max_x, points[i][j].x);
+                        position.min_x = Math.max(Math.min(position.min_x, points[i][j].x), 0);
+                        position.max_y = Math.max(position.max_y, points[i][j].y);
+                        position.min_y = Math.max(Math.min(position.min_y, points[i][j].y), 0);
+                    }
+                }
+                this.changePopupStatus();
+                this.clear();
+                var canvas = $('#canvas')[0];
+                var context = canvas.getContext('2d');
+                context.strokeStyle = "red";
+                context.strokeRect(position.min_x, position.min_y, (position.max_x - position.min_x), (position.max_y - position.min_y));
+                position.mark = canvas.toDataURL();
+                var scale = this.imageWidth / this.width;
+                position.max_x *= scale;
+                position.min_x *= scale;
+                position.max_y *= scale;
+                position.min_y *= scale;
+                this.positions[this.index] = position;
+            },
+            getTopics: function () {
+                if (this.$store.state.topics == null) {
+                    this.$store.dispatch('getTopics')
+                }
+            },
+            submit: function () {
+                if(this.topicId==0){
+                    MessageBox('提示', '请选择一个话题分类');
+                    return;
+                }
+                if(this.comment==''){
+                    MessageBox('提示', '说点什么吧');
+                    return;
+                }
+                if(this.articleId==0&&this.positions.length==0){
+                    MessageBox('提示', '请至少上传一张图片');
+                    return;
+                }
+            }
+        },
+        mounted: function () {
+            this.getTopics();
+            var id = this.$route.params.article_id;
+            if (id != null) {
+                this.articleId = id;
             }
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
     *:focus {
         outline: none;
@@ -376,4 +504,11 @@
         list-style-position: inside;
     }
 
+    .row {
+        margin: 10px auto;
+    }
+
+    .button {
+        width: 100%;
+    }
 </style>

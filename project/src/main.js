@@ -8,6 +8,8 @@ import store from './store'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import '@/assets/css/weui.min.css'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
 
 Vue.config.productionTip = false;
 Vue.config.debug = true;
@@ -17,6 +19,7 @@ window.$ = window.jQuery = jQuery;
 
 Vue.use(VueRouter);
 Vue.use(MintUI);
+Vue.use(ElementUI);
 
 const router = new VueRouter({
     routes

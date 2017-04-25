@@ -2,8 +2,8 @@
   <div>
     <index-list>
       <index-section v-for="(value, key) in map" :index="key" :key="key">
-        <router-link :to="{name:'Mine',params:{id:item.id}}" v-for="item in value">
-          <cell :title="item.nickname" :key="item.id">
+        <router-link :to="{name:'Mine',params:{id:item.id}}" v-for="item in value" :key="item.id">
+          <cell :title="item.nickname">
             <img slot="icon" :src="item.head_img" width="30" height="30">
           </cell>
         </router-link>
