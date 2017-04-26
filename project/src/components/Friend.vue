@@ -1,84 +1,83 @@
 <template>
-  <div>
-    <index-list>
-      <index-section v-for="(value, key) in map" :index="key" :key="key">
-        <router-link :to="{name:'Mine',params:{id:item.id}}" v-for="item in value" :key="item.id">
-          <cell :title="item.nickname">
-            <img slot="icon" :src="item.head_img" width="30" height="30">
-          </cell>
-        </router-link>
-      </index-section>
-    </index-list>
-  </div>
+    <mt-index-list>
+        <mt-index-section v-for="(value, key) in map" :index="key" :key="key">
+            <mt-cell :title="item.nickname" :to="{name:'Mine',params:{id:item.id}}" is-link v-for="item in value"
+                     :key="item.id">
+                <img slot="icon" :src="item.head_img" width="30" height="30">
+            </mt-cell>
+        </mt-index-section>
+    </mt-index-list>
 </template>
 
 <script>
 
-  import {mapState} from 'vuex';
+    import {mapState} from 'vuex';
 
-  export default{
-    data:function () {
-      return{
-        map:{},
-        users:[]
-      }
-    },
-    computed: mapState([
-      'userId'
-    ]),
-    methods:{
-      parseData:function () {
-        var vm=this;
-        axios.post('/flwechat/public/friend/get_friends',{id:this.userId,type:0})
-                .then(function (response) {
-                  vm.users=response.data;
-                  var firstCharUpper;
-                  var m={};
-                  vm.users.forEach(function(item){
-                    firstCharUpper = vm.getFirstUpperChar(item.nickname);
-                    if (m.hasOwnProperty(firstCharUpper)) {
-                      m[firstCharUpper].push(item);
-                    } else {
-                      m[firstCharUpper]=[item];
+    export default{
+        data: function () {
+            return {
+                map: {},
+                users: []
+            }
+        },
+        computed: mapState([
+            'userId'
+        ]),
+        methods: {
+            parseData: function () {
+                var vm = this;
+                console.log(this.uderId);
+                axios.post('/flwechat/public/friend/get_friends', {id: this.userId, type: 0})
+                        .then(function (response) {
+                            vm.users = response.data;
+                            var firstCharUpper;
+                            var m = {};
+                            vm.users.forEach(function (item) {
+                                firstCharUpper = vm.getFirstUpperChar(item.nickname);
+                                if (m.hasOwnProperty(firstCharUpper)) {
+                                    m[firstCharUpper].push(item);
+                                } else {
+                                    m[firstCharUpper] = [item];
+                                }
+                            });
+                            vm.map = m;
+                        })
+                        .catch(function (response) {
+                            console.log(response.data);
+                        })
+            },
+            getFirstUpperChar: function (str) {
+                var str = String(str);
+                var c = str[0];
+                if (/[^\u4e00-\u9fa5]/.test(c)) {
+                    return c.toUpperCase();
+                }
+                else {
+                    return this.chineseToEnglish(c);
+                }
+            },
+            chineseToEnglish: function (c) {
+                var idx = -1;
+                var MAP = 'ABCDEFGHJKLMNOPQRSTWXYZ';
+                var boundaryChar = '驁簿錯鵽樲鰒餜靃攟鬠纙鞪黁漚曝裠鶸蜶籜鶩鑂韻糳';
+                if (!String.prototype.localeCompare) {
+                    throw Error('String.prototype.localeCompare not supported.');
+                }
+                if (/[^\u4e00-\u9fa5]/.test(c)) {
+                    return c;
+                }
+                for (var i = 0; i < boundaryChar.length; i++) {
+                    if (boundaryChar[i].localeCompare(c, 'zh-CN-u-co-pinyin') >= 0) {
+                        idx = i;
+                        break;
                     }
-                  });
-                  vm.map=m;
-                })
-                .catch(function (response) {
-                  console.log(response.data);
-                })
-      },
-      getFirstUpperChar: function(str){
-        var str = String(str);
-        var c = str[0];
-        if (/[^\u4e00-\u9fa5]/.test(c)) {
-          return c.toUpperCase();
+                }
+                return MAP[idx];
+            }
+        },
+        mounted: function () {
+            this.parseData();
+            console.log('hi');
         }
-        else {
-          return this.chineseToEnglish(c);
-        }
-      },
-      chineseToEnglish: function(c){
-        var idx = -1;
-        var MAP = 'ABCDEFGHJKLMNOPQRSTWXYZ';
-        var boundaryChar = '驁簿錯鵽樲鰒餜靃攟鬠纙鞪黁漚曝裠鶸蜶籜鶩鑂韻糳';
-        if (!String.prototype.localeCompare) {
-          throw Error('String.prototype.localeCompare not supported.');
-        }
-        if (/[^\u4e00-\u9fa5]/.test(c)) {
-          return c;
-        }
-        for (var i = 0; i < boundaryChar.length; i++) {
-          if (boundaryChar[i].localeCompare(c, 'zh-CN-u-co-pinyin') >= 0) {
-            idx = i;
-            break;
-          }
-        }
-        return MAP[idx];
-      }
-    },
-    mounted:function () {
-      this.parseData();
     }
-  }
 </script>

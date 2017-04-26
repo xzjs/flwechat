@@ -1,7 +1,6 @@
 <template>
     <div class="container">
-        <div>
-            <transition>
+            <transition name="fade" mode="out-in">
                 <router-view></router-view>
             </transition>
             <div class="weui-tabbar">
@@ -32,7 +31,6 @@
                     <p class="weui-tabbar__label">我</p>
                 </router-link>
             </div>
-        </div>
     </div>
 </template>
 
@@ -59,11 +57,15 @@
                 img5: me1
             }
         },
+        mounted:function () {
+            $('.container').height($(window).height());
+        },
         watch: {
             '$route' (to, from){
                 this.img1 = home1;
                 this.img4 = friend1;
                 this.img5 = me1;
+                this.img3=release1;
                 switch (to.name) {
                     case "Index":
                         this.img1 = home2;
@@ -75,7 +77,7 @@
                         this.img5 = me2;
                         break;
                     case "Publish":
-                        this.img3=release2;
+                        this.img3 = release2;
                         break;
                 }
             }

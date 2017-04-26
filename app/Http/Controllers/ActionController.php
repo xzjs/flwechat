@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Action;
 use App\Article;
+use App\Notice;
 use Illuminate\Http\Request;
 
 class ActionController extends Controller
@@ -41,10 +42,17 @@ class ActionController extends Controller
             if ($action->id == null) {
                 $action->save();
                 $article = Article::find($request->article_id);
+
+                $notice=new Notice;
+                $notice->to=$article.user.id;
+                $notice->from=$request->user_id;
+
                 if ($request->type == 0) {
                     $article->support_num += 1;
+                    $notice->type=1;
                 } else {
                     $article->oppose_num += 1;
+                    $notice->type=2;
                 }
                 $article->save();
                 return response('true');

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <div class="weui-search-bar" id="searchBar">
             <form class="weui-search-bar__form" onsubmit="return check()">
                 <div class="weui-search-bar__box">

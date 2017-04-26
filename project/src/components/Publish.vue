@@ -110,7 +110,7 @@
                     return '仅自己可见';
                 }
             },
-            ...mapState(['topics', 'userId'])
+            ...mapState(['topics', 'userId','article'])
         },
         methods: {
             change: function (index, event) {
@@ -317,7 +317,7 @@
                         this.$store.dispatch('getTopics')
                     }
                 }else{
-
+                    this.topicId=this.article.topic_id;
                 }
             },
             submit: function () {

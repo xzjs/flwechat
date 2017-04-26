@@ -1,23 +1,20 @@
 <template>
-    <div>
-        <transition name="router-fade" mode="out-in">
-            <router-view></router-view>
-        </transition>
-    </div>
+    <router-view></router-view>
 </template>
 
 <script>
 
-export default {
-  name: 'app',
+    export default {
+        name: 'app',
 
-}
+    }
 </script>
 <style>
-  *:focus{
-    outline:none;
-  }
-  a{
-    color: #000;
-  }
+    *:focus {
+        outline: none;
+    }
+
+    a {
+        color: #000;
+    }
 </style>
