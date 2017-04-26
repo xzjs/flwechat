@@ -56,7 +56,7 @@ class ArticleController extends Controller
     {
         try {
             $id = $request->id;
-            $arr = ['pic_file1', 'pic_file2', 'pic_file3'];
+            $arr = ['image0', 'image1', 'image2'];
             if ($id == null) {
                 $article = new Article;
                 $article->user_id = $request->user_id;
@@ -79,31 +79,25 @@ class ArticleController extends Controller
 
                 foreach ($arr as $value) {
                     if ($request->$value != null) {
-                        $path = $request->file($value . 'file')->store('public');
-                        $path = explode('/', $path)[1];
+                        $temp = $request->$value;
+                        $pic = $this->store_base64($temp['img']);
 
-                        $disk=\Storage::disk('qiniu');
-                        if(!$disk->exists($path)){
-                            $disk->put($path,Storage::get('public/'.$path));
+                        $disk = \Storage::disk('qiniu');
+                        if (!$disk->exists($pic)) {
+                            $disk->put($pic, Storage::get('public/' . $pic));
                         }
 
-                        $temp = \GuzzleHttp\json_decode($request->$value);
-                        $r = explode(',', $temp->mark);
-                        $img = base64_decode($r[1]);
-                        $img_name = time() . rand(0, 10000) . '.png';
-                        $status = Storage::put("public/$img_name", $img);
-                        if ($status == false) {
-                            throw new \Exception('图片存储错误');
-                        }
+                        $mark = $this->store_base64($temp['position']['mark']);
+
                         $img = new Image;
-                        $img->img = $path;
+                        $img->img = $pic;
                         $img->article_id = $article->id;
                         $img->position = $value;
-                        $img->max_x = $temp->max_x;
-                        $img->min_x = $temp->min_x;
-                        $img->max_y = $temp->max_y;
-                        $img->min_y = $temp->min_y;
-                        $img->mark = $img_name;
+                        $img->max_x = $temp['position']['max_x'];
+                        $img->min_x = $temp['position']['min_x'];
+                        $img->max_y = $temp['position']['max_y'];
+                        $img->min_y = $temp['position']['min_y'];
+                        $img->mark = $mark;
                         $article->images()->save($img);
                         dispatch(new GetUrl($img));
                     }
@@ -288,5 +282,24 @@ class ArticleController extends Controller
         foreach ($article_ids as $article_id) {
             $this->get_img_after($article_id);
         }
+    }
+
+    /**
+     * 存储base64的图片
+     * @param $base64 图片base64字符串
+     * @return string 存储后的图片名
+     * @throws \Exception 图片存储异常
+     */
+    private function store_base64($base64)
+    {
+        $r = explode(',', $base64);
+        $img_name = md5($base64) . '.png';
+
+        $img = base64_decode($r[1]);
+        $status = Storage::put("public/$img_name", $img);
+        if ($status == false) {
+            throw new \Exception('图片存储错误');
+        }
+        return $img_name;
     }
 }

@@ -16,7 +16,8 @@
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <textarea class="weui-textarea" id="comment" placeholder="请输入文本" rows="3" v-model="comment"></textarea>
+                        <textarea class="weui-textarea" id="comment" placeholder="请输入文本" rows="3"
+                                  v-model="comment"></textarea>
                     </div>
                 </div>
             </div>
@@ -82,7 +83,7 @@
     import insert from '../assets/images/pic_insert.png';
     import Exif from 'exif-js';
     import SignaturePad from 'signature_pad';
-    import { MessageBox } from 'mint-ui';
+    import {MessageBox} from 'mint-ui';
 
     export default{
         data(){
@@ -98,7 +99,7 @@
                 isPublic: true,
                 topicId: 0,
                 articleId: 0,
-                comment:''
+                comment: ''
             }
         },
         computed: {
@@ -109,8 +110,7 @@
                     return '仅自己可见';
                 }
             },
-            ...mapState(['topics'])
-
+            ...mapState(['topics', 'userId'])
         },
         methods: {
             change: function (index, event) {
@@ -312,31 +312,69 @@
                 this.positions[this.index] = position;
             },
             getTopics: function () {
-                if (this.$store.state.topics == null) {
-                    this.$store.dispatch('getTopics')
+                if(this.articleId==0){
+                    if (this.$store.state.topics == null) {
+                        this.$store.dispatch('getTopics')
+                    }
+                }else{
+
                 }
             },
             submit: function () {
-                if(this.topicId==0){
+                if (this.topicId == 0) {
                     MessageBox('提示', '请选择一个话题分类');
                     return;
                 }
-                if(this.comment==''){
+                if (this.comment == '') {
                     MessageBox('提示', '说点什么吧');
                     return;
                 }
-                if(this.articleId==0&&this.positions.length==0){
+                if (this.articleId == 0 && this.positions.length == 0) {
                     MessageBox('提示', '请至少上传一张图片');
                     return;
                 }
+                var formData = {
+                    topic_id: this.topicId,
+                    comment: this.comment,
+                    user_id: this.userId,
+                    reply_id: 0,
+                    is_public: this.isPublic
+                };
+                for (var i = 0; i < this.image.length; i++) {
+                    if (this.image[i] != insert) {
+                        formData['image' + i] = {
+                            img: this.image[i],
+                            position: this.positions[i]
+                        };
+                    }
+                }
+                console.log(formData);
+                axios.post('/flwechat/public/article', formData)
+                        .then(response=> {
+                            console.log(response.data);
+                            if (response.data == true) {
+                                if (!this.isPublic) {
+                                    this.$router.push({name: 'Mine'});
+                                } else {
+                                    if (this.articleId == 0) {
+                                        this.$router.push({name: 'Index', params: {topic_id: 0}});
+                                    } else {
+                                        this.$router.push({name: 'Detail', params: {id: this.articleId}});
+                                    }
+                                }
+                            }
+                        })
+                        .catch(error=> {
+                            console.log(error);
+                        })
             }
         },
         mounted: function () {
-            this.getTopics();
             var id = this.$route.params.article_id;
             if (id != null) {
                 this.articleId = id;
             }
+            this.getTopics();
         }
     }
 </script>

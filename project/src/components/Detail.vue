@@ -5,7 +5,7 @@
                 <div class="content_top">
                     <a :href="'mine.html?user_id='+article.user.id">
                         <img :src="article.user.head_img" alt="" class="head_portrait"><span
-                             class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
+                            class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
                     </a>
                     <span v-if="article.user.id==userId" class="do_icon" style="float: right;" @click="changeDo">
                 <img class="do_open" src="images/down.png" alt="">
@@ -22,7 +22,7 @@
                 <articles :article_list="articles" :is_comment="true"></articles>
             </div>
             <div class="comment_input">
-                <a :href="'publish.html?reply_id='+article.id">评论</a>
+                <router-link :to="{name:'Publish',params:{article_id:article_id}}">评论</router-link>
             </div>
         </div>
     </div>
@@ -33,47 +33,32 @@
     import action from  '@/components/Action';
     import images from  '@/components/Image';
     import {mapState} from 'vuex';
-    import axios from 'axios';
+    import {mapActions} from 'vuex'
 
     export default{
-        data: function(){
-            return{
-                article: null,
+        data: function () {
+            return {
                 article_list: [],
-                article_id: 0,
+                article_id: this.$route.params.id,
                 userId: 0,
                 isDoShow: false
             }
         },
-        computed: mapState(['userId', 'articles']),
+        computed: mapState(['userId', 'articles', 'article']),
         components: {
-            articles, action,images
+            articles, action, images
         },
         methods: {
-            getArticle: function () {
-                var articleId = this.$route.params.id;
-                var vm = this;
-                axios.post('/flwechat/public/article/get_article',
-                        {article_id: articleId, user_id: vm.userId})
-                        .then(
-                                function (response) {
-                                    vm.article = response.data;
-                                }
-                        ).catch(
-                        function (error) {
-                            console.log(error);
-                        }
-                )
-            },
+            ...mapActions(['getArticle']),
             getArticleList: function () {
                 var articleId = this.$route.params.id;
                 var postData = {
                     page: 0,
                     size: 15,
-                    user_id:this.userId,
-                    reply_id:articleId
+                    user_id: this.userId,
+                    reply_id: articleId
                 };
-                this.$store.dispatch('getArticles',postData);
+                this.$store.dispatch('getArticles', postData);
             },
             changeDo: function () {
                 this.isDoShow = (!this.isDoShow);
@@ -92,12 +77,12 @@
             }
         },
         mounted: function () {
-            this.getArticle();
+            this.getArticle({article_id: this.article_id});
             this.getArticleList();
         },
         watch: {
             '$route'(to, from){
-                this.getArticle();
+                this.getArticle({article_id: this.article_id});
                 this.getArticleList();
             }
         }
@@ -105,33 +90,38 @@
 </script>
 
 <style scoped>
-    .container{
-        padding-bottom:84px;
+    .container {
+        padding-bottom: 84px;
     }
+
     .do_icon {
         text-align: center;
         width: 45px;
-        margin-right:-15px;
+        margin-right: -15px;
     }
-    .article_do a{
+
+    .article_do a {
         text-align: left;
-        height:35px;
-        line-height:35px;
+        height: 35px;
+        line-height: 35px;
         display: block;
         /*vertical-align: middle;*/
         border-bottom: 1px solid #e8e8e8;
     }
-    .article_do a img{
+
+    .article_do a img {
         position: relative;
-        top:6px;
-        padding:0 22px;
+        top: 6px;
+        padding: 0 22px;
     }
-    .comment_input{
+
+    .comment_input {
         position: fixed;
-        right:15px;
+        right: 15px;
         bottom: 65px;
     }
-    .comment_input a{
+
+    .comment_input a {
         width: 40px;
         height: 40px;
         line-height: 40px;
@@ -141,27 +131,31 @@
         background-color: #0084FF;
         color: #fff;
     }
-    .head_portrait{
-        width:20px;
-        height:20px;
+
+    .head_portrait {
+        width: 20px;
+        height: 20px;
         border-radius: 10px;
         vertical-align: middle;
     }
-    .content{
+
+    .content {
         /*padding:0 15px;*/
         border-bottom: 6px solid #e8e8e8;
         background-color: #fff;
         overflow: hidden;
     }
-    .content_top{
-        padding:0 15px;
+
+    .content_top {
+        padding: 0 15px;
         position: relative;
-        height:30px;
+        height: 30px;
         line-height: 30px;
     }
-    .content_txt{
-        padding:0 15px;
-        font-size:18px;
+
+    .content_txt {
+        padding: 0 15px;
+        font-size: 18px;
         line-height: 32px;
     }
 </style>
