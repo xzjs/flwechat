@@ -1,5 +1,421 @@
 <template>
-  <div>
-    这里显示大图
+  <div  class="show_box" style="background-color: lightgreen;text-align: center">
+    <mt-swipe :auto="0">
+      <mt-swipe-item>
+        <div v-cloak class="weui-gallery__img correct" id="galleryImg"
+             :style="'background-image: url(http://images.frilink.cn/'+ images[index].img + '-big);'">
+          <div class="mark_img" :style="'background-image: url(/flwechat/public/storage/'+ images[index].mark +');'" @click="imgClick()">
+            <div v-if="show" class="galleryImgUser">
+              <div class="galleryImgUserContent">
+                <img :src="images[index].article.user.head_img" alt="" class="galleryImgUserImg">
+                <span>{{images[index].article.user.nickname}}</span><span>&bull;</span><span>{{images[index].article.topic.content}}</span>
+                <p id="img_article_content">{{images[index].article.content}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="opposite">
+          <div class="" style="opacity: 0">
+            <div class="opposite-content"><p class="expands">相关阅读</p>
+              <!--另外一种颜色的class是expands_li_background_color-->
+              <ul>
+                <li v-for="(item,index) in images[index].expands" :class="{expands_li_background_color:classActive[index]}">
+                  <a :href="item.href">
+                    <p class="expands_title">{{item.title}}</p>
+                    <p class="expands_abstract">
+                      {{item.abstract}}
+                    </p>
+                  </a>
+                </li>
+                <li class="expands_li_background_color">信息流广告</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div v-if="show" class="bullet_screen">
+          <div class="bullet_screen_mask">
+
+          </div>
+          <div class="bullet_screen_panel">
+            <action :article="images[index].article"></action>
+            <div class="bullet_screen_img">
+              <span class="galleryImgUrl" @click="changeIcon()"><img src="images/url2.png" alt=""></span><span
+              class="galleryImgCenter" @click="close()"><img src="images/close2.png" alt=""></span>
+            </div>
+          </div>
+
+        </div>
+      </mt-swipe-item>
+      <mt-swipe-item>2</mt-swipe-item>
+      <mt-swipe-item>3</mt-swipe-item>
+    </mt-swipe>
   </div>
 </template>
+<script>
+  import action from '@/components/Action';
+  export default{
+    data: {
+      imageId: image_id,
+      images: [],
+      index: 0,
+      userId: user_id,
+      flag: 1,
+      isTurn:turn,
+      classActive:[],
+      show:true
+    },
+    components: {
+      action
+    },
+    mounted: function () {
+      this.getImages();
+      $(".show_box").height($(window).height());
+    },
+    methods: {
+      getImages: function () {
+        var vm = this;
+        axios.post('/flwechat/public/image/get_image', {id: vm.imageId, user_id: vm.userId})
+          .then(function (response) {
+            console.log(response.data);
+            vm.images = response.data;
+            for (var i = 0; i < vm.images.length; i++) {
+              if (vm.images[i].id == vm.imageId) {
+                vm.index = i;
+                break;
+              }
+            }
+            vm.changeIndex(0);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+      },
+      changeIndex: function (increment) {
+        if (increment < 0 && this.index == 0) {
+          alert("已经是第一张了");
+          return;
+        }
+        if (increment > 0 && this.index == this.images.length - 1) {
+          alert("已经是最后一张了");
+          return;
+        }
+        this.index += increment;
+        this.classActive=[];
+        var expands=this.images[this.index].expands;
+        for(var i=0;i<expands.length;i++){
+          this.classActive[i]=(expands[i].dimension=='variant'||expands[i].dimension=='implicit');
+        }
+      },
+      close: function () {
+        window.location.href = $.cookie('back');
+      },
+      changeIcon: function () {
+        var opposite = $(".opposite"), correct = $(".correct");
+        if (this.flag == 1) {
+          opposite.children().children().css('display', 'block');
+          correct.removeClass('test2');
+          opposite.children().removeClass("test");
+          correct.addClass("test");
+          opposite.children().addClass('test2');
+          setTimeout(function () {
+            $('.galleryImgUrl img').attr('src', 'images/back_to_original2.png');
+          }, 375);
+          //修改地址栏历史
+          var turn = GetQueryString('turn');
+          if (turn == null) {
+            history.pushState({}, "扩展", window.location.href + '&turn=true');
+          }
+          this.flag = 0;
+        } else {
+          correct.removeClass("test");
+          opposite.children().removeClass('test2');
+          correct.addClass("test2");
+          opposite.children().addClass('test');
+
+          setTimeout(function () {
+            $('.galleryImgUrl img').attr('src', 'images/url2.png');
+          }, 375);
+          setTimeout(function () {
+            opposite.children().children().css('display', 'none');
+          }, 750);
+          // opposite.children().css('display','none');
+
+          //修改地址栏历史
+          var href = window.location.href.split('&')[0];
+          history.pushState({}, "图片展示", href);
+          this.flag = 1;
+        }
+      },
+      imgClick:function () {
+
+        this.show=(!this.show);
+        console.log('hello');
+      }
+    },
+    updated: function () {
+      $('.mark_img').height($('.weui-gallery__img').height());
+      if (this.isTurn == 'true') {
+        this.changeIcon();
+        console.log("执行了");
+      }
+      var opposite = $(".opposite");
+      if(this.flag==1){
+        opposite.children().children().css('display', 'none');
+      }else{
+        opposite.children().children().css('display', 'block');
+      }
+    }
+  }
+</script>
+<style>
+  /*图片show样式*/
+  .weui-gallery__img{
+    bottom:0px;
+    -webkit-background-size:contain;
+    background-size:contain;
+    background-color: #000;
+  }
+  .mark_img{
+    margin:0 auto;
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position:inherit;
+  }
+
+  /*图片放大后显示用户评论*/
+  .galleryImgUser{
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+    background-color: #000;
+    color: #fff;
+  }
+  .galleryImgUserContent{
+    margin:5px;
+    font-size: 12px;
+    text-align: justify;
+  }
+  .galleryImgUserImg{
+    vertical-align: middle;
+    width: 20px;
+    height:20px;
+    border-radius: 10px;
+  }
+
+
+  @-webkit-keyframes flipOutYtest {
+    from {
+      -webkit-transform: perspective(1400px);
+      transform: perspective(1400px);
+    }
+
+    40% {
+      -webkit-transform: perspective(1400px) rotate3d(0, 1, 0, 60deg);
+      transform: perspective(1400px) rotate3d(0, 1, 0, 60deg);
+      opacity: 1;
+    }
+
+    50% {
+      -webkit-transform: perspective(1400px) rotate3d(0, 1, 0, 90deg);
+      transform: perspective(1400px) rotate3d(0, 1, 0, 90deg);
+      opacity: 0;
+    }
+
+    to {
+      -webkit-transform: perspective(1400px) rotate3d(0, 1, 0, 180deg);
+      transform: perspective(1400px) rotate3d(0, 1, 0, 180deg);
+      opacity: 0;
+    }
+  }
+
+  .test{
+    -webkit-animation: flipOutYtest 0.75s linear;
+    animation: flipOutYtest 0.75s linear;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    height:100%;
+  }
+
+
+  @-webkit-keyframes flipInYtest {
+    from {
+      -webkit-transform: perspective(1400px) rotate3d(0, 1, 0, -180deg);
+      transform: perspective(1400px) rotate3d(0, 1, 0, -180deg);
+      opacity: 0;
+    }
+
+    50% {
+      -webkit-transform: perspective(1400px) rotate3d(0, 1, 0, -90deg);
+      transform: perspective(1400px) rotate3d(0, 1, 0, -90deg);
+      opacity: 0;
+    }
+
+    60% {
+      -webkit-transform: perspective(1400px) rotate3d(0, 1, 0, -60deg);
+      transform: perspective(1400px) rotate3d(0, 1, 0, -60deg);
+      opacity: 1;
+    }
+
+    to {
+      -webkit-transform: perspective(1400px);
+      transform: perspective(1400px);
+      opacity: 1;
+    }
+  }
+
+  .test2{
+    -webkit-animation: flipInYtest 0.75s linear;
+    animation: flipInYtest 0.75s linear;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+  /*图片放大操作区样式*/
+  .bullet_screen{
+    width:100%;
+    height:60px;
+    position: fixed;
+    bottom:0;
+    z-index: 100;
+  }
+  .bullet_screen_mask{
+    width:100%;
+    height:60px;
+    position: relative;
+    left:0;
+    z-index: -100;
+    background-color: #000;
+  }
+  .bullet_screen_panel{
+    width:100%;
+    height:60px;
+    position: absolute;
+    top:0;
+  }
+  /*抵消index中点赞操作的样式*/
+  .your_action_show_img{
+    height:20px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .your_action_show_img p{
+    height:20px;
+    line-height: 20px;
+    color: #fff;
+    font-size: 12px;
+  }
+  .your_action_show_img .your_action_right{
+    display: inline-block;
+    padding: 0 10px;
+  }
+  /*翻页，url，close*/
+  .bullet_screen_img{
+    height:30px;
+    /*margin-top: 0 75px 0 75px;*/
+  }
+  .bullet_screen_img div{
+    width:100%;
+  }
+  .bullet_screen_img span{
+    display: inline-block;
+    height:16px;
+    width:25%;
+    text-align: center;
+    margin: 4px 0 10px 0;
+  }
+  .bullet_screen_img span img{
+    width: 16px;
+  }
+  /*.correct{*/
+  /*text-align: center;*/
+  /*}*/
+  .opposite{
+    padding:10px 15px 60px 15px;
+    background-color: #fff;
+    height:100%;
+  }
+  .opposite-content{
+    color: #000;
+    width: 100%;
+  }
+  .opposite-content .expands{
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  @media screen and (max-height: 568px){
+    .opposite-content ul{
+      height:428px;
+      overflow-y: scroll;
+    }
+    .bullet_screen .bullet_screen_content{
+      width: 50%;
+    }
+  }
+  @media screen and (min-height: 569px)and (max-height: 640px){
+    .opposite-content ul{
+      height:500px;
+      overflow-y: scroll;
+    }
+    .bullet_screen .bullet_screen_content{
+      width: 56%;
+    }
+  }
+  @media screen and (min-height: 641px)and (max-height: 667px){
+    .opposite-content ul{
+      height:527px;
+      overflow-y: scroll;
+    }
+    .bullet_screen .bullet_screen_content{
+      width: 57%;
+    }
+  }
+  @media screen and (min-height: 668px)and (max-height: 736px){
+    .opposite-content ul{
+      height:596px;
+      overflow-y: scroll;
+    }
+    .bullet_screen .bullet_screen_content{
+      width: 59%;
+    }
+  }
+  .opposite-content ul li{
+    padding:0 10px;
+    list-style: none;
+    line-height: 30px;
+    /*border: 1px solid #b2b2b2;*/
+    border-radius: 5px;
+    /*background-color: #c4e3f3;*/
+    background-color: #bce8f1;
+    margin-bottom: 10px;
+    max-height: 140px;
+    min-height:70px;
+    overflow: hidden;
+  }
+  .expands_li_background_color{
+    background-color: #b7d28d!important;
+  }
+  .opposite-content ul li a{
+    color: #000;
+    /*background-color: #fff;*/
+    display: block;
+  }
+  .opposite-content ul li a .expands_title{
+    font-weight: 700;
+    font-size: 20px;
+    height:30px;
+    line-height:30px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .opposite-content ul li a .expands_abstract{
+    font-size: 14px;
+    line-height: 1.4em;
+    color: #888888;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    padding-bottom: 5px;
+  }
+</style>
