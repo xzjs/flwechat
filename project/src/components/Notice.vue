@@ -5,8 +5,8 @@
                        :right="[
     {
       content: '标记为已读',
-      style: { background: 'green', color: '#fff' },
-      handler: () => this.$messagebox('delete')
+      style: { background: '#0084FF', color: '#fff' },
+      handler: () => this.remark
     },
     {
       content: '删除',
@@ -23,11 +23,14 @@
     export default{
         computed: mapState(['notices']),
         methods:{
-                ...mapActions(['getNotices']),
+                ...mapActions(['getNotices','updateNotices']),
             getTitle:notice=> {
                 let types=['评论','赞','踩'];
                 let data=notice.data;
                 return data.user_name+types[data.type]+'了你的文章';
+            },
+            remark:()=>{
+                console.log('修改了');
             }
         },
         mounted:function () {

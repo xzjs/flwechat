@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Input;
 
 class NoticeController extends Controller
@@ -17,7 +18,8 @@ class NoticeController extends Controller
     {
         $user_id=Input::get('user_id');
         $user=User::find($user_id);
-        return response()->json($user->notifications);
+
+        return response()->json($user->unreadNotifications);
     }
 
     /**
@@ -72,7 +74,7 @@ class NoticeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $notificatin = Notification::find($id);
     }
 
     /**

@@ -80,7 +80,14 @@ export default new Vuex.Store({
                 })
         },
         updateNotices(context,postData){
-            axios.put()
+            axios.put('/flwechat/public/notices/'+postData.noticeId)
+                .then(response=>{
+                    if(response.data==true){
+                        for(var i=0;i<context.state.notices.length;i++){
+
+                        }
+                    }
+                })
         }
     }
 })

@@ -7,6 +7,7 @@ use App\Image;
 use App\Action;
 use App\Follow;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class ImageController extends Controller
 {
@@ -19,7 +20,26 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        $img_id=Input::get('image_id');
+        $article_id=Input::get('article_id');
+        $user_id=Input::get('user_id');
+
+        if($img_id!=null){
+            try {
+                $article = Image::with('article')->find($img_id)->article;
+                $this->get_img_after($article->id);
+                $this->get_img_before($article->reply_id);
+                $imgs = Image::with('comments','article.user','expands','article.topic')->find($this->img_ids);
+                foreach ($imgs as $img) {
+                    $img->article->is_support = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 0)->count();
+                    $img->article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 1)->count();
+                    $img->article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $article->id)->count();
+                }
+                return response()->json($imgs);
+            } catch (\Exception $exception) {
+                return response($exception->getMessage());
+            }
+        }
     }
 
     /**
@@ -51,23 +71,7 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        try {
-            $article = Image::with('article')->find($id)->article;
-            $this->get_img_after($article->id);
-            $this->get_img_before($article->reply_id);
-            $imgs = Image::with('comments','article.user','expands','article.topic')->find($this->img_ids);
-            foreach ($imgs->article() as $article) {
-                $article->is_support = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 0)->count();
-                $article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 1)->count();
-                $article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $article->id)->count();
-                $this->img_ids = [];
-                $this->get_img_after($article->id);
-                $article->images = Image::find($this->img_ids);
-            }
-            return response()->json($imgs);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
+
     }
 
     /**
