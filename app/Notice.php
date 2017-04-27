@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notice extends Model
 {
-    use SoftDeletes;
-
     protected $dates = ['deleted_at'];
+
+    public function article(){
+        return $this->belongsTo('App\Article');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

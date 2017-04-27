@@ -20,7 +20,7 @@
                 }
             }
         },
-        mounted: function () {
+        created: function () {
             this.checkLogin();
         }
     }

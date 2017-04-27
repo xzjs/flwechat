@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class NoticeController extends Controller
 {
@@ -13,7 +15,9 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        //
+        $user_id=Input::get('user_id');
+        $user=User::find($user_id);
+        return response()->json($user->notifications);
     }
 
     /**

@@ -9,6 +9,7 @@ const Mine = resolve=>require(['../components/Mine'], resolve);
 const Show = resolve=>require(['../components/Show'], resolve);
 const Friend = resolve=>require(['../components/Friend'], resolve);
 const Publish = resolve=>require(['../components/Publish'], resolve);
+const Notice = resolve=>require(['../components/Notice'], resolve);
 
 export default [{
     path: '/',
@@ -50,6 +51,11 @@ export default [{
                             path:'publish/:article_id?',
                             name:'Publish',
                             component:Publish
+                        },
+                        {
+                            path:'notice',
+                            name:'Notice',
+                            component:Notice
                         }
                     ]
                 },

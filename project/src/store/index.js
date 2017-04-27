@@ -5,7 +5,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
@@ -13,7 +13,8 @@ export default new Vuex.Store({
         userId: 0,
         articles: null,
         topic_id: 0,
-        article: {user:{},topic:{}}
+        article: {user: {}, topic: {}},
+        notices: []
     },
     mutations: {
         setTopics(state, t){
@@ -27,6 +28,9 @@ export default new Vuex.Store({
         },
         setArticle(state, article){
             state.article = article;
+        },
+        setNotices(state, notices){
+            state.notices = notices;
         }
     }
     ,
@@ -57,13 +61,26 @@ export default new Vuex.Store({
                 {article_id: postData.article_id, user_id: context.state.userId})
                 .then(
                     function (response) {
-                        context.commit('setArticle',response.data);
+                        context.commit('setArticle', response.data);
                     }
                 ).catch(
                 function (error) {
                     console.log(error);
                 }
             )
+        },
+        //notice
+        getNotices(context){
+            axios.get('/flwechat/public/notices?user_id=' + context.state.userId)
+                .then(response=> {
+                    context.commit('setNotices', response.data);
+                })
+                .catch(error=> {
+                    console.log(error);
+                })
+        },
+        updateNotices(context,postData){
+            axios.put()
         }
     }
 })

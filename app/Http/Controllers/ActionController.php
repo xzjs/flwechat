@@ -6,6 +6,7 @@ use App\Action;
 use App\Article;
 use App\Notice;
 use Illuminate\Http\Request;
+use App\Notifications\ActionNotice;
 
 class ActionController extends Controller
 {
@@ -43,18 +44,24 @@ class ActionController extends Controller
                 $action->save();
                 $article = Article::find($request->article_id);
 
-                $notice=new Notice;
-                $notice->to=$article.user.id;
-                $notice->from=$request->user_id;
+                $notice = new Notice;
+                $notice->user_id = $request->user_id;
+                $notice->article_id = $request->article_id;
 
                 if ($request->type == 0) {
                     $article->support_num += 1;
-                    $notice->type=1;
+                    $notice->type = 1;//赞
                 } else {
                     $article->oppose_num += 1;
-                    $notice->type=2;
+                    $notice->type = 2;//踩
                 }
+                $notice->save();
                 $article->save();
+
+                //通知
+                $user=$article->user;
+                $user->notify(new ActionNotice($notice));
+
                 return response('true');
             } else {
                 return response('false');
@@ -73,7 +80,7 @@ class ActionController extends Controller
     public function show($id)
     {
         try {
-            $actions=Action::where('user_id',$id)->get();
+            $actions = Action::where('user_id', $id)->get();
             return response()->json($actions);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
@@ -119,17 +126,18 @@ class ActionController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function cancel(Request $request){
+    public function cancel(Request $request)
+    {
         try {
-            $action=Action::where('user_id',$request->user_id)->where('article_id',$request->article_id)->where('type',$request->type)->first();
-            $article=Article::find($request->article_id);
-            if($request->type==0){
-                if($article->support_num>0){
-                    $article->support_num-=1;
+            $action = Action::where('user_id', $request->user_id)->where('article_id', $request->article_id)->where('type', $request->type)->first();
+            $article = Article::find($request->article_id);
+            if ($request->type == 0) {
+                if ($article->support_num > 0) {
+                    $article->support_num -= 1;
                 }
-            }else{
-                if($article->oppose_num>0){
-                    $article->oppose_num-=1;
+            } else {
+                if ($article->oppose_num > 0) {
+                    $article->oppose_num -= 1;
                 }
             }
             $article->save();
