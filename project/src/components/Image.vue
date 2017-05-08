@@ -21,6 +21,7 @@
 //                $.cookie('back', window.location.href);
 //                window.location.href = 'show.html?image_id=' + image_id;
                 console.log(image_id);
+                this.$router.push({name:'Show',params:{id:image_id}});
             }
         },
         mounted: function () {
