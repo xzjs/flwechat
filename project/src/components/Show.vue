@@ -3,25 +3,21 @@
     <mt-swipe :auto="0">
       <mt-swipe-item>
         <div class="front" id="galleryImg">
-          <img src="../assets/images/img1.jpeg" alt="" class="img_original">
-          <img src="../assets/images/img1-1.png" alt="" class="img_mark">
-          <div v-if="show" class="UserCommentButton">
-            <div class="UserComment">
-              <div class="user_mark"></div>
-              <div class="user_comment">
-                <img src="../assets/images/me2.png" alt="" class="head_img">
-                <span>昵称</span><span>&bull;</span><span>主题</span>
-                <p id="img_article_content" class="comment_txt">当今社会，计算机与网络信息技术飞速发展，创新的信息传播与实时交互模式不断涌现，</p>
-              </div>
-            </div>
-            <div class="button_box">
-              <div class="button_mark"></div>
-              <div class="button">
-                <!--<action :article="images[index].article"></action>-->
-                <div class="bullet_screen_img">
-                  <span class="close"><img src="../assets/images/close2.png" alt=""></span><span class="url" @click="toBack()"><img src="../assets/images/url2.png" alt=""></span>
-                </div>
-              </div>
+          <img :src="'http://images.frilink.cn/'+images[index].img+'-big'" alt="" class="img_original">
+          <img :src="'/flwechat/public/storage/'+ images[index].mark" alt="" class="img_mark" @click="imgClick()">
+          <div v-if="show" class="UserComment">
+            <!--<div class="user_mask"></div>-->
+            <!--<div class="user_comment">-->
+            <img :src="images[index].article.user.head_img" alt="" class="head_img">
+            <span>{{images[index].article.user.nickname}}</span><span>&bull;</span><span>{{images[index].article.topic.content}}</span>
+            <p id="img_article_content" class="comment_txt">{{images[index].article.content}}</p>
+            <!--</div>-->
+          </div>
+          <div v-if="show" class="button_box">
+            <action :article="images[index].article" :is_comment="true" class="show_action"></action>
+            <div class="bullet_screen_img">
+              <span class="close" @click="close()"><img src="../assets/images/close2.png" alt=""></span><span
+              class="url" @click="toBack()"><img src="../assets/images/url2.png" alt=""></span>
             </div>
           </div>
         </div>
@@ -29,33 +25,27 @@
           <div class="back_box" style="opacity: 0">
             <div class="back-content">
               <p class="expands">相关阅读</p>
-              <!--另外一种颜色的class是expands_li_background_color-->
-              <!--<ul>-->
-                <!--<li v-for="(item,index) in images[index].expands"-->
-                    <!--:class="{bgc:classActive[index]}">-->
-                  <!--<a :href="item.href">-->
-                    <!--<p class="expands_title">{{item.title}}</p>-->
-                    <!--<p class="expands_abstract">-->
-                      <!--{{item.abstract}}-->
-                    <!--</p>-->
-                  <!--</a>-->
-                <!--</li>-->
-                <!--&lt;!&ndash;<li class="expands_li_background_color">信息流广告</li>&ndash;&gt;-->
-              <!--</ul>-->
+              <ul>
+                <li v-for="(item,index) in images[index].expands"
+                    :class="{expands_li_background_color:classActive[index]}">
+                  <a :href="item.href">
+                    <p class="expands_title">{{item.title}}</p>
+                    <p class="expands_abstract">
+                      {{item.abstract}}
+                    </p>
+                  </a>
+                </li>
+                <!--<li class="expands_li_background_color">信息流广告</li>-->
+              </ul>
             </div>
             <div class="button_box">
-              <!--<div class="button_mark"></div>-->
-              <!--<div class="button">-->
-                <span class="close"><img src="../assets/images/close2.png" alt=""></span><span class="url" @click="toFront()"><img src="../assets/images/back_to_original2.png" alt=""></span>
-              <!--</div>-->
+              <span class="close"><img src="../assets/images/close2.png" alt=""></span><span class="url" @click="toFront()"><img
+              src="../assets/images/back_to_original2.png" alt=""></span>
             </div>
           </div>
         </div>
       </mt-swipe-item>
-      <!--<mt-swipe-item>2</mt-swipe-item>-->
-      <!--<mt-swipe-item>3</mt-swipe-item>-->
     </mt-swipe>
-    <img :src="'http://image.frinlin.cn/'+image.img+'-image'" v-for="image in images">
   </div>
 </template>
 <script>
@@ -65,23 +55,24 @@
     data(){
       return {
         imageId: 0,
-        images: [],
+        images: [{img:"",article:{user:{},topic:{}}}],
         index: 0,
         show:true,
-        flag: 1,
-//        isTurn:turn,
-//        classActive:[],
+        classActive:[],
       }
     },
     computed:mapState([
         'userId'
     ]),
+    components: {
+      action
+    },
     methods: {
       getImages(){
         var vm = this;
         axios.get('/flwechat/public/images', {
             params:{
-                img_id: this.imageId,
+                image_id: this.imageId,
                 user_id: this.userId
             }
         })
@@ -99,9 +90,10 @@
             console.log(error);
           })
       },
-//      close: function () {
-//        window.location.href = $.cookie('back');
-//      },
+      close: function () {
+        console.log('q');
+        this.$router.go(-1);
+      },
 
       toBack: function () {
         var back = $(".back"), front = $(".front");
@@ -115,13 +107,18 @@
           setTimeout(function () {
             $('.front').css('display', 'none');
           }, 375);
+        this.show=true;
+        this.classActive=[];
+        var expands=this.images[this.index].expands;
+        for(var i=0;i<expands.length;i++){
+          this.classActive[i]=(expands[i].dimension=='variant'||expands[i].dimension=='implicit');
+        }
       },
 
-//      imgClick:function () {
-//
-//        this.show=(!this.show);
-//        console.log('hello');
-//      }
+      imgClick:function () {
+
+        this.show=(!this.show);
+      },
       toFront: function (){
         var back = $(".back"), front = $(".front");
         front.css('display', 'block');
@@ -137,11 +134,12 @@
         var href = window.location.href.split('&')[0];
         history.pushState({}, "图片展示", href);
         this.flag = 1;
+
+        this.show=true;
       },
     },
     mounted: function () {
        $('.show_box').height($(window).height()) ;
-       $('.UserComment').height($('.comment_txt').height()+35);
       this.imageId = this.$route.params.id;
       this.getImages();
     }
@@ -253,7 +251,6 @@
   /*图片show样式*/
   .show_box{
     position: relative;
-    /*background-color: lightgreen;*/
     .front{
       width:100%;
       height:100%;
@@ -271,30 +268,16 @@
         left:0;
         z-index: 3;
       }
-      .UserCommentButton{
-        position: absolute;
-        z-index:3;
-        font-size: 12px;
-        width: 100%;
-        height:100%;
-        color: #fff;
         .UserComment{
-          position: relative;
+          width: 100%;
+          text-align: left;
+          font-size: 12px;
+          color: #fff;
+          background-color: #000;
+          padding:5px 15px;
+          position: absolute;
+          z-index:4;
           top:0;
-          height:100px;
-          .user_mark{
-            width:100%;
-            height:100%;
-            position: absolute;
-            z-index:0;
-            background-color: #000;
-            opacity: 0.7;
-          }
-          .user_comment{
-            text-align: left;
-            position: absolute;
-            z-index:1;
-            padding:0 15px;
             .head_img{
               vertical-align: middle;
               width: 20px;
@@ -302,45 +285,44 @@
               border-radius: 10px;
               margin:5px 0px;
             }
-          }
         }
         .button_box{
           position: absolute;
+          bottom:0;
+          z-index: 4;
           height:60px;
           width:100%;
-          bottom:0;
-          .button_mark{
-            width:100%;
-            height:100%;
-            position: absolute;
-            z-index:1;
-            background-color: #000;
-            opacity: 0.7;
+          background-color: #000;
+          .show_action{
+            color: #fff;
           }
-          .button{
-            position: absolute;
-            padding: 20px 0;
-            width:100%;
-            z-index:2;
+          .your_action{
+            width:50%;
+            padding:0;
+            float: left;
+            margin:8px 0;
+            .your_action_right p{
+              background-color: #fff;
+            }
+          }
             .bullet_screen_img{
               width:100%;
-
               .close,.url{
                 float: right;
                 display: inline-block;
+                margin:20px 0;
                 width:15%;
-
               }
             }
-
-          }
         }
-      }
     }
     .back{
       background-color: #fff;
       height: 100%;
       width:100%;
+      .expands_li_background_color{
+        background-color: #b7d28d!important;
+      }
       .back_box{
         height:100%;
         .back-content{
@@ -352,6 +334,7 @@
             padding: 10px 0;
             }
           ul li{
+            text-align: left;
             padding:0 10px;
             list-style: none;
             line-height: 30px;
@@ -361,9 +344,6 @@
             max-height: 140px;
             min-height:70px;
             overflow: hidden;
-            .bgc{
-              background-color: #b7d28d!important;
-            }
             a{
               color: #000;
               display: block;
@@ -392,7 +372,6 @@
           width:100%;
           height:60px;
           background-color: #000;
-          opacity:0.7;
           position: fixed;
           bottom:0;
           span{
