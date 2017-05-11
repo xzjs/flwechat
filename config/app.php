@@ -180,6 +180,8 @@ return [
 
         Overtrue\LaravelWechat\ServiceProvider::class,
         zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
     ],
 

@@ -6,6 +6,11 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 Vue.use(Vuex);
+axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization':'Bearer '+localStorage.token
+};
+axios.defaults.baseURL = process.env.API_ROOT;
 
 export default new Vuex.Store({
     state: {
@@ -31,6 +36,9 @@ export default new Vuex.Store({
         },
         setNotices(state, notices){
             state.notices = notices;
+        },
+        markNotices(state,index){
+            state.notices.slice(index,1);
         }
     }
     ,
@@ -71,22 +79,13 @@ export default new Vuex.Store({
         },
         //notice
         getNotices(context){
-            axios.get('/flwechat/public/notices?user_id=' + context.state.userId)
+            axios.get('/api/notices')
                 .then(response=> {
+                    console.log(response.data);
                     context.commit('setNotices', response.data);
                 })
                 .catch(error=> {
                     console.log(error);
-                })
-        },
-        updateNotices(context,postData){
-            axios.put('/flwechat/public/notices/'+postData.noticeId)
-                .then(response=>{
-                    if(response.data==true){
-                        for(var i=0;i<context.state.notices.length;i++){
-
-                        }
-                    }
                 })
         }
     }

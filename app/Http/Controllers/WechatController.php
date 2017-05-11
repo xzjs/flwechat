@@ -6,6 +6,8 @@ use App\User;
 use EasyWeChat\Support\Log;
 use Illuminate\Http\Request;
 use EasyWeChat\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class WechatController extends Controller
 {
@@ -36,16 +38,16 @@ class WechatController extends Controller
                     $u->be_follow = 0;
                     $u->save();
                 }
-                $call_back=env('CALL_BACK');
-                header("Location: $call_back/#/login/$u->id");
-                exit;
+                $token = $u->createToken('access_token')->accessToken;
+                Auth::login($u);
+                $call_back=Input::get('callback');
+                return redirect("http://$call_back/#/login/$token");
             } else {
                 echo 0;
             }
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
-
     }
 
     public function getconfig(Application $wechat, Request $request)

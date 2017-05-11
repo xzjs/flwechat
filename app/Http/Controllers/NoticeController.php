@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 
 class NoticeController extends Controller
 {
@@ -16,9 +14,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $user_id=Input::get('user_id');
-        $user=User::find($user_id);
-
+        $user=Auth::user();
         return response()->json($user->unreadNotifications);
     }
 
@@ -35,7 +31,7 @@ class NoticeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -46,7 +42,7 @@ class NoticeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,7 +53,7 @@ class NoticeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -68,19 +64,26 @@ class NoticeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $notificatin = Notification::find($id);
+        $user=Auth::user();
+        foreach ($user->unreadNotifications as $notification) {
+            if($notification->id==$id){
+                $notification->markAsRead();
+                break;
+            }
+        }
+        return response('true');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

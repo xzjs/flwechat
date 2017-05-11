@@ -67,7 +67,7 @@ export default [{
             ]
         },
         {
-            path: 'login/:id',
+            path: 'login/:token',
             name: 'Login',
             component: Login
         }

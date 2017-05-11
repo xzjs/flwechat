@@ -81,7 +81,7 @@
         var vm = this;
         axios.get('/flwechat/public/images', {
             params:{
-                img_id: this.imageId,
+                image_id: this.imageId,
                 user_id: this.userId
             }
         })

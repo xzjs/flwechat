@@ -9,7 +9,7 @@
                 <p class="weui-tabbar__label">首页</p>
             </router-link>
             <router-link :to="{name:'Notice'}" class="weui-tabbar__item">
-                <el-badge :value="3" class="item">
+                <el-badge :value="count" class="item">
                     <i class="icon-notice weui-tabbar__icon"></i>
                     <p class="weui-tabbar__label">消息</p>
                 </el-badge>
@@ -31,9 +31,20 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
+
     export default{
+        computed: {
+            count(){
+                return this.$store.state.notices.length;
+            }
+        },
         mounted: function () {
             $('.container').height($(window).height());
+            this.getNotices();
+        },
+        methods: {
+            ...mapActions(['getNotices']),
         }
     }
 </script>

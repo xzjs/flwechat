@@ -4,7 +4,8 @@
     export default{
         methods: {
             login:function () {
-                localStorage.id=this.$route.params.id;
+                //localStorage.id=this.$route.params.id;
+                localStorage.token=this.$route.params.token;
                 this.$router.push('/');
             }
         },

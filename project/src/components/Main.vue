@@ -4,19 +4,18 @@
 
 <script>
     export default{
-        data:function () {
-            return{
-                userId:0
+        data: function () {
+            return {
+                token: 0
             }
         },
         methods: {
             checkLogin(){
-                this.userId = localStorage.id;
-                if (this.userId == null) {
-                    localStorage.url=window.location.href;
-                    window.location.href = '/flwechat/public/getuser';
+                this.token=localStorage.token;
+                if (this.token == null) {
+                    window.location.href = process.env.API_ROOT + '/wechat/getuser?callback=' + window.location.host;
                 } else {
-                    this.$store.commit('setUserId',this.userId);
+                    this.$store.commit('setUserId', this.userId);
                 }
             }
         },

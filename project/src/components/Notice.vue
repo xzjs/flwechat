@@ -6,35 +6,50 @@
     {
       content: '标记为已读',
       style: { background: '#0084FF', color: '#fff' },
-      handler: () => this.remark
-    },
-    {
-      content: '删除',
-      style: { background: 'red', color: '#fff' },
-      handler: () => this.$messagebox('delete')
+      handler: ()=>updateNotices(notice.id)
     }
   ]"></mt-cell-swipe>
     </div>
 </template>
 
 <script>
-    import {mapState,mapActions} from 'vuex';
+    import {mapState, mapMutations,mapActions} from 'vuex';
+    import { Toast } from 'mint-ui';
 
     export default{
         computed: mapState(['notices']),
-        methods:{
-                ...mapActions(['getNotices','updateNotices']),
-            getTitle:notice=> {
-                let types=['评论','赞','踩'];
-                let data=notice.data;
-                return data.user_name+types[data.type]+'了你的文章';
+        methods: {
+            ...mapMutations(['markNotices']),
+            ...mapActions(['updateNotices']),
+            getTitle: notice=> {
+                let types = ['评论', '赞', '踩'];
+                let data = notice.data;
+                return data.user_name + types[data.type] + '了你的文章';
             },
-            remark:()=>{
-                console.log('修改了');
+            updateNotices: id=> {
+                var vm=this;
+                axios.put('/api/notices/' + id)
+                        .then(response=> {
+                            if (response.data == true) {
+                                var index = 0;
+                                for (var i = 0; i < vm.notices.length; i++) {
+                                    if (vm.notices[i].id == id) {
+                                        index = i;
+                                        break;
+                                    }
+                                }
+                                this.markNotices(index);
+                            }else{
+                                Toast('标记失败');
+                            }
+                        })
+                        .catch(error=>{
+                            console.log(error);
+                            Toast('标记失败');
+                        })
             }
         },
-        mounted:function () {
-            this.getNotices();
+        mounted: function () {
         }
     }
 </script>

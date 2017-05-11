@@ -11,8 +11,8 @@
 |
 */
 
-Route::any('/', 'WechatController@serve');
-Route::post('/getconfig', 'WechatController@getconfig');
+Route::any('wechat/serve', 'WechatController@serve');
+Route::post('wechat/getconfig', 'WechatController@getconfig');
 
 Route::get('/test', function () {
     return view('welcome');
@@ -42,12 +42,10 @@ Route::post('/image/get_image','ImageController@get_image');
 Route::resource('images', 'ImageController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
-    Route::get('/getuser', 'WechatController@getuser');
+    Route::get('/wechat/getuser', 'WechatController@getuser');
 });
 
 Route::resource('topic', 'TopicController');
-
-Route::resource('notices','NoticeController');
 
 //test
 Route::post('test_post', 'TestController@test_post');
