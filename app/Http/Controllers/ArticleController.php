@@ -113,7 +113,7 @@ class ArticleController extends Controller
             $arr = ['image0', 'image1', 'image2'];
             if ($id == null) {
                 $article = new Article;
-                $article->user_id = $request->user_id;
+                $article->user_id = Auth::id();
                 $article->content = $request->comment;
                 $article->support_num = 0;
                 $article->transmit_num = 0;

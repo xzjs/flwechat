@@ -336,7 +336,6 @@
                 var formData = {
                     topic_id: this.topicId,
                     comment: this.comment,
-                    user_id: this.userId,
                     reply_id: 0,
                     is_public: this.isPublic
                 };
@@ -348,8 +347,8 @@
                         };
                     }
                 }
-                axios.post('/api/article', formData)
-                        .then(response=> {
+                axios.post('/api/articles', formData)
+                        .then(response => {
                             if (response.data == true) {
                                 if (!this.isPublic) {
                                     this.$router.push({name: 'Mine'});
