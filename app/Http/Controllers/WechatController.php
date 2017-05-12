@@ -26,7 +26,7 @@ class WechatController extends Controller
      * 获取用户的信息
      */
     public function getuser(){
-        try {
+
             $user = session('wechat.oauth_user');
             //var_dump($user);
             if ($user != null) {
@@ -45,9 +45,6 @@ class WechatController extends Controller
             } else {
                 echo 0;
             }
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
     }
 
     public function getconfig(Application $wechat, Request $request)

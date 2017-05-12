@@ -22,7 +22,8 @@ Vue.use(MintUI);
 Vue.use(ElementUI);
 
 const router = new VueRouter({
-    routes
+    routes,
+
 });
 
 /* eslint-disable no-new */

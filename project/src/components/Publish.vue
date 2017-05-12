@@ -405,7 +405,10 @@
     .weui-cells:after, .weui-cells:before {
         border: none;
     }
-
+    .weui-cells__title{
+      margin-top: 0;
+      padding-top:0.77em;
+    }
     .weui-cells__title sup {
         color: red;
     }
@@ -541,7 +544,11 @@
     }
 
     .row {
+      width:100%;
         margin: 10px auto;
+      position: absolute;
+      bottom:0;
+      right:15px;
     }
 
     .button {

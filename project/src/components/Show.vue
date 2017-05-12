@@ -39,7 +39,7 @@
               </ul>
             </div>
             <div class="button_box">
-              <span class="close"><img src="../assets/images/close2.png" alt=""></span><span class="url" @click="toFront()"><img
+              <span class="close" @click="close()"><img src="../assets/images/close2.png" alt=""></span><span class="url" @click="toFront()"><img
               src="../assets/images/back_to_original2.png" alt=""></span>
             </div>
           </div>
@@ -91,7 +91,6 @@
           })
       },
       close: function () {
-        console.log('q');
         this.$router.go(-1);
       },
 

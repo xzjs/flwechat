@@ -62,7 +62,8 @@ export default [{
                 {
                     path: 'show/:id',
                     name: 'Show',
-                    component: Show
+                    component: Show,
+                    // meta:
                 }
             ]
         },
