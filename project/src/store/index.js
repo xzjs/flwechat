@@ -81,7 +81,6 @@ export default new Vuex.Store({
         getNotices(context){
             axios.get('/api/notices')
                 .then(response=> {
-                    console.log(response.data);
                     context.commit('setNotices', response.data);
                 })
                 .catch(error=> {
