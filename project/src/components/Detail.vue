@@ -38,7 +38,7 @@
         data() {
             return {
                 article_list: [],
-                article_id: 0,
+                articleId: 0,
                 isDoShow: false
             }
         },
@@ -47,16 +47,7 @@
             articles, action, images
         },
         methods: {
-            ...mapActions(['getArticle']),
-            getArticleList() {
-                axios.get('/api/articles', {params: {reply_id: this.article_id}})
-                        .then(response=> {
-                            this.articles = response.data;
-                        })
-                        .catch(function (response) {
-                            console.log(response);
-                        });
-            },
+            ...mapActions(['getArticle','getArticles']),
             changeDo: function () {
                 this.isDoShow = (!this.isDoShow);
             },
@@ -73,9 +64,9 @@
             }
         },
         mounted() {
-            this.article_id = this.$route.params.id;
-            this.getArticle({id:this.article_id});
-            this.getArticleList();
+            this.articleId = this.$route.params.id;
+            this.getArticle({id:this.articleId});
+            this.getArticles({reply_id:this.articleId});
         },
         watch: {
             '$route'(to, from){

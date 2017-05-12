@@ -31,46 +31,31 @@
 
 <script>
     import articles from '@/components/Article';
-    import {mapState} from 'vuex';
+    import {mapState, mapActions} from 'vuex';
 
     export default{
         data: function () {
             return {
-                topic_id: 0,
-                articles: {}
+                topicId: 0
             }
         },
-        computed: mapState([
-            'topics'
-        ]),
-        created: function () {
-            this.getTopics();
-            this.getArticles();
-        },
+        computed: mapState(['topics', 'articles']),
         methods: {
-            getTopics(){
-                this.$store.dispatch('getTopics')
-            },
-            getArticles(){
-                this.topic_id = this.$route.params.topic_id;
-                if (this.topic_id == null) {
-                    this.topic_id = 0;
-                }
-                axios.get('/api/articles', {params: {topic_id: this.topic_id}})
-                        .then(response=> {
-                            this.articles = response.data;
-                        })
-                        .catch(function (response) {
-                            console.log(response);
-                        });
-            }
+            ...mapActions(['getArticles'])
         },
         components: {
             articles
         },
+        mounted(){
+            var id = this.$route.params.topic_id;
+            if (id != null) {
+                this.topicId = id;
+            }
+            this.getArticles({topic_id:this.topicId});
+        },
         watch: {
             '$route'(to, from){
-                this.getArticles();
+                this.getArticles({topic_id:this.topicId});
             }
         }
     }

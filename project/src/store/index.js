@@ -14,9 +14,9 @@ axios.defaults.baseURL = process.env.API_ROOT;
 
 export default new Vuex.Store({
     state: {
-        topics: null,
+        topics: [],
         userId: 0,
-        articles: null,
+        articles: {},
         topic_id: 0,
         article: {user: {}, topic: {}},
         notices: []
@@ -52,6 +52,7 @@ export default new Vuex.Store({
                     console.log(error);
                 })
         },
+        //article
         getArticle(context,data){
             axios.get('/api/articles/' + data.id)
                 .then(response => {
@@ -60,6 +61,15 @@ export default new Vuex.Store({
                 .catch(error=> {
                     console.log(error);
                 })
+        },
+        getArticles(context,data){
+            axios.get('/api/articles', {params: data})
+                .then(response=> {
+                    context.commit('setArticles',response.data);
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
         },
         //notice
         getNotices(context){
