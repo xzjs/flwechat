@@ -104,7 +104,7 @@
         },
         computed: {
             publicText: function () {
-                if (this.public) {
+                if (this.isPublic) {
                     return '公开';
                 } else {
                     return '仅自己可见';
@@ -348,10 +348,8 @@
                         };
                     }
                 }
-                console.log(formData);
-                axios.post('/flwechat/public/article', formData)
+                axios.post('/api/article', formData)
                         .then(response=> {
-                            console.log(response.data);
                             if (response.data == true) {
                                 if (!this.isPublic) {
                                     this.$router.push({name: 'Mine'});

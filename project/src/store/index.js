@@ -44,7 +44,7 @@ export default new Vuex.Store({
     ,
     actions: {
         getTopics(context){
-            axios.get('/flwechat/public/topic')
+            axios.get('/api/topics')
                 .then(function (response) {
                     context.commit('setTopics', response.data)
                 })
@@ -53,7 +53,7 @@ export default new Vuex.Store({
                 })
         },
         getArticles(context, postData){
-            axios.post('/flwechat/public/article/article_list', postData)
+            axios.post('/api/article/article_list', postData)
                 .then(
                     function (response) {
                         context.commit('setArticles', response.data);

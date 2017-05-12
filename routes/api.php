@@ -15,4 +15,6 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::resource('notices','NoticeController');
+    Route::resource('topics', 'TopicController');
+    Route::resource('articles', 'ArticleController');
 });

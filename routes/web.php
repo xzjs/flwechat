@@ -22,7 +22,7 @@ Route::resource('user', 'UserController');
 
 Route::post('/article/article_list', 'ArticleController@article_list');
 Route::post('/article/get_article', 'ArticleController@get_article');
-Route::resource('article', 'ArticleController');
+
 
 Route::get('/comment/get_comments_by_user_id/{user_id}', 'CommentController@get_comments_by_user_id');
 Route::resource('comment', 'CommentController');
@@ -44,8 +44,6 @@ Route::resource('images', 'ImageController');
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
     Route::get('/wechat/getuser', 'WechatController@getuser');
 });
-
-Route::resource('topic', 'TopicController');
 
 //test
 Route::post('test_post', 'TestController@test_post');

@@ -16,13 +16,14 @@
         </div>
         <nav class="topic_index_box">
             <router-link to="0" class="topic_index recommend">全部</router-link>
-            <router-link v-for="item in topics" :key="item.id" :to="{name:'Index',params:{topic_id:item.id}}" class="topic_index">
+            <router-link v-for="item in topics" :key="item.id" :to="{name:'Index',params:{topic_id:item.id}}"
+                         class="topic_index">
                 {{item.content}}
             </router-link>
         </nav>
         <!--<div class="more_topic">-->
-            <!--<img src="../../static/images/more.png" alt="" class="more">-->
-            <!--<img src="../../static/images/up_close.png" alt="" class="close" style="display: none">-->
+        <!--<img src="../../static/images/more.png" alt="" class="more">-->
+        <!--<img src="../../static/images/up_close.png" alt="" class="close" style="display: none">-->
         <!--</div>-->
         <articles :article_list="articles"></articles>
     </div>
@@ -36,10 +37,11 @@
         data: function () {
             return {
                 topic_id: 0,
+                articles: {}
             }
         },
         computed: mapState([
-            'topics', 'userId','articles'
+            'topics'
         ]),
         created: function () {
             this.getTopics();
@@ -51,18 +53,24 @@
             },
             getArticles(){
                 this.topic_id = this.$route.params.topic_id;
-                if(this.topic_id==null){
-                    this.topic_id=0;
+                if (this.topic_id == null) {
+                    this.topic_id = 0;
                 }
-                console.log(this.topic_id);
-                var postData = {
-                    page: 0,
-                    size: 15,
-                    user_id:this.userId,
-                    reply_id:0,
-                    topic_id:this.topic_id
-                };
-                this.$store.dispatch('getArticles',postData)
+                var vm = this;
+                axios.get('/api/articles', {
+                    params: {
+                        topic_id: this.topic_id
+                    }
+                })
+                        .then(
+                                response=> {
+                                    vm.articles = response.data;
+                                })
+                        .catch(
+                                function (response) {
+                                    console.log(response);
+                                }
+                        );
             }
         },
         components: {
@@ -105,6 +113,6 @@
 
     .router-link-active {
         color: #0084FF;
-        border-bottom:2px solid #0084FF;
+        border-bottom: 2px solid #0084FF;
     }
 </style>

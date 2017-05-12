@@ -8,6 +8,8 @@ use App\Follow;
 use App\Image;
 use App\Jobs\GetUrl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -22,8 +24,60 @@ class ArticleController extends Controller
     public function index()
     {
         try {
-            $articles = Article::with('images', 'topic', 'user')->orderBy('created_at', 'desc')->get();
-            return response()->json($articles);
+            $topic_id = Input::get('topic_id');
+//            $user_id = $request->user_id;
+//            $reply_id = $request->reply_id;
+//            $key_word = $request->key_word;
+//            $comment = $request->comment;
+            $is_public = Input::get('is_public');
+            if (is_null($is_public)) {
+                $is_public = 1;
+            }
+//            $follow_article = $request->follow_article;
+//            $type = $request->type;
+
+            $order_by = 'desc';
+
+            $articles = Article::with('topic', 'user');
+            //话题查询0
+            if (!is_null($topic_id)) {
+                if ($topic_id != 0) {
+                    $articles = $articles->where('topic_id', $topic_id);
+                }
+                $articles = $articles->where('reply_id', 0);
+            }
+            //回复id查询,为0就是首页的文章1
+//            if (!is_null($reply_id)) {
+//                $articles = $articles->where('reply_id', $reply_id);
+//                if ($reply_id > 0) {
+//                    $order_by = 'asc';
+//                }
+//            }
+            //关键字查询2
+//            if (!is_null($key_word)) {
+//                $articles = $articles->where('content', 'like', "%" . $key_word . "%");
+//            }
+            //查询用户关注的文章3
+//            if (!is_null($follow_article)) {
+//                $article_ids = Follow::where('follow_user', $user_id)->get(['be_follow_user'])->toArray();
+//                $articles->whereIn('id', $article_ids);
+//            }
+            //个人文章查询4
+//            if ($type == 4) {
+//                $articles = $articles->where('user_id', $request->user_id);
+//            }
+            $articles = $articles->where('is_public', $is_public)->orderBy('created_at', $order_by)->paginate(15);
+            $user_id=Auth::id();
+            foreach ($articles->items() as $article) {
+                $article->is_support = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 0)->count();
+                $article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 1)->count();
+                $article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $article->id)->count();
+                $this->img_ids = [];
+                $this->get_img_after($article->id);
+                $article->images = Image::find($this->img_ids);
+            }
+            $temp=$articles->toJson();
+            return response($articles->toJson());
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }
@@ -188,65 +242,7 @@ class ArticleController extends Controller
      */
     public function article_list(Request $request)
     {
-        try {
-            $page = $request->page;
-            $size = $request->size;
-            $topic_id = $request->topic_id;
-            $user_id = $request->user_id;
-            $reply_id = $request->reply_id;
-            $key_word = $request->key_word;
-            $comment = $request->comment;
-            $is_public = $request->is_public;
-            if (is_null($is_public)) {
-                $is_public = 1;
-            }
-            $follow_article = $request->follow_article;
-            $type = $request->type;
 
-            $order_by = 'desc';
-
-            $articles = Article::with('topic', 'user');
-            //话题查询0
-            if (!is_null($topic_id)) {
-                if ($topic_id != 0) {
-                    $articles = $articles->where('topic_id', $topic_id);
-                }
-                $articles = $articles->where('reply_id', 0);
-            }
-            //回复id查询,为0就是首页的文章1
-            if (!is_null($reply_id)) {
-                $articles = $articles->where('reply_id', $reply_id);
-                if ($reply_id > 0) {
-                    $order_by = 'asc';
-                }
-            }
-            //关键字查询2
-            if (!is_null($key_word)) {
-                $articles = $articles->where('content', 'like', "%" . $key_word . "%");
-            }
-            //查询用户关注的文章3
-            if (!is_null($follow_article)) {
-                $article_ids = Follow::where('follow_user', $user_id)->get(['be_follow_user'])->toArray();
-                $articles->whereIn('id', $article_ids);
-            }
-            //个人文章查询4
-            if ($type == 4) {
-                $articles = $articles->where('user_id', $request->user_id);
-            }
-            $articles = $articles->where('is_public', $is_public)->orderBy('created_at', $order_by)->skip($page * $size)->take($size)->get();
-            foreach ($articles as $article) {
-                $article->is_support = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 0)->count();
-                $article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 1)->count();
-                $article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $article->id)->count();
-                $this->img_ids = [];
-                $this->get_img_after($article->id);
-                $article->images = Image::find($this->img_ids);
-            }
-
-            return response()->json($articles);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
     }
 
     /**

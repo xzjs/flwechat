@@ -1,6 +1,8 @@
 <template>
-    <div class="content_box">
-        <div v-cloak v-for="item in article_list" class="content" :class="{comment_bg:is_comment}">
+    <div class="content_box" v-infinite-scroll="loadMore"
+         infinite-scroll-disabled="loading"
+         infinite-scroll-distance="10">
+        <div v-cloak v-for="item in article_list.data" class="content" :class="{comment_bg:is_comment}">
             <div class="content_top">
                 <router-link :to="{name:'Mine',params:{id:item.user.id}}">
                     <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{item.user.nickname}}&bull;<span>{{item.topic.content}}</span></span>
