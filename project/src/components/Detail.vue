@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
+    <div v-cloak class="container">
         <div class="article_box">
-            <div v-cloak class="content">
+            <div class="content">
                 <div class="content_top">
                     <a :href="'mine.html?user_id='+article.user.id">
                         <img :src="article.user.head_img" alt="" class="head_portrait"><span
@@ -16,31 +16,29 @@
                     <images :images="article.images"></images>
                 </div>
                 <p v-else class="content_txt">该文章已被作者删除</p>
-                <action :article="article" :is_comment="true"></action>
+                <action :article="article"></action>
             </div>
             <div class="comment_box">
                 <articles :article_list="articles" :is_comment="true"></articles>
             </div>
             <div class="comment_input">
-                <router-link :to="{name:'Publish',params:{article_id:article_id}}">评论</router-link>
+                <router-link :to="{name:'Publish',params:{id:article_id}}">评论</router-link>
             </div>
         </div>
     </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
     import articles from '@/components/Article';
     import action from  '@/components/Action';
     import images from  '@/components/Image';
-    import {mapState} from 'vuex';
-    import {mapActions} from 'vuex'
+    import {mapState, mapActions} from 'vuex';
 
     export default{
-        data: function () {
+        data() {
             return {
                 article_list: [],
-                article_id: this.$route.params.id,
-                userId: 0,
+                article_id: 0,
                 isDoShow: false
             }
         },
@@ -50,15 +48,14 @@
         },
         methods: {
             ...mapActions(['getArticle']),
-            getArticleList: function () {
-                var articleId = this.$route.params.id;
-                var postData = {
-                    page: 0,
-                    size: 15,
-                    user_id: this.userId,
-                    reply_id: articleId
-                };
-                this.$store.dispatch('getArticles', postData);
+            getArticleList() {
+                axios.get('/api/articles', {params: {reply_id: this.article_id}})
+                        .then(response=> {
+                            this.articles = response.data;
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                        });
             },
             changeDo: function () {
                 this.isDoShow = (!this.isDoShow);
@@ -67,7 +64,6 @@
                 var vm = this;
                 axios.delete('/flwechat/public/article/' + vm.article_id)
                         .then(function (response) {
-                            console.log(response.data);
                             vm.isDoShow = false;
                             vm.article.is_deleted = 1;
                         })
@@ -76,13 +72,14 @@
                         })
             }
         },
-        mounted: function () {
-            this.getArticle({article_id: this.article_id});
+        mounted() {
+            this.article_id = this.$route.params.id;
+            this.getArticle({id:this.article_id});
             this.getArticleList();
         },
         watch: {
             '$route'(to, from){
-                this.getArticle({article_id: this.article_id});
+                this.getArticle();
                 this.getArticleList();
             }
         }

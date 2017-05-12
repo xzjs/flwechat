@@ -42,14 +42,15 @@
         mounted: function () {
             $('.container').height($(window).height());
             this.getNotices();
+            this.getTopics();
         },
         methods: {
-            ...mapActions(['getNotices']),
+            ...mapActions(['getNotices','getTopics']),
         }
     }
 </script>
 
-<style lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss" scoped>
     @import "../assets/css/icon_style.css";
 
     .weui-tabbar {

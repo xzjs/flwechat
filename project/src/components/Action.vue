@@ -1,6 +1,6 @@
 <template>
     <div class="your_action">
-        <div v-if="!is_comment" class="your_action_right">
+        <div v-if="is_comment" class="your_action_right">
             <a  :href="'article_detail.html?reply_id=' + my_article.reply_id">
                 <img src="../assets/images/back_to_original.png" alt="">
                 <span>原文</span>

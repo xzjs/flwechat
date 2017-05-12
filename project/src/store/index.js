@@ -8,7 +8,7 @@ import axios from 'axios'
 Vue.use(Vuex);
 axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
-    'Authorization':'Bearer '+localStorage.token
+    'Authorization': 'Bearer ' + localStorage.token
 };
 axios.defaults.baseURL = process.env.API_ROOT;
 
@@ -37,8 +37,8 @@ export default new Vuex.Store({
         setNotices(state, notices){
             state.notices = notices;
         },
-        markNotices(state,index){
-            state.notices.slice(index,1);
+        markNotices(state, index){
+            state.notices.slice(index, 1);
         }
     }
     ,
@@ -52,30 +52,14 @@ export default new Vuex.Store({
                     console.log(error);
                 })
         },
-        getArticles(context, postData){
-            axios.post('/api/article/article_list', postData)
-                .then(
-                    function (response) {
-                        context.commit('setArticles', response.data);
-                    })
-                .catch(
-                    function (response) {
-                        console.log(response);
-                    }
-                );
-        },
-        getArticle(context, postData){
-            axios.post('/flwechat/public/article/get_article',
-                {article_id: postData.article_id, user_id: context.state.userId})
-                .then(
-                    function (response) {
-                        context.commit('setArticle', response.data);
-                    }
-                ).catch(
-                function (error) {
+        getArticle(context,data){
+            axios.get('/api/articles/' + data.id)
+                .then(response => {
+                    context.commit('setArticle',response.data);
+                })
+                .catch(error=> {
                     console.log(error);
-                }
-            )
+                })
         },
         //notice
         getNotices(context){

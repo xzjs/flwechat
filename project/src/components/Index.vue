@@ -56,21 +56,13 @@
                 if (this.topic_id == null) {
                     this.topic_id = 0;
                 }
-                var vm = this;
-                axios.get('/api/articles', {
-                    params: {
-                        topic_id: this.topic_id
-                    }
-                })
-                        .then(
-                                response=> {
-                                    vm.articles = response.data;
-                                })
-                        .catch(
-                                function (response) {
-                                    console.log(response);
-                                }
-                        );
+                axios.get('/api/articles', {params: {topic_id: this.topic_id}})
+                        .then(response=> {
+                            this.articles = response.data;
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                        });
             }
         },
         components: {

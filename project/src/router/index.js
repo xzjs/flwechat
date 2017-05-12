@@ -48,7 +48,7 @@ export default [{
                             component: Mine
                         },
                         {
-                            path:'publish/:article_id?',
+                            path:'publish/:id?',
                             name:'Publish',
                             component:Publish
                         },

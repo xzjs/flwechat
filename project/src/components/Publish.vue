@@ -63,7 +63,7 @@
                     <canvas id="canvas" :width="width" :height="height"></canvas>
                 </el-col>
             </el-row>
-            <el-row type="flex" justify="end" class="row">
+            <el-row type="flex" justify="end" class="row float-button">
                 <el-col :span="4">
                     <el-button @click="cancel">取消</el-button>
                 </el-col>
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-    import {mapState} from 'vuex';
+    import {mapState, mapActions} from 'vuex';
     import insert from '../assets/images/pic_insert.png';
     import Exif from 'exif-js';
     import SignaturePad from 'signature_pad';
@@ -110,9 +110,10 @@
                     return '仅自己可见';
                 }
             },
-            ...mapState(['topics', 'userId','article'])
+            ...mapState(['topics', 'article'])
         },
         methods: {
+            ...mapActions(['getTopics']),
             change: function (index, event) {
                 this.index = index;
                 var vm = this;
@@ -311,13 +312,13 @@
                 position.min_y *= scale;
                 this.positions[this.index] = position;
             },
-            getTopics: function () {
-                if(this.articleId==0){
-                    if (this.$store.state.topics == null) {
-                        this.$store.dispatch('getTopics')
+            setTopics() {
+                if (this.articleId == 0) {
+                    if (this.topics==null) {
+                        this.getTopics();
                     }
-                }else{
-                    this.topicId=this.article.topic_id;
+                } else {
+                    this.topicId = this.article.topic_id;
                 }
             },
             submit: function () {
@@ -336,7 +337,7 @@
                 var formData = {
                     topic_id: this.topicId,
                     comment: this.comment,
-                    reply_id: 0,
+                    reply_id: this.articleId,
                     is_public: this.isPublic
                 };
                 for (var i = 0; i < this.image.length; i++) {
@@ -366,12 +367,12 @@
                         })
             }
         },
-        mounted: function () {
-            var id = this.$route.params.article_id;
-            if (id != null) {
-                this.articleId = id;
+        mounted() {
+            var id=this.$route.params.id;
+            if(id!=null){
+                this.articleId=id;
             }
-            this.getTopics();
+            this.setTopics();
         }
     }
 </script>
@@ -404,10 +405,12 @@
     .weui-cells:after, .weui-cells:before {
         border: none;
     }
-    .weui-cells__title{
-      margin-top: 0;
-      padding-top:0.77em;
+
+    .weui-cells__title {
+        margin-top: 0;
+        padding-top: 0.77em;
     }
+
     .weui-cells__title sup {
         color: red;
     }
@@ -543,11 +546,14 @@
     }
 
     .row {
-      width:100%;
         margin: 10px auto;
-      position: absolute;
-      bottom:0;
-      right:15px;
+    }
+
+    .float-button{
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        right: 15px;
     }
 
     .button {
