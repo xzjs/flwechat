@@ -40,12 +40,12 @@
             }
         },
         mounted: function () {
-            $('.container').height($(window).height());
+            $('.container').height($(window).height()-53);
             this.getNotices();
             this.getTopics();
         },
         methods: {
-            ...mapActions(['getNotices','getTopics']),
+            ...mapActions(['getNotices', 'getTopics']),
         }
     }
 </script>
@@ -59,10 +59,12 @@
     }
 
     .router-link-active {
-
-    p, i {
-        color: #0084FF;
+        p, i {
+            color: #0084FF;
+        }
     }
 
+    .container {
+        padding-bottom: 53px;
     }
 </style>

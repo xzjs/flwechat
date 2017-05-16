@@ -18,11 +18,11 @@
                 <p v-else class="content_txt">该文章已被作者删除</p>
                 <action :article="article"></action>
             </div>
-            <div class="comment_box">
-                <articles :article_list="articles" :is_comment="true"></articles>
+            <div class="comment_box comment_bg" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+                <articles :article="item" v-for="item in articles" :is_comment="true" :key="item.id"></articles>
             </div>
             <div class="comment_input">
-                <router-link :to="{name:'Publish',params:{id:article_id}}">评论</router-link>
+                <router-link :to="{name:'Publish',params:{id:articleId}}">评论</router-link>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
     import articles from '@/components/Article';
     import action from  '@/components/Action';
     import images from  '@/components/Image';
-    import {mapState, mapActions} from 'vuex';
+    import {mapState, mapActions, mapMutations} from 'vuex';
 
     export default{
         data() {
@@ -42,12 +42,18 @@
                 isDoShow: false
             }
         },
-        computed: mapState(['userId', 'articles', 'article']),
+        computed: mapState(['userId', 'articles', 'article', 'currentPage', 'nextPage']),
         components: {
             articles, action, images
         },
         methods: {
-            ...mapActions(['getArticle','getArticles']),
+            ...mapMutations(['setCurrentPage', 'setNextPage']),
+            ...mapActions(['getArticle', 'getArticles']),
+            loadMore(){
+                if (this.nextPage != null) {
+                    this.getArticles({reply_id: this.articleId, page: this.nextPage});
+                }
+            },
             changeDo: function () {
                 this.isDoShow = (!this.isDoShow);
             },
@@ -64,20 +70,24 @@
             }
         },
         mounted() {
+            this.setCurrentPage(1);
+            this.setNextPage(null);
             this.articleId = this.$route.params.id;
-            this.getArticle({id:this.articleId});
-            this.getArticles({reply_id:this.articleId});
+            this.getArticle({id: this.articleId});
+            this.getArticles({reply_id: this.articleId, page: this.currentPage});
         },
-        watch: {
-            '$route'(to, from){
-                this.getArticle();
-                this.getArticleList();
-            }
-        }
+//        watch: {
+//            '$route'(to, from){
+//                this.setCurrentPage(1);
+//                this.setNextPage(null);
+//                this.getArticle();
+//                this.getArticleList();
+//            }
+//        }
     }
 </script>
 
-<style scoped>
+<style lang="scss" rel="stylesheet/scss"  scoped>
     .container {
         padding-bottom: 84px;
     }
@@ -145,5 +155,44 @@
         padding: 0 15px;
         font-size: 18px;
         line-height: 32px;
+    }
+
+    .comment_bg {
+        background-color: #f5f5f5;
+        border-bottom: 1px solid #e8e8e8;
+    }
+
+    .comment_box{
+        .content{
+            background-color: #f5f5f5;
+            border-bottom: 1px solid  #e8e8e8;
+            .wei_name{
+                font-size: 14px;
+            }
+            .pic_show .userImg{
+                width: 60px;
+            }
+            .head_portrait{
+                width:20px;
+                height:20px;
+                border-radius: 10px;
+                vertical-align: middle;
+            }
+        }
+    }
+    .comment_input{
+        position: fixed;
+        right:15px;
+        bottom: 65px;
+    }
+    .comment_input a{
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        display: inline-block;
+        border-radius: 20px;
+        background-color: #0084FF;
+        color: #fff;
     }
 </style>

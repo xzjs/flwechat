@@ -25,46 +25,66 @@
         <!--<img src="../../static/images/more.png" alt="" class="more">-->
         <!--<img src="../../static/images/up_close.png" alt="" class="close" style="display: none">-->
         <!--</div>-->
-        <articles :article_list="articles"></articles>
+        <div class="content_box" v-infinite-scroll="loadMore"
+             infinite-scroll-disabled="loading"
+             infinite-scroll-distance="10"
+             infinite-scroll-immediate-check="false">
+            <articles :article="item" v-for="item in articles" class="content" :key="item.id"></articles>
+        </div>
     </div>
 </template>
 
 <script>
     import articles from '@/components/Article';
-    import {mapState, mapActions} from 'vuex';
+    import {mapState, mapMutations, mapActions} from 'vuex';
 
     export default{
-        data: function () {
+        data() {
             return {
                 topicId: 0
             }
         },
-        computed: mapState(['topics', 'articles']),
+        computed: mapState(['topics', 'articles', 'currentPage', 'nextPage']),
         methods: {
-            ...mapActions(['getArticles'])
+            ...mapMutations(['setCurrentPage', 'setTotalPage']),
+            ...mapActions(['getArticles']),
+            getTopicId(){
+                var id = this.$route.params.topic_id;
+                if (id != null) {
+                    this.topicId = id;
+                } else {
+                    this.topicId = 0;
+                }
+            },
+            loadMore(){
+                console.log('hello');
+                if (this.nextPage!=null) {
+                    this.getArticles({topic_id: this.topicId, page: this.nextPage});
+                }
+            }
         },
         components: {
             articles
         },
         mounted(){
-            var id = this.$route.params.topic_id;
-            if (id != null) {
-                this.topicId = id;
-            }
-            this.getArticles({topic_id:this.topicId});
+            console.log('mounted');
+            this.getTopicId();
+            this.getArticles({topic_id: this.topicId, page: 1});
         },
         watch: {
             '$route'(to, from){
-                this.getArticles({topic_id:this.topicId});
+                this.setCurrentPage(1);
+                this.setTotalPage(1);
+                this.getTopicId();
+                this.getArticles({topic_id: this.topicId, page: 1});
             }
         }
     }
 </script>
 
 <style scoped>
-    .container {
-        /*background-color: #fff;*/
-        padding-bottom: 84px;
+    .content_box {
+        overflow: hidden;
     }
 
     .weui-search-bar {

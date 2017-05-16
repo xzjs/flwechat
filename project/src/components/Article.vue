@@ -1,22 +1,18 @@
 <template>
-    <div class="content_box" v-infinite-scroll="loadMore"
-         infinite-scroll-disabled="loading"
-         infinite-scroll-distance="10">
-        <div v-cloak v-for="item in article_list.data" class="content" :class="{comment_bg:is_comment}">
-            <div class="content_top">
-                <router-link :to="{name:'Mine',params:{id:item.user.id}}">
-                    <img :src="item.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{item.user.nickname}}&bull;<span>{{item.topic.content}}</span></span>
-                </router-link>
-            </div>
-            <div v-if="item.is_deleted==0">
-                <router-link :to="{name:'Detail',params:{id:item.id}}">
-                    <p class="content_txt">{{item.content}}</p>
-                </router-link>
-                <images :images="item.images"></images>
-            </div>
-            <a v-else :href="'article_detail.html?reply_id='+item.id"><p class="content_txt">该文章已被作者删除</p></a>
-            <action :article="item" :is_comment="is_comment"></action>
+    <div>
+        <div class="content_top">
+            <router-link :to="{name:'Mine',params:{id:article.user.id}}">
+                <img :src="article.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
+            </router-link>
         </div>
+        <div v-if="article.is_deleted==0">
+            <router-link :to="{name:'Detail',params:{id:article.id}}">
+                <p class="content_txt">{{article.content}}</p>
+            </router-link>
+            <images :images="article.images"></images>
+        </div>
+        <a v-else :href="'article_detail.html?reply_id='+article.id"><p class="content_txt">该文章已被作者删除</p></a>
+        <action :article="article"></action>
     </div>
 </template>
 
@@ -27,7 +23,7 @@
 
     export default {
         props: {
-            article_list:{},
+            article: {},
             is_comment: {
                 default: false
             }
@@ -41,12 +37,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .content_box {
-        padding-bottom: 80px;
-        overflow: hidden;
-
-    }
-
     .content {
         /*padding:0 15px;*/
         border-bottom: 6px solid #e8e8e8;
@@ -79,10 +69,5 @@
         padding: 0 15px;
         font-size: 18px;
         line-height: 32px;
-    }
-
-    .comment_bg{
-        background-color: #f5f5f5;
-        border-bottom: 1px solid  #e8e8e8;
     }
 </style>

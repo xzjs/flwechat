@@ -75,7 +75,6 @@ class ArticleController extends Controller
                 $this->get_img_after($article->id);
                 $article->images = Image::find($this->img_ids);
             }
-            $temp = $articles->toJson();
             return response($articles->toJson());
         } catch (\Exception $exception) {
             echo $exception->getMessage();

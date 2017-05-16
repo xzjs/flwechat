@@ -16,10 +16,13 @@ export default new Vuex.Store({
     state: {
         topics: [],
         userId: 0,
-        articles: {},
+        articles: [{user: {}, topic: {}}],
         topic_id: 0,
         article: {user: {}, topic: {}},
-        notices: []
+        notices: [],
+        currentPage: 1,
+        nextPage: null,
+        wait: false
     },
     mutations: {
         setTopics(state, t){
@@ -39,6 +42,18 @@ export default new Vuex.Store({
         },
         markNotices(state, index){
             state.notices.slice(index, 1);
+        },
+        setCurrentPage(state, index){
+            state.currentPage = index;
+        },
+        setNextPage(state, index){
+            state.totalPage = index;
+        },
+        attachArticles(state, articles){
+            state.articles = state.articles.concat(articles);
+        },
+        setWait(state, status){
+            state.wait = status;
         }
     }
     ,
@@ -53,19 +68,36 @@ export default new Vuex.Store({
                 })
         },
         //article
-        getArticle(context,data){
+        getArticle(context, data){
             axios.get('/api/articles/' + data.id)
                 .then(response => {
-                    context.commit('setArticle',response.data);
+                    context.commit('setArticle', response.data);
                 })
                 .catch(error=> {
                     console.log(error);
                 })
         },
-        getArticles(context,data){
+        getArticles(context, data){
+            if (context.state.wait)
+                return;
+            context.commit('setWait', true);
             axios.get('/api/articles', {params: data})
                 .then(response=> {
-                    context.commit('setArticles',response.data);
+                    console.log(response.data);
+                    var str = response.data.next_page_url;
+                    if (str == null) {
+                        context.commit('setNextPage', null);
+                    } else {
+                        context.commit('setNextPage', str.charAt(str.length - 1));
+                    }
+                    context.commit('setCurrentPage', response.data.current_page);
+
+                    if (data.page == 1) {
+                        context.commit('setArticles', response.data.data);
+                    } else {
+                        context.commit('attachArticles', response.data.data);
+                    }
+                    context.commit('setWait', false);
                 })
                 .catch(function (response) {
                     console.log(response);
