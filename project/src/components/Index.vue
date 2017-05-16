@@ -85,6 +85,7 @@
 <style scoped>
     .content_box {
         overflow: hidden;
+        margin-bottom: 53px;
     }
 
     .weui-search-bar {

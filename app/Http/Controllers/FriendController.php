@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Friend;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class FriendController extends Controller
 {
@@ -15,7 +17,29 @@ class FriendController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $friends_ids = array();
+            $id=Auth::id();
+            switch (Input::get('type')) {
+                case 1:
+                    //发出的好友邀请
+                    $friends_ids = Friend::where('friend_post', $id)->where('agree', 0)->get(['friend_receive'])->toArray();
+                    break;
+                case 2:
+                    //收到的好友邀请
+                    $friends_ids = Friend::where('friend_receive', $id)->where('agree', 0)->get(['friend_post'])->toArray();
+                    break;
+                case 0:
+                    //所有好友
+                    $friends_ids1 = Friend::where('friend_post', $id)->where('agree', 1)->get(['friend_receive'])->toArray();
+                    $friends_ids2 = Friend::where('friend_receive', $id)->where('agree', 1)->get(['friend_post'])->toArray();
+                    $friends_ids = array_merge($friends_ids1, $friends_ids2);
+            }
+            $users = User::find($friends_ids);
+            return response()->json($users);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     /**
@@ -100,28 +124,7 @@ class FriendController extends Controller
      */
     public function get_friends(Request $request)
     {
-        try {
-            $friends_ids = array();
-            switch ($request->type) {
-                case 1:
-                    //发出的好友邀请
-                    $friends_ids = Friend::where('friend_post', $request->id)->where('agree', 0)->get(['friend_receive'])->toArray();
-                    break;
-                case 2:
-                    //收到的好友邀请
-                    $friends_ids = Friend::where('friend_receive', $request->id)->where('agree', 0)->get(['friend_post'])->toArray();
-                    break;
-                case 0:
-                    //所有好友
-                    $friends_ids1 = Friend::where('friend_post', $request->id)->where('agree', 1)->get(['friend_receive'])->toArray();
-                    $friends_ids2 = Friend::where('friend_receive', $request->id)->where('agree', 1)->get(['friend_post'])->toArray();
-                    $friends_ids = array_merge($friends_ids1, $friends_ids2);
-            }
-            $users = User::find($friends_ids);
-            return response()->json($users);
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
+
     }
 
     /**

@@ -17,10 +17,10 @@
         <div class="your_action_right" @click="detail()">
             <p>评论<span>{{myArticle.comment_num}}</span></p>
         </div>
-        <template v-if="myArticle.user_id!=userId">
+        <template v-if="myArticle.user_id!=user.id">
             <div class="your_action_right" @click="follow()">
-                <img v-if="myArticle.is_follow==0" src="../assets/images/follow.png" alt="">
-                <img v-else src="../assets/images/follow3.png" alt="">
+                <p v-if="myArticle.is_follow==0">关注</p>
+                <p v-else style="color:#0084FF">关注</p>
             </div>
         </template>
     </div>
@@ -37,7 +37,7 @@
             }
         },
         computed: {
-            ...mapState(['userId']),
+            ...mapState(['user']),
             myArticle() {
                 return this.article;
             }

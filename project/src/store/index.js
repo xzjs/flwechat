@@ -22,7 +22,8 @@ export default new Vuex.Store({
         notices: [],
         currentPage: 1,
         nextPage: null,
-        wait: false
+        wait: false,
+        user:{}
     },
     mutations: {
         setTopics(state, t){
@@ -54,6 +55,10 @@ export default new Vuex.Store({
         },
         setWait(state, status){
             state.wait = status;
+        },
+        //user
+        setUser(state,user){
+            state.user=user;
         }
     }
     ,
@@ -110,6 +115,16 @@ export default new Vuex.Store({
                     context.commit('setNotices', response.data);
                 })
                 .catch(error=> {
+                    console.log(error);
+                })
+        },
+        //user
+        getUser(context,data){
+            axios.get('/api/users/'+data.id)
+                .then(response=>{
+                    context.commit('setUser',response.data);
+                })
+                .catch(error=>{
                     console.log(error);
                 })
         }

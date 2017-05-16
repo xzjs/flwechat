@@ -18,8 +18,6 @@ Route::get('/test', function () {
     return view('welcome');
 });
 
-Route::resource('user', 'UserController');
-
 Route::post('/article/article_list', 'ArticleController@article_list');
 Route::post('/article/get_article', 'ArticleController@get_article');
 
@@ -32,7 +30,6 @@ Route::resource('follow', 'FollowController');
 
 Route::post('/friend/get_friends', 'FriendController@get_friends');
 Route::post('/friend/agree_friend', 'FriendController@agree_friend');
-Route::resource('friend', 'FriendController');
 
 Route::post('/action/cancel','ActionController@cancel');
 Route::resource('action', 'ActionController');

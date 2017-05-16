@@ -40,12 +40,13 @@
             }
         },
         mounted: function () {
-            $('.container').height($(window).height()-53);
+            //$('.container').height($(window).height()-53);
             this.getNotices();
             this.getTopics();
+            this.getUser({id:0});
         },
         methods: {
-            ...mapActions(['getNotices', 'getTopics']),
+            ...mapActions(['getNotices', 'getTopics','getUser']),
         }
     }
 </script>
@@ -64,7 +65,7 @@
         }
     }
 
-    .container {
-        padding-bottom: 53px;
-    }
+    /*.container {*/
+        /*padding-bottom: 53px;*/
+    /*}*/
 </style>
