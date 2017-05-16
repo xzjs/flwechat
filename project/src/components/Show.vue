@@ -39,7 +39,8 @@
               </ul>
             </div>
             <div class="button_box">
-              <span class="close" @click="close()"><img src="../assets/images/close2.png" alt=""></span><span class="url" @click="toFront()"><img
+              <span class="close" @click="close()"><img src="../assets/images/close2.png" alt=""></span><span
+              class="url" @click="toFront()"><img
               src="../assets/images/back_to_original2.png" alt=""></span>
             </div>
           </div>
@@ -50,19 +51,19 @@
 </template>
 <script>
   import action from '@/components/Action';
-  import { mapState } from 'vuex';
+  import {mapState} from 'vuex';
   export default{
     data(){
       return {
         imageId: 0,
-        images: [{img:"",article:{user:{},topic:{}}}],
+        images: [{img: "", article: {user: {}, topic: {}}}],
         index: 0,
-        show:true,
-        classActive:[],
+        show: true,
+        classActive: [],
       }
     },
-    computed:mapState([
-        'userId'
+    computed: mapState([
+      'userId'
     ]),
     components: {
       action
@@ -71,10 +72,10 @@
       getImages(){
         var vm = this;
         axios.get('/flwechat/public/images', {
-            params:{
-                image_id: this.imageId,
-                user_id: this.userId
-            }
+          params: {
+            image_id: this.imageId,
+            user_id: this.userId
+          }
         })
           .then(function (response) {
             console.log(response.data);
@@ -98,27 +99,27 @@
         var back = $(".back"), front = $(".front");
 //        var front_button=$('.front .button_box');
 //        if (this.flag == 1) {
-          back.css('display', 'block');
-          front.removeClass('test2');
-          back.children().removeClass("test");
-          front.addClass("test");
-          back.children().addClass('test2');
-          setTimeout(function () {
-            $('.front').css('display', 'none');
-          }, 375);
-        this.show=true;
-        this.classActive=[];
-        var expands=this.images[this.index].expands;
-        for(var i=0;i<expands.length;i++){
-          this.classActive[i]=(expands[i].dimension=='variant'||expands[i].dimension=='implicit');
+        back.css('display', 'block');
+        front.removeClass('test2');
+        back.children().removeClass("test");
+        front.addClass("test");
+        back.children().addClass('test2');
+        setTimeout(function () {
+          $('.front').css('display', 'none');
+        }, 375);
+        this.show = true;
+        this.classActive = [];
+        var expands = this.images[this.index].expands;
+        for (var i = 0; i < expands.length; i++) {
+          this.classActive[i] = (expands[i].dimension == 'variant' || expands[i].dimension == 'implicit');
         }
       },
 
-      imgClick:function () {
+      imgClick: function () {
 
-        this.show=(!this.show);
+        this.show = (!this.show);
       },
-      toFront: function (){
+      toFront: function () {
         var back = $(".back"), front = $(".front");
         front.css('display', 'block');
         front.removeClass("test");
@@ -134,17 +135,17 @@
         history.pushState({}, "图片展示", href);
         this.flag = 1;
 
-        this.show=true;
+        this.show = true;
       },
     },
     mounted: function () {
-       $('.show_box').height($(window).height()) ;
+      $('.show_box').height($(window).height());
       this.imageId = this.$route.params.id;
       this.getImages();
     }
   }
 </script>
-<style lang="scss" scoped>
+<style scoped lang="scss" rel="stylesheet/scss" type="text/css">
   @-webkit-keyframes flipOutYtest {
     from {
       -webkit-transform: perspective(1400px);
@@ -170,14 +171,13 @@
     }
   }
 
-  .test{
+  .test {
     -webkit-animation: flipOutYtest 0.75s linear;
     animation: flipOutYtest 0.75s linear;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
-    height:100%;
+    height: 100%;
   }
-
 
   @-webkit-keyframes flipInYtest {
     from {
@@ -205,157 +205,162 @@
     }
   }
 
-  .test2{
+  .test2 {
     -webkit-animation: flipInYtest 0.75s linear;
     animation: flipInYtest 0.75s linear;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
   }
-  @media screen and (max-height: 568px){
-    .back-content ul{
-      height:428px;
+
+  @media screen and (max-height: 568px) {
+    .back-content ul {
+      height: 428px;
       overflow-y: scroll;
     }
-    .bullet_screen .bullet_screen_content{
+    .bullet_screen .bullet_screen_content {
       width: 50%;
     }
   }
-  @media screen and (min-height: 569px)and (max-height: 640px){
-    .back-content ul{
-      height:500px;
+
+  @media screen and (min-height: 569px) and (max-height: 640px) {
+    .back-content ul {
+      height: 500px;
       overflow-y: scroll;
     }
-    .bullet_screen .bullet_screen_content{
+    .bullet_screen .bullet_screen_content {
       width: 56%;
     }
   }
-  @media screen and (min-height: 641px)and (max-height: 667px){
-    .back-content ul{
-      height:527px;
+
+  @media screen and (min-height: 641px) and (max-height: 667px) {
+    .back-content ul {
+      height: 527px;
       overflow-y: scroll;
     }
-    .bullet_screen .bullet_screen_content{
+    .bullet_screen .bullet_screen_content {
       width: 57%;
     }
   }
-  @media screen and (min-height: 668px)and (max-height: 736px){
-    .back-content ul{
-      height:596px;
+
+  @media screen and (min-height: 668px) and (max-height: 736px) {
+    .back-content ul {
+      height: 596px;
       overflow-y: scroll;
     }
-    .bullet_screen .bullet_screen_content{
+    .bullet_screen .bullet_screen_content {
       width: 59%;
     }
   }
+
   /*图片show样式*/
-  .show_box{
+  .show_box {
     position: relative;
-    .front{
-      width:100%;
-      height:100%;
-      z-index:1;
-      position:absolute;
-      .img_original{
-        width:100%;
+    .front {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      position: absolute;
+      .img_original {
+        width: 100%;
         position: absolute;
-        left:0;
-        z-index:2;
+        left: 0;
+        z-index: 2;
       }
-      .img_mark{
-        width:100%;
+      .img_mark {
+        width: 100%;
         position: absolute;
-        left:0;
+        left: 0;
         z-index: 3;
       }
-        .UserComment{
-          width: 100%;
-          text-align: left;
-          font-size: 12px;
+      .UserComment {
+        width: 100%;
+        text-align: left;
+        font-size: 12px;
+        color: #fff;
+        background-color: #000;
+        padding: 5px 15px;
+        position: absolute;
+        z-index: 4;
+        top: 0;
+        .head_img {
+          vertical-align: middle;
+          width: 20px;
+          height: 20px;
+          border-radius: 10px;
+          margin: 5px 0px;
+        }
+      }
+      .button_box {
+        position: absolute;
+        bottom: 0;
+        z-index: 4;
+        height: 60px;
+        width: 100%;
+        background-color: #000;
+        .show_action {
           color: #fff;
-          background-color: #000;
-          padding:5px 15px;
-          position: absolute;
-          z-index:4;
-          top:0;
-            .head_img{
-              vertical-align: middle;
-              width: 20px;
-              height:20px;
-              border-radius: 10px;
-              margin:5px 0px;
-            }
         }
-        .button_box{
-          position: absolute;
-          bottom:0;
-          z-index: 4;
-          height:60px;
-          width:100%;
-          background-color: #000;
-          .show_action{
-            color: #fff;
+        .your_action {
+          width: 50%;
+          padding: 0;
+          float: left;
+          margin: 8px 0;
+          .your_action_right p {
+            background-color: #fff;
           }
-          .your_action{
-            width:50%;
-            padding:0;
-            float: left;
-            margin:8px 0;
-            .your_action_right p{
-              background-color: #fff;
-            }
-          }
-            .bullet_screen_img{
-              width:100%;
-              .close,.url{
-                float: right;
-                display: inline-block;
-                margin:20px 0;
-                width:15%;
-              }
-            }
         }
+        .bullet_screen_img {
+          width: 100%;
+          .close, .url {
+            float: right;
+            display: inline-block;
+            margin: 20px 0;
+            width: 15%;
+          }
+        }
+      }
     }
-    .back{
+    .back {
       background-color: #fff;
       height: 100%;
-      width:100%;
-      .expands_li_background_color{
-        background-color: #b7d28d!important;
+      width: 100%;
+      .expands_li_background_color {
+        background-color: #b7d28d !important;
       }
-      .back_box{
-        height:100%;
-        .back-content{
-          margin:0 15px;
+      .back_box {
+        height: 100%;
+        .back-content {
+          margin: 0 15px;
           color: #000;
-          .expands{
+          .expands {
             text-align: center;
             font-size: 22px;
             padding: 10px 0;
-            }
-          ul li{
+          }
+          ul li {
             text-align: left;
-            padding:0 10px;
+            padding: 0 10px;
             list-style: none;
             line-height: 30px;
             border-radius: 5px;
             background-color: #bce8f1;
             margin-bottom: 10px;
             max-height: 140px;
-            min-height:70px;
+            min-height: 70px;
             overflow: hidden;
-            a{
+            a {
               color: #000;
               display: block;
-              .expands_title{
+              .expands_title {
                 font-weight: 700;
                 font-size: 20px;
-                height:30px;
-                line-height:30px;
-                white-space:nowrap;
-                overflow:hidden;
-                text-overflow:ellipsis;
+                height: 30px;
+                line-height: 30px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
               }
-              .expands_abstract{
+              .expands_abstract {
                 font-size: 14px;
                 line-height: 1.4em;
                 color: #888888;
@@ -367,17 +372,17 @@
             }
           }
         }
-        .button_box{
-          width:100%;
-          height:60px;
+        .button_box {
+          width: 100%;
+          height: 60px;
           background-color: #000;
           position: fixed;
-          bottom:0;
-          span{
+          bottom: 0;
+          span {
             float: right;
             display: inline-block;
-            width:15%;
-            margin:20px 0;
+            width: 15%;
+            margin: 20px 0;
           }
         }
       }

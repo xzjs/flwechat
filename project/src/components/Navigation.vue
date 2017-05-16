@@ -40,7 +40,6 @@
             }
         },
         mounted: function () {
-            $('.container').height($(window).height()-53);
             this.getNotices();
             this.getTopics();
         },
