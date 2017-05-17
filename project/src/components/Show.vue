@@ -1,20 +1,20 @@
 <template>
   <div class="show_box" style="text-align: center">
-    <mt-swipe :auto="0">
-      <mt-swipe-item>
+    <mt-swipe :auto="0" :defaultIndex="index" :continuous="false" :showIndicators="false">
+      <mt-swipe-item v-for="image in images" :key="image.id">
         <div class="front" id="galleryImg">
-          <img :src="'http://images.frilink.cn/'+images[index].img+'-big'" alt="" class="img_original">
-          <img :src="'/flwechat/public/storage/'+ images[index].mark" alt="" class="img_mark" @click="imgClick()">
+          <img :src="'http://images.frilink.cn/'+image.img+'-big'" alt="" class="img_original">
+          <img :src="'/flwechat/public/storage/'+ image.mark" alt="" class="img_mark" @click="imgClick()">
           <div v-if="show" class="UserComment">
             <!--<div class="user_mask"></div>-->
             <!--<div class="user_comment">-->
-            <img :src="images[index].article.user.head_img" alt="" class="head_img">
-            <span>{{images[index].article.user.nickname}}</span><span>&bull;</span><span>{{images[index].article.topic.content}}</span>
-            <p id="img_article_content" class="comment_txt">{{images[index].article.content}}</p>
+            <img :src="image.article.user.head_img" alt="" class="head_img">
+            <span>{{image.article.user.nickname}}</span><span>&bull;</span><span>{{image.article.topic.content}}</span>
+            <p id="img_article_content" class="comment_txt">{{image.article.content}}</p>
             <!--</div>-->
           </div>
           <div v-if="show" class="button_box">
-            <action :article="images[index].article" :is_comment="true" class="show_action"></action>
+            <action :article="image.article" :is_comment="true" class="show_action"></action>
             <div class="bullet_screen_img">
               <span class="close" @click="close()"><img src="../assets/images/close2.png" alt=""></span><span
               class="url" @click="toBack()"><img src="../assets/images/url2.png" alt=""></span>
@@ -26,7 +26,7 @@
             <div class="back-content">
               <p class="expands">相关阅读</p>
               <ul>
-                <li v-for="(item,index) in images[index].expands"
+                <li v-for="(item,index) in image.expands"
                     :class="{expands_li_background_color:classActive[index]}">
                   <a :href="item.href">
                     <p class="expands_title">{{item.title}}</p>
@@ -56,7 +56,7 @@
     data(){
       return {
         imageId: 0,
-        images: [{img: "", article: {user: {}, topic: {}}}],
+        images: [{article: {user: {}, topic: {}}}],
         index: 0,
         show: true,
         classActive: [],
@@ -70,24 +70,22 @@
     },
     methods: {
       getImages(){
-        var vm = this;
-        axios.get('/flwechat/public/images', {
+        axios.get('/api/images', {
           params: {
-            image_id: this.imageId,
-            user_id: this.userId
+            image_id: this.imageId
           }
         })
-          .then(function (response) {
+          .then(response=> {
             console.log(response.data);
-            vm.images = response.data;
-            for (var i = 0; i < vm.images.length; i++) {
-              if (vm.images[i].id == vm.imageId) {
-                vm.index = i;
+            this.images = response.data;
+            for (var i = 0; i < this.images.length; i++) {
+              if (this.images[i].id == this.imageId) {
+                this.index = i;
                 break;
               }
             }
           })
-          .catch(function (error) {
+          .catch(error=> {
             console.log(error);
           })
       },

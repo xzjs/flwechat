@@ -7,6 +7,7 @@ use App\Image;
 use App\Action;
 use App\Follow;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class ImageController extends Controller
@@ -22,7 +23,7 @@ class ImageController extends Controller
     {
         $img_id=Input::get('image_id');
         $article_id=Input::get('article_id');
-        $user_id=Input::get('user_id');
+        $user_id=Auth::id();
 
         if($img_id!=null){
             try {

@@ -34,10 +34,6 @@ Route::post('/friend/agree_friend', 'FriendController@agree_friend');
 Route::post('/action/cancel','ActionController@cancel');
 Route::resource('action', 'ActionController');
 
-Route::get('/image/get_children_imgs/{id}','ImageController@get_children_imgs');
-Route::post('/image/get_image','ImageController@get_image');
-Route::resource('images', 'ImageController');
-
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
     Route::get('/wechat/getuser', 'WechatController@getuser');
 });

@@ -19,4 +19,5 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::resource('articles', 'ArticleController');
     Route::resource('friends', 'FriendController');
     Route::resource('users', 'UserController');
+    Route::resource('images', 'ImageController');
 });
