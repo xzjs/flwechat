@@ -23,7 +23,7 @@ export default new Vuex.Store({
         currentPage: 1,
         nextPage: null,
         wait: false,
-        user:{}
+        user: {}
     },
     mutations: {
         setTopics(state, t){
@@ -57,8 +57,8 @@ export default new Vuex.Store({
             state.wait = status;
         },
         //user
-        setUser(state,user){
-            state.user=user;
+        setUser(state, user){
+            state.user = user;
         }
     }
     ,
@@ -97,7 +97,7 @@ export default new Vuex.Store({
                     }
                     context.commit('setCurrentPage', response.data.current_page);
 
-                    if (data.page == 1) {
+                    if (data.page == null) {
                         context.commit('setArticles', response.data.data);
                     } else {
                         context.commit('attachArticles', response.data.data);
@@ -119,12 +119,12 @@ export default new Vuex.Store({
                 })
         },
         //user
-        getUser(context,data){
-            axios.get('/api/users/'+data.id)
-                .then(response=>{
-                    context.commit('setUser',response.data);
+        getUser(context, data){
+            axios.get('/api/users/' + data.id)
+                .then(response=> {
+                    context.commit('setUser', response.data);
                 })
-                .catch(error=>{
+                .catch(error=> {
                     console.log(error);
                 })
         }

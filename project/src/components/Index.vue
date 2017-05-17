@@ -67,16 +67,14 @@
             articles
         },
         mounted(){
-            console.log('mounted');
             this.getTopicId();
-            this.getArticles({topic_id: this.topicId, page: 1});
+            this.getArticles({topic_id: this.topicId});
         },
         watch: {
             '$route'(to, from){
                 this.setCurrentPage(1);
-                this.setTotalPage(1);
                 this.getTopicId();
-                this.getArticles({topic_id: this.topicId, page: 1});
+                this.getArticles({topic_id: this.topicId});
             }
         }
     }

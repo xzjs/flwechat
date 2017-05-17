@@ -24,16 +24,16 @@ class ArticleController extends Controller
     public function index()
     {
         try {
+            $user=Auth::user();
             $topic_id = Input::get('topic_id');
             $reply_id = Input::get('reply_id');
 //            $key_word = $request->key_word;
 //            $comment = $request->comment;
-            $is_public = Input::get('is_public');
-            if (is_null($is_public)) {
-                $is_public = 1;
-            }
+
+            $is_public = 1;
+
 //            $follow_article = $request->follow_article;
-//            $type = $request->type;
+            $type = Input::get('type');
 
             $order_by = 'desc';
 
@@ -50,6 +50,19 @@ class ArticleController extends Controller
                 $articles = $articles->where('reply_id', $reply_id);
                 if ($reply_id > 0) {
                     $order_by = 'asc';
+                }
+            }
+            if (!is_null($type)) {
+                switch ($type) {
+                    case 'private':
+                        $is_public = 0;
+                        break;
+                    case 'public':
+                        $articles=$user->articles()->with('user','topic');
+                        break;
+                    case 'follow':
+                        $user=Auth::user();
+                        $articles=$user->follow_articles();
                 }
             }
             //关键字查询2
@@ -77,7 +90,7 @@ class ArticleController extends Controller
             }
             return response($articles->toJson());
         } catch (\Exception $exception) {
-            echo $exception->getMessage();
+            return response($exception->getMessage());
         }
     }
 

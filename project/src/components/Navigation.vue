@@ -40,9 +40,12 @@
             }
         },
         mounted: function () {
+            console.log('父组件');
             //$('.container').height($(window).height()-53);
             this.getNotices();
             this.getTopics();
+        },
+        created(){
             this.getUser({id:0});
         },
         methods: {
