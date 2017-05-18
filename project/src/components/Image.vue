@@ -13,6 +13,7 @@
     import Swiper from 'swiper';
     import 'swiper/dist/css/swiper.min.css';
     import 'swiper/dist/js/swiper.min.js';
+    import { mapState } from 'vuex';
 
     export default {
         props: ['images'],
@@ -37,7 +38,8 @@
                 slidesPerView: 3,
                 centeredSlides: true,
             });
-        }
+        },
+        computed:mapState(['url'])
     }
 </script>
 

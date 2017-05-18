@@ -23,7 +23,8 @@ export default new Vuex.Store({
         currentPage: 1,
         nextPage: null,
         wait: false,
-        user: {}
+        user: {},
+        url: process.env.API_ROOT
     },
     mutations: {
         setTopics(state, t){
