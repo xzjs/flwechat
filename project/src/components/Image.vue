@@ -3,7 +3,7 @@
         <div  class="swiper-wrapper pic_show_list">
             <div v-for="img in images" class="swiper-slide userImg" @click="show_img(img.id)" >
                 <img :src="'http://images.frilink.cn/' + img.img+'-image'" alt="" class="img_show">
-                <img :src="['/flwechat/public/storage/' + img.mark]" alt="" class="article_list_mark_img">
+                <img :src="['/storage/' + img.mark]" alt="" class="article_list_mark_img">
             </div>
         </div>
     </div>
