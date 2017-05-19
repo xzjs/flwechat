@@ -34,7 +34,7 @@ class ArticleController extends Controller
             $type = Input::get('type');
             $order_by = 'desc';
 
-            $articles = Article::with('topic', 'user', 'agrees', 'opposes','comments');
+            $articles = Article::with('topic');
             //话题查询0
             if (!is_null($topic_id)) {
                 if ($topic_id != 0) {
@@ -55,11 +55,11 @@ class ArticleController extends Controller
                         $public = 0;
                         break;
                     case 'public':
-                        $articles = $user->articles()->with('topic', 'user', 'agrees', 'opposes','comments');
+                        $articles = $user->articles();
                         break;
                     case 'follow':
                         $user = Auth::user();
-                        $articles = $user->follow_articles()->with('topic', 'user', 'agrees', 'opposes','comments');
+                        $articles = $user->follow_articles();
                 }
             }
             //关键字查询2
@@ -75,7 +75,7 @@ class ArticleController extends Controller
 //            if ($type == 4) {
 //                $articles = $articles->where('user_id', $request->user_id);
 //            }
-            $articles = $articles->where('public', $public)->orderBy('created_at', $order_by)->paginate(15);
+            $articles = $articles->where('public', $public)->orderBy('created_at', $order_by)->with('topic', 'user', 'agrees', 'opposes','comments','followers')->paginate(15);
             foreach ($articles->items() as $article) {
                 $this->img_ids = [];
                 $this->get_img_after($article->id);
@@ -188,8 +188,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         try {
-            $article = Article::with('topic', 'user', 'agrees', 'opposes','comments')->find($id);
-            $user_id = Auth::id();
+            $article = Article::with('topic', 'user', 'agrees', 'opposes','comments','followers')->find($id);
             $this->img_ids = [];
             $this->get_img_after($article->id);
             $article->images = Image::find($this->img_ids);
@@ -219,7 +218,15 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $article=Article::find($id);
+        $user_id=Auth::id();
+        $type=$request->type;
+        if($type=='attach'){
+            $article->followers()->attach($user_id);
+        }else{
+            $article->followers()->detach($user_id);
+        }
+        return response('true');
     }
 
     /**

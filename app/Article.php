@@ -29,4 +29,8 @@ class Article extends Model
     public function comments(){
         return $this->hasMany('App\Article');
     }
+
+    public function followers(){
+        return $this->belongsToMany('App\User','follow_articles');
+    }
 }

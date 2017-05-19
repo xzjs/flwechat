@@ -15,12 +15,9 @@
         <div class="your_action_right" @click="detail()">
             <p>评论<span>{{myArticle.comments.length}}</span></p>
         </div>
-        <template v-if="myArticle.user_id!=user.id">
-            <div class="your_action_right" @click="follow()">
-                <p v-if="myArticle.is_follow==0">关注</p>
-                <p v-else style="color:#0084FF">关注</p>
-            </div>
-        </template>
+        <div v-if="myArticle.user_id!=user.id" class="your_action_right" @click="follow()">
+            <p :class="{text:isFollow}">关注</p>
+        </div>
     </div>
 </template>
 
@@ -38,7 +35,9 @@
 
                 oppose: false,
                 opposeNum: 0,
-                opposeId:0
+                opposeId: 0,
+
+                isFollow: false
             }
         },
         props: {
@@ -103,26 +102,24 @@
                 }
             },
             follow: function () {
-                if (this.myArticle.is_follow == 0) {
-                    this.myArticle.is_follow = 1;
-                    axios.post('/flwechat/public/follow',
-                            {follow_user_id: this.userId, be_follow_id: this.myArticle.id, type: 1})
-                            .then(
-                                    response=> {
-                                        console.log(response.data);
-                                    }, response=> {
-                                        console.log(response.data);
-                                    });
+                if (this.isFollow) {
+                    this.isFollow = false;
+                    axios.put('/api/articles/' + this.myArticle.id, {type: 'detach'})
+                            .then(response=> {
+                                console.log(response.data);
+                            })
+                            .catch(response=> {
+                                console.log(response.data);
+                            });
                 } else {
-                    this.myArticle.is_follow = 0;
-                    axios.post('/flwechat/public/follow/cancel_follow',
-                            {follow_user_id: this.userId, be_follow_id: this.myArticle.id, type: 1})
-                            .then(
-                                    response=> {
-                                        console.log(response.data);
-                                    }, response=> {
-                                        console.log(response.data);
-                                    });
+                    this.isFollow = true;
+                    axios.put('/api/articles/' + this.myArticle.id, {type: 'attach'})
+                            .then(response=> {
+                                console.log(response.data);
+                            })
+                            .catch(response=> {
+                                console.log(response.data);
+                            });
                 }
             }
         },
@@ -143,6 +140,12 @@
                 }
             }
             this.opposeNum = this.myArticle.opposes.length;
+            for (var i in this.myArticle.followers) {
+                if (this.myArticle.followers[i].id == this.user.id) {
+                    this.isFollow = true;
+                    break;
+                }
+            }
         }
     }
 </script>
@@ -162,7 +165,7 @@
         display: inline-block;
         text-align: center;
 
-        .text{
+        .text {
             color: #0084FF
         }
     }
