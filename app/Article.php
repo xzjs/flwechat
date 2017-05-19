@@ -17,4 +17,20 @@ class Article extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+
+    public function agrees(){
+        return $this->hasMany('App\Agree');
+    }
+
+    public function opposes(){
+        return $this->hasMany('App\Oppose');
+    }
+
+    public function comments(){
+        return $this->hasMany('App\Article');
+    }
+
+    public function followers(){
+        return $this->belongsToMany('App\User','follow_articles');
+    }
 }

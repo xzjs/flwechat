@@ -20,30 +20,26 @@
                 users: []
             }
         },
-        computed: mapState([
-            'userId'
-        ]),
+        computed: mapState(['userId']),
         methods: {
             parseData: function () {
-                var vm = this;
-                console.log(this.uderId);
-                axios.post('/flwechat/public/friend/get_friends', {id: this.userId, type: 0})
-                        .then(function (response) {
-                            vm.users = response.data;
+                axios.get('/api/friends', {params: {type: 0}})
+                        .then(response=> {
+                            this.users = response.data;
                             var firstCharUpper;
                             var m = {};
-                            vm.users.forEach(function (item) {
-                                firstCharUpper = vm.getFirstUpperChar(item.nickname);
+                            this.users.forEach(item=> {
+                                firstCharUpper = this.getFirstUpperChar(item.nickname);
                                 if (m.hasOwnProperty(firstCharUpper)) {
                                     m[firstCharUpper].push(item);
                                 } else {
                                     m[firstCharUpper] = [item];
                                 }
                             });
-                            vm.map = m;
+                            this.map = m;
                         })
-                        .catch(function (response) {
-                            console.log(response.data);
+                        .catch(error=> {
+                            console.log(error);
                         })
             },
             getFirstUpperChar: function (str) {
@@ -77,7 +73,6 @@
         },
         mounted: function () {
             this.parseData();
-            console.log('hi');
         }
     }
 </script>

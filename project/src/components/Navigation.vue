@@ -43,8 +43,11 @@
             this.getNotices();
             this.getTopics();
         },
+        created(){
+            this.getUser({id:0});
+        },
         methods: {
-            ...mapActions(['getNotices', 'getTopics']),
+            ...mapActions(['getNotices', 'getTopics','getUser']),
         }
     }
 </script>
@@ -63,7 +66,7 @@
         }
     }
 
-    .container {
-        padding-bottom: 53px;
-    }
+    /*.container {*/
+        /*padding-bottom: 53px;*/
+    /*}*/
 </style>

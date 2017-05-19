@@ -16,13 +16,15 @@ export default new Vuex.Store({
     state: {
         topics: [],
         userId: 0,
-        articles: [{user: {}, topic: {}}],
+        articles: [],
         topic_id: 0,
-        article: {user: {}, topic: {}},
+        article: {user: {}, topic: {}, agrees: [], opposes: [],comments:[]},
         notices: [],
         currentPage: 1,
         nextPage: null,
-        wait: false
+        wait: false,
+        user: {},
+        url: process.env.API_ROOT
     },
     mutations: {
         setTopics(state, t){
@@ -54,6 +56,10 @@ export default new Vuex.Store({
         },
         setWait(state, status){
             state.wait = status;
+        },
+        //user
+        setUser(state, user){
+            state.user = user;
         }
     }
     ,
@@ -92,7 +98,7 @@ export default new Vuex.Store({
                     }
                     context.commit('setCurrentPage', response.data.current_page);
 
-                    if (data.page == 1) {
+                    if (data.page == null) {
                         context.commit('setArticles', response.data.data);
                     } else {
                         context.commit('attachArticles', response.data.data);
@@ -108,6 +114,16 @@ export default new Vuex.Store({
             axios.get('/api/notices')
                 .then(response=> {
                     context.commit('setNotices', response.data);
+                })
+                .catch(error=> {
+                    console.log(error);
+                })
+        },
+        //user
+        getUser(context, data){
+            axios.get('/api/users/' + data.id)
+                .then(response=> {
+                    context.commit('setUser', response.data);
                 })
                 .catch(error=> {
                     console.log(error);

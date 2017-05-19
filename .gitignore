@@ -8,3 +8,4 @@ Homestead.yaml
 config/wechat.php
 /config/wechat.php
 /composer.lock
+storage

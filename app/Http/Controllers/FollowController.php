@@ -7,6 +7,8 @@ use App\Follow;
 use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class FollowController extends Controller
 {
@@ -17,7 +19,18 @@ class FollowController extends Controller
      */
     public function index()
     {
-        //
+        $type=Input::get('type');
+        try {
+            $be_follow_ids = Follow::where('type', $type)->where('follow_user', Auth::id())->pluck('be_follow_user')->toArray();
+            if ($type == 0) {
+                $be_follow = User::find($be_follow_ids);
+            } else {
+                $be_follow = Article::find($be_follow_ids);
+            }
+            return response()->json($be_follow);
+        } catch (\Exception $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     /**
@@ -102,26 +115,6 @@ class FollowController extends Controller
     {
         try {
 
-        } catch (\Exception $exception) {
-            echo $exception->getMessage();
-        }
-    }
-
-    /**
-     * 获取用户关注列表
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get_follow_list(Request $request)
-    {
-        try {
-            $be_follow_ids = Follow::where('type', $request->type)->where('follow_user', $request->id)->pluck('be_follow_user')->toArray();
-            if ($request->type == 0) {
-                $be_follow = User::find($be_follow_ids);
-            } else {
-                $be_follow = Article::find($be_follow_ids);
-            }
-            return response()->json($be_follow);
         } catch (\Exception $exception) {
             echo $exception->getMessage();
         }

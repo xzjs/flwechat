@@ -21,6 +21,9 @@
         },
         created: function () {
             this.checkLogin();
+        },
+        mounted() {
+            this.checkLogin();
         }
     }
 </script>

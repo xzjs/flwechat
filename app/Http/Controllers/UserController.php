@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -46,8 +47,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user=User::find($id);
-        echo \GuzzleHttp\json_encode($user);
+        if($id==0){
+            return response()->json(Auth::user());
+        }else{
+            return response()->json(User::find($id));
+        }
     }
 
     /**

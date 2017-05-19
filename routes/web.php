@@ -14,32 +14,9 @@
 Route::any('wechat/serve', 'WechatController@serve');
 Route::post('wechat/getconfig', 'WechatController@getconfig');
 
-Route::get('/test', function () {
+Route::get('/', function () {
     return view('welcome');
 });
-
-Route::resource('user', 'UserController');
-
-Route::post('/article/article_list', 'ArticleController@article_list');
-Route::post('/article/get_article', 'ArticleController@get_article');
-
-
-Route::get('/comment/get_comments_by_user_id/{user_id}', 'CommentController@get_comments_by_user_id');
-Route::resource('comment', 'CommentController');
-Route::post('/follow/get_follow_list', 'FollowController@get_follow_list');
-Route::post('/follow/cancel_follow', 'FollowController@cancel_follow');
-Route::resource('follow', 'FollowController');
-
-Route::post('/friend/get_friends', 'FriendController@get_friends');
-Route::post('/friend/agree_friend', 'FriendController@agree_friend');
-Route::resource('friend', 'FriendController');
-
-Route::post('/action/cancel','ActionController@cancel');
-Route::resource('action', 'ActionController');
-
-Route::get('/image/get_children_imgs/{id}','ImageController@get_children_imgs');
-Route::post('/image/get_image','ImageController@get_image');
-Route::resource('images', 'ImageController');
 
 Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function () {
     Route::get('/wechat/getuser', 'WechatController@getuser');

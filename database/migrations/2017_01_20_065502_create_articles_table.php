@@ -18,13 +18,9 @@ class CreateArticlesTable extends Migration
             $table->integer('user_id');
             $table->string('content');
             $table->integer('topic_id')->nullable();
-            $table->integer('support_num');
-            $table->integer('comment_num');
-            $table->integer('oppose_num');
-            $table->integer('transmit_num');
-            $table->integer('reply_id');
-            $table->integer('is_deleted');
-            $table->integer('is_public');
+            $table->integer('article_id')->nullable();
+            $table->integer('deleted');
+            $table->integer('public');
             $table->timestamps();
         });
     }
