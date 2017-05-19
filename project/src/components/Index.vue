@@ -105,9 +105,11 @@
     .topic_index {
         display: inline-block;
         text-align: center;
-        padding: 0px 10px;
+        /*padding: 0px 10px;*/
     }
-
+    .topic_index_box a{
+      width:19%;
+    }
     .router-link-active {
         color: #0084FF;
         border-bottom: 2px solid #0084FF;
