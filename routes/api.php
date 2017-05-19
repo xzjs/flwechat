@@ -20,4 +20,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::resource('friends', 'FriendController');
     Route::resource('users', 'UserController');
     Route::resource('images', 'ImageController');
+    Route::resource('actions', 'ActionController');
+    Route::resource('agrees','AgreeController');
+    Route::resource('opposes','OpposeController');
 });

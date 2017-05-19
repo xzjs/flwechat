@@ -5,7 +5,7 @@
                 <img :src="article.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
             </router-link>
         </div>
-        <div v-if="article.is_deleted==0">
+        <div v-if="article.deleted==0">
             <router-link :to="{name:'Detail',params:{id:article.id}}">
                 <p class="content_txt">{{article.content}}</p>
             </router-link>

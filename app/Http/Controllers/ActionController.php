@@ -7,6 +7,8 @@ use App\Article;
 use App\Notice;
 use Illuminate\Http\Request;
 use App\Notifications\ActionNotice;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class ActionController extends Controller
 {
@@ -39,13 +41,14 @@ class ActionController extends Controller
     public function store(Request $request)
     {
         try {
-            $action = Action::firstOrNew(['user_id' => $request->user_id, 'article_id' => $request->article_id, 'type' => $request->type]);
+            $user_id=Auth::id();
+            $action = Action::firstOrNew(['user_id' => $user_id, 'article_id' => $request->article_id, 'type' => $request->type]);
             if ($action->id == null) {
                 $action->save();
                 $article = Article::find($request->article_id);
 
                 $notice = new Notice;
-                $notice->user_id = $request->user_id;
+                $notice->user_id = $user_id;
                 $notice->article_id = $request->article_id;
 
                 if ($request->type == 0) {
@@ -56,6 +59,7 @@ class ActionController extends Controller
                     $notice->type = 2;//踩
                 }
                 $notice->save();
+                $notice->user=Auth::user();
                 $article->save();
 
                 //通知
@@ -118,20 +122,13 @@ class ActionController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * 取消点赞或者踩
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function cancel(Request $request)
-    {
         try {
-            $action = Action::where('user_id', $request->user_id)->where('article_id', $request->article_id)->where('type', $request->type)->first();
-            $article = Article::find($request->article_id);
-            if ($request->type == 0) {
+            $user_id=Auth::id();
+            $article_id=Input::get('article_id');
+            $type=Input::get('type');
+            $action = Action::where('user_id', $user_id)->where('article_id', $article_id)->where('type', $type)->first();
+            $article = Article::find($article_id);
+            if ($type == 0) {
                 if ($article->support_num > 0) {
                     $article->support_num -= 1;
                 }

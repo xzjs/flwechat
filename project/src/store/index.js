@@ -16,7 +16,7 @@ export default new Vuex.Store({
     state: {
         topics: [],
         userId: 0,
-        articles: [{user: {}, topic: {}}],
+        articles: [],
         topic_id: 0,
         article: {user: {}, topic: {}},
         notices: [],

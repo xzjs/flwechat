@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActionsTable extends Migration
+class CreateOpposesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('actions', function (Blueprint $table) {
+        Schema::create('opposes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
             $table->integer('article_id');
-            $table->integer('type');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actions');
+        Schema::dropIfExists('opposes');
     }
 }
