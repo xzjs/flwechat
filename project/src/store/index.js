@@ -18,7 +18,7 @@ export default new Vuex.Store({
         userId: 0,
         articles: [],
         topic_id: 0,
-        article: {user: {}, topic: {}},
+        article: {user: {}, topic: {}, agrees: [], opposes: [],comments:[]},
         notices: [],
         currentPage: 1,
         nextPage: null,

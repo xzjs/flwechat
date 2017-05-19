@@ -55,11 +55,11 @@ class ArticleController extends Controller
                         $public = 0;
                         break;
                     case 'public':
-                        $articles = $user->articles()->with('user', 'topic');
+                        $articles = $user->articles()->with('topic', 'user', 'agrees', 'opposes','comments');
                         break;
                     case 'follow':
                         $user = Auth::user();
-                        $articles = $user->follow_articles();
+                        $articles = $user->follow_articles()->with('topic', 'user', 'agrees', 'opposes','comments');
                 }
             }
             //关键字查询2
@@ -188,11 +188,8 @@ class ArticleController extends Controller
     public function show($id)
     {
         try {
-            $article = Article::with('topic', 'user')->find($id);
+            $article = Article::with('topic', 'user', 'agrees', 'opposes','comments')->find($id);
             $user_id = Auth::id();
-            $article->is_support = Action::where('article_id', $id)->where('user_id', $user_id)->where('type', 0)->count();
-            $article->is_oppose = Action::where('article_id', $id)->where('user_id', $user_id)->where('type', 1)->count();
-            $article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $id)->count();
             $this->img_ids = [];
             $this->get_img_after($article->id);
             $article->images = Image::find($this->img_ids);

@@ -6,11 +6,11 @@
                     <img :src="article.user.head_img" alt="" class="head_portrait"><span
                         class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>
                 </a>
-                <span v-if="article.user.id==userId" class="do_icon" style="float: right;" @click="changeDo">
-                <img class="do_open" src="images/down.png" alt="">
+                <span v-if="article.user.id==user.id" class="do_icon" style="float: right;" @click="changeDo">
+                <img class="do_open" src="../assets/images/down.png" alt="">
             </span>
             </div>
-            <div v-if="article.is_deleted==0">
+            <div v-if="article.deleted==0">
                 <p id="article_content" class="content_txt">{{article.content}}</p>
                 <images :images="article.images"></images>
             </div>
@@ -36,12 +36,11 @@
     export default{
         data() {
             return {
-                article_list: [],
                 articleId: 0,
                 isDoShow: false
             }
         },
-        computed: mapState(['userId', 'articles', 'article', 'currentPage', 'nextPage']),
+        computed: mapState(['user', 'articles', 'article', 'currentPage', 'nextPage']),
         components: {
             articles, action, images
         },
@@ -67,12 +66,12 @@
                         })
             }
         },
-        mounted() {
+        created() {
             this.setCurrentPage(1);
             this.setNextPage(null);
             this.articleId = this.$route.params.id;
             this.getArticle({id: this.articleId});
-            this.getArticles({reply_id: this.articleId, page: this.currentPage});
+            this.getArticles({article_id: this.articleId});
         },
         watch: {
             '$route'(to, from){

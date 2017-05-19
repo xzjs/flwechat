@@ -126,7 +126,7 @@
                 }
             }
         },
-        created(){
+        mounted(){
             for (var item in this.myArticle.agrees) {
                 if (this.myArticle.agrees[item].user_id == this.user.id) {
                     this.agree = true;
