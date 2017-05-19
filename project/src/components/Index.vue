@@ -105,9 +105,8 @@
         display: inline-block;
         text-align: center;
         /*padding: 0px 10px;*/
-    }
-    .topic_index_box a{
-      width:19%;
+        width:20%;
+        margin-right: -2px;
     }
     .router-link-active {
         color: #0084FF;
