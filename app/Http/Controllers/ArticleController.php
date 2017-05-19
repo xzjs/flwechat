@@ -120,12 +120,11 @@ class ArticleController extends Controller
                 $article->user_id = Auth::id();
                 $article->content = $request->comment;
                 $article->topic_id = $request->topic_id;
-                $article->article_id = $request->artricle_id;
+                $article->article_id = $request->article_id;
                 $article->deleted = 0;
                 $article->public = $request->is_public;
                 if ($article->article_id != 0) {
                     $article2 = Article::find($article->article_id);
-                    $article2->comment_num += 1;
                     $article2->save();
                     $article->topic_id = $article2->topic_id;
                 }

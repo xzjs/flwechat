@@ -181,6 +181,7 @@
 
     .comment_input {
         position: fixed;
+        z-index: 10;
         right: 15px;
         bottom: 65px;
     }

@@ -83,7 +83,7 @@
     import insert from '../assets/images/pic_insert.png';
     import Exif from 'exif-js';
     import SignaturePad from 'signature_pad';
-    import {MessageBox} from 'mint-ui';
+    import {MessageBox,Indicator} from 'mint-ui';
 
     export default{
         data(){
@@ -334,10 +334,14 @@
                     MessageBox('提示', '请至少上传一张图片');
                     return;
                 }
+                Indicator.open({
+                    text: '上传中...',
+                    spinnerType: 'fading-circle'
+                });
                 var formData = {
                     topic_id: this.topicId,
                     comment: this.comment,
-                    reply_id: this.articleId,
+                    article_id: this.articleId,
                     is_public: this.isPublic
                 };
                 for (var i = 0; i < this.image.length; i++) {
@@ -351,6 +355,7 @@
                 axios.post('/api/articles', formData)
                         .then(response => {
                             if (response.data == true) {
+                                Indicator.close();
                                 if (!this.isPublic) {
                                     this.$router.push({name: 'Mine'});
                                 } else {
@@ -385,12 +390,6 @@
 
     body {
         background-color: #f5f5f5;
-    }
-
-    .container {
-        background-color: #f8f8f8;
-        padding-right: 0 !important;
-        padding-left: 0 !important;
     }
 
     .publish_content {
