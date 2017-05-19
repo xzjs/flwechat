@@ -98,7 +98,7 @@
                 imageWidth: 0,
                 isPublic: true,
                 topicId: 0,
-                articleId: 0,
+                articleId: this.$route.params.id,
                 comment: ''
             }
         },
@@ -365,6 +365,8 @@
                                         this.$router.push({name: 'Detail', params: {id: this.articleId}});
                                     }
                                 }
+                            }else{
+                                console.log(response.data);
                             }
                         })
                         .catch(error=> {
@@ -373,10 +375,6 @@
             }
         },
         mounted() {
-            var id=this.$route.params.id;
-            if(id!=null){
-                this.articleId=id;
-            }
             this.setTopics();
         }
     }
