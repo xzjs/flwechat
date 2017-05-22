@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content">
         <div class="content_top">
             <router-link :to="{name:'Mine',params:{id:article.user.id}}">
                 <img :src="article.user.head_img" alt="" class="head_portrait"><span class="wei_name">{{article.user.nickname}}&bull;<span>{{article.topic.content}}</span></span>

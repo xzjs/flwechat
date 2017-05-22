@@ -1,16 +1,16 @@
 <template>
     <div>
         <div v-cloak class="my_messages">
-            <img :src="user.head_img" alt="" class="head_portrait_top"/>
+            <img :src="showUser.head_img" alt="" class="head_portrait_top"/>
             <div class="my_messages_middle">
-                <div class="name">{{user.nickname}}</div>
+                <div class="name">{{showUser.nickname}}</div>
                 <div class="my_messages_num">
                     <div>
-                        <p id="follow_num" class="follow_num">{{user.follow}}</p>
+                        <p id="follow_num" class="follow_num">{{showUser.follow}}</p>
                         <p>关注</p>
                     </div>
                     <div>
-                        <p id="be_follow_num" class="follow_num">{{user.be_follow}}</p>
+                        <p id="be_follow_num" class="follow_num">{{showUser.be_follow}}</p>
                         <p>粉丝</p>
                     </div>
                 </div>
@@ -57,42 +57,21 @@
                 is_friend: false,
                 items: [],
                 select: [false, true, false],
-                types: ["private", 'public', 'follow']
+                types: ["private", 'public', 'follow'],
+                showUser: {}
             }
         },
         computed: mapState(['user', 'articles']),
         methods: {
-            ...mapActions(["getArticles"]),
+            ...mapActions(["getArticles", "getUser"]),
             Init() {
                 if (this.showId != this.user.id) {
-                    //检测是否关注
-                    axios.get('/api/follow', {params: {type: 0}})
-                            .then(response => {
-                                var follows = response.data;
-                                for (var i = 0; i < follows.length; i++) {
-                                    if (follows[i].id == this.showId) {
-                                        this.is_follow = true;
-                                        break;
-                                    }
-                                }
-                            })
-                            .catch(error=> {
-                                console.log(error);
-                            });
-                    //检测是否为好友
-                    axios.get('/api/friend', {params: {type: 0}})
+                    axios.get('/api/users/' + this.showId)
                             .then(response=> {
-                                var friends = response.data;
-                                for (var i = 0; i < friends.length; i++) {
-                                    if (friends[i].id == this.showId) {
-                                        this.is_friend = true;
-                                        break;
-                                    }
-                                }
+                                this.showUser = response.data;
                             })
-                            .catch(function (error) {
-                                console.log(error);
-                            });
+                } else {
+                    this.showUser = this.user;
                 }
             },
             LoadArticles(index) {
@@ -100,7 +79,7 @@
                     this.select[i] = false;
                 }
                 this.select[index] = true;
-                var data = {type: this.types[index]};
+                var data = {type: this.types[index], user_id: this.showId};
                 this.getArticles(data);
             },
         },

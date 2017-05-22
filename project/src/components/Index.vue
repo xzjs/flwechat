@@ -16,7 +16,7 @@
              infinite-scroll-disabled="loading"
              infinite-scroll-distance="10"
              infinite-scroll-immediate-check="false">
-            <articles :article="item" v-for="item in articles" class="content" :key="item.id"></articles>
+            <articles :article="item" v-for="item in articles" :key="item.id"></articles>
         </div>
     </div>
 </template>

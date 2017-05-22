@@ -7,6 +7,7 @@ use App\Article;
 use App\Follow;
 use App\Image;
 use App\Jobs\GetUrl;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -24,7 +25,12 @@ class ArticleController extends Controller
     public function index()
     {
         try {
-            $user = Auth::user();
+            $user_id=Input::get('user_id');
+            if(is_null($user_id)){
+                $user = Auth::user();
+            }else{
+                $user=User::find($user_id);
+            }
             $topic_id = Input::get('topic_id');
             $article_id = Input::get('article_id');
             $key_word = Input::get('key_word');
