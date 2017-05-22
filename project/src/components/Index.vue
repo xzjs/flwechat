@@ -1,19 +1,6 @@
 <template>
     <div>
-        <div class="weui-search-bar" id="searchBar">
-            <form class="weui-search-bar__form" onsubmit="return check()">
-                <div class="weui-search-bar__box">
-                    <i class="weui-icon-search"></i>
-                    <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-                    <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-                </div>
-                <label class="weui-search-bar__label" id="searchText">
-                    <i class="weui-icon-search"></i>
-                    <span>搜索</span>
-                </label>
-            </form>
-            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-        </div>
+        <search></search>
         <nav class="topic_index_box">
             <router-link to="0" class="topic_index recommend">全部</router-link>
             <router-link v-for="item in topics" :key="item.id" :to="{name:'Index',params:{topic_id:item.id}}"
@@ -36,12 +23,14 @@
 
 <script>
     import articles from '@/components/Article';
+    import search from '@/components/SearchBar';
     import {mapState, mapMutations, mapActions} from 'vuex';
 
     export default{
         data() {
             return {
-                topicId: 0
+                topicId: 0,
+                value:''
             }
         },
         computed: mapState(['topics', 'articles', 'currentPage', 'nextPage']),
@@ -61,11 +50,12 @@
                 if (this.nextPage!=null) {
                     this.getArticles({topic_id: this.topicId, page: this.nextPage});
                 }
+            },
+            search(){
+
             }
         },
-        components: {
-            articles
-        },
+        components: {articles,search},
         mounted(){
             this.getTopicId();
             this.getArticles({topic_id: this.topicId});
@@ -111,5 +101,11 @@
     .router-link-active {
         color: #0084FF;
         border-bottom: 2px solid #0084FF;
+    }
+
+    .search{
+        width: 100%;
+        position: fixed;
+        top: 0;
     }
 </style>

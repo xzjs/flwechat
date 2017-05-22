@@ -27,7 +27,7 @@ class ArticleController extends Controller
             $user = Auth::user();
             $topic_id = Input::get('topic_id');
             $article_id = Input::get('article_id');
-//            $key_word = $request->key_word;
+            $key_word = Input::get('key_word');
 //            $comment = $request->comment;
 
             $public = 1;
@@ -63,25 +63,17 @@ class ArticleController extends Controller
                 }
             }
             //关键字查询2
-//            if (!is_null($key_word)) {
-//                $articles = $articles->where('content', 'like', "%" . $key_word . "%");
-//            }
-            //查询用户关注的文章3
-//            if (!is_null($follow_article)) {
-//                $article_ids = Follow::where('follow_user', $user_id)->get(['be_follow_user'])->toArray();
-//                $articles->whereIn('id', $article_ids);
-//            }
-            //个人文章查询4
-//            if ($type == 4) {
-//                $articles = $articles->where('user_id', $request->user_id);
-//            }
+            if (!is_null($key_word)) {
+                $articles = $articles->where('content', 'like', "%" . $key_word . "%");
+            }
+
             $articles = $articles->where('public', $public)->orderBy('created_at', $order_by)->with('topic', 'user', 'agrees', 'opposes','comments','followers')->paginate(15);
             foreach ($articles->items() as $article) {
                 $this->img_ids = [];
                 $this->get_img_after($article->id);
                 $article->images = Image::find($this->img_ids);
             }
-            return response($articles->toJson());
+            return response()->json($articles);
         } catch (\Exception $exception) {
             return response($exception->getMessage());
         }

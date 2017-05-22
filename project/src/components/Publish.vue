@@ -313,7 +313,7 @@
                 this.positions[this.index] = position;
             },
             setTopics() {
-                if (this.articleId == 0) {
+                if (this.articleId == null) {
                     if (this.topics==null) {
                         this.getTopics();
                     }
