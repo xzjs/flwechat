@@ -49,11 +49,10 @@ class UserController extends Controller
     {
         try {
             if ($id == 0) {
-                return response()->json(Auth::user());
-            } else {
-                return response()->json(User::with('fans', 'receive_friends')->find($id));
+                $id = Auth::id();
             }
-        }catch (\Exception $exception){
+            return response()->json(User::with('fans', 'receive_friends','follow_users')->find($id));
+        } catch (\Exception $exception) {
             return response($exception->getMessage());
         }
     }
@@ -78,7 +77,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $user = User::find($id);
+            switch ($request->type) {
+                case 'follow':
+                    $user->follow_users()->attach($request->user_id);
+                    break;
+                case 'cancel_follow':
+                    $user->follow_users()->detach($request->user_id);
+                    break;
+                case 'make_friend':
+                    $user->post_friends()->attach($request->user_id);
+                    break;
+                case 'delete_friend':
+                    $user->post_friends()->detach($request->user_id);
+                    break;
+            }
+            return response('true');
+        } catch (\Exception $exception) {
+            return response($exception->getMessage());
+        }
     }
 
     /**

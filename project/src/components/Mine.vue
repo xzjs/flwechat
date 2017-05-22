@@ -6,27 +6,21 @@
                 <div class="name">{{showUser.nickname}}</div>
                 <div class="my_messages_num">
                     <div>
-                        <p id="follow_num" class="follow_num">{{showUser.follow}}</p>
+                        <p id="follow_num" class="follow_num">{{showUser.follow_users.length}}</p>
                         <p>关注</p>
                     </div>
                     <div>
-                        <p id="be_follow_num" class="follow_num">{{showUser.be_follow}}</p>
+                        <p id="be_follow_num" class="follow_num">{{showUser.fans.length}}</p>
                         <p>粉丝</p>
                     </div>
                 </div>
             </div>
             <div class="my_messages_right">
-                <img v-if="showId==user.id" class="follow_action" src="../assets/images/message.png" alt="">
-                <img v-else-if="is_follow==true" class="follow_action" src="../assets/images/follow3.png" alt=""
-                     @click="cancelFollow()">
-                <img v-else class="follow_action" src="../assets/images/follow.png" alt="" @click="follow()">
-
+                <i v-if="showId==user.id" class="icon-notice follow_action weui-tabbar__icon"></i>
+                <i v-else class="icon-follow follow_action weui-tabbar__icon" :class="{yes:is_follow}" @click="follow"></i>
                 <div class="my_messages_friend">
-                    <img v-if="showId==user.id" src="../assets/images/add_friend.png" alt="" @click="goMessage()">
-                    <img v-else-if="is_friend==true" src="../assets/images/add_friend2.png" alt="">
-                    <img v-else src="../assets/images/add_friend.png" alt="" @click="makeFriend()">
-                    <span class="weui-badge weui-badge_dot"
-                          style="position: absolute;top: 5px;right: 15px;display: none"></span>
+                    <i v-if="showId==user.id" class="icon-add-friend weui-tabbar__icon" :class="{yes:is_follow}" @click="goMessage()"></i>
+                    <i v-else class="icon-add-friend weui-tabbar__icon" :class="{yes:is_friend}" @click="friend"></i>
                 </div>
             </div>
         </div>
@@ -58,7 +52,7 @@
                 items: [],
                 select: [false, true, false],
                 types: ["private", 'public', 'follow'],
-                showUser: {}
+                showUser: {follow_users: {}, fans: {}}
             }
         },
         computed: mapState(['user', 'articles']),
@@ -69,6 +63,18 @@
                     axios.get('/api/users/' + this.showId)
                             .then(response=> {
                                 this.showUser = response.data;
+                                for (var i in this.showUser.fans) {
+                                    if (this.showUser.fans[i].id == this.user.id) {
+                                        this.is_follow = true;
+                                        break;
+                                    }
+                                }
+                                for (var i in this.showUser.receive_friends) {
+                                    if (this.showUser.receive_friends[i].id == this.user.id) {
+                                        this.is_friend = true;
+                                        break;
+                                    }
+                                }
                             })
                 } else {
                     this.showUser = this.user;
@@ -82,6 +88,36 @@
                 var data = {type: this.types[index], user_id: this.showId};
                 this.getArticles(data);
             },
+            follow(){
+                if (this.is_follow) {
+                    this.is_follow = false;
+                    axios.put('/api/users/' + this.user.id, {type: 'cancel_follow', user_id: this.showId})
+                            .then(response=> {
+                                console.log(response.data);
+                            })
+                } else {
+                    this.is_follow = true;
+                    axios.put('/api/users/' + this.user.id, {type: 'follow', user_id: this.showId})
+                            .then(response=> {
+                                console.log(response.data);
+                            })
+                }
+            },
+            friend(){
+                if (this.is_friend) {
+                    this.is_friend = false;
+                    axios.put('/api/users/' + this.user.id, {type: 'delete_friend', user_id: this.showId})
+                            .then(response=> {
+                                console.log(response.data);
+                            })
+                } else {
+                    this.is_friend = true;
+                    axios.put('/api/users/' + this.user.id, {type: 'make_friend', user_id: this.showId})
+                            .then(response=> {
+                                console.log(response.data);
+                            })
+                }
+            }
         },
         mounted() {
             this.showId = this.$route.params.id;
@@ -97,7 +133,7 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
     .my_messages {
         height: 88px;
         padding: 8px;
@@ -132,12 +168,15 @@
     .my_messages_right {
         height: 80px;
         float: right;
-    }
+        i{
+            margin: 8px 15px;
+            float: none;
+            display: block;
+        }
+        .yes {
+            color: #0084FF
+        }
 
-    .my_messages_right img {
-        margin: 8px 15px;
-        float: none;
-        display: block;
     }
 
     .my_messages_friend {

@@ -65,8 +65,4 @@
             color: #0084FF;
         }
     }
-
-    /*.container {*/
-        /*padding-bottom: 53px;*/
-    /*}*/
 </style>
