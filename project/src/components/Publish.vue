@@ -57,7 +57,7 @@
                 <mt-button type="primary" class="button" @click="submit">提交</mt-button>
             </el-col>
         </el-row>
-        <mt-popup v-model="popupVisible" position="right">
+        <mt-popup v-model="popupVisible" position="right" popup-transition="popup-fade">
             <el-row>
                 <el-col>
                     <canvas id="canvas" :width="width" :height="height"></canvas>
@@ -83,7 +83,7 @@
     import insert from '../assets/images/pic_insert.png';
     import Exif from 'exif-js';
     import SignaturePad from 'signature_pad';
-    import {MessageBox,Indicator} from 'mint-ui';
+    import {MessageBox, Indicator} from 'mint-ui';
 
     export default{
         data(){
@@ -91,15 +91,17 @@
                 image: [insert, insert, insert],
                 popupVisible: false,
                 width: screen.availWidth,
-                height: 0,
+                height: screen.availHeight,
                 signaturePad: null,
                 index: -1,
                 positions: [],
                 imageWidth: 0,
+                imageHeight: 0,
                 isPublic: true,
                 topicId: 0,
                 articleId: this.$route.params.id,
-                comment: ''
+                comment: '',
+                scale: screen.availHeight / screen.availWidth
             }
         },
         computed: {
@@ -128,24 +130,27 @@
                     var result = this.result;
                     let img = new Image();
                     img.src = result;
-                    if (this.result.length > (100 * 1024) || Orientation != 1) {
-                        img.onload = function () {
-                            console.log(img.width, img.height);
-                            if (Orientation == 6 || Orientation == 8) {
-                                vm.height = img.width * vm.width / img.height;
-                                vm.imageWidth = img.height;
-                            } else {
-                                vm.height = img.height * vm.width / img.width;
-                                vm.imageWidth = img.width;
-                            }
+                    img.onload = function () {
+                        console.log(img.width, img.height);
+                        //计算canvas的大小
+                        if (Orientation == 1) {
+                            var imageScale = img.height / img.width;
+                        } else {
+                            var imageScale = img.width / img.height;
+                        }
+                        if (imageScale > vm.scale) {
+                            vm.width = vm.height / imageScale;
+                        } else {
+                            vm.height = vm.width * imageScale;
+                        }
+                        if (result.length > (100 * 1024) || Orientation != 1) {
                             result = vm.compress(img, Orientation);
-                            $('#canvas').css('background-image', 'url(' + result + ')');
-                            $('#canvas').css('background-size', "cover");
-                            vm.changePopupStatus();
-                            vm.image[index] = result;
-                        };
-                    }
-
+                        }
+                        $('#canvas').css('background-image', 'url(' + result + ')');
+                        $('#canvas').css('background-size', "cover");
+                        vm.popupVisible = true;
+                        vm.image[index] = result;
+                    };
                     vm.signaturePad = new SignaturePad($('#canvas')[0], {
                         penColor: "rgb(229,43,28)",
                         onBegin: function () {
@@ -272,11 +277,8 @@
                 tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
                 return ndata;
             },
-            changePopupStatus: function () {
-                this.popupVisible = !this.popupVisible;
-            },
             cancel: function () {
-                this.changePopupStatus();
+                this.popupVisible = false;
                 this.image[this.index] = insert;
             },
             clear: function () {
@@ -298,7 +300,7 @@
                         position.min_y = Math.max(Math.min(position.min_y, points[i][j].y), 0);
                     }
                 }
-                this.changePopupStatus();
+                this.popupVisible = false;
                 this.clear();
                 var canvas = $('#canvas')[0];
                 var context = canvas.getContext('2d');
@@ -314,7 +316,7 @@
             },
             setTopics() {
                 if (this.articleId == null) {
-                    if (this.topics==null) {
+                    if (this.topics == null) {
                         this.getTopics();
                     }
                 } else {
@@ -365,7 +367,7 @@
                                         this.$router.push({name: 'Detail', params: {id: this.articleId}});
                                     }
                                 }
-                            }else{
+                            } else {
                                 console.log(response.data);
                             }
                         })
@@ -546,7 +548,7 @@
         margin: 10px auto;
     }
 
-    .float-button{
+    .float-button {
         width: 100%;
         position: absolute;
         bottom: 0;
