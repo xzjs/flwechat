@@ -383,7 +383,7 @@
 //            if(this.height==screen.height){
 //                this.height-=85
 //            }
-            alert(this.width + ',' + this.height);
+            //alert(this.width + ',' + this.height);
         }
     }
 </script>
