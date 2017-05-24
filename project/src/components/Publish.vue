@@ -139,6 +139,7 @@
                             var imageScale = img.width / img.height;
                         }
                         if (imageScale > vm.scale) {
+                            vm.height *= 0.95;
                             vm.width = vm.height / imageScale;
                         } else {
                             vm.height = vm.width * imageScale;
@@ -381,7 +382,7 @@
 //            if(this.height==screen.height){
 //                this.height-=85
 //            }
-            alert(this.width+','+this.height);
+            alert(this.width + ',' + this.height);
         }
     }
 </script>
