@@ -23,19 +23,13 @@ class ImageController extends Controller
     {
         $img_id=Input::get('image_id');
         $article_id=Input::get('article_id');
-        $user_id=Auth::id();
 
         if($img_id!=null){
             try {
                 $article = Image::with('article')->find($img_id)->article;
                 $this->get_img_after($article->id);
-                $this->get_img_before($article->reply_id);
-                $imgs = Image::with('comments','article.user','expands','article.topic')->find($this->img_ids);
-                foreach ($imgs as $img) {
-                    $img->article->is_support = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 0)->count();
-                    $img->article->is_oppose = Action::where('article_id', $article->id)->where('user_id', $user_id)->where('type', 1)->count();
-                    $img->article->is_follow = Follow::where('follow_user', $user_id)->where('be_follow_user', $article->id)->count();
-                }
+                $this->get_img_before($article->article_id);
+                $imgs = Image::with('article.user','expands','article.topic','article.agrees','article.opposes','article.followers','article.comments')->find($this->img_ids);
                 return response()->json($imgs);
             } catch (\Exception $exception) {
                 return response($exception->getMessage());
@@ -117,7 +111,7 @@ class ImageController extends Controller
     {
         $imgs = Image::where('article_id', $id)->get(['id'])->toArray();
         $this->img_ids=array_merge($this->img_ids,$imgs);
-        $article_ids = Article::where('reply_id', $id)->get(['id'])->toArray();
+        $article_ids = Article::where('article_id', $id)->get(['id'])->toArray();
         foreach ($article_ids as $article_id) {
             $this->get_img_after($article_id);
         }

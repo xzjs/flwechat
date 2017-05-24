@@ -51,31 +51,27 @@
         </mt-swipe>
     </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
     import action from '@/components/Action';
     import {mapState} from 'vuex';
     export default{
         data(){
             return {
                 imageId: 0,
-                images: [{article: {user: {}, topic: {}}}],
+                images: [{article: {user: {}, topic: {},comments:{},agrees:{},opposes:{}}}],
                 index: 0,
                 show: true,
                 classActive: [],
             }
         },
-        computed: mapState(['userId', 'url']),
+        computed: mapState(['url']),
         components: {
             action
         },
         methods: {
             getImages(){
-                axios.get('/api/images', {
-                    params: {
-                        image_id: this.imageId
-                    }
-                })
-                        .then(response=> {
+                axios.get('/api/images', {params: {image_id: this.imageId}})
+                        .then(response => {
                             console.log(response.data);
                             this.images = response.data;
                             for (var i = 0; i < this.images.length; i++) {
@@ -85,7 +81,7 @@
                                 }
                             }
                         })
-                        .catch(error=> {
+                        .catch(error => {
                             console.log(error);
                         })
             },
