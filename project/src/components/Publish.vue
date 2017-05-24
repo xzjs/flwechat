@@ -378,6 +378,7 @@
         },
         mounted() {
             this.setTopics();
+            alert(this.width+','+this.height);
         }
     }
 </script>
