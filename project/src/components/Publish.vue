@@ -91,7 +91,7 @@
                 image: [insert, insert, insert],
                 popupVisible: false,
                 width: screen.availWidth,
-                height: screen.availHeight,
+                height: $(window).height(),
                 signaturePad: null,
                 index: -1,
                 positions: [],
@@ -378,7 +378,9 @@
         },
         mounted() {
             this.setTopics();
-            this.height=screen.availHeight;
+//            if(this.height==screen.height){
+//                this.height-=85
+//            }
             alert(this.width+','+this.height);
         }
     }
