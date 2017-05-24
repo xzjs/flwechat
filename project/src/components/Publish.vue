@@ -378,6 +378,7 @@
         },
         mounted() {
             this.setTopics();
+            this.height=screen.availHeight;
             alert(this.width+','+this.height);
         }
     }
