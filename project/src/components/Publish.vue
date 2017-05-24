@@ -142,6 +142,7 @@
                             vm.height *= 0.95;
                             vm.width = vm.height / imageScale;
                         } else {
+                            vm.width *= 0.95;
                             vm.height = vm.width * imageScale;
                         }
                         if (result.length > (100 * 1024) || Orientation != 1) {
