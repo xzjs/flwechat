@@ -133,7 +133,7 @@
                     img.onload = function () {
                         console.log(img.width, img.height);
                         //计算canvas的大小
-                        if (Orientation == 1) {
+                        if (Orientation == 1 || Orientation == undefined) {
                             var imageScale = img.height / img.width;
                         } else {
                             var imageScale = img.width / img.height;
