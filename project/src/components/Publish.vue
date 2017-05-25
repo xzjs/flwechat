@@ -135,8 +135,10 @@
                         //计算canvas的大小
                         if (Orientation == 1 || Orientation == undefined) {
                             var imageScale = img.height / img.width;
+                            vm.imageWidth=img.width;
                         } else {
                             var imageScale = img.width / img.height;
+                            vm.imageWidth=img.height;
                         }
                         if (imageScale > vm.scale) {
                             vm.height *= 0.95;
