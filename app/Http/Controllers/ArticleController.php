@@ -59,6 +59,7 @@ class ArticleController extends Controller
                 switch ($type) {
                     case 'private':
                         $public = 0;
+                        $articles = $user->articles();
                         break;
                     case 'public':
                         $articles = $user->articles();
