@@ -217,7 +217,7 @@
     }
     @media screen and (min-height: 481px) and (max-height: 568px) {
         .back-content ul {
-            height: 368px;
+            height: 408px;
             overflow-y: scroll;
         }
         .bullet_screen .bullet_screen_content {
@@ -227,7 +227,7 @@
 
     @media screen and (min-height: 569px) and (max-height: 640px) {
         .back-content ul {
-            height: 440px;
+            height: 480px;
             overflow-y: scroll;
         }
         .bullet_screen .bullet_screen_content {
@@ -237,7 +237,7 @@
 
     @media screen and (min-height: 641px) and (max-height: 667px) {
         .back-content ul {
-            height: 467px;
+            height: 507px;
             overflow-y: scroll;
         }
         .bullet_screen .bullet_screen_content {
@@ -247,7 +247,7 @@
 
     @media screen and (min-height: 668px) and (max-height: 736px) {
         .back-content ul {
-            height: 536px;
+            height: 576px;
             overflow-y: scroll;
         }
         .bullet_screen .bullet_screen_content {
