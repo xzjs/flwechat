@@ -3,6 +3,7 @@
         <mt-swipe :auto="0" :defaultIndex="index" :continuous="false" :showIndicators="false">
             <mt-swipe-item v-for="image in images" :key="image.id">
                 <div class="front" id="galleryImg">
+
                     <img :src="'http://images.frilink.cn/'+image.img+'-big'" alt="" class="img_original">
                     <img :src="url+'/storage/'+ image.mark" alt="" class="img_mark" @click="imgClick()">
                     <div v-if="show" class="UserComment">
@@ -36,6 +37,9 @@
                                         </p>
                                     </a>
                                 </li>
+                                <p>所谓“互联网+”战略，是全国人大代表、腾讯董事会主席兼CEO马化腾向人大提出的四个建议之一，马化腾解释说，“互联网+”战略就是利用互联网的平台，利用信息通信技术，把互联网和包括传统行业在内的各行各业结合起来，在新的领域创造一种新的生态。紧接着，李克强总理在2015年政府工作报告中提出，“制定‘互联网+’行动计划，推动移动互联网、云计算、大数据、物联网等与现代制造业结合，促进电子商务、工业互联网和互联网金融健康发展，引导互联网企业拓展国际市场。”随后，在中国的社会经济中掀起了一股“互联网+X”的商业浪潮。其中，传统农业也站上了这个风口。农业是最古老的产业，也是最关乎国计民生的一个产业，相对于一日千里的互联网产业而言，农业的发展一直处于蜗速状态。如今，“互联网+”的大风吹来，技术的可行性与经济上的有利可图，使得这个古老的产业插上了智慧的翅膀，借东风而舞，产业升级一触即发。于是，一批如网易丁磊、京东刘强东、联想佳沃等产业资本巨头纷纷务农，而大北农、新希望、芭田股份等传统农业企业也纷纷启动互联网化改造，一批涉及互联网农业领域的个股也在资本市场上受到热捧。 
+                                  茶叶作为一个农业产值已超千亿的产业，在互联网的大风下早已是躁动不安了。一方面，受到大环境变化带来的市场冲击，许多茶企、茶商业绩下滑较为严重，生存为艰；另一方面，以茶叶电商发展迅速、“互联网+茶叶”的新商业形态频出，不断地引爆行业热点。此外，茶叶食品安全问题不断遭到曝光，行业产生信任危机。在这个形势下，许多老板把互联网作为一根救命稻草，但对于如何实现“互联网+茶叶”的结合却又很迷茫，不知所措。时下，许多茶企为了挽回业绩因此将注意力多放在了电商、微店等直接产生销量的互联网渠道。但实际上，“互联网+茶叶”，不单是把茶叶搬到网上去售卖，而应该考虑通过互联网的力量对整个茶叶产业链的完善和革新。 
+                                  首先，在生产方面，构建智慧农业生产过程。通过构建农业物联网、云服务、大数据分析来实现茶叶生产技术问题、产品标准化问题、茶叶质量安全问题以及生产全程可追溯问题等的解决。通过提高茶叶种植加工各个环节的信息化水平，保证产品标准化，并可实现自动化控制，降低成本，提高质量。近年来，茶产业深受农残问题的困扰，由于产业有品类无品牌的现状，导致“一颗老鼠屎坏了一</p>
                                 <!--<li class="expands_li_background_color">信息流广告</li>-->
                             </ul>
                         </div>
@@ -205,10 +209,18 @@
         -webkit-animation-fill-mode: both;
         animation-fill-mode: both;
     }
-
-    @media screen and (max-height: 568px) {
+    @media screen and (max-height: 480px) {
+      .back-content ul {
+        height: 295px;
+        overflow-y: scroll;
+      }
+      .bullet_screen .bullet_screen_content {
+        width: 50%;
+      }
+    }
+    @media screen and (min-height: 481px) and (max-height: 568px) {
         .back-content ul {
-            height: 428px;
+            height: 368px;
             overflow-y: scroll;
         }
         .bullet_screen .bullet_screen_content {
@@ -218,7 +230,7 @@
 
     @media screen and (min-height: 569px) and (max-height: 640px) {
         .back-content ul {
-            height: 500px;
+            height: 440px;
             overflow-y: scroll;
         }
         .bullet_screen .bullet_screen_content {
@@ -228,7 +240,7 @@
 
     @media screen and (min-height: 641px) and (max-height: 667px) {
         .back-content ul {
-            height: 527px;
+            height: 467px;
             overflow-y: scroll;
         }
         .bullet_screen .bullet_screen_content {
@@ -238,7 +250,7 @@
 
     @media screen and (min-height: 668px) and (max-height: 736px) {
         .back-content ul {
-            height: 596px;
+            height: 536px;
             overflow-y: scroll;
         }
         .bullet_screen .bullet_screen_content {
@@ -258,12 +270,15 @@
                 width: 100%;
                 position: absolute;
                 left: 0;
+              /*top:50%;*/
                 z-index: 2;
+
             }
             .img_mark {
                 width: 100%;
                 position: absolute;
                 left: 0;
+              /*top:50%;*/
                 z-index: 3;
             }
             .UserComment {
