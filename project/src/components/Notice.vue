@@ -2,6 +2,8 @@
     <div>
         <mt-cell-swipe v-for="(notice,index) in notices" :key="notice.id"
                        :title="getTitle(notice)"
+                       :is-link="true"
+                       :to="{name:'Detail',params:{id:notice.data.article_id}}"
                        :right="[
     {
       content: '标记为已读',
