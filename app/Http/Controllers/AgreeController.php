@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Agree;
+use App\Article;
+use App\Notice;
+use App\Notifications\ActionNotice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,6 +43,13 @@ class AgreeController extends Controller
         $agree->user_id = Auth::id();
         $agree->article_id = $request->article_id;
         $agree->save();
+        $user=Article::find($request->article_id)->user;
+        $notice=new Notice;
+        $notice->user_id=Auth::id();
+        $notice->article_id=$request->article_id;
+        $notice->type=1;
+        $notice->save();
+        $user->notify(new ActionNotice($notice));
         return response($agree->id);
     }
 

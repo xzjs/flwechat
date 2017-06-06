@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
+use App\Notice;
+use App\Notifications\ActionNotice;
 use App\Oppose;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +43,13 @@ class OpposeController extends Controller
         $oppose->user_id = Auth::id();
         $oppose->article_id = $request->article_id;
         $oppose->save();
+        $user=Article::find($request->article_id)->user;
+        $notice=new Notice;
+        $notice->user_id=Auth::id();
+        $notice->article_id=$request->article_id;
+        $notice->type=2;
+        $notice->save();
+        $user->notify(new ActionNotice($notice));
         return response($oppose->id);
     }
 

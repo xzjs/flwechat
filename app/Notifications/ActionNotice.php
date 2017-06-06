@@ -58,7 +58,7 @@ class ActionNotice extends Notification
     {
         return [
             'user_id'=>$this->notice->user_id,
-            'user_name'=>$this->notice->user->nick_name,
+            'user_name'=>$this->notice->user->nickname,
             'article_id'=>$this->notice->article_id,
             'article'=>$this->notice->article->content,
             'type'=>$this->notice->type

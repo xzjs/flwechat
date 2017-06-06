@@ -7,6 +7,8 @@ use App\Article;
 use App\Follow;
 use App\Image;
 use App\Jobs\GetUrl;
+use App\Notice;
+use App\Notifications\ActionNotice;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,11 +27,11 @@ class ArticleController extends Controller
     public function index()
     {
         try {
-            $user_id=Input::get('user_id');
-            if(is_null($user_id)){
+            $user_id = Input::get('user_id');
+            if (is_null($user_id)) {
                 $user = Auth::user();
-            }else{
-                $user=User::find($user_id);
+            } else {
+                $user = User::find($user_id);
             }
             $topic_id = Input::get('topic_id');
             $article_id = Input::get('article_id');
@@ -74,7 +76,7 @@ class ArticleController extends Controller
                 $articles = $articles->where('content', 'like', "%" . $key_word . "%");
             }
 
-            $articles = $articles->where('public', $public)->orderBy('created_at', $order_by)->with('topic', 'user', 'agrees', 'opposes','comments','followers')->paginate(15);
+            $articles = $articles->where('public', $public)->orderBy('created_at', $order_by)->with('topic', 'user', 'agrees', 'opposes', 'comments', 'followers')->paginate(15);
             foreach ($articles->items() as $article) {
                 $this->img_ids = [];
                 $this->get_img_after($article->id);
@@ -123,11 +125,18 @@ class ArticleController extends Controller
                 $article->deleted = 0;
                 $article->public = $request->is_public;
                 if ($article->article_id != 0) {
-                    $article2 = Article::find($article->article_id);
-                    $article2->save();
-                    $article->topic_id = $article2->topic_id;
+                    $article2=Article::find($article->article_id);
+                    $article->topic_id =$article2 ->topic_id;
+                    //通知
+                    $user = $article2->user;
+                    $notice = new Notice;
+                    $notice->user_id = Auth::id();
+                    $notice->type = 0;
+                    $notice->article_id=$request->article_id;
+                    $notice->save();
+                    $user->notify(new ActionNotice($notice));
                 }
-                $article->saveOrFail();
+                $article->save();
 
                 foreach ($arr as $value) {
                     if ($request->$value != null) {
@@ -186,7 +195,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         try {
-            $article = Article::with('topic', 'user', 'agrees', 'opposes','comments','followers')->find($id);
+            $article = Article::with('topic', 'user', 'agrees', 'opposes', 'comments', 'followers')->find($id);
             $this->img_ids = [];
             $this->get_img_after($article->id);
             $article->images = Image::find($this->img_ids);
@@ -216,12 +225,12 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $article=Article::find($id);
-        $user_id=Auth::id();
-        $type=$request->type;
-        if($type=='attach'){
+        $article = Article::find($id);
+        $user_id = Auth::id();
+        $type = $request->type;
+        if ($type == 'attach') {
             $article->followers()->attach($user_id);
-        }else{
+        } else {
             $article->followers()->detach($user_id);
         }
         return response('true');

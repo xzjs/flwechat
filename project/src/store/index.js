@@ -43,7 +43,7 @@ export default new Vuex.Store({
             state.notices = notices;
         },
         markNotices(state, index){
-            state.notices.slice(index, 1);
+            state.notices.splice(index, 1);
         },
         setCurrentPage(state, index){
             state.currentPage = index;
