@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Broadcasting\Channel;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,4 +48,5 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\User', 'friends', 'friend_receive', 'friend_post');
     }
+
 }

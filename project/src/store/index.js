@@ -18,7 +18,7 @@ export default new Vuex.Store({
         userId: 0,
         articles: [],
         topic_id: 0,
-        article: {user: {}, topic: {}, agrees: [], opposes: [],comments:[]},
+        article: {user: {}, topic: {}, agrees: [], opposes: [], comments: []},
         notices: [],
         currentPage: 1,
         nextPage: null,
@@ -42,8 +42,11 @@ export default new Vuex.Store({
         setNotices(state, notices){
             state.notices = notices;
         },
-        markNotices(state, index){
+        markNotice(state, index){
             state.notices.splice(index, 1);
+        },
+        addNotice(state, notice){
+            state.notices.push(notice);
         },
         setCurrentPage(state, index){
             state.currentPage = index;
@@ -111,22 +114,16 @@ export default new Vuex.Store({
         },
         //notice
         getNotices(context){
-            axios.get('/api/notices')
+            return axios.get('/api/notices')
                 .then(response=> {
                     context.commit('setNotices', response.data);
-                })
-                .catch(error=> {
-                    console.log(error);
                 })
         },
         //user
         getUser(context, data){
-            axios.get('/api/users/' + data.id)
+            return axios.get('/api/users/' + data.id)
                 .then(response=> {
                     context.commit('setUser', response.data);
-                })
-                .catch(error=> {
-                    console.log(error);
                 })
         }
     }

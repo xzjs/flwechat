@@ -1,9 +1,8 @@
 <template>
-    <div>
+    <div v-if="show">
         <mt-cell-swipe v-for="(notice,index) in notices" :key="notice.id"
                        :title="getTitle(notice)"
-                       :is-link="true"
-                       :to="{name:'Detail',params:{id:notice.data.article_id}}"
+
                        :right="[
     {
       content: '标记为已读',
@@ -21,18 +20,18 @@
     export default{
         computed: mapState(['notices']),
         methods: {
-            ...mapMutations(['markNotices']),
-            ...mapActions(['updateNotices']),
+            ...mapMutations(['markNotice']),
+            ...mapActions(['updateNotices', 'getNotices']),
             getTitle(notice){
                 let types = ['评论', '赞', '踩'];
                 let data = notice.data;
-                return data.user_name + types[data.type] + '了你的文章';
+                return data.user_name + types[data.method] + '了你的文章';
             },
-            updateNotices(index,notice) {
+            updateNotices(index, notice) {
                 axios.put('/api/notices/' + notice.id)
                         .then(response=> {
                             if (response.data == true) {
-                                this.markNotices(index);
+                                this.markNotice(index);
                             } else {
                                 Toast('标记失败');
                             }
@@ -44,6 +43,17 @@
             }
         },
         mounted: function () {
+            this.getNotices()
+                    .then(()=> {
+                        if (this.notices.length > 0) {
+                            this.show = true;
+                        }
+                    })
+        },
+        data(){
+            return {
+                show: false,
+        }
         }
     }
 </script>

@@ -24,3 +24,7 @@ Route::group(['middleware' => ['web', 'wechat.oauth:snsapi_userinfo']], function
 
 //test
 Route::post('test_post', 'TestController@test_post');
+Route::get('/pusher', function() {
+    event(new \App\Events\SomeEvent('Hi there Pusher!'));
+    return "Event has been sent!";
+});

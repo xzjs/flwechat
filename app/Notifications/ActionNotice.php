@@ -4,8 +4,8 @@ namespace App\Notifications;
 
 use App\Notice;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class ActionNotice extends Notification
@@ -54,14 +54,31 @@ class ActionNotice extends Notification
      * @param  mixed $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
             'user_id'=>$this->notice->user_id,
             'user_name'=>$this->notice->user->nickname,
             'article_id'=>$this->notice->article_id,
             'article'=>$this->notice->article->content,
-            'type'=>$this->notice->type
+            'method'=>$this->notice->type
         ];
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'user_id'=>$this->notice->user_id,
+            'user_name'=>$this->notice->user->nickname,
+            'article_id'=>$this->notice->article_id,
+            'article'=>$this->notice->article->content,
+            'method'=>$this->notice->type
+        ]);
     }
 }

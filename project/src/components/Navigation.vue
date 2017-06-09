@@ -31,23 +31,39 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {mapActions, mapState, mapMutations} from 'vuex';
 
     export default{
         computed: {
             count(){
                 return this.$store.state.notices.length;
-            }
+            },
+            ...mapState(['user'])
         },
         mounted: function () {
-            this.getNotices();
-            this.getTopics();
+//            this.getNotices();
+//            this.getTopics();
+            this.$echo.channel('test').listen('.test', (payload)=> {
+                console.log(payload);
+            })
         },
         created(){
-            this.getUser({id:0});
+            this.getUser({id: 0})
+                    .then(()=> {
+                        this.getNotices();
+                        this.getTopics();
+                        console.log(this.user);
+                        this.$echo.private('App.User.' + this.user.id)
+                                .notification((notification) => {
+                                    console.log(notification);
+                                    this.addNotice(notification);
+                                });
+
+                    })
         },
         methods: {
-            ...mapActions(['getNotices', 'getTopics','getUser']),
+            ...mapActions(['getNotices', 'getTopics', 'getUser']),
+                ...mapMutations(['addNotice'])
         }
     }
 </script>

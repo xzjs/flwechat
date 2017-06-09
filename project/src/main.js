@@ -17,6 +17,22 @@ Vue.config.debug = true;
 import jQuery from 'jquery'
 window.$ = window.jQuery = jQuery;
 
+import VueEcho from 'vue-echo';
+
+Vue.use(VueEcho, {
+    broadcaster: 'pusher',
+    key: '53d2c65d354b5542d329',
+    cluster: 'ap1',
+    encrypted: true,
+    auth: {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': 'Bearer ' + localStorage.token
+        }
+    },
+    authEndpoint: process.env.API_ROOT+'/broadcasting/auth',
+});
+
 Vue.use(VueRouter);
 Vue.use(MintUI);
 Vue.use(ElementUI);

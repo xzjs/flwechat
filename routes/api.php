@@ -13,14 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['auth:api']], function () {
-    Route::resource('notices','NoticeController');
+
+    Route::resource('notices', 'NoticeController');
     Route::resource('topics', 'TopicController');
     Route::resource('articles', 'ArticleController');
     Route::resource('friends', 'FriendController');
     Route::resource('users', 'UserController');
     Route::resource('images', 'ImageController');
     Route::resource('actions', 'ActionController');
-    Route::resource('agrees','AgreeController');
-    Route::resource('opposes','OpposeController');
-});
+    Route::resource('agrees', 'AgreeController');
+    Route::resource('opposes', 'OpposeController');
