@@ -57,6 +57,11 @@
                                 .notification((notification) => {
                                     console.log(notification);
                                     this.addNotice(notification);
+                                    let types = ['评论', '赞', '踩'];
+                                    this.$notify.info({
+                                        title: '消息',
+                                        message: '有人'+types[notification.method]+'了你的文章'
+                                    });
                                 });
 
                     })
