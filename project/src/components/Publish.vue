@@ -360,8 +360,9 @@
                 }
                 axios.post('/api/articles', formData)
                         .then(response => {
+                            Indicator.close();
                             if (response.data == true) {
-                                Indicator.close();
+
                                 if (!this.isPublic) {
                                     this.$router.push({name: 'Mine'});
                                 } else {
@@ -372,6 +373,7 @@
                                     }
                                 }
                             } else {
+                                MessageBox('错误', response.data);
                                 console.log(response.data);
                             }
                         })

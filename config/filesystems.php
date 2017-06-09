@@ -72,6 +72,7 @@ return [
             'secret_key' => env('SECRET_KEY'),  //SecretKey
             'bucket' => env('BUCKET'),  //Bucket名字
             'notify_url' => '',  //持久化处理回调地址
+            'access'=>'public'
         ],
     ],
 
