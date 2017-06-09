@@ -1,12 +1,13 @@
 <template>
-    <div v-if="show">
-        <mt-cell-swipe v-for="(notice,index) in notices" :key="notice.id"
+    <div>
+        <mt-cell-swipe v-if="show" v-for="(notice,index) in notices" :key="notice.id"
                        :title="getTitle(notice)"
-
+                       :label="notice.data.article"
+                       @click.native="read(index,notice)"
                        :right="[
     {
-      content: '标记为已读',
-      style: { background: '#0084FF', color: '#fff' },
+      content: '标为已读',
+      style: { background: '#C0C0C0', color: '#fff' },
       handler: ()=>updateNotices(index,notice)
     }
   ]"></mt-cell-swipe>
@@ -40,6 +41,10 @@
                             console.log(error);
                             Toast('标记失败');
                         })
+            },
+            read(index, notice){
+                this.updateNotices(index, notice);
+                this.$router.push({name: 'Detail', params: {id: notice.data.article_id}})
             }
         },
         mounted: function () {
@@ -53,7 +58,7 @@
         data(){
             return {
                 show: false,
-        }
+            }
         }
     }
 </script>
